@@ -28,7 +28,6 @@ abstract public class UI {
     Stage stage;
     public UI(Stage stage){
         this.stage = stage;
-        stage.setResizable(true);
     }
     
    public BorderPane allPane(){
