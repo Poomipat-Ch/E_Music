@@ -33,7 +33,7 @@ abstract public class UI {
    public BorderPane allPane(){
        BorderPane borderPane = new BorderPane();
        borderPane.getStyleClass().add("bg-border");
-       borderPane.setPadding(new Insets(5));
+       //borderPane.setPadding(new Insets(5));
        
        
        
