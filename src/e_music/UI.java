@@ -28,6 +28,7 @@ abstract public class UI {
     Stage stage;
     public UI(Stage stage){
         this.stage = stage;
+        stage.setResizable(true);
     }
     
    public BorderPane allPane(){
@@ -51,8 +52,8 @@ abstract public class UI {
         
         return vbox;
     }
-    
 
+    
     
     private Button CreaButton(String text){
         Button btn = new Button(text);
