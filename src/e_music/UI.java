@@ -34,8 +34,6 @@ abstract public class UI {
        BorderPane borderPane = new BorderPane();
        borderPane.getStyleClass().add("bg-border");
        
-       borderPane.setBottom(vbox);
-       
        
        borderPane.setLeft(menu());
        borderPane.setCenter(mainBox());
