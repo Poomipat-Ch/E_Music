@@ -1,0 +1,59 @@
+
+.logoName{
+    -fx-text-fill: white;
+    -fx-font-size: 50px;
+    -fx-background-color : #0c577c;
+}
+
+.bg-border{
+    -fx-background-color : #00a8cc;
+}
+
+.mainBox{
+    -fx-background-color : #0c7b93;
+}
+
+.title{
+    -fx-background-color : #00a8cc;
+}
+
+.menu{
+     -fx-background-color : #00a8cc;
+}
+
+.exitbtn{
+    -fx-background-color : #023059;
+}
+
+.menubtn{
+    -fx-background-color: #00a8cc; 
+    -fx-background-radius :  0 0 0 0; 
+    -fx-text-fill : white;
+    -fx-font-size : 20px;
+}
+
+.menubtn:hover{
+    -fx-border-style: hidden none none solid;
+    -fx-border-width: 0 0 0 10;
+    -fx-border-color: #27496d;
+
+}
+
+.menubtn:pressed{
+     -fx-background-color: #27496d;
+}
+
+.detailbtn{
+    -fx-background-color : #00a8cc;
+    -fx-text-fill : white;
+    -fx-background-radius :  10;
+    -fx-font-size : 20px;
+}
+
+.detailbtn:hover{
+    -fx-background-color: #27496d;
+}
+
+.detailbtn:pressed{
+     -fx-background-color: #0c7b93;
+}
