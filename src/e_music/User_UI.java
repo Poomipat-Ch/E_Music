@@ -36,6 +36,7 @@ public class User_UI extends UI{
     SearchSystem mySearchSystem = new SearchSystem();
     public User_UI(Stage stage) {
         super(stage);
+        
     }
 
     @Override
