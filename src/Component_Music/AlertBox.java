@@ -1,5 +1,7 @@
 package Component_Music;
 
+import UI_music.Login;
+import UI_music.User_UI;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

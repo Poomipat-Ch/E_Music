@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -52,9 +53,9 @@ public class Login {
     ArrayList<Account> listAccount = new ArrayList<>();
 
     public Login(Stage stage) {
-       this.stage = stage;
+       Login.stage = stage;
         
-        Label title1 = new Label("Sign in");
+         Label title1 = new Label("Sign in");
         //Username
         Label idLabel = new Label("Email / username:");
         TextField idInput = new TextField();
@@ -84,15 +85,17 @@ public class Login {
                 if (thisUser.equals(chkUser) && thisPass.equals(chkPass)) {
                     //Go user / admin page
                     logIn = true;
-                    break;
+                    break;   
                 }
             }
             if(logIn){
                 //success goto user page
                 System.out.println("Login complete.\n");
-                //AlertBox.display("Login Complete", "Go to main page.");
-                this.stage.hide();
-                User_UI user = new User_UI(new Stage());
+               // AlertBox.display("Login Complete", "Go to main page.");
+                Login.stage.hide();
+                User_UI user_UI = new User_UI(new Stage());
+                
+                
             }
             else{
                 //show error
@@ -138,10 +141,12 @@ public class Login {
             }
         });
         stage.show();
+
     }
     
     
-    public void register(String email) {
+  public void register(String email) {
+        StringProperty name, surname, mail, password, sex;
         Stage regisStage = new Stage();
         regisStage.initModality(Modality.APPLICATION_MODAL);
 
@@ -302,13 +307,13 @@ public class Login {
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
         out.writeObject(listAccount);   
         out.close();
-    }
+    }  
 
     
     public static Stage getStage(){
         
         return stage;
-    }
+}
     
     
 }
