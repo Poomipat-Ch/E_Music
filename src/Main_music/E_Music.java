@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package e_music;
+package Main_music;
 
+import UI_music.Login;
 import javafx.application.Application;
 import javafx.stage.Stage;
 /**
@@ -23,11 +24,8 @@ public class E_Music extends Application{
         Login login = new Login(stage);
     }
 
-  
-    
     
     public static void main(String[] args) {launch(args);}
 
-    
     
 }

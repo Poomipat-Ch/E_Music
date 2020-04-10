@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package e_music;
+package Component_Music;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

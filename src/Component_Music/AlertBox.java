@@ -1,4 +1,4 @@
-package e_music;
+package Component_Music;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
