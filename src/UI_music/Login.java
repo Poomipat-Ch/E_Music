@@ -7,6 +7,7 @@ package UI_music;
 
 import Component_Music.Account;
 import Component_Music.AlertBox;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,6 +27,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -43,67 +45,107 @@ import javafx.stage.Stage;
  * @author poomi
  */
 public class Login {
-    Button btn;
-    int numberOfClick;
+
     Scene scene1;
+    LocalDate dOB;
+    boolean dateSet = false;
     static Stage stage;
 
-    File user = new File("src/data/user.ini");
-    File admin = new File("src/data/admin.ini");
-    
-    ArrayList<Account> listAccount = new ArrayList<>();
+    File user = new File("src/data/user.dat");
+    File admin = new File("src/data/admin.dat");
+    File tempId = new File("src/data/user.txt");
 
-    public Login(Stage stage) {
-       Login.stage = stage;
+    ArrayList<Account> listAccount = new ArrayList<>();
+    Account userAccount = new Account();
+
+    public Login(Stage stage) throws FileNotFoundException, IOException {
+
         
-         Label title1 = new Label("Sign in");
-        //Username
+        Login.stage = stage;
+
+        Label title1 = new Label("Sign in");
+        //Get Username
         Label idLabel = new Label("Email / username:");
         TextField idInput = new TextField();
 
-        //Password
+        try{
+        DataInputStream tempID = new DataInputStream(new FileInputStream(tempId));
+        idInput.setText(tempID.readLine());
+        }catch(FileNotFoundException ex){
+            System.out.println("File error: "+ex);
+        }
+
+        //Get Password
         Label passLabel = new Label("Password");
         TextField passInput = new PasswordField();
 
-        //Checkbox
+        //Remember me Checkbox
         CheckBox chk1 = new CheckBox("Remember this");
-        //if(chk1.isSelected
         
+        
+
+        //init read file
         try {
             listAccount = readFile(user);
         } catch (Exception e) {
-            System.out.println("Login " + e);
+            System.out.println("Read File error: " + e);
         }
+        
+        
 
-        //Button
+        //Login Action Event
         Button loginBtn = new Button("Login");
         loginBtn.setOnAction(e -> {
-            System.out.println("Logging in...");
-            boolean logIn = false;
-            for (Account account : listAccount) {
-                String thisUser = (String) idInput.getText(), thisPass = (String) passInput.getText();
-                String chkUser = account.geteMail(), chkPass = account.getPassword();
-                if (thisUser.equals(chkUser) && thisPass.equals(chkPass)) {
-                    //Go user / admin page
-                    logIn = true;
-                    break;   
+            //If checkbox is checked, program will remember username to ID field
+            if (chk1.isSelected()) {
+                try {
+                    DataOutputStream tempO = new DataOutputStream(new FileOutputStream(tempId));
+                    tempO.writeUTF(idInput.getText());
+                } catch (Exception ex) {
+                    System.out.println(ex);
+                }
+            } else {
+                try {
+                    DataOutputStream tempO = new DataOutputStream(new FileOutputStream(tempId));
+                    tempO.writeUTF("");
+                } catch (Exception ex) {
+                    System.out.println(ex);
                 }
             }
-            if(logIn){
+            System.out.println("Logging in...");
+            boolean logIn = false; //Validating account
+            for (Account account : listAccount) {
+                String thisUser = idInput.getText(), thisPass = passInput.getText();
+                String chkUser = account.getUsername(), chkPass = account.getPassword();
+                String chkEmail = account.getEmail();
+                if ((thisUser.equals(chkUser) || thisUser.equals(chkEmail)) && thisPass.equals(chkPass)) {
+                    userAccount = account;
+                    logIn = true;
+                    break;
+                }
+            }
+            //Can Login
+            if (logIn) {
                 //success goto user page
-                System.out.println("Login complete.\n");
-               // AlertBox.display("Login Complete", "Go to main page.");
+                System.out.println("Login complete.\nWelcome, " + userAccount.getName());
+                // AlertBox.display("Login Complete", "Go to main page.");
                 Login.stage.hide();
-                User_UI user_UI = new User_UI(new Stage());
-                
-                
-            }
-            else{
+                if (userAccount.getIsAdmin()) {
+                    //Admin_UI admin_UI = new Admin_UI(new Stage()); <-- EDIT HERE Mr.Sirawit
+                } else {
+                    User_UI user_UI = new User_UI(new Stage());
+                }
+                idInput.clear();
+                passInput.clear();
+
+            } else {
                 //show error
-                AlertBox.display("Login Failed", "Please try again.");
+                if (idInput.getText().isBlank() || passInput.getText().isBlank()) {
+                    AlertBox.displayAlert("Login Failed", "Please fill username/password");
+                } else {
+                    AlertBox.displayAlert("Login Failed", "Username or Password is not correct.");
+                }
             }
-            idInput.clear();
-            passInput.clear();
         });
 
         Button forgotBtn = new Button("Forgot Password?");
@@ -144,19 +186,21 @@ public class Login {
         stage.show();
 
     }
-    
-    
-  public void register(String email) {
-        StringProperty name, surname, mail, password, sex;
+
+    public void register(String email) {
+        //StringProperty name, surname, mail, password, sex;
         Stage regisStage = new Stage();
         regisStage.initModality(Modality.APPLICATION_MODAL);
 
         Label title = new Label("Sign up");
 
+        //Fill name surname username email password
         TextField nameIn = new TextField();
         nameIn.setPromptText("Name");
         TextField surnameIn = new TextField();
         surnameIn.setPromptText("Surname");
+        TextField usernameIn = new TextField();
+        usernameIn.setPromptText("Username");
         TextField mailIn = new TextField(email);
         mailIn.setPromptText("Email e.g. Spookify@gmail.com");
         TextField passIn = new PasswordField();
@@ -164,55 +208,94 @@ public class Login {
         TextField cfPassIn = new PasswordField();
         cfPassIn.setPromptText("Confirm Password");
 
-        Label title2 = new Label("Date of birth");
-        ChoiceBox<String> dOb = new ChoiceBox<>();
-        dOb.getItems().addAll("1", "2", "3");
-        ChoiceBox<String> mOb = new ChoiceBox<>();
-        mOb.getItems().addAll("1", "2", "3");
-        ChoiceBox<String> yOb = new ChoiceBox<>();
-        yOb.getItems().addAll("1", "2", "3");
-        Label title3 = new Label("Gender");
-        ToggleGroup sexToggle = new ToggleGroup();
+        // create a date picker 
+        DatePicker date = new DatePicker();
+        // show week numbers 
+        date.setShowWeekNumbers(false);
+        // when datePicker is pressed 
+        date.setOnAction(e -> {
+            dOB = date.getValue();
+            dateSet = true;
+        });
+
+        //Select Gender
+        Label sexText = new Label("Gender");
+        ToggleGroup sexToggle = new ToggleGroup(); //sexToggle.getItem
         RadioButton male = new RadioButton("Male");
         RadioButton female = new RadioButton("Female");
         male.setToggleGroup(sexToggle);
         female.setToggleGroup(sexToggle);
-        //sexToggle.getItem
+
+        //FORGOT QUESTION
+        Label qText = new Label("Security Question");
+        ComboBox<String> question = new ComboBox<>();
+        question.getItems().addAll(
+                "What's your first school.",
+                "Your favourite pet's name.",
+                "Your father's name"
+        );
+        question.setPromptText("Select / write a question.");
+        question.setEditable(true); //USER CAN WRITE THEIR OWN QUESTION
+        //FORGOT ANSWER
+        TextField answer = new TextField();
+        answer.setPromptText("Answer");
+        
+        
 
         Button ok = new Button("OK");
         ok.setOnAction(e -> {
             System.out.println("Checking information...");
             ArrayList<Account> addAccount = new ArrayList<>();
-            
-            System.out.println("");
-            
-            if(passIn.getText().equals(cfPassIn.getText())) {
-                
-                try {
-                    addAccount = readFile(user);
-                } catch (IOException | ClassNotFoundException ex) {
-                    System.out.println("Register readFile " + ex);
-                } 
-                
-                addAccount.add(new Account(nameIn.getText(), mailIn.getText(), passIn.getText(), "hello", "hi"));
-                
-                try {
-                    writeFile(user, addAccount);
-                } catch (IOException ex) {
-                    System.out.println("Register writeFile " + ex);
+
+            try {
+                listAccount = readFile(user);
+            } catch (Exception ex) {
+                System.out.println("error: " + ex);
+            }
+            boolean uniqueID = true;
+            //Check already username / email
+            for (Account account : listAccount) {
+                String userId = usernameIn.getText(), emailID = mailIn.getText();
+                String chkUser = account.getUsername(), chkEmail = account.getEmail();
+                if ((userId.equals(chkUser) || emailID.equals(chkEmail))) {
+                    uniqueID = false;
+                    break;
                 }
-                try {
-                    listAccount = readFile(user);
-                } catch (IOException ex) {
-                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (uniqueID == false) {
+                AlertBox.displayAlert("Something went wrong", "Email / username is already exists.");
+            } //Check comfirm password
+            else if (passIn.getText().equals(cfPassIn.getText())) {
+                //Check Blank Field
+                if (nameIn.getText().isBlank() || passIn.getText().isBlank() || usernameIn.getText().isBlank()
+                        || mailIn.getText().isBlank() || dateSet == false || question.equals(null) || answer.getText().isBlank()) {
+                    AlertBox.displayAlert("Something went wrong", "Please check all the form.\nAnd make sure it was filled.");
+                } else {
+//                    try {
+//                        addAccount = readFile(user);
+//                    } catch (IOException | ClassNotFoundException ex) {
+//                        System.out.println("Register readFile " + ex);
+//                    }
+
+                    addAccount.add(new Account(nameIn.getText(), surnameIn.getText(), usernameIn.getText(), mailIn.getText(),
+                            passIn.getText(), sexToggle.getSelectedToggle().toString(), dOB, question.getValue(), answer.getText(), false));
+
+                    try {
+                        writeFile(user, addAccount);
+                    } catch (IOException ex) {
+                        System.out.println("Register writeFile " + ex);
+                    }
+                    try {
+                        listAccount = readFile(user);
+                    } catch (Exception ex) {
+                        System.out.println("Error: " + ex);
+                    }
+                    AlertBox.display("Register Complete", "Your account has been saved.\nTry to login now.");
+                    System.out.println("Saving account.");
+                    System.out.println("Registeraion Complete!\n");
+
+                    regisStage.close();
                 }
-                AlertBox.display("Register Complete", "Your account has been saved.\nTry to login now.");
-                System.out.println("Saving account.");
-                System.out.println("Registeraion Complete!\n");
-                
-                regisStage.close();
             } else {
                 System.out.println("Register Failed!\n");
                 nameIn.clear();
@@ -221,7 +304,7 @@ public class Login {
                 passIn.clear();
                 cfPassIn.clear();
             }
-            
+
         });
         Button cancel = new Button("Cancel");
         cancel.setOnAction(e -> {
@@ -236,10 +319,9 @@ public class Login {
         HBox row3 = new HBox(20);//Password Row
         row3.getChildren().addAll(passIn, cfPassIn);
         row3.setAlignment(Pos.CENTER);
+        
+        Label title2 = new Label("Date of birth");
 
-        HBox dateRow = new HBox(20);
-        dateRow.getChildren().addAll(dOb, mOb, yOb);
-        dateRow.setAlignment(Pos.CENTER);
         HBox sexRow = new HBox(20);
         sexRow.getChildren().addAll(male, female);
         sexRow.setAlignment(Pos.CENTER);
@@ -248,22 +330,13 @@ public class Login {
         row2.getChildren().addAll(ok, cancel);
         row2.setAlignment(Pos.CENTER);
 
-        // create a date picker 
-        DatePicker date = new DatePicker();
-
-        // show week numbers 
-        date.setShowWeekNumbers(false);
-
-        // when datePicker is pressed 
-        date.setOnAction(e -> {
-            LocalDate dOB = date.getValue();
-        });
 
         VBox column1 = new VBox(20);
-        column1.getChildren().addAll(title, row1, mailIn, row3, title2, date, title3, sexRow, row2);
+        column1.getChildren().addAll(title, row1, usernameIn, mailIn, row3, title2, date, sexText, sexRow, qText, question, answer, row2);
         column1.setAlignment(Pos.CENTER);
-        Scene regScene = new Scene(column1, 360, 500);
+        Scene regScene = new Scene(column1, 360, 600);
         regisStage.setScene(regScene);
+        regisStage.setResizable(false);
         regisStage.setTitle("Registeration.");
         regisStage.showAndWait();
 
@@ -277,10 +350,75 @@ public class Login {
         Label descrip = new Label("Enter your email address to find your account.");
         TextField mailIn = new TextField();
         mailIn.setPromptText("e.g. spookify@gmail.com");
+        
+        Label title2 = new Label("Reset Password");
+        Label askQ = new Label("Question: "+userAccount.getQuestion());
+        TextField answer = new TextField();
+        answer.setPromptText("Type Answer here");
+        TextField passIn1 = new PasswordField();
+        passIn1.setPromptText("New Password.");
+        TextField passIn2 = new PasswordField();
+        passIn2.setPromptText("Re-enter Password.");
+        Button resetBtn = new Button("Reset Password");
+        
+        
+        VBox vBox = new VBox(10);
+        vBox.getChildren().addAll(title2,askQ,answer,passIn1,passIn2,resetBtn);
+        vBox.setAlignment(Pos.CENTER);
+        Scene newPassScene = new Scene(vBox,360,200);
+        
 
         Button ok = new Button("Find");
         ok.setOnAction(e -> {
+            boolean foundEmail = false;
             System.out.println("Finding...");
+            String thisUser = mailIn.getText();
+            for (Account account : listAccount) {
+                String chkEmail = account.getEmail();
+                if (thisUser.equals(chkEmail)) {
+                    System.out.println("User email founded!");
+                    userAccount = account;
+                    foundEmail = true;
+                    break;
+                }
+            }
+            if(foundEmail){
+                AlertBox.displayAlert("Email Founded!", "Click OK to reset your password");
+                askQ.setText("Question: "+userAccount.getQuestion());
+                fgtStage.setScene(newPassScene);
+            }else{
+                System.out.println("User email not found");
+                AlertBox.displayAlert("Email not found!", "Your email is invalid.");
+            }
+        });
+        
+        resetBtn.setOnAction(e->{
+            if(answer.getText().equals(userAccount.getAnswer())){
+                if(passIn1.getText().equals(passIn2.getText())){
+                    System.out.println("Changing password.");
+                    ArrayList<Account> addAccount = new ArrayList<>();
+                    
+                    addAccount.add(new Account(userAccount.getName(), userAccount.getSurname(), userAccount.getUsername(), userAccount.getEmail(),
+                            passIn1.getText(), userAccount.getGender(), userAccount.getDateOfBirth(), userAccount.getQuestion(), userAccount.getAnswer(),false));
+                    addAccount.remove(userAccount);
+                    
+
+                    try {
+                        writeFile(user, addAccount);
+                    } catch (IOException ex) {
+                        System.out.println("Register writeFile " + ex);
+                    }
+
+                    
+                    
+                    userAccount.setPassword(passIn1.getText());
+                    AlertBox.displayAlert("Reset Password", "Password changed successfully.");
+                    fgtStage.close();
+                }
+            }else{
+                System.out.println("Answer not correct.");
+                AlertBox.displayAlert("Error", "Sorry, Your answer is not correct.");
+            }
         });
 
         Button cancel = new Button("Cancel");
@@ -290,15 +428,18 @@ public class Login {
         });
         HBox hbox = new HBox(10);
         hbox.getChildren().addAll(ok, cancel);
+        hbox.setAlignment(Pos.CENTER);
         VBox box1 = new VBox(10);
         box1.getChildren().addAll(title, descrip, mailIn, hbox);
+        
+        
         Scene forgScene = new Scene(box1, 360, 200);
         fgtStage.setScene(forgScene);
         fgtStage.setTitle("Forget Password / Cannot login");
         fgtStage.showAndWait();
 
     }
-    
+
     private ArrayList<Account> readFile(File file) throws FileNotFoundException, IOException, ClassNotFoundException {
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
         return (ArrayList<Account>) in.readObject();
@@ -306,15 +447,13 @@ public class Login {
 
     private void writeFile(File file, ArrayList<Account> listAccount) throws FileNotFoundException, IOException {
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
-        out.writeObject(listAccount);   
+        out.writeObject(listAccount);
         out.close();
-    }  
+    }
 
-    
-    public static Stage getStage(){
-        
+    public static Stage getStage() {
+
         return stage;
-}
-    
-    
+    }
+
 }

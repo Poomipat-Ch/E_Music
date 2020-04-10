@@ -64,4 +64,32 @@ public class AlertBox {
         
         return ans;
     }
+    public static void displayAlert(String title, String message) {
+        try {
+            Stage stage = new Stage();
+
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle(title);
+            stage.setResizable(false);
+
+            Label label1 = new Label();
+            label1.setText(message);
+
+            Button okBtn = new Button("OK");
+            okBtn.setOnAction(e -> {
+                stage.close();
+            });
+
+            VBox layout1 = new VBox(20);
+            layout1.getChildren().addAll(label1, okBtn);
+            layout1.setAlignment(Pos.CENTER);
+
+            Scene scene = new Scene(layout1, 200, 100);
+
+            stage.setScene(scene);
+            stage.showAndWait();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 }
