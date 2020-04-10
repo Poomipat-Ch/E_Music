@@ -42,7 +42,7 @@ public class User_UI extends UI{
     public User_UI(Stage stage) {
         super(stage);
         Scene scene = new Scene(allPane(), 1280, 960);
-        String stylrSheet = getClass().getResource("/Style/style.css").toExternalForm();
+        String stylrSheet = getClass().getResource("/style_css/style.css").toExternalForm();
         scene.getStylesheets().add(stylrSheet);
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);

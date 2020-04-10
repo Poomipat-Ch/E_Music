@@ -125,7 +125,7 @@ public class Login {
 
         scene1 = new Scene(borderPane, 720, 576);
 
-        scene1.getStylesheets().add(getClass().getResource("/Style/styleLogin.css").toExternalForm());
+        scene1.getStylesheets().add(getClass().getResource("/style_css/styleLogin.css").toExternalForm());
 
         stage.setScene(scene1);
         stage.setTitle("Spookify - Login/Register");
