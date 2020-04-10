@@ -15,9 +15,9 @@ import javafx.collections.transformation.FilteredList;
  */
 public class SearchSystem implements ChangeListener<String>{
     
-    FilteredList<UserAccount> filterData;
+    FilteredList<Song> filterData;
 
-    public SearchSystem(FilteredList<UserAccount> filterData) {
+    public SearchSystem(FilteredList<Song> filterData) {
         this.filterData = filterData;
     }
 
@@ -26,11 +26,11 @@ public class SearchSystem implements ChangeListener<String>{
     
    
 
-    public FilteredList<UserAccount> getFilterData() {
+    public FilteredList<Song> getFilterData() {
         return filterData;
     }
 
-    public void setFilterData(FilteredList<UserAccount> filterData) {
+    public void setFilterData(FilteredList<Song> filterData) {
         this.filterData = filterData;
     }
     
@@ -45,13 +45,13 @@ public class SearchSystem implements ChangeListener<String>{
                     String lowerCase = newValue.toLowerCase();
                     
                     
-                    if (user.getUserName().contains(newValue)) {
+                    if (user.getNameSong().contains(newValue)) {
                         return true;
                     }
-                    else if (user.getFirstName().toLowerCase().contains(lowerCase)) {
+                    else if (user.getArtistSong().toLowerCase().contains(lowerCase)) {
                         return true;
                     }
-                    else if (user.getLastName().toLowerCase().contains(lowerCase)){
+                    else if (user.getDetailSong().toLowerCase().contains(lowerCase)){
                         return true;
                     }
                     return false;

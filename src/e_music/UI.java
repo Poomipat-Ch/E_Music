@@ -8,6 +8,7 @@ package e_music;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -18,6 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  *
@@ -84,6 +86,10 @@ abstract public class UI {
             this.vbox.getChildren().add(mySongPane());
         });
         Button logOut = CreaButton("Logout");
+        logOut.setOnMouseClicked(e -> {
+            this.stage.close();
+            Login.stage.show();
+        });
         
         VBox bottomVBox = new VBox(logOut);
         bottomVBox.setAlignment(Pos.BOTTOM_CENTER);
