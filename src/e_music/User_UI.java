@@ -36,14 +36,6 @@ public class User_UI extends UI{
     SearchSystem searchSystemMyLibrary = new SearchSystem();
     public User_UI(Stage stage) {
         super(stage);
-        String s = "reasd";
-        
-        String aString = "reasd";
-        
-        String sas = "reasd";
-        
-        String sasdasd = "reasd";
-        
     }
 
     @Override
