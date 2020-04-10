@@ -3,10 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package e_music;
+package UI_music;
 
 
 
+import UI_music.UI;
+import Component_Music.SearchSystem;
+import Component_Music.Song;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;

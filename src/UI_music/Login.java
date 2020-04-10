@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package e_music;
+package UI_music;
 
+import Component_Music.Account;
+import Component_Music.AlertBox;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
