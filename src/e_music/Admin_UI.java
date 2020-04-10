@@ -13,14 +13,14 @@ public class Admin_UI {
     public double number;
     
     private String test = "Sirawit";
-    
-    
-    //1
-    //2
-    //3
-    //4
-    //5
-    //6
+//    asdasdasd
+//            asdasdasd
+//            as
+//                    d
+//                    asd
+//                            a
+//                            sd
+//                                    asd
     //This is a te[conflict test]st to commit-> push up stream and pull request to merge for 2nd time! 
     
 }
