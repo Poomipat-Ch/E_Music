@@ -7,6 +7,7 @@ package UI_music;
 
 import Component_Music.Account;
 import Component_Music.AlertBox;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -47,8 +48,8 @@ public class Login {
     Scene scene1;
     static Stage stage;
 
-    File user = new File("src/data/user.dat");
-    File admin = new File("src/data/admin.dat");
+    File user = new File("src/data/user.ini");
+    File admin = new File("src/data/admin.ini");
     
     ArrayList<Account> listAccount = new ArrayList<>();
 
