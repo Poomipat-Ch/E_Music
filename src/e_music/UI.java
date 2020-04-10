@@ -21,7 +21,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author poomi
+ * @author pop
  */
 abstract public class UI {
    
