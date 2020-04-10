@@ -1,3 +1,12 @@
-# E_Music
+# E_Music Project Final 
 
-Project Final eiei
+
+<h2>Objective</h2>
+<ul>
+    <li>Login</li>
+    <li>User UI</li>
+    <li>Admin UI</li>
+    <li>Database Music</li>
+    <li>Database User</li>
+    <li>Download Music</li>
+</ul>
