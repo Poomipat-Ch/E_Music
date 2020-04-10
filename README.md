@@ -3,10 +3,5 @@
 
 <h2>Objective</h2>
 <ul>
-    <li>Login</li>
-    <li>User UI</li>
-    <li>Admin UI</li>
-    <li>Database Music</li>
-    <li>Database User</li>
-    <li>Download Music</li>
+    <h3  style="text-decoration: line-through" >Login</h3>
 </ul>
