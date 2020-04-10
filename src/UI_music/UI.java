@@ -131,7 +131,7 @@ abstract public class UI {
     private Button exitButton(){
         
        Image exit_icon = new Image("/icon/close-512.png");
-       Image exit_hover_icon = new Image("/icon/close-512.png");
+       Image exit_hover_icon = new Image("/icon/close-512_hover.png");
        
        Button exit = new Button("",new ImageView(exit_icon));
        exit.setOnMouseEntered(e -> { 
@@ -153,7 +153,15 @@ abstract public class UI {
     
     private Button minimizeButton(){
         Image minimize_icon = new Image("/icon/minimize-window.png");
+        Image minimize_icon_hover_icon = new Image("/icon/minimize-window_hover.png");
+        
         Button minimize = new Button("",new ImageView(minimize_icon));
+       minimize.setOnMouseEntered(e -> { 
+           minimize.setGraphic(new ImageView(minimize_icon_hover_icon));
+       });
+       minimize.setOnMouseExited(e -> {
+           minimize.setGraphic(new ImageView(minimize_icon));
+       });
         
        minimize.setStyle("-fx-background-color : transparent;");
        minimize.setPadding(Insets.EMPTY);
