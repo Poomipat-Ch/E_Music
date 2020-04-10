@@ -10,8 +10,12 @@ package e_music;
  * @author Sirawit
  */
 public class Admin_UI {
-    private String name;
+    public double number;
     
-    //This is a test to commit-> push up stream and pull request to merge for 2nd time! 
+    private String test = "Sirawit";
+    
+    
+    
+    //This is a te[conflict test]st to commit-> push up stream and pull request to merge for 2nd time! 
     
 }
