@@ -1,3 +1,1 @@
-# E_Music
-
-Project Final eiei
+# E_Music Project Final 
