@@ -12,7 +12,7 @@ package UI_music;
 public class Admin_UI {
     public double number;
     
-    private String test = "Sirawit";
+    public double test = 2213.0;
 
     
     
