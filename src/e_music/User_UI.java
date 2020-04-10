@@ -32,8 +32,8 @@ import javafx.stage.Stage;
 public class User_UI extends UI{
     
    // SearchSystem searchSystem = new SearchSystem();
-    SearchSystem searchSystem = new SearchSystem();
-    SearchSystem mySearchSystem = new SearchSystem();
+    SearchSystem searchSystemMain = new SearchSystem();
+    SearchSystem searchSystemMyLibrary = new SearchSystem();
     public User_UI(Stage stage) {
         super(stage);
         
@@ -116,32 +116,28 @@ public class User_UI extends UI{
 //      });
       
       
-      // Create column UserName (Data type of String).
-      TableColumn<UserAccount, String> userNameCol //
-              = new TableColumn<>("Name Song");
+       // Create column UserName (Data type of String).
+      TableColumn<UserAccount, String> userNameCol = new TableColumn<>("Name Song");
+      userNameCol.setMinWidth(250);
 
  
       // Create column Email (Data type of String).
-      TableColumn<UserAccount, String> emailCol//
-              = new TableColumn<>("Artic");
+      TableColumn<UserAccount, String> emailCol = new TableColumn<>("Email");
+      emailCol.setMinWidth(200);
  
       // Create column FullName (Data type of String).
-      TableColumn<UserAccount, String> fullNameCol;
-        fullNameCol = new TableColumn<>("Full Name");
- 
+      TableColumn<UserAccount, String> fullNameCol = new TableColumn<>("Full Name");
+      
       // Create 2 sub column for FullName.
-      TableColumn<UserAccount, String> firstNameCol;
-        firstNameCol = new TableColumn<>("First Name");
+      TableColumn<UserAccount, String> firstNameCol = new TableColumn<>("First Name");
+      firstNameCol.setMinWidth(110);
  
-      TableColumn<UserAccount, String> lastNameCol //
-              = new TableColumn<>("Last Name");
+      TableColumn<UserAccount, String> lastNameCol = new TableColumn<>("Last Name");
+      lastNameCol.setMinWidth(110);
  
       // Add sub columns to the FullName
       fullNameCol.getColumns().addAll(firstNameCol, lastNameCol);
  
-      // Active Column
-      TableColumn<UserAccount, Boolean> activeCol//
-              = new TableColumn<>("Active");
  
       // Defines how to fill data for each cell.
       // Get value from property of UserAccount. .
@@ -149,7 +145,6 @@ public class User_UI extends UI{
       emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
       firstNameCol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
       lastNameCol.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-      activeCol.setCellValueFactory(new PropertyValueFactory<>("active"));
     
       // Set Sort type for userName column
       userNameCol.setSortType(TableColumn.SortType.DESCENDING);
@@ -158,13 +153,13 @@ public class User_UI extends UI{
       // Display row data
       ObservableList<UserAccount> list = UserAccount.getMusicList();
       FilteredList<UserAccount> filterData = new FilteredList<>(list, b -> true);
-      searchSystem.setFilterData(filterData);
+      searchSystemMain.setFilterData(filterData);
         
-      SortedList<UserAccount> sortedList = new SortedList<>(searchSystem.getFilterData());
+      SortedList<UserAccount> sortedList = new SortedList<>(searchSystemMain.getFilterData());
       sortedList.comparatorProperty().bind(table.comparatorProperty());
       table.setItems(sortedList);
  
-      table.getColumns().addAll(userNameCol, emailCol, fullNameCol, activeCol);
+      table.getColumns().addAll(userNameCol, emailCol, fullNameCol);
         
         
         anchorPane.getChildren().add(table);
@@ -192,31 +187,27 @@ public class User_UI extends UI{
       
       
       // Create column UserName (Data type of String).
-      TableColumn<UserAccount, String> userNameCol //
-              = new TableColumn<>("Name Song");
+      TableColumn<UserAccount, String> userNameCol = new TableColumn<>("Name Song");
+      userNameCol.setMinWidth(250);
 
  
       // Create column Email (Data type of String).
-      TableColumn<UserAccount, String> emailCol//
-              = new TableColumn<>("Artic");
+      TableColumn<UserAccount, String> emailCol = new TableColumn<>("Email");
+      emailCol.setMinWidth(200);
  
       // Create column FullName (Data type of String).
-      TableColumn<UserAccount, String> fullNameCol;
-        fullNameCol = new TableColumn<>("Full Name");
- 
+      TableColumn<UserAccount, String> fullNameCol = new TableColumn<>("Full Name");
+      
       // Create 2 sub column for FullName.
-      TableColumn<UserAccount, String> firstNameCol;
-        firstNameCol = new TableColumn<>("First Name");
+      TableColumn<UserAccount, String> firstNameCol = new TableColumn<>("First Name");
+      firstNameCol.setMinWidth(110);
  
-      TableColumn<UserAccount, String> lastNameCol //
-              = new TableColumn<>("Last Name");
+      TableColumn<UserAccount, String> lastNameCol = new TableColumn<>("Last Name");
+      lastNameCol.setMinWidth(110);
  
       // Add sub columns to the FullName
       fullNameCol.getColumns().addAll(firstNameCol, lastNameCol);
  
-      // Active Column
-      TableColumn<UserAccount, Boolean> activeCol//
-              = new TableColumn<>("Active");
  
       // Defines how to fill data for each cell.
       // Get value from property of UserAccount. .
@@ -224,7 +215,6 @@ public class User_UI extends UI{
       emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
       firstNameCol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
       lastNameCol.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-      activeCol.setCellValueFactory(new PropertyValueFactory<>("active"));
     
       // Set Sort type for userName column
       userNameCol.setSortType(TableColumn.SortType.DESCENDING);
@@ -234,14 +224,14 @@ public class User_UI extends UI{
       // Display row data
       ObservableList<UserAccount> list = UserAccount.getMyMusicList();
       FilteredList<UserAccount> filterData = new FilteredList<>(list, b -> true);
-      mySearchSystem.setFilterData(filterData);
+      searchSystemMyLibrary.setFilterData(filterData);
         
-      SortedList<UserAccount> sortedList = new SortedList<>(mySearchSystem.getFilterData());
+      SortedList<UserAccount> sortedList = new SortedList<>(searchSystemMyLibrary.getFilterData());
       sortedList.comparatorProperty().bind(table.comparatorProperty());
       table.setItems(sortedList);
       
  
-      table.getColumns().addAll(userNameCol, emailCol, fullNameCol, activeCol);
+      table.getColumns().addAll(userNameCol, emailCol, fullNameCol);
         
         
         
@@ -266,7 +256,7 @@ public class User_UI extends UI{
         searchButton.setMinSize(50, 30);
         HBox.setMargin(searchButton, new Insets(0,0,0,10));
         
-        searchTextField.textProperty().addListener(searchSystem);
+        searchTextField.textProperty().addListener(searchSystemMain);
         
         hBox.getChildren().addAll(searchTextField,searchButton);
         
@@ -289,7 +279,7 @@ public class User_UI extends UI{
         searchButton.setMinSize(50, 30);
         HBox.setMargin(searchButton, new Insets(0,0,0,10));
         
-        searchTextField.textProperty().addListener(mySearchSystem);
+        searchTextField.textProperty().addListener(searchSystemMyLibrary);
 
         hBox.getChildren().addAll(searchTextField,searchButton);
         
