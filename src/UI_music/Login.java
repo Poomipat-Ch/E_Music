@@ -267,11 +267,11 @@ public class Login {
                         || mailIn.getText().isBlank() || dateSet == false || question.equals(null) || answer.getText().isBlank()) {
                     AlertBox.displayAlert("Something went wrong", "Please check all the form.\nAnd make sure it was filled.");
                 } else {
-//                    try {
-//                        addAccount = readFile(user);
-//                    } catch (IOException | ClassNotFoundException ex) {
-//                        System.out.println("Register readFile " + ex);
-//                    }
+                    try {
+                        addAccount = readFile(user);
+                    } catch (IOException | ClassNotFoundException ex) {
+                        System.out.println("Register readFile " + ex);
+                    }
 
                     addAccount.add(new Account(nameIn.getText(), surnameIn.getText(), usernameIn.getText(), mailIn.getText(),
                             passIn.getText(), sexToggle.getSelectedToggle().toString(), dOB, question.getValue(), answer.getText(), false));
