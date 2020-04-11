@@ -71,7 +71,7 @@ public class Admin_UI extends UI{
     SearchSystem searchSystemMain = new SearchSystem();
     SearchSystemAccount searchAccount = new SearchSystemAccount();
 
-    TableView<Account> table = new TableView<>();
+    TableView<Account> table;
     
 
     public Admin_UI(Stage stage) {
@@ -165,7 +165,8 @@ public class Admin_UI extends UI{
         anchorPane.setMinSize(925, 500); //1030 - 300 - 60, 700
         anchorPane.setLayoutX(20);
         anchorPane.setLayoutY(150);
-
+        
+        table = new TableView<>();
         
         table.setEditable(true);
         table.setPrefSize(anchorPane.getMinWidth(), anchorPane.getMinHeight());
@@ -378,11 +379,22 @@ public class Admin_UI extends UI{
 
         //Select Gender
         Label sexText = new Label("Gender");
-        ToggleGroup sexToggle = new ToggleGroup(); //sexToggle.getItem
-        RadioButton male = new RadioButton("Male");
+        ToggleGroup sexToggle = new ToggleGroup(); //create radio button group
+        RadioButton male = new RadioButton("Male"); //create radio button
         RadioButton female = new RadioButton("Female");
-        male.setToggleGroup(sexToggle);
+        RadioButton otherRadio = new RadioButton("Not specify");
+        male.setToggleGroup(sexToggle); //Set radio button group
         female.setToggleGroup(sexToggle);
+        otherRadio.setToggleGroup(sexToggle);
+        sexToggle.selectToggle(male); // Set default = male
+        
+        Label adminText = new Label("Administrive");
+        ToggleGroup adminToggle = new ToggleGroup(); //create radio button group
+        RadioButton userRadio = new RadioButton("User"); //create radio button
+        RadioButton adminRadio = new RadioButton("Admin");
+        userRadio.setToggleGroup(adminToggle); //Set radio button group
+        adminRadio.setToggleGroup(adminToggle);
+        adminToggle.selectToggle(userRadio); // Set default = user
 
         //FORGOT QUESTION
         Label qText = new Label("Security Question");
@@ -397,12 +409,31 @@ public class Admin_UI extends UI{
         //FORGOT ANSWER
         TextField answer = new TextField();
         answer.setPromptText("Answer");
-        
-        
 
         Button ok = new Button("OK");
         ok.setOnAction(e -> {
             System.out.println("Checking information...");
+
+            String userGender = "";
+
+            //Check sex radioButton which is selected
+            if (male.isSelected()) {
+                userGender = "Male";
+            } else if (female.isSelected()) {
+                userGender = "Female";
+            } else {
+                userGender = "N/A";
+            }
+            
+            boolean isAdmin = false;
+
+            //Check admin radioButton which is selected
+            if (adminRadio.isSelected()) {
+                isAdmin = true;
+            } else if (userRadio.isSelected()) {
+                isAdmin = false;
+            }
+            ArrayList<Account> addAccount = new ArrayList<>();
 
 
             try {
@@ -421,59 +452,64 @@ public class Admin_UI extends UI{
                 }
             }
             if (uniqueID == false) {
-                AlertBox.displayAlert("Something went wrong", "Email / username is already exists.");
-            } //Check comfirm password
+                AlertBox.displayAlert("Something went wrong!", "Email / username is already exists.");
+            } //Check comfirm password is the same as password will call error password
             else if (passIn.getText().equals(cfPassIn.getText())) {
-                //Check Blank Field
+                //Check if it has Blank Field will call error blank field
                 if (nameIn.getText().isBlank() || passIn.getText().isBlank() || usernameIn.getText().isBlank()
                         || mailIn.getText().isBlank() || dateSet == false || question.equals(null) || answer.getText().isBlank()) {
-                    AlertBox.displayAlert("Something went wrong", "Please check all the form.\nAnd make sure it was filled.");
+                    AlertBox.displayAlert("Something went wrong!", "Please check all the form.\nAnd make sure it was filled.");
                 } else {
-                    try {
-                        addAccount = readFile(user);
-                    } catch (IOException | ClassNotFoundException ex) {
-                        System.out.println("Register readFile " + ex);
+                    //Check Date of Birth
+                    if (dOB.isAfter(LocalDate.now())) { // checkdate if user born after present
+                        System.out.println("User is come from the future.");
+                        AlertBox.displayAlert("Something went wrong!", "Please check a date field again.\n"
+                                + "Make sure that's your date of birth.");
                     }
+                    //Check email if it's not will call error email [ see function isEmail for more information]
+                    else if (!isEmail(mailIn.getText())) {
+                        AlertBox.displayAlert("Something went wrong!", "Please use another email.");
 
-                    addAccount.add(new Account(nameIn.getText(), surnameIn.getText(), usernameIn.getText(), mailIn.getText(),
-                            passIn.getText(), sexToggle.getSelectedToggle().toString(), dOB, question.getValue(), answer.getText(), false));
+                    } else {
+                        try {
+                            addAccount = readFile(user);
+                        } catch (IOException | ClassNotFoundException ex) {
+                            System.out.println("Register readFile " + ex);
+                        }
 
-                    try {
-                        writeFile(user, addAccount);
-                    } catch (IOException ex) {
-                        System.out.println("Register writeFile " + ex);
+                        addAccount.add(new Account(nameIn.getText(), surnameIn.getText(), usernameIn.getText(), mailIn.getText(),
+                                passIn.getText(), userGender, dOB, question.getValue(), answer.getText(), isAdmin));
+
+                        try {
+                            writeFile(user, addAccount);
+                            System.out.println("Saving account.");
+                        } catch (IOException ex) {
+                            System.out.println("Register writeFile " + ex);
+                        }
+                        try {
+                            listAccount = readFile(user);
+                        } catch (Exception ex) {
+                            System.out.println("Error: " + ex);
+                        }
+                        AlertBox.displayAlert("Register Complete", "Your account has been saved.\nTry to login now.");
+
+                        System.out.println("Registeraion Complete!\n");
+
+                        regisStage.close();
                     }
-                    try {
-                        listAccount = readFile(user);
-                    } catch (Exception ex) {
-                        System.out.println("Error: " + ex);
-                    }
-                    AlertBox.display("Register Complete", "Your account has been saved.\nTry to login now.");
-                    System.out.println("Saving account.");
-                    System.out.println("Registeraion Complete!\n");
-
-                    regisStage.close();
                 }
             } else {
-                System.out.println("Register Failed!\n");
-                nameIn.clear();
-                surnameIn.clear();
-                mailIn.clear();
-                passIn.clear();
-                cfPassIn.clear();
+                AlertBox.displayAlert("Something went wrong!", "Confirm password is not as same as password.");
             }
 
         });
+        
         Button cancel = new Button("Cancel");
         cancel.setOnAction(e -> {
             System.out.println("Canceling Registeration.");
             regisStage.close();
         });
-        
-        HBox adminRow = new HBox(20);
-        adminRow.getChildren().addAll(male, female);
-        adminRow.setAlignment(Pos.CENTER);
-        
+
         HBox row1 = new HBox(20); //Name Row
         row1.getChildren().addAll(nameIn, surnameIn);
         row1.setAlignment(Pos.CENTER);
@@ -481,28 +517,31 @@ public class Admin_UI extends UI{
         HBox row3 = new HBox(20);//Password Row
         row3.getChildren().addAll(passIn, cfPassIn);
         row3.setAlignment(Pos.CENTER);
-        
+
         Label title2 = new Label("Date of birth");
 
         HBox sexRow = new HBox(20);
-        sexRow.getChildren().addAll(male, female);
+        sexRow.getChildren().addAll(male, female, otherRadio);
         sexRow.setAlignment(Pos.CENTER);
+        
+        HBox adminRow = new HBox(20);
+        adminRow.getChildren().addAll(userRadio, adminRadio);
+        adminRow.setAlignment(Pos.CENTER);
 
         HBox row2 = new HBox(20); //Button Row
         row2.getChildren().addAll(ok, cancel);
         row2.setAlignment(Pos.CENTER);
 
-
         VBox column1 = new VBox(20);
         column1.setPadding(new Insets(10)); //add gap 10px
-        column1.getChildren().addAll(title, row1, usernameIn, mailIn, row3, title2, date, sexText, sexRow, qText, question, answer, row2);
+        column1.getChildren().addAll(title, adminRow, row1, usernameIn, mailIn, row3, title2, date, sexText, sexRow, qText, question, answer, row2);
         column1.setAlignment(Pos.CENTER);
         Scene regScene = new Scene(column1, 360, 600);
         regisStage.setScene(regScene);
         regisStage.setResizable(false);
         regisStage.setTitle("Registeration.");
         regisStage.showAndWait();
- 
+
     }
     
     //ReadFile Function from Registor
@@ -557,6 +596,14 @@ public class Admin_UI extends UI{
         
         writeFile(user, presentAccounts);
 
+    }
+    
+    //Verify email address bab easy
+    //.contains = have that string in email
+    //catch case dai pra marn nee
+    private boolean isEmail(String email) {
+        return email.contains("@") && email.contains(".") && !(email.contains(" ") || email.contains(";") || email.contains(",") || email.contains("..")
+                || email.length() <= 12 || email.length() > 64);
     }
     
 }
