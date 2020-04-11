@@ -39,16 +39,19 @@ public class User_UI extends UI{
    // SearchSystem searchSystem = new SearchSystem();
     SearchSystem searchSystemMain = new SearchSystem();
     SearchSystem searchSystemMyLibrary = new SearchSystem();
+    
+    //Constuctor
     public User_UI(Stage stage) {
         super(stage);
         Scene scene = new Scene(allPane(), 1280, 960);
-        String stylrSheet = getClass().getResource("/style_css/style.css").toExternalForm();
-        scene.getStylesheets().add(stylrSheet);
-        stage.initStyle(StageStyle.UNDECORATED);
+        String stylrSheet = getClass().getResource("/style_css/style.css").toExternalForm();    //CSS
+        scene.getStylesheets().add(stylrSheet);      //CSS
+        stage.initStyle(StageStyle.UNDECORATED);     //CSS
         stage.setScene(scene);
         stage.show();
     }
 
+    //ALL Song First Page
     @Override
     public AnchorPane allSongPane() {
        AnchorPane pane = new AnchorPane();
@@ -72,7 +75,8 @@ public class User_UI extends UI{
         return pane;
     }
     
-        @Override
+    //MY Song Second Page
+    @Override
     public AnchorPane mySongPane() {
        AnchorPane pane = new AnchorPane();
        pane.setMinHeight(760);
@@ -96,7 +100,7 @@ public class User_UI extends UI{
         return pane;
     }
     
-    
+    //Created Button
     private Button CreaButton(String text){
         Button downLoadButton = new Button(text);
         downLoadButton.getStyleClass().add("detailbtn");
@@ -107,66 +111,67 @@ public class User_UI extends UI{
         
     }
     
-    
+    //Table View All Song
     private AnchorPane tableMusic(){
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.setMinSize(1030-300-60, 700);
         anchorPane.setLayoutX(20);
         anchorPane.setLayoutY(100);
-        
 
-      TableView<Song> table = new TableView<>();
-      table.setEditable(true);
-      table.setMinSize(anchorPane.getMinWidth(), anchorPane.getMinHeight());
- 
-//      searchSystem.getTableView().setOnMouseClicked((event) -> {
-//        if(event.getButton().equals(MouseButton.PRIMARY)){
-//            System.out.println(table.getSelectionModel().getSelectedItem().getUserName());
-//        }
-//      });
-      
-      
-  // Create column UserName (Data type of String).
-      TableColumn<Song, String> NameCol = new TableColumn<>("Name Song");
-      NameCol.setMinWidth(250);
 
- 
-      // Create column Email (Data type of String).
-      TableColumn<Song, String> artistCol = new TableColumn<>("Artist");
-      artistCol.setMinWidth(200);
- 
-      // Create column FullName (Data type of String).
-      TableColumn<Song, String> detailCol = new TableColumn<>("Detail");
-      detailCol.setMinWidth(220);
- 
- 
-      // Defines how to fill data for each cell.
-      // Get value from property of UserAccount. .
-      NameCol.setCellValueFactory(new PropertyValueFactory<>("nameSong"));
-      artistCol.setCellValueFactory(new PropertyValueFactory<>("artistSong"));
-      detailCol.setCellValueFactory(new PropertyValueFactory<>("detailSong"));
-    
-      // Set Sort type for userName column
-      NameCol.setSortType(TableColumn.SortType.DESCENDING);
-      detailCol.setSortable(false);
- 
-      // Display row data
-      ObservableList<Song> list = Song.getMusicList();
-      FilteredList<Song> filterData = new FilteredList<>(list, b -> true);
-      searchSystemMain.setFilterData(filterData);
-        
-      SortedList<Song> sortedList = new SortedList<>(searchSystemMain.getFilterData());
-      sortedList.comparatorProperty().bind(table.comparatorProperty());
-      table.setItems(sortedList);
- 
-       table.getColumns().addAll(NameCol, artistCol, detailCol);
-        
-        
+        TableView<Song> table = new TableView<>();
+        table.setEditable(true);
+        table.setMinSize(anchorPane.getMinWidth(), anchorPane.getMinHeight());
+
+        //      searchSystem.getTableView().setOnMouseClicked((event) -> {
+        //        if(event.getButton().equals(MouseButton.PRIMARY)){
+        //            System.out.println(table.getSelectionModel().getSelectedItem().getUserName());
+        //        }
+        //      });
+
+
+        // Create column UserName (Data type of String).
+        TableColumn<Song, String> NameCol = new TableColumn<>("Name Song");
+        NameCol.setMinWidth(250);
+
+
+        // Create column Email (Data type of String).
+        TableColumn<Song, String> artistCol = new TableColumn<>("Artist");
+        artistCol.setMinWidth(200);
+
+        // Create column FullName (Data type of String).
+        TableColumn<Song, String> detailCol = new TableColumn<>("Detail");
+        detailCol.setMinWidth(220);
+
+
+        // Defines how to fill data for each cell.
+        // Get value from property of UserAccount. .
+        NameCol.setCellValueFactory(new PropertyValueFactory<>("nameSong"));
+        artistCol.setCellValueFactory(new PropertyValueFactory<>("artistSong"));
+        detailCol.setCellValueFactory(new PropertyValueFactory<>("detailSong"));
+
+        // Set Sort type for userName column
+        NameCol.setSortType(TableColumn.SortType.DESCENDING);
+        detailCol.setSortable(false);
+
+        // Display row data
+        ObservableList<Song> list = Song.getMusicList();
+        FilteredList<Song> filterData = new FilteredList<>(list, b -> true);
+        searchSystemMain.setFilterData(filterData);
+
+        SortedList<Song> sortedList = new SortedList<>(searchSystemMain.getFilterData());
+        sortedList.comparatorProperty().bind(table.comparatorProperty());
+        table.setItems(sortedList);
+
+        table.getColumns().addAll(NameCol, artistCol, detailCol);
+
+
         anchorPane.getChildren().add(table);
-        
+
         return anchorPane;
     }
     
+    //Table View My Song
     private AnchorPane tableMyMusic(){
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.setMinSize(1030-300-60, 700);
@@ -174,62 +179,60 @@ public class User_UI extends UI{
         anchorPane.setLayoutY(100);
         
         
+        TableView<Song> table = new TableView<>();
+        table.setEditable(true);
+        table.setMinSize(anchorPane.getMinWidth(), anchorPane.getMinHeight());
 
-      TableView<Song> table = new TableView<>();
-      table.setEditable(true);
-      table.setMinSize(anchorPane.getMinWidth(), anchorPane.getMinHeight());
- 
-      table.setOnMouseClicked((event) -> {
-        if(event.getButton().equals(MouseButton.PRIMARY)){
-            System.out.println(table.getSelectionModel().getSelectedItem().getNameSong());
-        }
-      });
+        table.setOnMouseClicked((event) -> {
+            if(event.getButton().equals(MouseButton.PRIMARY)){
+                System.out.println(table.getSelectionModel().getSelectedItem().getNameSong());
+            }
+        });
       
       
-      // Create column UserName (Data type of String).
-      TableColumn<Song, String> NameCol = new TableColumn<>("Name Song");
-      NameCol.setMinWidth(250);
+        // Create column UserName (Data type of String).
+        TableColumn<Song, String> NameCol = new TableColumn<>("Name Song");
+        NameCol.setMinWidth(250);
 
- 
-      // Create column Email (Data type of String).
-      TableColumn<Song, String> artistCol = new TableColumn<>("Artist");
-      artistCol.setMinWidth(200);
- 
-      // Create column FullName (Data type of String).
-      TableColumn<Song, String> detailCol = new TableColumn<>("Detail");
-      detailCol.setMinWidth(220);
- 
- 
-      // Defines how to fill data for each cell.
-      // Get value from property of UserAccount. .
-      NameCol.setCellValueFactory(new PropertyValueFactory<>("nameSong"));
-      artistCol.setCellValueFactory(new PropertyValueFactory<>("artistSong"));
-      detailCol.setCellValueFactory(new PropertyValueFactory<>("detailSong"));
-    
-      // Set Sort type for userName column
-      NameCol.setSortType(TableColumn.SortType.DESCENDING);
-      detailCol.setSortable(false);
-      
- 
-      // Display row data
-      ObservableList<Song> list = Song.getMyMusicList();
-      FilteredList<Song> filterData = new FilteredList<>(list, b -> true);
-      searchSystemMyLibrary.setFilterData(filterData);
-        
-      SortedList<Song> sortedList = new SortedList<>(searchSystemMyLibrary.getFilterData());
-      sortedList.comparatorProperty().bind(table.comparatorProperty());
-      table.setItems(sortedList);
-      
- 
-      table.getColumns().addAll(NameCol, artistCol, detailCol);
-        
-        
-        
+        // Create column Email (Data type of String).
+        TableColumn<Song, String> artistCol = new TableColumn<>("Artist");
+        artistCol.setMinWidth(200);
+
+        // Create column FullName (Data type of String).
+        TableColumn<Song, String> detailCol = new TableColumn<>("Detail");
+        detailCol.setMinWidth(220);
+
+
+        // Defines how to fill data for each cell.
+        // Get value from property of UserAccount. .
+        NameCol.setCellValueFactory(new PropertyValueFactory<>("nameSong"));
+        artistCol.setCellValueFactory(new PropertyValueFactory<>("artistSong"));
+        detailCol.setCellValueFactory(new PropertyValueFactory<>("detailSong"));
+
+        // Set Sort type for userName column
+        NameCol.setSortType(TableColumn.SortType.DESCENDING);
+        detailCol.setSortable(false);
+
+
+        // Display row data
+        ObservableList<Song> list = Song.getMyMusicList();
+        FilteredList<Song> filterData = new FilteredList<>(list, b -> true);
+        searchSystemMyLibrary.setFilterData(filterData);
+
+        SortedList<Song> sortedList = new SortedList<>(searchSystemMyLibrary.getFilterData());
+        sortedList.comparatorProperty().bind(table.comparatorProperty());
+        table.setItems(sortedList);
+
+
+        table.getColumns().addAll(NameCol, artistCol, detailCol); // All 3 Columns
+
+
         anchorPane.getChildren().addAll(table);
-        
+
         return anchorPane;
     }
     
+    //SearchBox AllSong
     @Override
     public HBox searchBoxAll(){
         HBox hBox = new HBox();
@@ -253,6 +256,7 @@ public class User_UI extends UI{
         return hBox;
     }
 
+    //SearchBox MySong
     @Override
     public HBox searchBoxMy(){
         HBox hBox = new HBox();

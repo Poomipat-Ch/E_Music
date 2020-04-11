@@ -55,7 +55,6 @@ public class Login {
     Account userAccount = new Account();
 
     public Login(Stage stage) throws FileNotFoundException, IOException {
-
         
         Login.stage = stage;
 
@@ -127,7 +126,7 @@ public class Login {
                 // AlertBox.display("Login Complete", "Go to main page.");
                 Login.stage.hide();
                 if (userAccount.getIsAdmin()) {
-                    //Admin_UI admin_UI = new Admin_UI(new Stage()); <-- EDIT HERE Mr.Sirawit
+                    Admin_UI admin_UI = new Admin_UI(new Stage()); 
                 } else {
                     User_UI user_UI = new User_UI(new Stage());
                 }
@@ -267,15 +266,15 @@ public class Login {
                         || mailIn.getText().isBlank() || dateSet == false || question.equals(null) || answer.getText().isBlank()) {
                     AlertBox.displayAlert("Something went wrong", "Please check all the form.\nAnd make sure it was filled.");
                 } else {
-//                    try {
-//                        addAccount = readFile(user);
-//                    } catch (IOException | ClassNotFoundException ex) {
-//                        System.out.println("Register readFile " + ex);
-//                    }
+                    try {
+                        addAccount = readFile(user);
+                    } catch (IOException | ClassNotFoundException ex) {
+                        System.out.println("Register readFile " + ex);
+                    }
 
                     addAccount.add(new Account(nameIn.getText(), surnameIn.getText(), usernameIn.getText(), mailIn.getText(),
                             passIn.getText(), sexToggle.getSelectedToggle().toString(), dOB, question.getValue(), answer.getText(), false));
-
+                    
                     try {
                         writeFile(user, addAccount);
                     } catch (IOException ex) {
