@@ -328,6 +328,7 @@ public class Login {
 
 
         VBox column1 = new VBox(20);
+        column1.setPadding(new Insets(10)); //add gap 10px
         column1.getChildren().addAll(title, row1, usernameIn, mailIn, row3, title2, date, sexText, sexRow, qText, question, answer, row2);
         column1.setAlignment(Pos.CENTER);
         Scene regScene = new Scene(column1, 360, 600);
