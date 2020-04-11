@@ -81,7 +81,7 @@ public class Account implements Serializable {
 
     @Override
     public String toString() {
-        return "Account{" + "username=" + email + ", password=" + password + ", answer=" + answer + '}';
+        return "Account{" + "username=" + username + ", password=" + password + ", answer=" + answer + '}';
     }
 
     public String getName() {
