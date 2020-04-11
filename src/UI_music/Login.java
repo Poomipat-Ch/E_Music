@@ -56,8 +56,12 @@ public class Login {
     ArrayList<Account> addAccount = new ArrayList<>();
 
     public Login(Stage stage) throws FileNotFoundException, IOException {
-
         
+//**READ THIS***** This save in user.dat file, if you can't run admin, try run this code only once and comment again
+
+//        listAccount.add(new Account("admin", "admin", "admin", "admin@gmail.com", "admin", null, null, null, null, true));
+//        writeFile(user, listAccount); 
+
         Login.stage = stage;
 
         Label title1 = new Label("Sign in");
@@ -128,7 +132,7 @@ public class Login {
                 // AlertBox.display("Login Complete", "Go to main page.");
                 Login.stage.hide();
                 if (userAccount.getIsAdmin()) {
-                    //Admin_UI admin_UI = new Admin_UI(new Stage()); <-- EDIT HERE Mr.Sirawit
+                    Admin_UI admin_UI = new Admin_UI(new Stage()); // <-- EDIT HERE Mr.Sirawit
                 } else {
                     User_UI user_UI = new User_UI(new Stage());
                 }
