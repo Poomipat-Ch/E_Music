@@ -5,8 +5,16 @@
  */
 package Component_Music;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -23,6 +31,8 @@ public class Account implements Serializable {
     private String answer;
     private LocalDate dateOfBirth;
     private boolean isAdmin;
+    
+    private static File user = new File("src/data/user.dat");
     
     public Account() {
     }
@@ -94,7 +104,25 @@ public class Account implements Serializable {
         return gender;
     }
     
+    /**
+     *
+     * @return
+     * @throws FileNotFoundException
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    public static ObservableList<Account> getAccountList() throws FileNotFoundException, IOException, ClassNotFoundException{
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream(user));
+ 
+        ObservableList list = FXCollections.observableArrayList();
+        
+        for (Account account : (ArrayList<Account>)in.readObject()) {
+            list.add(account);
+        }
     
+  
+        return list;
+    }
     
     
 }

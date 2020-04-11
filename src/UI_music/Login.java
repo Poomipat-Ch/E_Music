@@ -18,15 +18,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -57,8 +53,16 @@ public class Login {
 
     ArrayList<Account> listAccount = new ArrayList<>();
     Account userAccount = new Account();
+    ArrayList<Account> addAccount = new ArrayList<>();
 
     public Login(Stage stage) throws FileNotFoundException, IOException {
+
+        
+//**READ THIS***** This save in user.dat file, if you can't run admin, try run this code only once and comment again
+
+//        listAccount.add(new Account("admin", "admin", "admin", "admin@gmail.com", "admin", null, null, null, null, true));
+//        writeFile(user, listAccount); 
+
 
         Login.stage = stage;
 
@@ -126,7 +130,7 @@ public class Login {
                 // AlertBox.display("Login Complete", "Go to main page.");
                 Login.stage.hide();
                 if (userAccount.getIsAdmin()) {
-                    //Admin_UI admin_UI = new Admin_UI(new Stage()); <-- EDIT HERE Mr.Sirawit
+                    Admin_UI admin_UI = new Admin_UI(new Stage()); // <-- EDIT HERE Mr.Sirawit
                 } else {
                     User_UI user_UI = new User_UI(new Stage());
                 }
@@ -241,6 +245,7 @@ public class Login {
         Button ok = new Button("OK");
         ok.setOnAction(e -> {
             System.out.println("Checking information...");
+
             String userGender = "";
 
             //Check sex radioButton which is selected
@@ -252,6 +257,7 @@ public class Login {
                 userGender = "N/A";
             }
             ArrayList<Account> addAccount = new ArrayList<>();
+
 
             try {
                 listAccount = readFile(user);
@@ -345,6 +351,7 @@ public class Login {
         row2.setAlignment(Pos.CENTER);
 
         VBox column1 = new VBox(20);
+        column1.setPadding(new Insets(10)); //add gap 10px
         column1.getChildren().addAll(title, row1, usernameIn, mailIn, row3, title2, date, sexText, sexRow, qText, question, answer, row2);
         column1.setAlignment(Pos.CENTER);
         Scene regScene = new Scene(column1, 360, 600);

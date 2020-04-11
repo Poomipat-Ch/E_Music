@@ -47,35 +47,35 @@ public class Song {
     
     public static ObservableList<Song> getMyMusicList(){
         ObservableList list = FXCollections.observableArrayList(
-                new Song("asdasd", "3.15s", "Poom"),
-                new Song("asdzzzasd", "3.15s", "pop"),
-                new Song("asdasqqqd", "3.15s", "gut"),
-                new Song("asdasdasd", "3.15s", "font"),
-                new Song("asdahhsd", "3.15s", "rarch"),
-                new Song("asdasd", "3.15s", "Poom"),
-                new Song("das", "3.15s", "Poom"),
-                new Song("aszzxdasd", "3.15s", "Poom"),
-                new Song("aertweasd", "3.15s", "Poom"),
-                new Song("asxcasdasd", "3.15s", "Poom"),
-                new Song("aasdsdasd", "3.15s", "Poom")
+                new Song("A", "3.15s", "Bodyslam"),
+                new Song("B", "3.15s", "Bodyslam"),
+                new Song("C", "3.15s", "Bodyslam"),
+                new Song("D", "3.15s", "Bodyslam"),
+                new Song("X", "3.15s", "Paradox"),
+                new Song("Y", "3.15s", "Paradox"),
+                new Song("Z", "3.15s", "Paradox"),
+                new Song("W", "3.15s", "Paradox"),
+                new Song("I", "3.15s", "BigAss"),
+                new Song("J", "3.15s", "BigAss"),
+                new Song("K", "3.15s", "BigAss")
                 
         );
         return list;
     }
     
-        public static ObservableList<Song> getMusicList(){
+    public static ObservableList<Song> getMusicList(){
         ObservableList list = FXCollections.observableArrayList(
-                new Song("asdasd", "3.15s", "Poom"),
-                new Song("asdzzzasd", "3.15s", "pop"),
-                new Song("asdasqqqd", "3.15s", "gut"),
-                new Song("asdasdasd", "3.15s", "font"),
-                new Song("asdahhsd", "3.15s", "rarch"),
-                new Song("asdasd", "3.15s", "Poom"),
-                new Song("das", "3.15s", "Poom"),
-                new Song("aszzxdasd", "3.15s", "Poom"),
-                new Song("aertweasd", "3.15s", "Poom"),
-                new Song("asxcasdasd", "3.15s", "Poom"),
-                new Song("aasdsdasd", "3.15s", "Poom")
+                new Song("A", "3.15s", "Bodyslam"),
+                new Song("B", "3.15s", "Bodyslam"),
+                new Song("C", "3.15s", "Bodyslam"),
+                new Song("D", "3.15s", "Bodyslam"),
+                new Song("X", "3.15s", "Paradox"),
+                new Song("Y", "3.15s", "Paradox"),
+                new Song("Z", "3.15s", "Paradox"),
+                new Song("W", "3.15s", "Paradox"),
+                new Song("I", "3.15s", "BigAss"),
+                new Song("J", "3.15s", "BigAss"),
+                new Song("K", "3.15s", "BigAss")
                 
         );
         return list;
