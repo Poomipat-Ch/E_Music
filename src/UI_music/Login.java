@@ -53,6 +53,7 @@ public class Login {
 
     ArrayList<Account> listAccount = new ArrayList<>();
     Account userAccount = new Account();
+    ArrayList<Account> addAccount = new ArrayList<>();
 
     public Login(Stage stage) throws FileNotFoundException, IOException {
 
@@ -241,7 +242,7 @@ public class Login {
         Button ok = new Button("OK");
         ok.setOnAction(e -> {
             System.out.println("Checking information...");
-            ArrayList<Account> addAccount = new ArrayList<>();
+
 
             try {
                 listAccount = readFile(user);

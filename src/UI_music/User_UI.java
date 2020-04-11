@@ -23,6 +23,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -53,22 +54,22 @@ public class User_UI extends UI {
     public AnchorPane allSongPane() {
         AnchorPane pane = new AnchorPane();
 
-        pane.setMinHeight(760);
-        pane.setMaxHeight(Double.MAX_VALUE);
-        pane.getStyleClass().add("bg-2");
-        AnchorPane img = new AnchorPane();
-        img.setPrefSize(300, 400);
-        img.setLayoutX(1030 - 300 - 20);
-        img.setLayoutY(20);
-        Image imageAll = new Image("/image/Music_pic.jpg");
-        ImageView imgAll = new ImageView(imageAll);
-        img.getChildren().add(imgAll);
+//        pane.setMinHeight(760);
+//        pane.setMaxHeight(Double.MAX_VALUE);
+//        pane.getStyleClass().add("bg-2");
+//        AnchorPane img = new AnchorPane();
+//        img.setPrefSize(300, 400);
+//        img.setLayoutX(1030 - 300 - 20);
+//        img.setLayoutY(20);
+//        Image imageAll = new Image("/image/Music_pic.jpg");
+//        ImageView imgAll = new ImageView(imageAll);
+//        img.getChildren().add(imgAll);
+//
+//        Button priceButton = CreaButton("Buy");
+//        priceButton.setLayoutX(1030 - 250 - 20);
+//        priceButton.setLayoutY(420 + 20);
 
-        Button priceButton = CreaButton("Buy");
-        priceButton.setLayoutX(1030 - 250 - 20);
-        priceButton.setLayoutY(420 + 20);
-
-        pane.getChildren().addAll(img, priceButton, AllSong(), searchBoxAll());
+        pane.getChildren().addAll(AllSong());
 
         return pane;
     }
@@ -278,7 +279,7 @@ public class User_UI extends UI {
         scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.ALWAYS);
         
         scrollPane.setPadding(new Insets(20, 20, 20, 20));
-        scrollPane.setStyle("-fx-background-color: #e9967a");
+        scrollPane.setBackground(Background.EMPTY);
         
         ImageView imageView;
         
@@ -296,6 +297,12 @@ public class User_UI extends UI {
                 imageView = new ImageView(new Image("/image/" + k +".jpg"));
                 imageView.setFitHeight(160); 
                 imageView.setFitWidth(120); 
+                
+                Button buyButton = new Button("Buy");
+                buyButton.setOnMouseClicked(e ->{
+                    // Buy fuction wait ->  gut nehee
+                });
+                
                 vbox.getChildren().addAll(imageView, new Text("Wahn Goey Dteun"), new Text("ARTIST : GUNGUN"));
                 vbox.setAlignment(Pos.CENTER);
                 hbox.getChildren().addAll(vbox);
@@ -305,7 +312,11 @@ public class User_UI extends UI {
         }
         
         totalbox.setAlignment(Pos.CENTER);
-        scrollPane.setContent(totalbox);
+        VBox totalPane = new VBox();
+        totalPane.getChildren().addAll(searchBoxAll(),totalbox);
+        
+        
+        scrollPane.setContent(totalPane);
         
         return scrollPane;
     }
