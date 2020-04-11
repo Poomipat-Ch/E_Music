@@ -58,3 +58,8 @@
 .detailbtn:pressed{
      -fx-background-color: #0c7b93;
 }
+
+.titleAdmin{
+    -fx-font-size: 60px;
+    -fx-text-fill: white;
+}

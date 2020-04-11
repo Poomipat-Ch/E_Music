@@ -42,7 +42,21 @@ abstract public class UI {
        
        return borderPane;
    }
-           VBox vbox = new VBox();
+   
+   public BorderPane allPane2(){
+       BorderPane borderPane = new BorderPane();
+       borderPane.getStyleClass().add("bg-border");
+       
+       
+       borderPane.setLeft(menu2());
+       borderPane.setCenter(mainBox());
+      
+      
+       
+       return borderPane;
+   }
+   
+    VBox vbox = new VBox();
     private VBox mainBox(){
 
         vbox.getStyleClass().add("mainBox");
@@ -100,6 +114,43 @@ abstract public class UI {
         return vBox;
     }
     
+    private VBox menu2(){
+        VBox vBox = new VBox();
+        vBox.getStyleClass().add("menu");
+        vBox.setMaxWidth(200);
+        vBox.setPadding(Insets.EMPTY);
+        
+        Label logoLabel = new Label("E-Music");
+        logoLabel.getStyleClass().add("logoName");
+        logoLabel.setMinWidth(250);
+        logoLabel.setAlignment(Pos.CENTER);
+        
+        Button main = CreaButton("All Song");
+        main.setOnMouseClicked(e -> {
+            this.vbox.getChildren().remove(1);
+            this.vbox.getChildren().add(allSongPane());
+        });
+        Button myLibrary = CreaButton("All Account");
+        myLibrary.setOnMouseClicked(e -> {
+            this.vbox.getChildren().remove(1);
+            this.vbox.getChildren().add(mySongPane());
+        });
+        Button logOut = CreaButton("Logout");
+        logOut.setOnMouseClicked(e -> {
+            this.stage.close();
+            Login.stage.show();
+        });
+        
+        VBox bottomVBox = new VBox(logOut);
+        bottomVBox.setAlignment(Pos.BOTTOM_CENTER);
+        VBox.setVgrow(bottomVBox, Priority.ALWAYS);
+        
+        
+        vBox.getChildren().addAll(logoLabel,main,myLibrary,bottomVBox);
+        
+        
+        return vBox;
+    }
     
     
     double mouse_x = 0,mouse_y = 0; // position mouse
