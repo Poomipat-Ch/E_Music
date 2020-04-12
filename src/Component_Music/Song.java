@@ -47,17 +47,18 @@ public class Song {
     
     public static ObservableList<Song> getMyMusicList(){
         ObservableList list = FXCollections.observableArrayList(
-                new Song("A", "3.15s", "Bodyslam"),
-                new Song("B", "3.15s", "Bodyslam"),
-                new Song("C", "3.15s", "Bodyslam"),
-                new Song("D", "3.15s", "Bodyslam"),
-                new Song("X", "3.15s", "Paradox"),
-                new Song("Y", "3.15s", "Paradox"),
-                new Song("Z", "3.15s", "Paradox"),
-                new Song("W", "3.15s", "Paradox"),
-                new Song("I", "3.15s", "BigAss"),
-                new Song("J", "3.15s", "BigAss"),
-                new Song("K", "3.15s", "BigAss")
+                new Song("Maps", "3.10s", "Maroon 5"),
+                new Song("Sugar", "3.30s", "Maroon 5"),
+                new Song("Payphone", "4.05s", "Maroon 5"),
+                new Song("One More Night", "3.05s", "Maroon 5"),
+                new Song("Natural Birds ", "3.15s", "Imagine Dragons"),
+                new Song("Thunder", "3.20s", "Imagine Dragons"),
+                new Song("I Bet My Life", "3.08s", "Imagine Dragons"),
+                new Song("Radioactive", "3.30s", "Imagine Dragons"),
+                new Song("The Scientist", "3.17s", "Coldplay"),
+                new Song("Paradise", "4.15s", "Coldplay"),
+                new Song("Yellow", "3.15s", "Coldplay"),
+                new Song("Everyday Life", "3.16s", "Coldplay")
                 
         );
         return list;
@@ -65,17 +66,18 @@ public class Song {
     
     public static ObservableList<Song> getMusicList(){
         ObservableList list = FXCollections.observableArrayList(
-                new Song("A", "3.15s", "Bodyslam"),
-                new Song("B", "3.15s", "Bodyslam"),
-                new Song("C", "3.15s", "Bodyslam"),
-                new Song("D", "3.15s", "Bodyslam"),
-                new Song("X", "3.15s", "Paradox"),
-                new Song("Y", "3.15s", "Paradox"),
-                new Song("Z", "3.15s", "Paradox"),
-                new Song("W", "3.15s", "Paradox"),
-                new Song("I", "3.15s", "BigAss"),
-                new Song("J", "3.15s", "BigAss"),
-                new Song("K", "3.15s", "BigAss")
+                new Song("Maps", "3.10s", "Maroon 5"),
+                new Song("Sugar", "3.30s", "Maroon 5"),
+                new Song("Payphone", "4.05s", "Maroon 5"),
+                new Song("One More Night", "3.05s", "Maroon 5"),
+                new Song("Natural Birds ", "3.15s", "Imagine Dragons"),
+                new Song("Thunder", "3.20s", "Imagine Dragons"),
+                new Song("I Bet My Life", "3.08s", "Imagine Dragons"),
+                new Song("Radioactive", "3.30s", "Imagine Dragons"),
+                new Song("The Scientist", "3.17s", "Coldplay"),
+                new Song("Paradise", "4.15s", "Coldplay"),
+                new Song("Yellow", "3.15s", "Coldplay"),
+                new Song("Everyday Life", "3.16s", "Coldplay")
                 
         );
         return list;

@@ -50,7 +50,7 @@ abstract public class UI {
        
        borderPane.setLeft(menu2());
        borderPane.setCenter(mainBox());
-      
+       
       
        
        return borderPane;
