@@ -43,7 +43,7 @@ public class User_UI extends UI {
     // SearchSystem searchSystem = new SearchSystem();
     SearchSystem searchSystemMain = new SearchSystem();
     SearchSystem searchSystemMyLibrary = new SearchSystem();
-    
+    String nameSongFromTable;
     Account userAccount;
 
     public User_UI(Stage stage, Account userAccount) {
@@ -82,6 +82,7 @@ public class User_UI extends UI {
         img.getChildren().add(imgMy);
 
         Button downloadBtn = CreaButton("Download");
+        
         downloadBtn.setLayoutX(1030 - 250 - 20);
         downloadBtn.setLayoutY(420 + 20);
 
@@ -89,6 +90,7 @@ public class User_UI extends UI {
 
         return pane;
     }
+    
 
     private Button CreaButton(String text) {
         Button downLoadButton = new Button(text);
@@ -98,6 +100,7 @@ public class User_UI extends UI {
         return downLoadButton;
 
     }
+    
 
     private AnchorPane tableMyMusic() {
         AnchorPane anchorPane = new AnchorPane();
@@ -110,9 +113,10 @@ public class User_UI extends UI {
         table.setMinSize(anchorPane.getMinWidth(), anchorPane.getMinHeight());
 
         table.setOnMouseClicked((event) -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                System.out.println(table.getSelectionModel().getSelectedItem().getNameSong());
-            }
+//            if (event.getButton().equals(MouseButton.PRIMARY)) {
+//                System.out.println(table.getSelectionModel().getSelectedItem().getNameSong());
+//            }
+            nameSongFromTable = table.getSelectionModel().getSelectedItem().getNameSong();
         });
 
         // Create column UserName (Data type of String).
