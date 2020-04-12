@@ -5,6 +5,7 @@
  */
 package Component_Music;
 
+import UI_music.User_UI;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.transformation.FilteredList;
@@ -16,6 +17,7 @@ import javafx.collections.transformation.FilteredList;
 public class SearchSystem implements ChangeListener<String>{
     
     FilteredList<Song> filterData;
+    
 
     public SearchSystem(FilteredList<Song> filterData) {
         this.filterData = filterData;
@@ -58,7 +60,7 @@ public class SearchSystem implements ChangeListener<String>{
                 });
     }
 
-
+    
         
     
 }
