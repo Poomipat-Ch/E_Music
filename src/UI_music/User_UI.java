@@ -24,7 +24,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -116,7 +115,8 @@ public class User_UI extends UI {
 //            if (event.getButton().equals(MouseButton.PRIMARY)) {
 //                System.out.println(table.getSelectionModel().getSelectedItem().getNameSong());
 //            }
-            nameSongFromTable = table.getSelectionModel().getSelectedItem().getNameSong();
+            nameSongFromTable = table.getSelectionModel().getSelectedItem().getNameSong() + 
+                    table.getSelectionModel().getSelectedItem().getArtistSong() + table.getSelectionModel().getSelectedItem().getDetailSong();
         });
 
         // Create column UserName (Data type of String).
