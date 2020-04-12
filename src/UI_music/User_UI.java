@@ -9,6 +9,10 @@ import Component_Music.Account;
 import Component_Music.AlertBox;
 import Component_Music.SearchSystem;
 import Component_Music.Song;
+import Component_Music.MusicFunc;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -24,12 +28,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -42,7 +48,11 @@ public class User_UI extends UI {
     // SearchSystem searchSystem = new SearchSystem();
     SearchSystem searchSystemMain = new SearchSystem();
     SearchSystem searchSystemMyLibrary = new SearchSystem();
-    String nameSongFromTable;
+    MusicFunc nameSongFromTable = new MusicFunc();
+    
+    // Create File for downloader
+    File fileForDownload = new File(""+"*.mp3");
+    
     Account userAccount;
 
     public User_UI(Stage stage, Account userAccount) {
@@ -85,6 +95,13 @@ public class User_UI extends UI {
         downloadBtn.setLayoutX(1030 - 250 - 20);
         downloadBtn.setLayoutY(420 + 20);
 
+        //Download Button action
+        downloadBtn.setOnMouseClicked((event) -> {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                nameSongFromTable.downloader();
+            }
+        });
+        
         pane.getChildren().addAll(img, downloadBtn, tableMyMusic(), searchBoxMy());
 
         return pane;
@@ -95,7 +112,6 @@ public class User_UI extends UI {
         Button downLoadButton = new Button(text);
         downLoadButton.getStyleClass().add("detailbtn");
         downLoadButton.setMinSize(200, 50);
-
         return downLoadButton;
 
     }
@@ -112,11 +128,10 @@ public class User_UI extends UI {
         table.setMinSize(anchorPane.getMinWidth(), anchorPane.getMinHeight());
 
         table.setOnMouseClicked((event) -> {
-//            if (event.getButton().equals(MouseButton.PRIMARY)) {
-//                System.out.println(table.getSelectionModel().getSelectedItem().getNameSong());
-//            }
-            nameSongFromTable = table.getSelectionModel().getSelectedItem().getNameSong() + 
-                    table.getSelectionModel().getSelectedItem().getArtistSong() + table.getSelectionModel().getSelectedItem().getDetailSong();
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                System.out.println(table.getSelectionModel().getSelectedItem().getNameSong());
+                fileForDownload = new File(table.getSelectionModel().getSelectedItem().getNameSong()+table.getSelectionModel().getSelectedItem().getArtistSong()+table.getSelectionModel().getSelectedItem().getDetailSong()+".mp3");
+            }
         });
 
         // Create column UserName (Data type of String).
@@ -332,4 +347,21 @@ public class User_UI extends UI {
         return mainPane;
     }
 
+    public void downloader() {
+
+        System.out.println("Download");
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("MP3 Files", "*.mp3"));
+        File downloadFile = fileChooser.showSaveDialog(null);
+        
+        if (downloadFile != null) {
+            try {
+                Files.copy(fileForDownload.toPath(), downloadFile.toPath());
+            } catch (IOException ex) {
+                System.out.println("DownloadFile" + ex);
+            }
+        }
+
+    }
+    
 }
