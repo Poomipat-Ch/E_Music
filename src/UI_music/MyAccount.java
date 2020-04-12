@@ -15,8 +15,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -34,7 +37,7 @@ import javafx.scene.text.Text;
  */
 public class MyAccount {
 
-    BorderPane editPane = new BorderPane();
+    BorderPane profilePane = new BorderPane();
     BorderPane changePane = new BorderPane();
     
     File user = new File("src/data/user.dat");
@@ -66,8 +69,59 @@ public class MyAccount {
     boolean changeStatus = false;
     
     public MyAccount(Account myAccount) {
+        this.showAccount(myAccount);
+    }
+
+    public BorderPane getProfilePane() {
+        return profilePane;
+    }
+    public void showAccount(Account myAccount) {
         this.myAccount = myAccount;
+        editBox.getChildren().clear();
+                
+            VBox row = new VBox(10);
+            row.getChildren().addAll(new Text("Username : \t"), new Label(myAccount.getUsername()));
+            
         
+            HBox row2 = new HBox(10);
+            row2.getChildren().addAll(new Text("Name : "), new Label(myAccount.getName()), new Label(myAccount.getSurname()));
+        
+            HBox row3 = new HBox(5);
+            row3.getChildren().addAll(new Text("Last Name : \t\t\t    "),new Label(myAccount.getSurname()));
+        
+            VBox row5 = new VBox(10);
+            row5.getChildren().addAll(new Text("Email : \t\t"), new Label(myAccount.getEmail()));
+            
+            HBox row7 = new HBox(10);
+            DatePicker date = new DatePicker();
+            dOB = myAccount.getDateOfBirth();
+            date.setValue(dOB);
+            row7.getChildren().addAll(new Text("Date of Birth : "), new Label(dOB.format(DateTimeFormatter.ISO_DATE)));
+        
+            HBox row9 = new HBox(10);
+            row9.getChildren().addAll(new Label("Gender : "), new Label(myAccount.getGender()));
+            
+            //Blank line
+            HBox row1 = new HBox(10);
+            row1.getChildren().add(new Text(" "));
+            HBox row4 = new HBox(10);
+            row4.getChildren().add(new Text(" "));
+            HBox row6 = new HBox(10);
+            row6.getChildren().add(new Text(" "));
+            HBox row8 = new HBox(10);
+            row8.getChildren().add(new Text(" "));
+            HBox row10 = new HBox(10);
+            row10.getChildren().add(new Text(" "));
+            HBox row12 = new HBox(10);      
+        
+        editBox.getChildren().addAll(row, row1, row2, row4, row5, row6, row7, row8,row9, row10);        
+        editBox.setPadding(new Insets(50, 50, 50, 50));
+        
+        profilePane.setStyle("-fx-background-color: #f5deb3");
+        profilePane.setCenter(editBox);
+    }
+    
+    public void editAccount() {
         username.setPromptText("Usrname");
         username.setText(this.myAccount.getUsername());
         username.setMaxWidth(300);
@@ -170,14 +224,11 @@ public class MyAccount {
                     changeStatus = true;
             });
             
-        
+        editBox.getChildren().clear();
         editBox.getChildren().addAll(row, row1, row2, row3, row4, row5, row6, row7, row8,row9, row10,row11, row12, changePassword);        
         editBox.setPadding(new Insets(50, 50, 50, 50));
-        editBox.setStyle("-fx-background-color: #f5deb3");
-    }
-
-    public VBox getEditBox() {
-        return editBox;
+        profilePane.setStyle("-fx-background-color: #f5deb3");
+        profilePane.setCenter(editBox);
     }
     
     public boolean saveAccount() {
@@ -193,7 +244,6 @@ public class MyAccount {
             } else {
                 userGender = "N/A";
             }
-            ArrayList<Account> addAccount = new ArrayList<>();
         
         try {
             listAccount = readFile(user);
@@ -202,7 +252,6 @@ public class MyAccount {
         }
         
         boolean uniqueID = true;
-            //Check already username / email
             for (Account account : listAccount) {
                 String userId = username.getText(), emailID = email.getText();
                 String chkUser = account.getUsername(), chkEmail = account.getEmail();
@@ -213,20 +262,17 @@ public class MyAccount {
             }
             if (uniqueID == false) {
                 AlertBox.displayAlert("Something went wrong!", "Email / username is already exists.");
-            } //Check comfirm password is the same as password will call error password
+            }
             else if (currentPassword.getText().equals(myAccount.getPassword()) && password.getText().equals(passwordConfirm.getText())) {
-                //Check if it has Blank Field will call error blank field
                 if (firstname.getText().isBlank() || lastname.getText().isBlank() || username.getText().isBlank()
                         || email.getText().isBlank() ) {
                     AlertBox.displayAlert("Something went wrong!", "Please check all the form.\nAnd make sure it was filled.");
                 } else {
-                    //Check Date of Birth
-                    if (dOB.isAfter(LocalDate.now())) { // checkdate if user born after present
+                    if (dOB.isAfter(LocalDate.now())) {
                         System.out.println("User is come from the future.");
                         AlertBox.displayAlert("Something went wrong!", "Please check a date field again.\n"
                                 + "Make sure that's your date of birth.");
                     }
-                    //Check email if it's not will call error email [ see function isEmail for more information]
                     else if (!isEmail(email.getText())) {
                         AlertBox.displayAlert("Something went wrong!", "Please use another email.");
 
