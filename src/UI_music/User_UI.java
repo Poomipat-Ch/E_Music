@@ -5,6 +5,8 @@
  */
 package UI_music;
 
+import Component_Music.Account;
+import Component_Music.AlertBox;
 import Component_Music.SearchSystem;
 import Component_Music.Song;
 import javafx.collections.ObservableList;
@@ -24,9 +26,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -39,9 +44,13 @@ public class User_UI extends UI {
     // SearchSystem searchSystem = new SearchSystem();
     SearchSystem searchSystemMain = new SearchSystem();
     SearchSystem searchSystemMyLibrary = new SearchSystem();
+    
+    Account userAccount;
 
-    public User_UI(Stage stage) {
+    public User_UI(Stage stage, Account userAccount) {
         super(stage);
+        this.userAccount = userAccount;
+        
         Scene scene = new Scene(allPane(), 1280, 960);
         String stylrSheet = getClass().getResource("/style_css/style.css").toExternalForm();
         scene.getStylesheets().add(stylrSheet);
@@ -250,6 +259,46 @@ public class User_UI extends UI {
         scrollPane.setContent(totalPane);
         
         return scrollPane;
+    }
+    
+    public BorderPane myAccount() {
+        
+        BorderPane accountPane = new BorderPane();
+        BorderPane mainPane = new BorderPane();
+        MyAccount myAccount = new MyAccount(userAccount);
+        
+        
+        
+        VBox head = new VBox(10);
+        head.setPadding(new Insets(0,10,20,20));
+        head.getChildren().add(new Text("MY ACCOUNT"));
+        
+        VBox bottom = new VBox(10);
+        bottom.setPadding(new Insets(20,20,0,0));
+        bottom.setAlignment(Pos.CENTER_RIGHT);
+        
+        Button savebt = new Button("Save");
+        bottom.getChildren().add(savebt);
+        savebt.setOnAction(event -> {
+            if(myAccount.saveAccount()) {
+                AlertBox.displayAlert("Edit Profile", "Saved.");;
+                userAccount = myAccount.getMyAccount();
+            } 
+//            else {
+//                AlertBox.displayAlert("Edit Profile", "Failed.");;
+//            }
+        });
+        
+        accountPane.setTop(head);
+        accountPane.setCenter(myAccount.getEditBox());
+        accountPane.setPadding(new Insets(50, 50, 50, 50));
+        accountPane.setStyle("-fx-background-color: white");
+        accountPane.setBottom(bottom);
+        
+        mainPane.setCenter(accountPane);
+        mainPane.setPadding(new Insets(50, 100, 0, 100));
+        
+        return mainPane;
     }
 
 }

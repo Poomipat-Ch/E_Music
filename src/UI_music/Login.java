@@ -132,7 +132,7 @@ public class Login {
                 if (userAccount.getIsAdmin()) {
                     Admin_UI admin_UI = new Admin_UI(new Stage()); // <-- EDIT HERE Mr.Sirawit
                 } else {
-                    User_UI user_UI = new User_UI(new Stage());
+                    User_UI user_UI = new User_UI(new Stage(), userAccount);
                 }
                 idInput.clear();
                 passInput.clear();
