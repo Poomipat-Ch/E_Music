@@ -95,7 +95,6 @@ public class User_UI extends UI {
         Button downLoadButton = new Button(text);
         downLoadButton.getStyleClass().add("detailbtn");
         downLoadButton.setMinSize(200, 50);
-
         return downLoadButton;
 
     }
