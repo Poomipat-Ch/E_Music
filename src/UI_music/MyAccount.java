@@ -299,10 +299,11 @@ public class MyAccount {
                         for (Account account : listAccount) {
                             
                             if(account.getUsername().equals(myAccount.getUsername())) {
-//                                Account newAccount = new Account(firstname.getText(), lastname.getText(), username.getText(), email.getText(),
-//                                        myAccount.getPassword(), userGender, dOB, myAccount.getQuestion(), myAccount.getAnswer(), myAccount.getIsAdmin(), myAccount.getPhoto());
-//                                changeAccount.add(newAccount);
-//                                myAccount = newAccount;
+                                Account newAccount = new Account(firstname.getText(), lastname.getText(), username.getText(), email.getText(),
+                                        myAccount.getPassword(), userGender, dOB, myAccount.getQuestion(), myAccount.getAnswer(), myAccount.getIsAdmin(), myAccount.getPhoto());
+                                changeAccount.add(newAccount);
+                                myAccount = newAccount;
+                              
                             } else {
                                 changeAccount.add(account);
                             }

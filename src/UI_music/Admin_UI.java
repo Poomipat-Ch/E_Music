@@ -546,7 +546,7 @@ public class Admin_UI extends UI{
                         }
 
                         addAccount.add(new Account(nameIn.getText(), surnameIn.getText(), usernameIn.getText(), mailIn.getText(),
-                                passIn.getText(), userGender, dOB, question.getValue(), answer.getText(), isAdmin));
+                                passIn.getText(), userGender, dOB, question.getValue(), answer.getText(), isAdmin, new Image("default-profile.png")));
 
                         try {
                             writeFile(user, addAccount);

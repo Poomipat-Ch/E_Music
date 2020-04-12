@@ -62,6 +62,12 @@ public class Login {
     ArrayList<Account> listAccount = new ArrayList<>();
     Account userAccount = new Account();
     ArrayList<Account> addAccount = new ArrayList<>();
+    
+    private ImageView profilePicture;
+    private Image profileImage;
+    
+    private FileChooser fileChooser;
+    private File filePath;
 
     private FileChooser fileChooser;
     private File filePath;
@@ -73,6 +79,7 @@ public class Login {
 //**READ THIS***** This save in user.dat file, if you can't run admin, try run this code only once and comment again
 //        listAccount.add(new Account("admin", "admin", "admin", "admin@gmail.com", "admin", null, null, null, null, true));
 //        writeFile(user, listAccount); 
+
         Login.stage = stage;
 
         Label title1 = new Label("Sign in");
@@ -310,7 +317,7 @@ public class Login {
                         }
 
                         addAccount.add(new Account(nameIn.getText(), surnameIn.getText(), usernameIn.getText(), mailIn.getText(),
-                                passIn.getText(), userGender, dOB, question.getValue(), answer.getText(), false));
+                                passIn.getText(), userGender, dOB, question.getValue(), answer.getText(), false, profileImage));
 
                         try {
                             writeFile(user, addAccount);
@@ -357,7 +364,7 @@ public class Login {
 
         HBox row2 = new HBox(20); //Button Row
         row2.getChildren().addAll(ok, cancel);
-        row2.setAlignment(Pos.CENTER);
+        row2.setAlignment(Pos.CENTER_RIGHT);
 
         VBox column1 = new VBox(20);
         column1.setPadding(new Insets(10)); //add gap 10px
@@ -389,6 +396,7 @@ public class Login {
                 BufferedImage bufferedImage = ImageIO.read(filePath);
                 image = SwingFXUtils.toFXImage(bufferedImage, null);
                 this.photo.setImage(image);
+
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
