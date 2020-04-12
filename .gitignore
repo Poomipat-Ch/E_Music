@@ -1,5 +1,4 @@
 /nbproject/private/
 /dist/
 /build/
-*.dat
-src/data
+src/data/
