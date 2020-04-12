@@ -45,3 +45,13 @@
     -fx-background-insets: 0, 0 0 1 0;
     -fx-background-radius: 1;
 }
+
+.nameSong{
+    -fx-font-size: 25px;
+    -fx-text-fill: white;
+}
+
+.nameArtist{
+    -fx-font-size: 20px;
+    -fx-text-fill: white;
+}

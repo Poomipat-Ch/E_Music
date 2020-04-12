@@ -303,6 +303,7 @@ public class MyAccount {
                                         myAccount.getPassword(), userGender, dOB, myAccount.getQuestion(), myAccount.getAnswer(), myAccount.getIsAdmin(), myAccount.getPhoto());
                                 changeAccount.add(newAccount);
                                 myAccount = newAccount;
+                              
                             } else {
                                 changeAccount.add(account);
                             }

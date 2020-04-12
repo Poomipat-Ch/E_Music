@@ -233,7 +233,7 @@ public class User_UI extends UI {
         scrollPane.pannableProperty().set(true);
         scrollPane.fitToWidthProperty().set(true);
         scrollPane.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
-        scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.ALWAYS);
+        scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setPadding(new Insets(10));
         scrollPane.getStyleClass().add("allSong");
         totalPane = new VBox();
@@ -256,7 +256,7 @@ public class User_UI extends UI {
         tilePane.setPadding(new Insets(10, 10, 10, 10));
         tilePane.setVgap(10);
         tilePane.setHgap(10);
-        tilePane.setAlignment(Pos.CENTER);
+        tilePane.setAlignment(Pos.CENTER_LEFT); // By POP
         ObservableList<Song> list = Song.getMyMusicList();
         
         String lowerCase = text.toLowerCase();
@@ -272,12 +272,14 @@ public class User_UI extends UI {
                 paneContent.getStyleClass().add("content-allSong");
 
                 imageView = new ImageView(new Image("/image/1.jpg"));
-                imageView.setFitHeight(160);
-                imageView.setFitWidth(120);
+                imageView.setFitHeight(200); // By pop
+                imageView.setFitWidth(150); // By pop
                 
                 
                 paneContent.getChildren().addAll(imageView, new Label(song.getNameSong()), new Label("ARTIST : "+song.getArtistSong()));
                 contentButton.setGraphic(paneContent);
+                contentButton.setMinHeight(300); // By Pop
+                contentButton.setMinWidth(300); // By Pop
 
                 tilePane.getChildren().add(contentButton);
             }

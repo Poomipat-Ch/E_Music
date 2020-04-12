@@ -17,10 +17,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 
-/**
- *
- * @author HCARACH Thanks a lot!!
- */
 public class Account implements Serializable {
     private String name;
     private String surname;
@@ -32,6 +28,7 @@ public class Account implements Serializable {
     private String answer;
     private LocalDate dateOfBirth;
     private boolean isAdmin;
+    private Image photo;
     
     private Image photo;
     
@@ -53,7 +50,6 @@ public class Account implements Serializable {
         this.question = question;
         this.answer = answer;
         this.isAdmin = isAdmin;
-        
         this.photo = image;
     }
     
