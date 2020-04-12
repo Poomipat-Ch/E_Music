@@ -79,7 +79,9 @@ public class Admin_UI extends UI{
         super(stage);
         Scene scene = new Scene(allPane2(), 1280, 960);
         String stylrSheet = getClass().getResource("/style_css/style.css").toExternalForm();
+        String stylrSheet2 = getClass().getResource("/style_css/styleAdmin.css").toExternalForm();
         scene.getStylesheets().add(stylrSheet);
+        scene.getStylesheets().add(stylrSheet2);
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
         stage.show();
@@ -136,10 +138,18 @@ public class Admin_UI extends UI{
         title2.setLayoutY(5);
         
         Button addAccountBtn = CreaButton("Add Account");
-        addAccountBtn.setLayoutX(520);
+        addAccountBtn.setLayoutX(290);
         addAccountBtn.setLayoutY(675); 
         addAccountBtn.setOnAction(e -> {
             register(null);
+            refreshTable();
+        });
+        
+        Button updateAccountBtn = CreaButton("Update Account");
+        updateAccountBtn.setLayoutX(520);
+        updateAccountBtn.setLayoutY(675); 
+        updateAccountBtn.setOnAction(e -> {
+            //RACH -<<<
             refreshTable();
         });
 
@@ -156,14 +166,14 @@ public class Admin_UI extends UI{
             refreshTable();
         });
         
-        pane.getChildren().addAll(addAccountBtn, deleteAccountBtn, tableAccount(), searchBoxMy(),title2);
+        pane.getChildren().addAll(addAccountBtn, updateAccountBtn, deleteAccountBtn, tableAccount(), searchBoxMy(),title2);
 
         return pane;    
     }
      
     private AnchorPane tableAccount() {
         AnchorPane anchorPane = new AnchorPane();
-        anchorPane.setMinSize(925, 500); //1030 - 300 - 60, 700
+        anchorPane.setMinSize(933, 500); //1030 - 300 - 60, 700
         anchorPane.setLayoutX(20);
         anchorPane.setLayoutY(150);
         
@@ -181,32 +191,31 @@ public class Admin_UI extends UI{
 
         // Create column Name (Data type of String).
         TableColumn<Account, String> nameCol = new TableColumn<>("Name");
-        nameCol.setMinWidth(150);
+        nameCol.setMinWidth(120);
 
         // Create column Surname (Data type of String).
         TableColumn<Account, String> surnameCol = new TableColumn<>("Surname");
-        surnameCol.setMinWidth(150);
+        surnameCol.setMinWidth(120);
 
         // Create column Username (Data type of String).
         TableColumn<Account, String> usernameCol = new TableColumn<>("Username");
-        usernameCol.setMinWidth(150);
+        usernameCol.setMinWidth(120);
         
         // Create column Email (Data type of String).
         TableColumn<Account, String> emailCol = new TableColumn<>("Email");
-        emailCol.setMinWidth(280);
+        emailCol.setMinWidth(250);
         
         // Create column Gender (Data type of String).
         TableColumn<Account, String> genderCol = new TableColumn<>("Gender");
-        genderCol.setMinWidth(30);
-        genderCol.setMaxWidth(60);
+        genderCol.setMinWidth(90);
         
         // Create column DoB (Data type of LocalDate).
-        TableColumn<Account, LocalDate> dobCol = new TableColumn<>("DoB");
-        dobCol.setMinWidth(60);
+        TableColumn<Account, LocalDate> dobCol = new TableColumn<>("Date of Birth");
+        dobCol.setMinWidth(130);
         
         // Create column isAdmin (Data type of Boolean).
         TableColumn<Account, Boolean> adminCol = new TableColumn<>("Admin");
-        adminCol.setMinWidth(50);
+        adminCol.setMinWidth(100);
 
         // Defines how to fill data for each cell.
         // Get value from property of UserAccount. .
@@ -217,7 +226,6 @@ public class Admin_UI extends UI{
         genderCol.setCellValueFactory(new PropertyValueFactory<>("gender"));
         dobCol.setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
         adminCol.setCellValueFactory(new PropertyValueFactory<>("isAdmin"));
-       
         
         // Set Sort type for userName column
         nameCol.setSortType(TableColumn.SortType.DESCENDING);
