@@ -313,7 +313,7 @@ public class MyAccount {
                     }
                 }
             } else if(!currentPassword.getText().equals(myAccount.getPassword())){
-                AlertBox.displayAlert("Something went wrong!", "Confirm password is not correct.");
+                AlertBox.displayAlert("Something went wrong!", "Current password is not correct.");
             } else {
                 AlertBox.displayAlert("Something went wrong!", "Confirm password is not as same as password.");
             }
