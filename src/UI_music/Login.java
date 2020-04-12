@@ -7,6 +7,7 @@ package UI_music;
 
 import Component_Music.Account;
 import Component_Music.AlertBox;
+import java.awt.image.BufferedImage;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -18,8 +19,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -30,11 +34,15 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -54,14 +62,20 @@ public class Login {
     ArrayList<Account> listAccount = new ArrayList<>();
     Account userAccount = new Account();
     ArrayList<Account> addAccount = new ArrayList<>();
+    
+    private ImageView profilePicture;
+    private Image profileImage;
+    
+    private FileChooser fileChooser;
+    private File filePath;
 
     public Login(Stage stage) throws FileNotFoundException, IOException {
 
-        
+        profileImage = new Image("default-profile.png");
 //**READ THIS***** This save in user.dat file, if you can't run admin, try run this code only once and comment again
 
-//        listAccount.add(new Account("admin", "admin", "admin", "admin@gmail.com", "admin", null, null, null, null, true));
-//        writeFile(user, listAccount); 
+        listAccount.add(new Account("admin", "admin", "admin", "admin@gmail.com", "admin", null, null, null, null, true, profileImage));
+        writeFile(user, listAccount); 
 
 
         Login.stage = stage;
@@ -301,7 +315,7 @@ public class Login {
                         }
 
                         addAccount.add(new Account(nameIn.getText(), surnameIn.getText(), usernameIn.getText(), mailIn.getText(),
-                                passIn.getText(), userGender, dOB, question.getValue(), answer.getText(), false));
+                                passIn.getText(), userGender, dOB, question.getValue(), answer.getText(), false, profileImage));
 
                         try {
                             writeFile(user, addAccount);
@@ -348,13 +362,58 @@ public class Login {
 
         HBox row2 = new HBox(20); //Button Row
         row2.getChildren().addAll(ok, cancel);
-        row2.setAlignment(Pos.CENTER);
+        row2.setAlignment(Pos.CENTER_RIGHT);
 
         VBox column1 = new VBox(20);
         column1.setPadding(new Insets(10)); //add gap 10px
-        column1.getChildren().addAll(title, row1, usernameIn, mailIn, row3, title2, date, sexText, sexRow, qText, question, answer, row2);
+        column1.getChildren().addAll(title, row1, usernameIn, mailIn, row3, title2, date, sexText, sexRow, qText, question, answer);
         column1.setAlignment(Pos.CENTER);
-        Scene regScene = new Scene(column1, 360, 600);
+        
+        VBox column2 = new VBox(10);
+        column2.setPadding(new Insets(10));
+        
+        profilePicture.setImage(profileImage);
+        profilePicture.setFitWidth(100);
+        profilePicture.setFitHeight(100);
+        
+        Button changeImage = new Button("Change Image");
+        changeImage.setOnAction((ActionEvent event)-> {
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            fileChooser = new FileChooser();
+            fileChooser.setTitle("Open Image");
+
+            //Set to user's directory or go to the default C drvie if cannot access
+            String userDirectoryString = System.getProperty("user.home") + "\\Pictures";
+            File userDirectory = new File(userDirectoryString);
+
+            if (!userDirectory.canRead()) {
+                userDirectory = new File("c:/");
+            }
+
+            fileChooser.setInitialDirectory(userDirectory);
+
+            this.filePath = fileChooser.showOpenDialog(stage);
+
+            //Try to update the image by loading the new image
+            try {
+                BufferedImage bufferedImage = ImageIO.read(filePath);
+                profileImage = SwingFXUtils.toFXImage(bufferedImage, null);
+                profilePicture.setImage(profileImage);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        });
+        
+        column2.getChildren().addAll(profilePicture, changeImage);
+        
+        BorderPane regPane = new BorderPane();
+        regPane.setPadding(new Insets(10));
+        regPane.setCenter(column1);
+        regPane.setRight(column2);
+        regPane.setBottom(row2);
+        
+        Scene regScene = new Scene(regPane, 550, 600);
         regisStage.setScene(regScene);
         regisStage.setResizable(false);
         regisStage.setTitle("Registeration.");
@@ -417,7 +476,7 @@ public class Login {
                     ArrayList<Account> addAccount = new ArrayList<>();
 
                     addAccount.add(new Account(userAccount.getName(), userAccount.getSurname(), userAccount.getUsername(), userAccount.getEmail(),
-                            passIn1.getText(), userAccount.getGender(), userAccount.getDateOfBirth(), userAccount.getQuestion(), userAccount.getAnswer(), false));
+                            passIn1.getText(), userAccount.getGender(), userAccount.getDateOfBirth(), userAccount.getQuestion(), userAccount.getAnswer(), false, userAccount.getPhoto()));
                     addAccount.remove(userAccount);
 
                     try {
