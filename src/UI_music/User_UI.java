@@ -24,9 +24,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
@@ -44,7 +42,7 @@ public class User_UI extends UI {
     // SearchSystem searchSystem = new SearchSystem();
     SearchSystem searchSystemMain = new SearchSystem();
     SearchSystem searchSystemMyLibrary = new SearchSystem();
-    
+    String nameSongFromTable;
     Account userAccount;
 
     public User_UI(Stage stage, Account userAccount) {
@@ -83,6 +81,7 @@ public class User_UI extends UI {
         img.getChildren().add(imgMy);
 
         Button downloadBtn = CreaButton("Download");
+        
         downloadBtn.setLayoutX(1030 - 250 - 20);
         downloadBtn.setLayoutY(420 + 20);
 
@@ -90,6 +89,7 @@ public class User_UI extends UI {
 
         return pane;
     }
+    
 
     private Button CreaButton(String text) {
         Button downLoadButton = new Button(text);
@@ -99,6 +99,7 @@ public class User_UI extends UI {
         return downLoadButton;
 
     }
+    
 
     private AnchorPane tableMyMusic() {
         AnchorPane anchorPane = new AnchorPane();
@@ -111,9 +112,11 @@ public class User_UI extends UI {
         table.setMinSize(anchorPane.getMinWidth(), anchorPane.getMinHeight());
 
         table.setOnMouseClicked((event) -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                System.out.println(table.getSelectionModel().getSelectedItem().getNameSong());
-            }
+//            if (event.getButton().equals(MouseButton.PRIMARY)) {
+//                System.out.println(table.getSelectionModel().getSelectedItem().getNameSong());
+//            }
+            nameSongFromTable = table.getSelectionModel().getSelectedItem().getNameSong() + 
+                    table.getSelectionModel().getSelectedItem().getArtistSong() + table.getSelectionModel().getSelectedItem().getDetailSong();
         });
 
         // Create column UserName (Data type of String).
@@ -165,14 +168,18 @@ public class User_UI extends UI {
 
         Button searchButton = CreaButton("Search");
         searchButton.setOnMouseClicked(e ->{
-           // AllSong();
+            User_UI.totalPane.getChildren().remove(1);
+            User_UI.totalPane.getChildren().add(User_UI.updateScrollPane(searchTextField.getText()));
         });
         
         searchButton.setStyle("-fx-font-size : 15px;");
         searchButton.setMinSize(50, 30);
         HBox.setMargin(searchButton, new Insets(0, 0, 0, 10));
 
-        searchTextField.textProperty().addListener(searchSystemMain);
+        searchTextField.textProperty().addListener((ov, t, t1) -> {
+            User_UI.totalPane.getChildren().remove(1);
+            User_UI.totalPane.getChildren().add(User_UI.updateScrollPane(searchTextField.getText()));
+        });
 
         hBox.getChildren().addAll(searchTextField, searchButton);
 
@@ -203,11 +210,9 @@ public class User_UI extends UI {
     }
     
 
-    
+    public static VBox totalPane;
     private ScrollPane  AllSong(){
         
-        VBox paneContent;
-        Button contentButton;
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setPrefSize(1030, 900);
         scrollPane.pannableProperty().set(true);
@@ -216,7 +221,20 @@ public class User_UI extends UI {
         scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.ALWAYS);
         scrollPane.setPadding(new Insets(10));
         scrollPane.getStyleClass().add("allSong");
+        totalPane = new VBox();
+        totalPane.setAlignment(Pos.CENTER);
+        totalPane.getStyleClass().add("allSong");
+
+        totalPane.getChildren().addAll(searchBoxAll(),updateScrollPane(""));
         
+        scrollPane.setContent(totalPane);
+        
+        return scrollPane;
+    }
+    
+    public static TilePane updateScrollPane(String text){
+        VBox paneContent;
+        Button contentButton;
         ImageView imageView;
        
         TilePane tilePane = new TilePane();
@@ -224,41 +242,32 @@ public class User_UI extends UI {
         tilePane.setVgap(10);
         tilePane.setHgap(10);
         tilePane.setAlignment(Pos.CENTER);
-        
-        VBox totalPane = new VBox();
-        totalPane.setAlignment(Pos.CENTER);
-        totalPane.getStyleClass().add("allSong");
-        
         ObservableList<Song> list = Song.getMyMusicList();
-        FilteredList<Song> filterData = new FilteredList<>(list, b -> true);
-        searchSystemMain.setFilterData(filterData);
-
-        SortedList<Song> sortedList = new SortedList<>(searchSystemMain.getFilterData());
         
-        for (Song song : sortedList) {
-            contentButton = new Button();
-            contentButton.getStyleClass().add("contentDetailbtn");
-            paneContent = new VBox();
-            paneContent.setAlignment(Pos.CENTER);
-            paneContent.setPadding(new Insets(20));
-            paneContent.getStyleClass().add("content-allSong");
+        String lowerCase = text.toLowerCase();
+        
+        for (Song song : list) {
+            
+            if (song.getNameSong().contains(text) || song.getArtistSong().toLowerCase().contains(lowerCase)) {
+                contentButton = new Button();
+                contentButton.getStyleClass().add("contentDetailbtn");
+                paneContent = new VBox();
+                paneContent.setAlignment(Pos.CENTER);
+                paneContent.setPadding(new Insets(20));
+                paneContent.getStyleClass().add("content-allSong");
 
-            imageView = new ImageView(new Image("/image/1.jpg"));
-            imageView.setFitHeight(160); 
-            imageView.setFitWidth(120); 
-            
-            
+                imageView = new ImageView(new Image("/image/1.jpg"));
+                imageView.setFitHeight(160);
+                imageView.setFitWidth(120);
+                
+                
+                paneContent.getChildren().addAll(imageView, new Label(song.getNameSong()), new Label("ARTIST : "+song.getArtistSong()));
+                contentButton.setGraphic(paneContent);
 
-            paneContent.getChildren().addAll(imageView, new Label(song.getNameSong()), new Label("ARTIST : "+song.getArtistSong()));
-            contentButton.setGraphic(paneContent);
-            
-            tilePane.getChildren().add(contentButton);
+                tilePane.getChildren().add(contentButton);
+            }
         }
-        totalPane.getChildren().addAll(searchBoxAll(),tilePane);
-        
-        scrollPane.setContent(totalPane);
-        
-        return scrollPane;
+       return tilePane;
     }
     
     Button editbt;
