@@ -63,3 +63,39 @@
     -fx-font-size: 60px;
     -fx-text-fill: white;
 }
+
+.allSong{
+    -fx-background-color:transparent;
+}
+
+.allSong .viewport {
+       -fx-background-color: transparent;
+}
+
+.content-allSong{
+    -fx-text-fill:white;
+    -fx-font-size:20px;
+    -fx-align-items:center;
+}
+
+.content-allSong Label{
+    -fx-text-fill:white;
+    -fx-font-size:20px;
+}
+
+.contentDetailbtn{
+    -fx-background-color : #00a8cc;
+    -fx-text-fill : white;
+    -fx-background-radius :  30;
+    -fx-font-size : 20px;
+    -fx-opacity: .9;
+}
+
+.contentDetailbtn:hover{
+     -fx-background-color : #27496d;
+         -fx-opacity: 1;
+}
+
+.contentDetailbtn:pressed{
+     -fx-background-color : #0c7b93;
+}
