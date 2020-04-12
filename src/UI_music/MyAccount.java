@@ -67,7 +67,52 @@ public class MyAccount {
     
     public MyAccount(Account myAccount) {
         this.myAccount = myAccount;
+                
+            VBox row = new VBox(10);
+            row.getChildren().addAll(new Text("Username : \t"), new Label(myAccount.getUsername()));
+            
         
+            HBox row2 = new HBox(10);
+            row2.getChildren().addAll(new Text("First Name : \t\t\t    "), new Text("Last Name : \t"));
+        
+            HBox row3 = new HBox(5);
+            row3.getChildren().addAll(new Label(myAccount.getName()),new Label(myAccount.getSurname()));
+        
+            VBox row5 = new VBox(10);
+            row5.getChildren().addAll(new Text("Email : \t\t"), new Label(myAccount.getEmail()));
+            
+            HBox row7 = new HBox(10);
+            row7.getChildren().addAll(new Text("Date of Birth : "), new Label());
+        
+            HBox row9 = new HBox(10);
+            row9.getChildren().addAll(new Label("Gender : "), new Label(myAccount.getGender()));
+            
+            //Blank line
+            HBox row1 = new HBox(10);
+            row1.getChildren().add(new Text(" "));
+            HBox row4 = new HBox(10);
+            row4.getChildren().add(new Text(" "));
+            HBox row6 = new HBox(10);
+            row6.getChildren().add(new Text(" "));
+            HBox row8 = new HBox(10);
+            row8.getChildren().add(new Text(" "));
+            HBox row10 = new HBox(10);
+            row10.getChildren().add(new Text(" "));
+            HBox row12 = new HBox(10);
+            row12.getChildren().add(new Text(" "));
+            HBox row14 = new HBox(10);
+            row14.getChildren().add(new Text(" "));            
+        
+        editBox.getChildren().addAll(row, row1, row2, row3, row4, row5, row6, row7, row8,row9, row10);        
+        editBox.setPadding(new Insets(50, 50, 50, 50));
+        editBox.setStyle("-fx-background-color: #f5deb3");
+    }
+
+    public VBox getEditBox() {
+        return editBox;
+    }
+    
+    private void editAccount() {
         username.setPromptText("Usrname");
         username.setText(this.myAccount.getUsername());
         username.setMaxWidth(300);
@@ -174,10 +219,6 @@ public class MyAccount {
         editBox.getChildren().addAll(row, row1, row2, row3, row4, row5, row6, row7, row8,row9, row10,row11, row12, changePassword);        
         editBox.setPadding(new Insets(50, 50, 50, 50));
         editBox.setStyle("-fx-background-color: #f5deb3");
-    }
-
-    public VBox getEditBox() {
-        return editBox;
     }
     
     public boolean saveAccount() {

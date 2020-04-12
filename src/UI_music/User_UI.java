@@ -293,7 +293,7 @@ public class User_UI extends UI {
         accountPane.setCenter(myAccount.getEditBox());
         accountPane.setPadding(new Insets(50, 50, 50, 50));
         accountPane.setStyle("-fx-background-color: white");
-        accountPane.setBottom(bottom);
+        //accountPane.setBottom(bottom);
         
         mainPane.setCenter(accountPane);
         mainPane.setPadding(new Insets(50, 100, 0, 100));
