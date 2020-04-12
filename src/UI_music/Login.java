@@ -68,9 +68,6 @@ public class Login {
     
     private FileChooser fileChooser;
     private File filePath;
-
-    private FileChooser fileChooser;
-    private File filePath;
     private ImageView photo;
     private Image image;
 

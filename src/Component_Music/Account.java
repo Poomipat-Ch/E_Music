@@ -30,8 +30,6 @@ public class Account implements Serializable {
     private boolean isAdmin;
     private Image photo;
     
-    private Image photo;
-    
     private static File user = new File("src/data/user.dat");
     
     public Account() {
