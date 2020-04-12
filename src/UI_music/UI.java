@@ -97,13 +97,18 @@ abstract public class UI {
             this.vbox.getChildren().remove(1);
             this.vbox.getChildren().add(mySongPane());
         });
+        Button myAccount = CreaButton("My Account");
+        myAccount.setOnMouseClicked(e -> {
+            this.vbox.getChildren().remove(1);
+            this.vbox.getChildren().add(myAccount());
+        });
         Button logOut = CreaButton("Logout");
         logOut.setOnMouseClicked(e -> {
             this.stage.close();
             Login.stage.show();
         });
         
-        VBox bottomVBox = new VBox(logOut);
+        VBox bottomVBox = new VBox(myAccount,logOut);
         bottomVBox.setAlignment(Pos.BOTTOM_CENTER);
         VBox.setVgrow(bottomVBox, Priority.ALWAYS);
         
@@ -229,6 +234,7 @@ abstract public class UI {
     abstract public AnchorPane mySongPane();
     abstract public HBox searchBoxAll();
     abstract public HBox searchBoxMy();
+    abstract public BorderPane myAccount();
     
     
 }
