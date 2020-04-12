@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
 
 /**
  *
@@ -31,6 +32,7 @@ public class Account implements Serializable {
     private String answer;
     private LocalDate dateOfBirth;
     private boolean isAdmin;
+    private Image photo;
     
     private static File user = new File("src/data/user.dat");
     
@@ -50,6 +52,23 @@ public class Account implements Serializable {
         this.question = question;
         this.answer = answer;
         this.isAdmin = isAdmin;
+        //this.photo = image;
+    }
+    
+    public Account(String name, String surname, String username, String email,
+            String password,String gender, LocalDate dateOfBirth, String question, String answer, boolean isAdmin, Image image) {
+        this.name = name;
+        this.surname = surname;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.question = question;
+        this.gender = gender;
+        this.dateOfBirth = dateOfBirth;
+        this.question = question;
+        this.answer = answer;
+        this.isAdmin = isAdmin;
+        this.photo = image;
     }
     
     public boolean getIsAdmin(){
@@ -102,6 +121,14 @@ public class Account implements Serializable {
 
     public String getGender() {
         return gender;
+    }
+
+    public void setPhoto(Image photo) {
+        this.photo = photo;
+    }
+
+    public Image getPhoto() {
+        return photo;
     }
     
     /**

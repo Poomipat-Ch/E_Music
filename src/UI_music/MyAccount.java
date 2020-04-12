@@ -7,6 +7,7 @@ package UI_music;
 
 import Component_Music.Account;
 import Component_Music.AlertBox;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -17,8 +18,11 @@ import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -26,10 +30,15 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -67,6 +76,10 @@ public class MyAccount {
     RadioButton otherRadio;
     
     boolean changeStatus = false;
+    
+    private FileChooser fileChooser;
+    private File filePath;
+    private ImageView photo;
     
     public MyAccount(Account myAccount) {
         this.showAccount(myAccount);
@@ -286,10 +299,10 @@ public class MyAccount {
                         for (Account account : listAccount) {
                             
                             if(account.getUsername().equals(myAccount.getUsername())) {
-                                Account newAccount = new Account(firstname.getText(), lastname.getText(), username.getText(), email.getText(),
-                                        myAccount.getPassword(), userGender, dOB, myAccount.getQuestion(), myAccount.getAnswer(), myAccount.getIsAdmin());
-                                changeAccount.add(newAccount);
-                                myAccount = newAccount;
+//                                Account newAccount = new Account(firstname.getText(), lastname.getText(), username.getText(), email.getText(),
+//                                        myAccount.getPassword(), userGender, dOB, myAccount.getQuestion(), myAccount.getAnswer(), myAccount.getIsAdmin(), myAccount.getPhoto());
+//                                changeAccount.add(newAccount);
+//                                myAccount = newAccount;
                             } else {
                                 changeAccount.add(account);
                             }
@@ -320,6 +333,34 @@ public class MyAccount {
         
             changeStatus = false;
         return editSave;
+    }
+    
+    public void chooseImageButtonPushed(ActionEvent event) {
+        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        
+        fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Image");
+        
+        //Set to user's directory or go to the default C drvie if cannot access
+        String userDirectoryString = System.getProperty("user.home") + "\\Pictures";
+        File userDirectory = new File(userDirectoryString);
+        
+        if(!userDirectory.canRead())
+            userDirectory = new File("c:/");
+        
+        fileChooser.setInitialDirectory(userDirectory);
+        
+        this.filePath = fileChooser.showOpenDialog(stage);
+        
+        //Try to update the image by loading the new image
+        try {
+            BufferedImage bufferedImage = ImageIO.read(filePath);
+            Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+            myAccount.setPhoto(image);
+            this.photo.setImage(myAccount.getPhoto());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public Account getMyAccount() {

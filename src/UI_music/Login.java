@@ -7,6 +7,7 @@ package UI_music;
 
 import Component_Music.Account;
 import Component_Music.AlertBox;
+import java.awt.image.BufferedImage;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -18,8 +19,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -30,11 +34,15 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -55,15 +63,16 @@ public class Login {
     Account userAccount = new Account();
     ArrayList<Account> addAccount = new ArrayList<>();
 
-    public Login(Stage stage) throws FileNotFoundException, IOException {
+    private FileChooser fileChooser;
+    private File filePath;
+    private ImageView photo;
+    private Image image;
 
-        
+    public Login(Stage stage) throws FileNotFoundException, IOException, ClassNotFoundException {
+
 //**READ THIS***** This save in user.dat file, if you can't run admin, try run this code only once and comment again
-
 //        listAccount.add(new Account("admin", "admin", "admin", "admin@gmail.com", "admin", null, null, null, null, true));
 //        writeFile(user, listAccount); 
-
-
         Login.stage = stage;
 
         Label title1 = new Label("Sign in");
@@ -192,6 +201,8 @@ public class Login {
         regisStage.initModality(Modality.APPLICATION_MODAL);
 
         Label title = new Label("Sign up");
+        title.setPadding(new Insets(10));
+        title.setAlignment(Pos.TOP_CENTER);
 
         //Fill name surname username email password
         TextField nameIn = new TextField();
@@ -258,7 +269,6 @@ public class Login {
             }
             ArrayList<Account> addAccount = new ArrayList<>();
 
-
             try {
                 listAccount = readFile(user);
             } catch (Exception ex) {
@@ -288,8 +298,7 @@ public class Login {
                         System.out.println("User is come from the future.");
                         AlertBox.displayAlert("Something went wrong!", "Please check a date field again.\n"
                                 + "Make sure that's your date of birth.");
-                    }
-                    //Check email if it's not will call error email [ see function isEmail for more information]
+                    } //Check email if it's not will call error email [ see function isEmail for more information]
                     else if (!isEmail(mailIn.getText())) {
                         AlertBox.displayAlert("Something went wrong!", "Please use another email.");
 
@@ -352,9 +361,59 @@ public class Login {
 
         VBox column1 = new VBox(20);
         column1.setPadding(new Insets(10)); //add gap 10px
-        column1.getChildren().addAll(title, row1, usernameIn, mailIn, row3, title2, date, sexText, sexRow, qText, question, answer, row2);
+        column1.setMaxWidth(300);
+        column1.getChildren().addAll(row1, usernameIn, mailIn, row3, title2, date, sexText, sexRow, qText, question, answer, row2);
         column1.setAlignment(Pos.CENTER);
-        Scene regScene = new Scene(column1, 360, 600);
+
+        Button changeImage = new Button("Change Image");
+        changeImage.setOnAction(event -> {
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            fileChooser = new FileChooser();
+            fileChooser.setTitle("Open Image");
+
+            //Set to user's directory or go to the default C drvie if cannot access
+            String userDirectoryString = System.getProperty("user.home") + "\\Pictures";
+            File userDirectory = new File(userDirectoryString);
+
+            if (!userDirectory.canRead()) {
+                userDirectory = new File("user.home");
+            }
+
+            fileChooser.setInitialDirectory(userDirectory);
+
+            this.filePath = fileChooser.showOpenDialog(stage);
+
+            //Try to update the image by loading the new image
+            try {
+                BufferedImage bufferedImage = ImageIO.read(filePath);
+                image = SwingFXUtils.toFXImage(bufferedImage, null);
+                this.photo.setImage(image);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        });
+
+        photo = new ImageView(new Image("/image/defaultprofile.png"));
+        photo.setFitHeight(200);
+        photo.setFitWidth(200);
+        photo.setPreserveRatio(true);
+        VBox column2 = new VBox(10);
+        column2.setPadding(new Insets(40));
+        column2.getChildren().addAll(photo, changeImage);
+        column2.setAlignment(Pos.CENTER);
+
+        BorderPane pane = new BorderPane();
+        pane.setPadding(new Insets(10));
+
+        pane.setTop(title);
+        pane.setCenter(column1);
+        pane.setRight(column2);
+
+        pane.setAlignment(title, Pos.CENTER);
+        pane.setAlignment(column2, Pos.CENTER);
+
+        Scene regScene = new Scene(pane, 550, 600);
         regisStage.setScene(regScene);
         regisStage.setResizable(false);
         regisStage.setTitle("Registeration.");
@@ -417,7 +476,7 @@ public class Login {
                     ArrayList<Account> addAccount = new ArrayList<>();
 
                     addAccount.add(new Account(userAccount.getName(), userAccount.getSurname(), userAccount.getUsername(), userAccount.getEmail(),
-                            passIn1.getText(), userAccount.getGender(), userAccount.getDateOfBirth(), userAccount.getQuestion(), userAccount.getAnswer(), false));
+                            passIn1.getText(), userAccount.getGender(), userAccount.getDateOfBirth(), userAccount.getQuestion(), userAccount.getAnswer(), false, userAccount.getPhoto()));
                     addAccount.remove(userAccount);
 
                     try {
@@ -452,6 +511,38 @@ public class Login {
         fgtStage.setTitle("Forget Password / Cannot login");
         fgtStage.showAndWait();
 
+    }
+
+    public void chooseImageButtonPushed(ActionEvent event) {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Image");
+
+        //Set to user's directory or go to the default C drvie if cannot access
+        String userDirectoryString = System.getProperty("user.home") + "\\Pictures";
+        File userDirectory = new File(userDirectoryString);
+
+        if (!userDirectory.canRead()) {
+            userDirectory = new File("user.home");
+        }
+
+        fileChooser.setInitialDirectory(userDirectory);
+
+        this.filePath = fileChooser.showOpenDialog(stage);
+
+        //Try to update the image by loading the new image
+        if (filePath != null) {
+            if (!filePath.isFile()) {
+                try {
+                    BufferedImage bufferedImage = ImageIO.read(filePath);
+                    image = SwingFXUtils.toFXImage(bufferedImage, null);
+                    this.photo.setImage(image);
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
     }
 
     private ArrayList<Account> readFile(File file) throws FileNotFoundException, IOException, ClassNotFoundException {
