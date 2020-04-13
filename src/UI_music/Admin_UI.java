@@ -63,7 +63,6 @@ public class Admin_UI extends UI {
 
     //Gut add
     static String songSelectString;
-    static Song songSelect;
 //    static ObservableList<Song> songArrayList;
     static ArrayList<Song> songArrayList = new ArrayList<Song>();
     static File musicFile = new File("src/data/music.dat");
@@ -83,13 +82,6 @@ public class Admin_UI extends UI {
 
         super(stage);
 
-//            try{
-//            songObservableList = songSelect.getMyMusicList();
-//        } catch (IOException ex) {
-//            Logger.getLogger(Admin_UI.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(Admin_UI.class.getName()).log(Level.SEVERE, null, ex);
-//        }
         try {
             songArrayList = readFileSong(musicFile);
         } catch (Exception e) {
@@ -124,6 +116,7 @@ public class Admin_UI extends UI {
         title1.getStyleClass().add("titleAdmin");
         title1.setLayoutX(50);
         title1.setLayoutY(5);
+
 
         Button editBtn = CreaButton("Edit Song");       //Edit Button
         editBtn.setLayoutX(780);
@@ -174,7 +167,7 @@ public class Admin_UI extends UI {
         addAccountBtn.setLayoutX(290);
         addAccountBtn.setLayoutY(675);
         addAccountBtn.setOnAction(e -> {
-            register();
+            addAccountClicked();
             refreshTable();
         });
 
@@ -275,8 +268,11 @@ public class Admin_UI extends UI {
     @Override
     public HBox searchBoxAll() { // All Song First Page
         HBox hBox = new HBox();
+        hBox.setLayoutX(40);
+        hBox.setLayoutY(90);
         hBox.setMinSize(1030 - 300 - 60, 30);
         hBox.setAlignment(Pos.CENTER);
+        hBox.setPadding(new Insets(10));
         TextField searchTextField = new TextField();
         searchTextField.setPromptText("Search Music");
         searchTextField.setMinSize(1030 - 300 - 60 - 70, 30);
@@ -340,8 +336,8 @@ public class Admin_UI extends UI {
     private ScrollPane AllSong() {
 
         ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setPrefSize(750, 800);
-        scrollPane.setLayoutY(100);
+        scrollPane.setPrefSize(750, 750);
+        scrollPane.setLayoutY(140);
         scrollPane.pannableProperty().set(true);
         scrollPane.fitToWidthProperty().set(true);
         scrollPane.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
@@ -352,9 +348,8 @@ public class Admin_UI extends UI {
         totalPane = new VBox();
         totalPane.setAlignment(Pos.CENTER);
         totalPane.getStyleClass().add("allSong"); //CSS
-
-        totalPane.getChildren().addAll(searchBoxAll(), updateScrollPane(""));
-
+        totalPane.getChildren().addAll(updateScrollPane(""));
+        
         scrollPane.setContent(totalPane);
 
         return scrollPane;
@@ -398,7 +393,6 @@ public class Admin_UI extends UI {
                     selectImage.setFitWidth(250);
 
                     //Gut add
-                    songSelect = song;
                     songSelectString = song.getNameSong() + song.getArtistSong() + song.getDetailSong();
                     System.out.println(songSelectString + " is selected");
 
@@ -457,14 +451,10 @@ public class Admin_UI extends UI {
         updatePane.getChildren().add(updateVBox);
 
         return updatePane;
-    }
 
-    private void register() {
-        new Register();
-
-    }
-
-    private void refreshTable() { //get.list -> sorted
+    } 
+        
+    private void refreshTable(){ //get.list -> sorted
 
         //TRY -CATCH FOR EXCEPTION ... NOTHING TO DO WITH IT
         try {
@@ -482,6 +472,15 @@ public class Admin_UI extends UI {
         table.setItems(filterData);
     }
 
+    
+     private void addAccountClicked() {
+        new Register(true);
+    }
+     
+     private void updateAccountClicked() {
+         
+     }
+        
     private int deleteAccountClicked() throws IOException, FileNotFoundException, ClassNotFoundException {
 
         String selectUsername = table.getSelectionModel().getSelectedItem().getUsername();
@@ -502,8 +501,17 @@ public class Admin_UI extends UI {
             } else if (!(selectUsername.equals(chkUser) && selectEmail.equals(chkEmail))) {
 
                 presentAccounts.add(account);
-            } else {
-                System.out.println("delete " + account);
+
+            }
+            else{
+                if(AlertBox.display("Delect Account.","Are you sure to delete this account?")) {
+                    AlertBox.displayAlert("Delect Account.","Delete account successed.");
+                    System.out.println("delete " + account);
+                } else {
+                    AlertBox.displayAlert("Delect Account.","Delete account failed.");
+                    presentAccounts.add(account);
+                }
+                    
             }
         }
 
@@ -532,8 +540,6 @@ public class Admin_UI extends UI {
             if (songSelectString.equals(song.getNameSong() + song.getArtistSong() + song.getDetailSong())) {
                 System.out.println("delete " + song);
                 selectFileDelete.delete();
-//                System.out.println(songSelectString);
-//                System.out.println(song.getNameSong()+song.getArtistSong()+song.getDetailSong());
 
             } else {
                 newSongList.add(song);
@@ -541,7 +547,7 @@ public class Admin_UI extends UI {
         }
 
         writeFileSong(musicFile, newSongList);
-         Admin_UI.totalPane.getChildren().remove(1);
+         Admin_UI.totalPane.getChildren().remove(0);
          Admin_UI.totalPane.getChildren().add(Admin_UI.updateScrollPane(""));
 
         return 1;

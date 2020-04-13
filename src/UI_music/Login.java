@@ -196,7 +196,7 @@ public class Login {
 
     public void register() {
         //StringProperty name, surname, mail, password, sex;
-        new Register();
+        new Register(false);
     }
 
     public void forgetPassword() {

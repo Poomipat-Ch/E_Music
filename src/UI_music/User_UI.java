@@ -54,6 +54,7 @@ public class User_UI extends UI {
     // Create File for downloader
     File fileForDownload;
     String songNameSelected;
+    String nameSet;
     
     Account userAccount;
 
@@ -133,6 +134,7 @@ public class User_UI extends UI {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
                 System.out.println(table.getSelectionModel().getSelectedItem().getNameSong());
                 songNameSelected = table.getSelectionModel().getSelectedItem().getNameSong()+table.getSelectionModel().getSelectedItem().getArtistSong()+table.getSelectionModel().getSelectedItem().getDetailSong();
+                nameSet = table.getSelectionModel().getSelectedItem().getNameSong();
                 System.out.println(songNameSelected);
                 fileForDownload = new File("src/MusicFile/"+ songNameSelected + ".mp3");
             }
@@ -326,6 +328,7 @@ public class User_UI extends UI {
         System.out.println("Download");
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("MP3 Files", "*.mp3"));
+        fileChooser.setInitialFileName(nameSet);
         File downloadFile = fileChooser.showSaveDialog(null);
         
         if (downloadFile != null) {

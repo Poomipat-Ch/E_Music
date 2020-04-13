@@ -6,6 +6,7 @@
 package Component_Music;
 
 import UI_music.Admin_UI;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -15,9 +16,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -31,6 +34,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -38,6 +42,10 @@ import javafx.stage.StageStyle;
  */
 public class UploadSongPopUp {
 
+    private FileChooser fileChooser;
+    private File filePath;
+    private ImageView photo;
+    private Image image;
     private HBox totalDetail;
     //private BorderPane totalDetail;
     private Stage stage;
@@ -48,7 +56,6 @@ public class UploadSongPopUp {
     ArrayList<Song> songArrayList = new ArrayList<Song>();
     File musicFile = new File("src/data/music.dat");
     Label path = new Label("no files selected");
-    
 
     public UploadSongPopUp() {
         this.stage = new Stage();
@@ -91,18 +98,49 @@ public class UploadSongPopUp {
 //       });
         //Image Song
         Image img = new Image("/image/blankimage.jpg");
-        ImageView imageSong = new ImageView(img);
-        imageSong.setFitWidth(250);
-        imageSong.setFitHeight(300);
+        
+//        ImageView imageSong = new ImageView(img);      //commend by gut
+//        imageSong.setFitWidth(250);
+//        imageSong.setFitHeight(300);
 
         //Upload Picture
         Button imageBtn = new Button("Upload Picture");
         imageBtn.setOnAction(e -> {
-            //GUT -> Upload Picture
+            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+
+            fileChooser = new FileChooser();
+            fileChooser.setTitle("Open Image");
+            fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG Files", "*.png"), new FileChooser.ExtensionFilter("JPEG", "*.jpeg"));
+
+            //Set to user's directory or go to the default C drvie if cannot access
+            String userDirectoryString = System.getProperty("user.home") + "\\Pictures";
+            File userDirectory = new File(userDirectoryString);
+
+            if (!userDirectory.canRead()) {
+                userDirectory = new File("user.home");
+            }
+
+            fileChooser.setInitialDirectory(userDirectory);
+
+            this.filePath = fileChooser.showOpenDialog(stage);
+
+            //Try to update the image by loading the new image
+            try {
+                BufferedImage bufferedImage = ImageIO.read(filePath);
+                image = SwingFXUtils.toFXImage(bufferedImage, null);
+                this.photo.setImage(image);
+
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
         });
+        photo = new ImageView(new Image("/image/defaultprofile.png"));
+        photo.setFitHeight(200);
+        photo.setFitWidth(200);
+        photo.setPreserveRatio(true);
         imageBtn.getStyleClass().add("buybtn"); //CSS
 
-        imageDetail.getChildren().addAll(imageSong, imageBtn);
+        imageDetail.getChildren().addAll(photo, imageBtn);
 
         //Detail Song
         //Upload detail song
@@ -164,7 +202,7 @@ public class UploadSongPopUp {
             } catch (IOException | ClassNotFoundException ex) {
                 System.out.println("Added READFILE" + ex);
             }
-            songArrayList.add(new Song(fillNameSong.getText(), fillNameArtist.getText(), fillDetailSong.getText(), songPrice.getText()));
+            songArrayList.add(new Song(fillNameSong.getText(), fillNameArtist.getText(), fillDetailSong.getText(), songPrice.getText(), image));
             try {
                 writeFileSong(musicFile, songArrayList);
             } catch (IOException ex) {
@@ -172,14 +210,14 @@ public class UploadSongPopUp {
             }
             //Upload file .mp3
             nameForUpload = fillNameSong.getText() + fillNameArtist.getText() + fillDetailSong.getText();
-            File newSong = new File("src/MusicFile/"+nameForUpload + ".mp3");
+            File newSong = new File("src/MusicFile/" + nameForUpload + ".mp3");
             System.out.println(newSong.getName());
             try {
                 Files.copy(file.toPath(), newSong.toPath());
             } catch (IOException ex) {
                 System.out.println("uploadFile" + ex);
-            }   
-            Admin_UI.totalPane.getChildren().remove(1);
+            }
+            Admin_UI.totalPane.getChildren().remove(0);
             Admin_UI.totalPane.getChildren().add(Admin_UI.updateScrollPane(""));
             stage.close();
         });

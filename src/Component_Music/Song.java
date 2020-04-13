@@ -14,6 +14,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
 
 /**
  *
@@ -25,16 +29,19 @@ public class Song implements Serializable {
     private String detailSong;
     private String artistSong;
     private String priceSong;
+    private int width, height;
+    private int[][] data;
 
     private static File musicFile = new File("src/data/music.dat");
 
     public Song() {
     }
 
-    public Song(String nameSong, String detailSong, String artistSong, String priceSong) {
+    public Song(String nameSong, String detailSong, String artistSong, String priceSong, Image image) {
         this.nameSong = nameSong;
         this.detailSong = detailSong;
         this.artistSong = artistSong;
+        this.setPhoto(image);
     }
 
     public Song(Song song) {
@@ -92,4 +99,30 @@ public class Song implements Serializable {
         return list;
     }
 
+    public void setPhoto(Image image) {
+        width = ((int) image.getWidth());
+        height = ((int) image.getHeight());
+        data = new int[width][height];
+
+        PixelReader r = image.getPixelReader();
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                data[i][j] = r.getArgb(i, j);
+            }
+        }
+    }
+
+    public Image getPhoto() {
+        WritableImage img = new WritableImage(width, height);
+
+        PixelWriter w = img.getPixelWriter();
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                w.setArgb(i, j, data[i][j]);
+            }
+        }
+
+        return img;
+    }
+    
 }

@@ -54,11 +54,11 @@ public class Register {
     ArrayList<Account> listUserAccount = new ArrayList<>();
     Account userAccount = new Account();
     ArrayList<Account> addAccount = new ArrayList<>();
-    
+
     private ReadWriteFile file = new ReadWriteFile();
 
-    public Register() {
-        
+    public Register(boolean isAdmin) {
+
         image = new Image("/image/defaultprofile.png");
 
         Stage regisStage = new Stage();
@@ -67,6 +67,11 @@ public class Register {
         Label title = new Label("Sign up");
         title.setPadding(new Insets(10));
         title.setAlignment(Pos.TOP_CENTER);
+        
+        //Admin add account
+        ToggleGroup statusToggle = new ToggleGroup();
+        RadioButton adminSelect = new RadioButton("Admin Account");
+        RadioButton userSelect = new RadioButton("User Account");
 
         //Fill name surname username email password
         TextField nameIn = new TextField();
@@ -134,7 +139,7 @@ public class Register {
             ArrayList<Account> addAccount = new ArrayList<>();
 
             try {
-                listUserAccount = file.readFile(user);
+                listUserAccount = file.readFile(this.user);
             } catch (Exception ex) {
                 System.out.println("error: " + ex);
             }
@@ -168,22 +173,31 @@ public class Register {
 
                     } else {
                         try {
-                            addAccount = file.readFile(user);
+                            addAccount = file.readFile(this.user);
                         } catch (IOException | ClassNotFoundException ex) {
                             System.out.println("Register readFile " + ex);
                         }
 
-                        addAccount.add(new Account(nameIn.getText(), surnameIn.getText(), usernameIn.getText(), mailIn.getText(),
-                                passIn.getText(), userGender, dOB, question.getValue(), answer.getText(), false, image));
+                        if (!isAdmin) {
+                            addAccount.add(new Account(nameIn.getText(), surnameIn.getText(), usernameIn.getText(), mailIn.getText(),
+                                    passIn.getText(), userGender, dOB, question.getValue(), answer.getText(), false, image));
+                        } else {
+                            boolean isAdminReg = false;
+                            if (adminSelect.isSelected()) 
+                                isAdminReg = true;
+
+                            addAccount.add(new Account(nameIn.getText(), surnameIn.getText(), usernameIn.getText(), mailIn.getText(),
+                                    passIn.getText(), userGender, dOB, question.getValue(), answer.getText(), isAdminReg, image));
+                        }
 
                         try {
-                            file.writeFile(user, addAccount);
+                            file.writeFile(this.user, addAccount);
                             System.out.println("Saving account.");
                         } catch (IOException ex) {
                             System.out.println("Register writeFile " + ex);
                         }
                         try {
-                            listUserAccount = file.readFile(user);
+                            listUserAccount = file.readFile(this.user);
                         } catch (Exception ex) {
                             System.out.println("Error: " + ex);
                         }
@@ -221,13 +235,8 @@ public class Register {
 
         HBox row2 = new HBox(20); //Button Row
         row2.getChildren().addAll(ok, cancel);
-        row2.setAlignment(Pos.CENTER_RIGHT);
-
-        VBox column1 = new VBox(20);
-        column1.setPadding(new Insets(10)); //add gap 10px
-        column1.setMaxWidth(300);
-        column1.getChildren().addAll(row1, usernameIn, mailIn, row3, title2, date, sexText, sexRow, qText, question, answer, row2);
-        column1.setAlignment(Pos.CENTER);
+        row2.setAlignment(Pos.CENTER);
+        row2.setPadding(new Insets(20));
 
         Button changeImage = new Button("Change Image");
         changeImage.setOnAction(event -> {
@@ -258,11 +267,36 @@ public class Register {
                 System.out.println(e.getMessage());
             }
         });
+        
+        VBox column1 = new VBox(20);
+        column1.setPadding(new Insets(10)); //add gap 10px
+        column1.setMaxWidth(300);
+        
+        HBox statusRow = new HBox(20);
+        statusRow.setAlignment(Pos.CENTER);
+
+        if (isAdmin) {
+            statusRow.getChildren().addAll(userSelect, adminSelect);
+            column1.getChildren().add(statusRow);
+        }
+        
+        column1.getChildren().addAll(row1, usernameIn, mailIn, row3, title2, date, sexText, sexRow, qText, question, answer);
+        column1.setAlignment(Pos.CENTER);
 
         photo = new ImageView(new Image("/image/defaultprofile.png"));
         photo.setFitHeight(200);
         photo.setFitWidth(200);
         photo.setPreserveRatio(true);
+
+        adminSelect.setToggleGroup(statusToggle);
+        userSelect.setToggleGroup(statusToggle);
+        sexToggle.selectToggle(userSelect);
+
+        VBox titleRow = new VBox(5);
+        titleRow.getChildren().add(title);        
+        titleRow.setAlignment(Pos.CENTER);
+        titleRow.setPadding(new Insets(10));
+
         VBox column2 = new VBox(10);
         column2.setPadding(new Insets(40));
         column2.getChildren().addAll(photo, changeImage);
@@ -271,14 +305,20 @@ public class Register {
         BorderPane pane = new BorderPane();
         pane.setPadding(new Insets(10));
 
-        pane.setTop(title);
+        pane.setTop(titleRow);
         pane.setCenter(column1);
         pane.setRight(column2);
+        pane.setBottom(row2);
 
         pane.setAlignment(title, Pos.CENTER);
         pane.setAlignment(column2, Pos.CENTER);
 
-        Scene regScene = new Scene(pane, 550, 600);
+        Scene regScene;
+        if(isAdmin)
+            regScene = new Scene(pane, 550, 630);
+        else
+            regScene = new Scene(pane, 550, 600);
+        
         regisStage.setScene(regScene);
         regisStage.setResizable(false);
         regisStage.setTitle("Registeration.");
