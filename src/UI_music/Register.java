@@ -180,7 +180,7 @@ public class Register {
 
                         if (!isAdmin) {
                             addAccount.add(new Account(nameIn.getText(), surnameIn.getText(), usernameIn.getText(), mailIn.getText(),
-                                    passIn.getText(), userGender, dOB, question.getValue(), answer.getText(), false, image));
+                                    passIn.getText(), userGender, dOB, question.getValue(), answer.getText(), true, image));
                         } else {
                             boolean isAdminReg = false;
                             if (adminSelect.isSelected()) 
@@ -201,7 +201,11 @@ public class Register {
                         } catch (Exception ex) {
                             System.out.println("Error: " + ex);
                         }
-                        AlertBox.displayAlert("Register Complete", "Your account has been saved.\nTry to login now.");
+                        
+                        if(isAdmin)
+                            AlertBox.displayAlert("Add Account Complete", "This account has been saved.");
+                        else
+                            AlertBox.displayAlert("Register Complete", "Your account has been saved.\nTry to login now.");
 
                         System.out.println("Registeraion Complete!\n");
 
@@ -290,7 +294,7 @@ public class Register {
 
         adminSelect.setToggleGroup(statusToggle);
         userSelect.setToggleGroup(statusToggle);
-        sexToggle.selectToggle(userSelect);
+        statusToggle.selectToggle(userSelect);
 
         VBox titleRow = new VBox(5);
         titleRow.getChildren().add(title);        

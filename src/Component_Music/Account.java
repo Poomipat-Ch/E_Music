@@ -61,6 +61,10 @@ public class Account implements Serializable {
         return isAdmin;
     }
 
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
