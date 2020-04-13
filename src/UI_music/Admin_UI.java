@@ -119,7 +119,7 @@ public class Admin_UI extends UI{
                 //Gut
             });
             
-        pane.getChildren().addAll(AllSong(),UpdateClikedPane(),title1,editBtn,uploadBtn,deleteBtn);
+        pane.getChildren().addAll(searchBoxAll(), AllSong(),UpdateClikedPane(),title1,editBtn,uploadBtn,deleteBtn);
 
         return pane;   
     }
@@ -139,7 +139,7 @@ public class Admin_UI extends UI{
         addAccountBtn.setLayoutX(290);
         addAccountBtn.setLayoutY(675); 
         addAccountBtn.setOnAction(e -> {
-            register();
+            addAccountClicked();
             refreshTable();
         });
         
@@ -241,8 +241,11 @@ public class Admin_UI extends UI{
     @Override
     public HBox searchBoxAll() { // All Song First Page
         HBox hBox = new HBox();
+        hBox.setLayoutX(40);
+        hBox.setLayoutY(90);
         hBox.setMinSize(1030 - 300 - 60, 30);
         hBox.setAlignment(Pos.CENTER);
+        hBox.setPadding(new Insets(10));
         TextField searchTextField = new TextField();
         searchTextField.setPromptText("Search Music");
         searchTextField.setMinSize(1030 - 300 - 60 - 70, 30);
@@ -305,8 +308,8 @@ public class Admin_UI extends UI{
     private ScrollPane  AllSong(){
         
         ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setPrefSize(750, 800);
-        scrollPane.setLayoutY(100);
+        scrollPane.setPrefSize(750, 750);
+        scrollPane.setLayoutY(140);
         scrollPane.pannableProperty().set(true);
         scrollPane.fitToWidthProperty().set(true);
         scrollPane.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
@@ -319,7 +322,7 @@ public class Admin_UI extends UI{
         totalPane.setAlignment(Pos.CENTER);
         totalPane.getStyleClass().add("allSong"); //CSS
 
-        totalPane.getChildren().addAll(searchBoxAll(),updateScrollPane(""));
+        totalPane.getChildren().addAll(updateScrollPane(""));
         
         scrollPane.setContent(totalPane);
         
@@ -415,10 +418,6 @@ public class Admin_UI extends UI{
         
         return updatePane;
     } 
-    
-    private void register() {
-        new Register(true);
-    }
         
     private void refreshTable(){ //get.list -> sorted
         //TRY -CATCH FOR EXCEPTION ... NOTHING TO DO WITH IT
@@ -437,6 +436,14 @@ public class Admin_UI extends UI{
         table.setItems(filterData);  
     }
     
+     private void addAccountClicked() {
+        new Register(true);
+    }
+     
+     private void updateAccountClicked() {
+         
+     }
+        
     private int deleteAccountClicked() throws IOException, FileNotFoundException, ClassNotFoundException {
         
         String selectUsername = table.getSelectionModel().getSelectedItem().getUsername();
