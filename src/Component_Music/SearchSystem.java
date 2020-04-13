@@ -5,7 +5,6 @@
  */
 package Component_Music;
 
-import UI_music.User_UI;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.transformation.FilteredList;
@@ -47,7 +46,7 @@ public class SearchSystem implements ChangeListener<String>{
                     String lowerCase = newValue.toLowerCase();
                     
                     
-                    if (user.getNameSong().contains(newValue)) {
+                    if (user.getNameSong().toLowerCase().contains(lowerCase)) {
                         return true;
                     }
                     else if (user.getArtistSong().toLowerCase().contains(lowerCase)) {
