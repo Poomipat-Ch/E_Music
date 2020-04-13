@@ -30,10 +30,12 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -71,6 +73,7 @@ public class Admin_UI extends UI {
 
     SearchSystem searchSystemMain = new SearchSystem();
     SearchSystemAccount searchAccount = new SearchSystemAccount();
+
 
     private TableView<Account> table;
 
@@ -117,7 +120,6 @@ public class Admin_UI extends UI {
         title1.setLayoutX(50);
         title1.setLayoutY(5);
 
-
         Button editBtn = CreaButton("Edit Song");       //Edit Button
         editBtn.setLayoutX(780);
         editBtn.setLayoutY(600);
@@ -130,7 +132,7 @@ public class Admin_UI extends UI {
         uploadBtn.setLayoutY(700);
         uploadBtn.setOnAction(e -> {
             new UploadSongPopUp();
-            
+
         });
 
         Button deleteBtn = CreaButton("Delete");        //Delete Button
@@ -149,6 +151,7 @@ public class Admin_UI extends UI {
         });
 
         pane.getChildren().addAll(AllSong(), UpdateClikedPane(), title1, editBtn, uploadBtn, deleteBtn);
+
         return pane;
     }
 
@@ -175,7 +178,7 @@ public class Admin_UI extends UI {
         updateAccountBtn.setLayoutX(520);
         updateAccountBtn.setLayoutY(675);
         updateAccountBtn.setOnAction(e -> {
-            //RACH -<<<
+            updateAccountClicked();
             refreshTable();
         });
 
@@ -349,7 +352,7 @@ public class Admin_UI extends UI {
         totalPane.setAlignment(Pos.CENTER);
         totalPane.getStyleClass().add("allSong"); //CSS
         totalPane.getChildren().addAll(updateScrollPane(""));
-        
+
         scrollPane.setContent(totalPane);
 
         return scrollPane;
@@ -456,6 +459,7 @@ public class Admin_UI extends UI {
         
     private void refreshTable(){ //get.list -> sorted
 
+
         //TRY -CATCH FOR EXCEPTION ... NOTHING TO DO WITH IT
         try {
             list = Account.getAccountList();
@@ -471,16 +475,134 @@ public class Admin_UI extends UI {
         sortedList.comparatorProperty().bind(table.comparatorProperty());
         table.setItems(filterData);
     }
-
     
      private void addAccountClicked() {
+
         new Register(true);
     }
-     
-     private void updateAccountClicked() {
-         
-     }
+
+    ImageView photo;
+    ArrayList<Account> oldAccounts;
+    ArrayList<Account> presentAccounts;
+    Account updateAccount;
+
+    private int updateAccountClicked() {
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Edit User/Admin Account");
+        stage.setResizable(false);
         
+        oldAccounts = new ArrayList<>();
+        presentAccounts = new ArrayList<>();
+        updateAccount = new Account();
+
+        String selectUsername = table.getSelectionModel().getSelectedItem().getUsername();
+        String selectEmail = table.getSelectionModel().getSelectedItem().getEmail();
+
+        try {
+            oldAccounts = file.readFile(user);
+        } catch (IOException ex) {
+            Logger.getLogger(Admin_UI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Admin_UI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (selectUsername.equals(userAccount.getUsername()) && selectEmail.equals(userAccount.getEmail())) {
+            AlertBox.displayAlert("Delect Account.", "You cannot delete your account.");
+            return 0;
+        }
+
+        ToggleGroup statusToggle = new ToggleGroup();
+        RadioButton adminSelect = new RadioButton("Admin Account");
+        RadioButton userSelect = new RadioButton("User Account");
+        adminSelect.setToggleGroup(statusToggle);
+        userSelect.setToggleGroup(statusToggle);
+
+        for (Account account : oldAccounts) {
+            String chkUser = account.getUsername();
+            String chkEmail = account.getEmail();
+
+            if (selectUsername.equals(chkUser) && selectEmail.equals(chkEmail)) {
+                updateAccount = account;
+                if (updateAccount.getIsAdmin()) {
+                    statusToggle.selectToggle(adminSelect);
+                } else {
+                    statusToggle.selectToggle(userSelect);
+                }
+            } else {
+                presentAccounts.add(account);
+            }
+        }
+
+        photo = new ImageView(updateAccount.getPhoto());
+        photo.setFitHeight(200);
+        photo.setFitWidth(200);
+        photo.setPreserveRatio(true);
+
+        Button yesBtn = new Button("Yes");
+        yesBtn.setOnAction(e -> {
+            if(adminSelect.isSelected())
+                updateAccount.setIsAdmin(true);
+            else
+                updateAccount.setIsAdmin(false);
+            
+            presentAccounts.add(updateAccount);
+            
+            try {
+                file.writeFile(user, presentAccounts);
+            } catch (IOException ex) {
+                Logger.getLogger(Admin_UI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            stage.close();
+            
+            refreshTable();
+        });
+
+        Button noBtn = new Button("No");
+        noBtn.setOnAction(e -> {
+            stage.close();
+        });
+
+        VBox row0 = new VBox(10);
+        row0.getChildren().addAll(photo);
+        row0.setAlignment(Pos.CENTER);
+        row0.setPadding(new Insets(10));
+        row0.setMinHeight(200);
+
+        HBox row1 = new HBox(20);
+        row1.getChildren().addAll(new Label("Username : "), new Label(updateAccount.getUsername()));
+        row1.setAlignment(Pos.CENTER);
+        row1.setPadding(new Insets(10));
+
+        HBox row2 = new HBox(20);
+        row2.getChildren().addAll(new Label("Name : "), new Label(updateAccount.getName()), new Label(updateAccount.getSurname()));
+        row2.setAlignment(Pos.CENTER);
+        row2.setPadding(new Insets(10));
+
+        HBox row3 = new HBox(20);
+        row3.getChildren().addAll(new Label("Status : "), userSelect, adminSelect);
+        row3.setAlignment(Pos.CENTER);
+        row3.setPadding(new Insets(30));
+
+        HBox row4 = new HBox(20);
+        row4.getChildren().addAll(yesBtn, noBtn);
+        row4.setAlignment(Pos.CENTER);
+        row4.setPadding(new Insets(20));
+
+        VBox layout1 = new VBox(20);
+        layout1.getChildren().addAll(row0, row1, row2, row3, row4);
+        layout1.setAlignment(Pos.TOP_CENTER);
+        layout1.setPadding(new Insets(30, 0, 0, 0));
+
+        Scene scene = new Scene(layout1, 500, 600);
+
+        stage.setScene(scene);
+        stage.showAndWait();
+
+        return 0;
+    }
+
     private int deleteAccountClicked() throws IOException, FileNotFoundException, ClassNotFoundException {
 
         String selectUsername = table.getSelectionModel().getSelectedItem().getUsername();
@@ -490,6 +612,11 @@ public class Admin_UI extends UI {
         ArrayList<Account> presentAccounts = new ArrayList<>();
 
         oldAccounts = file.readFile(user);
+
+        if (selectUsername.equals(userAccount.getUsername()) && selectEmail.equals(userAccount.getEmail())) {
+            AlertBox.displayAlert("Delect Account.", "You cannot delete your account.");
+            return 0;
+        }
 
         for (Account account : oldAccounts) {
             String chkUser = account.getUsername();
@@ -506,12 +633,13 @@ public class Admin_UI extends UI {
             else{
                 if(AlertBox.display("Delect Account.","Are you sure to delete this account?")) {
                     AlertBox.displayAlert("Delect Account.","Delete account successed.");
+
                     System.out.println("delete " + account);
                 } else {
-                    AlertBox.displayAlert("Delect Account.","Delete account failed.");
-                    presentAccounts.add(account);
+                    AlertBox.displayAlert("Delect Account.", "Delete account failed.");
+                    return 0;
                 }
-                    
+
             }
         }
 
@@ -563,4 +691,5 @@ public class Admin_UI extends UI {
         out.writeObject(listSong);
         out.close();
     }
+
 }
