@@ -129,7 +129,8 @@ public class MyAccount {
         row10.getChildren().add(new Text(" "));
         HBox row12 = new HBox(10);
 
-        photo = new ImageView(myAccount.getPhoto());
+        image = myAccount.getPhoto();
+        photo = new ImageView(image);
         photo.setFitHeight(200);
         photo.setFitWidth(200);
         photo.setPreserveRatio(true);
@@ -149,6 +150,8 @@ public class MyAccount {
     }
 
     public void editAccount() {
+        
+        this.changeStatus = false;
         username.setPromptText("Usrname");
         username.setText(this.myAccount.getUsername());
         username.setMaxWidth(300);
@@ -325,10 +328,16 @@ public class MyAccount {
                 break;
             }
         }
+        
+        System.out.println(uniqueID);
+        
         if (uniqueID == false) {
             AlertBox.displayAlert("Something went wrong!", "Email / username is already exists.");
-        } else if (currentPassword.getText().equals(myAccount.getPassword()) && password.getText().equals(passwordConfirm.getText())) {
-            if (firstname.getText().isBlank() || lastname.getText().isBlank() || username.getText().isBlank()
+        } else if (currentPassword.getText().equals(myAccount.getPassword())) {
+            if(this.changeStatus && !password.getText().equals(passwordConfirm.getText())) {
+                AlertBox.displayAlert("Something went wrong!", "Confirm password is not as same as password.");
+            }
+            else if (firstname.getText().isBlank() || lastname.getText().isBlank() || username.getText().isBlank()
                     || email.getText().isBlank()) {
                 AlertBox.displayAlert("Something went wrong!", "Please check all the form.\nAnd make sure it was filled.");
             } else {
@@ -338,7 +347,6 @@ public class MyAccount {
                             + "Make sure that's your date of birth.");
                 } else if (!isEmail(email.getText())) {
                     AlertBox.displayAlert("Something went wrong!", "Please use another email.");
-
                 } else {
 
                     ArrayList<Account> changeAccount = new ArrayList<>();
@@ -348,7 +356,6 @@ public class MyAccount {
                     }
 
                     for (Account account : listAccount) {
-
                         if (account.getUsername().equals(myAccount.getUsername())) {
                             myAccount.setPhoto(image);
                             this.photo.setImage(myAccount.getPhoto());
@@ -379,10 +386,11 @@ public class MyAccount {
                     editSave = true;
                 }
             }
+
+            this.Clear();
+
         } else if (!currentPassword.getText().equals(myAccount.getPassword())) {
             AlertBox.displayAlert("Something went wrong!", "Current password is not correct.");
-        } else {
-            AlertBox.displayAlert("Something went wrong!", "Confirm password is not as same as password.");
         }
 
         changeStatus = false;
@@ -391,6 +399,12 @@ public class MyAccount {
 
     public Account getMyAccount() {
         return myAccount;
+    }
+
+    public void Clear() {
+        currentPassword.clear();
+        password.clear();
+        passwordConfirm.clear();
     }
 
     private boolean isEmail(String email) {
