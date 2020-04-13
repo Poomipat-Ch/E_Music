@@ -48,6 +48,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -56,21 +58,26 @@ import javafx.stage.StageStyle;
  *
  * @author Sirawit
  */
-public class Admin_UI extends UI{
-    
+public class Admin_UI extends UI {
+
     LocalDate dOB;
     File user = new File("src/data/user.dat");
-    boolean dateSet = false;   
-    ArrayList<Account> listAccount = new ArrayList<>(); 
+    boolean dateSet = false;
+    ArrayList<Account> listAccount = new ArrayList<>();
     ArrayList<Account> addAccount = new ArrayList<>();
-    
-    ObservableList<Account> list = null; 
-    
+
+    //Gut add
+    static Song songSelect = new Song();
+    static ArrayList<Song> songArrayList = new ArrayList<Song>();
+    static File musicFile = new File("src/data/Song.dat");
+
+//    songArrayList = songSelect.getMyMusicList();
+    ObservableList<Account> list = null;
+
     SearchSystem searchSystemMain = new SearchSystem();
     SearchSystemAccount searchAccount = new SearchSystemAccount();
 
     TableView<Account> table;
-    
 
     public Admin_UI(Stage stage) {
         super(stage);
@@ -83,7 +90,7 @@ public class Admin_UI extends UI{
         stage.setScene(scene);
         stage.show();
     }
-    
+
     private Button CreaButton(String text) {
         Button downLoadButton = new Button(text);
         downLoadButton.getStyleClass().add("detailbtn");
@@ -92,40 +99,60 @@ public class Admin_UI extends UI{
         return downLoadButton;
 
     }
-    
+
     @Override
     public AnchorPane allSongPane() {   //First Page 1
         AnchorPane pane = new AnchorPane();
-        
+
         Label title1 = new Label("Welcome to Administrative Page!");
         title1.getStyleClass().add("titleAdmin");
         title1.setLayoutX(50);
         title1.setLayoutY(5);
 
-            Button editBtn = CreaButton("Edit Song");       //Edit Button
-            editBtn.setLayoutX(780);
-            editBtn.setLayoutY(600);
-            editBtn.setOnAction(e->{
-                //Gut //Edit profile / file e.g. artist, name, time, and file .mp3
-            });
-            
-            Button uploadBtn = CreaButton("Upload");        //Upload Button
-            uploadBtn.setLayoutX(780);
-            uploadBtn.setLayoutY(700);
-            uploadBtn.setOnAction(e->{
-                //Gut
-            });
-            
-            Button deleteBtn = CreaButton("Delete");        //Delete Button
-            deleteBtn.setLayoutX(780);
-            deleteBtn.setLayoutY(770);
-            deleteBtn.setOnAction(e->{
-                //Gut
-            });
-            
-        pane.getChildren().addAll(AllSong(),UpdateClikedPane(),title1,editBtn,uploadBtn,deleteBtn);
+        Button editBtn = CreaButton("Edit Song");       //Edit Button
+        editBtn.setLayoutX(780);
+        editBtn.setLayoutY(600);
+        editBtn.setOnAction(e -> {
+            //Gut //Edit profile / file e.g. artist, name, time, and file .mp3
+        });
 
-        return pane;   
+        Button uploadBtn = CreaButton("Upload");        //Upload Button
+        uploadBtn.setLayoutX(780);
+        uploadBtn.setLayoutY(700);
+        uploadBtn.setOnAction(e -> {
+            //Gut
+            uploadBtn.setOnMouseClicked((event) -> {
+                if (event.getButton().equals(MouseButton.PRIMARY)) {
+                    this.uploadSong();
+                }
+            });
+        });
+
+        Button deleteBtn = CreaButton("Delete");        //Delete Button
+        deleteBtn.setLayoutX(780);
+        deleteBtn.setLayoutY(770);
+        deleteBtn.setOnAction(e -> {
+            //Gut
+            deleteBtn.setOnMouseClicked((event) -> {
+                if (event.getButton().equals(MouseButton.PRIMARY)) {
+                    try {
+                        songArrayList = readFileSong(musicFile);
+                    } catch (IOException | ClassNotFoundException ex) {
+                        System.out.println("Added READFILE" + ex);
+                    }
+                    songArrayList.remove(songSelect);
+                    try {
+                        writeFileSong(musicFile, songArrayList);
+                    } catch (IOException ex) {
+                        System.out.println("Added WRITEFILE" + ex);
+                    }
+                }
+            });
+        });
+
+        pane.getChildren().addAll(AllSong(), UpdateClikedPane(), title1, editBtn, uploadBtn, deleteBtn);
+
+        return pane;
     }
 
     @Override
@@ -133,23 +160,23 @@ public class Admin_UI extends UI{
         AnchorPane pane = new AnchorPane();
         pane.setMinHeight(760);
         pane.setMaxHeight(Double.MAX_VALUE);
-        
+
         Label title2 = new Label("Account Management System");
         title2.getStyleClass().add("titleAdmin");
         title2.setLayoutX(50);
         title2.setLayoutY(5);
-        
+
         Button addAccountBtn = CreaButton("Add Account");
         addAccountBtn.setLayoutX(290);
-        addAccountBtn.setLayoutY(675); 
+        addAccountBtn.setLayoutY(675);
         addAccountBtn.setOnAction(e -> {
             register(null);
             refreshTable();
         });
-        
+
         Button updateAccountBtn = CreaButton("Update Account");
         updateAccountBtn.setLayoutX(520);
-        updateAccountBtn.setLayoutY(675); 
+        updateAccountBtn.setLayoutY(675);
         updateAccountBtn.setOnAction(e -> {
             //RACH -<<<
             refreshTable();
@@ -159,35 +186,35 @@ public class Admin_UI extends UI{
         deleteAccountBtn.setLayoutX(750);
         deleteAccountBtn.setLayoutY(675);
         deleteAccountBtn.setOnAction(e -> {
-            
+
             try {
                 deleteAccountClicked();
             } catch (IOException | ClassNotFoundException ex) {
                 Logger.getLogger(Admin_UI.class.getName()).log(Level.SEVERE, null, ex);
-            }     
+            }
             refreshTable();
         });
-        
-        pane.getChildren().addAll(addAccountBtn, updateAccountBtn, deleteAccountBtn, tableAccount(), searchBoxMy(),title2);
 
-        return pane;    
+        pane.getChildren().addAll(addAccountBtn, updateAccountBtn, deleteAccountBtn, tableAccount(), searchBoxMy(), title2);
+
+        return pane;
     }
-     
+
     private AnchorPane tableAccount() {
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.setMinSize(933, 500); //1030 - 300 - 60, 700
         anchorPane.setLayoutX(20);
         anchorPane.setLayoutY(150);
-        
+
         table = new TableView<>();
-        
+
         table.setEditable(true);
         table.setPrefSize(anchorPane.getMinWidth(), anchorPane.getMinHeight());
 
         table.setOnMouseClicked((event) -> {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
                 System.out.println(table.getSelectionModel().getSelectedItem().getName()); //.getNameSong()
-                
+
             }
         });
 
@@ -202,19 +229,19 @@ public class Admin_UI extends UI{
         // Create column Username (Data type of String).
         TableColumn<Account, String> usernameCol = new TableColumn<>("Username");
         usernameCol.setMinWidth(120);
-        
+
         // Create column Email (Data type of String).
         TableColumn<Account, String> emailCol = new TableColumn<>("Email");
         emailCol.setMinWidth(250);
-        
+
         // Create column Gender (Data type of String).
         TableColumn<Account, String> genderCol = new TableColumn<>("Gender");
         genderCol.setMinWidth(90);
-        
+
         // Create column DoB (Data type of LocalDate).
         TableColumn<Account, LocalDate> dobCol = new TableColumn<>("Date of Birth");
         dobCol.setMinWidth(130);
-        
+
         // Create column isAdmin (Data type of Boolean).
         TableColumn<Account, Boolean> adminCol = new TableColumn<>("Admin");
         adminCol.setMinWidth(100);
@@ -228,19 +255,18 @@ public class Admin_UI extends UI{
         genderCol.setCellValueFactory(new PropertyValueFactory<>("gender"));
         dobCol.setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
         adminCol.setCellValueFactory(new PropertyValueFactory<>("isAdmin"));
-        
+
         // Set Sort type for userName column
         nameCol.setSortType(TableColumn.SortType.DESCENDING);
 
         // Display row data       
         refreshTable(); // get.list account-> sorted ** see function below
-        
+
         table.getColumns().addAll(nameCol, surnameCol, usernameCol, emailCol, genderCol, dobCol, adminCol);
         anchorPane.getChildren().addAll(table);
 
         return anchorPane;
     }
-    
 
     @Override
     public HBox searchBoxAll() { // All Song First Page
@@ -252,11 +278,11 @@ public class Admin_UI extends UI{
         searchTextField.setMinSize(1030 - 300 - 60 - 70, 30);
 
         Button searchButton = CreaButton("Search");
-        searchButton.setOnMouseClicked(e ->{
+        searchButton.setOnMouseClicked(e -> {
             Admin_UI.totalPane.getChildren().remove(1);
             Admin_UI.totalPane.getChildren().add(Admin_UI.updateScrollPane(searchTextField.getText()));
         });
-        
+
         searchButton.setStyle("-fx-font-size : 15px;");
         searchButton.setMinSize(50, 30);
         HBox.setMargin(searchButton, new Insets(0, 0, 0, 10));
@@ -285,7 +311,7 @@ public class Admin_UI extends UI{
         Button searchButton = CreaButton("Refresh");
         searchButton.setStyle("-fx-font-size : 15px;");
         searchButton.setMinSize(50, 32);
-        searchButton.setOnAction(e->{
+        searchButton.setOnAction(e -> {
             searchTextField.clear();
             list.removeAll();
             refreshTable();
@@ -299,10 +325,11 @@ public class Admin_UI extends UI{
 
         return hBox;
     }
-    
+
     public static VBox totalPane;
-    private ScrollPane  AllSong(){
-        
+
+    private ScrollPane AllSong() {
+
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setPrefSize(750, 800);
         scrollPane.setLayoutY(100);
@@ -312,68 +339,72 @@ public class Admin_UI extends UI{
         scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.ALWAYS);
         scrollPane.setPadding(new Insets(10));
         scrollPane.getStyleClass().add("allSong"); //CSS
-        
+
         totalPane = new VBox();
         totalPane.setAlignment(Pos.CENTER);
         totalPane.getStyleClass().add("allSong"); //CSS
 
-        totalPane.getChildren().addAll(searchBoxAll(),updateScrollPane(""));
-        
+        totalPane.getChildren().addAll(searchBoxAll(), updateScrollPane(""));
+
         scrollPane.setContent(totalPane);
-        
+
         return scrollPane;
     }
-    
+
     static Label selectNameSong = new Label("");
-    static Label selectArtist = new Label(""); 
+    static Label selectArtist = new Label("");
     static ImageView selectImage;
-    
-    public static TilePane updateScrollPane(String text){
+
+    public static TilePane updateScrollPane(String text) {
         VBox paneContent;
         Button contentButton;
         ImageView imageView;
-       
+
         TilePane tilePane = new TilePane();
         tilePane.setPadding(new Insets(10, 10, 10, 10)); // Top,Bottom,Right,Left
         tilePane.setVgap(10);
         tilePane.setHgap(10);
         tilePane.setAlignment(Pos.CENTER);
-        
-        ObservableList<Song> list = Song.getMyMusicList();
-        
+
         String lowerCase = text.toLowerCase();
-        
-        for (Song song : list) {
-            
+        try {
+            songArrayList = readFileSong(musicFile);
+        } catch (Exception ex) {
+            System.out.println("error: " + ex);
+        }
+        for (Song song : songArrayList) {
+
             if (song.getNameSong().contains(text) || song.getArtistSong().toLowerCase().contains(lowerCase)) {
                 contentButton = new Button();
-                contentButton.getStyleClass().add("contentDetailbtn"); //CSS
-                contentButton.setOnAction(e->{
+                contentButton.getStyleClass().add("contentDetailbtn"); //CSS           
+                contentButton.setOnAction(e -> {
                     //SELECTION 
-                    Admin_UI.updateVBox.getChildren().removeAll(selectImage,selectNameSong,selectArtist);
-            
+                    Admin_UI.updateVBox.getChildren().removeAll(selectImage, selectNameSong, selectArtist);
+
                     selectNameSong = new Label(song.getNameSong());
                     selectArtist = new Label("ARTIST : " + song.getArtistSong());
                     selectImage = new ImageView(new Image("/image/1.jpg"));   //DATA...Collection from database..
                     selectImage.setFitHeight(300);
-                    selectImage.setFitWidth(250); 
-                    
+                    selectImage.setFitWidth(250);
+
+                    //Gut add
+                    songSelect = song;
+
                     selectNameSong.getStyleClass().add("nameSong");
                     selectArtist.getStyleClass().add("nameArtist");
-                    
-                    Admin_UI.updateVBox.getChildren().addAll(selectImage,selectNameSong,selectArtist);        
+
+                    Admin_UI.updateVBox.getChildren().addAll(selectImage, selectNameSong, selectArtist);
                 });
-                
+
                 paneContent = new VBox();
                 paneContent.setAlignment(Pos.CENTER);
-                paneContent.setPadding(new Insets(10,10,10,10));
+                paneContent.setPadding(new Insets(10, 10, 10, 10));
                 paneContent.getStyleClass().add("content-allSong"); //CSS
 
                 imageView = new ImageView(new Image("/image/1.jpg"));
                 imageView.setFitHeight(200); //160
                 imageView.setFitWidth(150); //120
-                
-                
+
                 paneContent.getChildren().addAll(imageView, new Label(song.getNameSong()), new Label("ARTIST : " + song.getArtistSong()));
                 contentButton.setGraphic(paneContent);
                 contentButton.setMinHeight(300);
@@ -382,38 +413,39 @@ public class Admin_UI extends UI{
                 tilePane.getChildren().add(contentButton);
             }
         }
-       return tilePane;
+        return tilePane;
     }
-    
+
     //UPDATE CLICKPANE // RUN ONLY ONCE THE PROGRAM RUN 1 PAGE
     public static VBox updateVBox;
-    public AnchorPane UpdateClikedPane(){
+
+    public AnchorPane UpdateClikedPane() {
         //Image
         AnchorPane updatePane = new AnchorPane();
         updatePane.setLayoutX(760);
         updatePane.setLayoutY(100);
-        
+
         updateVBox = new VBox();
 
         selectImage = new ImageView(new Image("/image/blankimage.jpg"));
         selectImage.setFitHeight(300);
         selectImage.setFitWidth(250);
-        
+
         selectNameSong = new Label("N/A");
-        selectArtist = new Label("Artist: N/A"); 
-        
+        selectArtist = new Label("Artist: N/A");
+
         selectNameSong.getStyleClass().add("nameSong");
         selectArtist.getStyleClass().add("nameArtist");
-        
+
         selectNameSong.setAlignment(Pos.CENTER);
         selectArtist.setAlignment(Pos.CENTER_LEFT);
-        
-        updateVBox.getChildren().addAll(selectImage,selectNameSong,selectArtist);
+
+        updateVBox.getChildren().addAll(selectImage, selectNameSong, selectArtist);
         updatePane.getChildren().add(updateVBox);
-        
+
         return updatePane;
-    } 
-    
+    }
+
     public void register(String email) {
         //StringProperty name, surname, mail, password, sex;
         Stage regisStage = new Stage();
@@ -455,7 +487,7 @@ public class Admin_UI extends UI{
         female.setToggleGroup(sexToggle);
         otherRadio.setToggleGroup(sexToggle);
         sexToggle.selectToggle(male); // Set default = male
-        
+
         Label adminText = new Label("Administrive");
         ToggleGroup adminToggle = new ToggleGroup(); //create radio button group
         RadioButton userRadio = new RadioButton("User"); //create radio button
@@ -492,7 +524,7 @@ public class Admin_UI extends UI{
             } else {
                 userGender = "N/A";
             }
-            
+
             boolean isAdmin = false;
 
             //Check admin radioButton which is selected
@@ -502,7 +534,6 @@ public class Admin_UI extends UI{
                 isAdmin = false;
             }
             ArrayList<Account> addAccount = new ArrayList<>();
-
 
             try {
                 listAccount = readFile(user);
@@ -533,8 +564,7 @@ public class Admin_UI extends UI{
                         System.out.println("User is come from the future.");
                         AlertBox.displayAlert("Something went wrong!", "Please check a date field again.\n"
                                 + "Make sure that's your date of birth.");
-                    }
-                    //Check email if it's not will call error email [ see function isEmail for more information]
+                    } //Check email if it's not will call error email [ see function isEmail for more information]
                     else if (!isEmail(mailIn.getText())) {
                         AlertBox.displayAlert("Something went wrong!", "Please use another email.");
 
@@ -571,7 +601,7 @@ public class Admin_UI extends UI{
             }
 
         });
-        
+
         Button cancel = new Button("Cancel");
         cancel.setOnAction(e -> {
             System.out.println("Canceling Registeration.");
@@ -591,7 +621,7 @@ public class Admin_UI extends UI{
         HBox sexRow = new HBox(20);
         sexRow.getChildren().addAll(male, female, otherRadio);
         sexRow.setAlignment(Pos.CENTER);
-        
+
         HBox adminRow = new HBox(20);
         adminRow.getChildren().addAll(userRadio, adminRadio);
         adminRow.setAlignment(Pos.CENTER);
@@ -611,61 +641,71 @@ public class Admin_UI extends UI{
         regisStage.showAndWait();
 
     }
-    
+
     //ReadFile Function from Registor
     private ArrayList<Account> readFile(File file) throws FileNotFoundException, IOException, ClassNotFoundException {
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
         return (ArrayList<Account>) in.readObject();
     }
-    
+
     //WriteFile Function from Registor
     private void writeFile(File file, ArrayList<Account> listAccount) throws FileNotFoundException, IOException {
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
         out.writeObject(listAccount);
         out.close();
     }
-    
-    private void refreshTable(){ //get.list -> sorted
+
+    private static ArrayList<Song> readFileSong(File file) throws FileNotFoundException, IOException, ClassNotFoundException {
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+        return (ArrayList<Song>) in.readObject();
+    }
+
+    private static void writeFileSong(File file, ArrayList<Song> listAccount) throws FileNotFoundException, IOException {
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+        out.writeObject(listAccount);
+        out.close();
+    }
+
+    private void refreshTable() { //get.list -> sorted
         //TRY -CATCH FOR EXCEPTION ... NOTHING TO DO WITH IT
         try {
             list = Account.getAccountList();
         } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(Admin_UI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         //Filter for Search and Sorted
         FilteredList<Account> filterData = new FilteredList<>(list, b -> true);
         searchAccount.setFilterData(filterData);
-                                                       
-        SortedList<Account> sortedList = new SortedList<>(searchAccount.getFilterData()); 
-        sortedList.comparatorProperty().bind(table.comparatorProperty()); 
-        table.setItems(filterData);  
+
+        SortedList<Account> sortedList = new SortedList<>(searchAccount.getFilterData());
+        sortedList.comparatorProperty().bind(table.comparatorProperty());
+        table.setItems(filterData);
     }
-    
+
     private void deleteAccountClicked() throws IOException, FileNotFoundException, ClassNotFoundException {
-        
+
         String selectUsername = table.getSelectionModel().getSelectedItem().getUsername();
         String selectEmail = table.getSelectionModel().getSelectedItem().getEmail();
-        
+
         ArrayList<Account> oldAccounts = new ArrayList<>();
         ArrayList<Account> presentAccounts = new ArrayList<>();
-        oldAccounts = readFile(user);   
-        
+        oldAccounts = readFile(user);
+
         for (Account account : oldAccounts) {
             String chkUser = account.getUsername();
             String chkEmail = account.getEmail();
-            if (!(selectEmail.equals(chkEmail) && selectEmail.equals(chkEmail))) {  
+            if (!(selectEmail.equals(chkEmail) && selectEmail.equals(chkEmail))) {
                 presentAccounts.add(account);
-            }
-            else{
+            } else {
                 System.out.println("delete " + account);
             }
         }
-        
+
         writeFile(user, presentAccounts);
 
     }
-    
+
     //Verify email address bab easy
     //.contains = have that string in email
     //catch case dai pra marn nee
@@ -678,5 +718,19 @@ public class Admin_UI extends UI{
     public BorderPane myAccount() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
+    public void uploadSong() {
+        // create a File chooser 
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("MP3 Files", "*.mp3"));
+        Label label = new Label("no files selected");
+        File file = fileChooser.showOpenDialog(null);
+
+        if (file != null) {
+
+            label.setText(file.getAbsolutePath() + "  selected");
+        } else {
+            System.out.println("upload cancel");
+        }
+    }
 }

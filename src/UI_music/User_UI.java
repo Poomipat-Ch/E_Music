@@ -13,6 +13,8 @@ import Component_Music.MusicFunc;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -155,7 +157,14 @@ public class User_UI extends UI {
         detailCol.setSortable(false);
 
         // Display row data
-        ObservableList<Song> list = Song.getMyMusicList();
+        ObservableList<Song> list = null;
+        try {
+            list = Song.getMyMusicList();
+        } catch (IOException ex) {
+            Logger.getLogger(User_UI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(User_UI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         FilteredList<Song> filterData = new FilteredList<>(list, b -> true);
         searchSystemMyLibrary.setFilterData(filterData);
 
@@ -255,7 +264,14 @@ public class User_UI extends UI {
         tilePane.setVgap(10);
         tilePane.setHgap(10);
         tilePane.setAlignment(Pos.CENTER_LEFT); // By POP
-        ObservableList<Song> list = Song.getMyMusicList();
+        ObservableList<Song> list = null;
+        try {
+            list = Song.getMyMusicList();
+        } catch (IOException ex) {
+            Logger.getLogger(User_UI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(User_UI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         String lowerCase = text.toLowerCase();
         

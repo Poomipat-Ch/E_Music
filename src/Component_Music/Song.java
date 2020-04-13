@@ -5,6 +5,13 @@
  */
 package Component_Music;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -12,11 +19,14 @@ import javafx.collections.ObservableList;
  *
  * @author 62010710
  */
-public class Song {
+public class Song implements Serializable{
     
     private String nameSong;
     private String detailSong;
     private String artistSong;
+    private String priceSong;
+    
+    private static File musicFile = new File("src/data/Song.dat");
 
     public Song() {
     }
@@ -25,6 +35,10 @@ public class Song {
         this.nameSong = nameSong;
         this.detailSong = detailSong;
         this.artistSong = artistSong;
+    }
+
+    public Song(Song song) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public String getNameSong() {
@@ -38,6 +52,10 @@ public class Song {
     public String getArtistSong() {
         return artistSong;
     }
+    
+    public String getPriceSong() {
+        return priceSong;
+    }
 
     @Override
     public String toString() {
@@ -45,24 +63,19 @@ public class Song {
     }
     
     
-    public static ObservableList<Song> getMyMusicList(){
-        ObservableList list = FXCollections.observableArrayList(
-                new Song("Maps", "3.10s", "Maroon 5"),
-                new Song("Sugar", "3.30s", "Maroon 5"),
-                new Song("Payphone", "4.05s", "Maroon 5"),
-                new Song("One More Night", "3.05s", "Maroon 5"),
-                new Song("Natural Birds ", "3.15s", "Imagine Dragons"),
-                new Song("Thunder", "3.20s", "Imagine Dragons"),
-                new Song("I Bet My Life", "3.08s", "Imagine Dragons"),
-                new Song("Radioactive", "3.30s", "Imagine Dragons"),
-                new Song("The Scientist", "3.17s", "Coldplay"),
-                new Song("Paradise", "4.15s", "Coldplay"),
-                new Song("Yellow", "3.15s", "Coldplay"),
-                new Song("Everyday Life", "3.16s", "Coldplay")
-                
-        );
+    public static ObservableList<Song> getMyMusicList() throws FileNotFoundException, IOException, ClassNotFoundException{
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream(musicFile));
+ 
+        ObservableList list = FXCollections.observableArrayList();
+        
+        for (Song song : (ArrayList<Song>)in.readObject()) {
+            list.add(song);
+        }
+    
+  
         return list;
     }
+    
     
     public static ObservableList<Song> getMusicList(){
         ObservableList list = FXCollections.observableArrayList(
