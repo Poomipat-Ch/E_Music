@@ -80,6 +80,7 @@ public class MyAccount {
     private FileChooser fileChooser;
     private File filePath;
     private ImageView photo;
+    private Image image;
     
     public MyAccount(Account myAccount) {
         this.showAccount(myAccount);
@@ -127,10 +128,22 @@ public class MyAccount {
             row10.getChildren().add(new Text(" "));
             HBox row12 = new HBox(10);      
         
+        photo = new ImageView(myAccount.getPhoto());
+        photo.setFitHeight(200);
+        photo.setFitWidth(200);
+        photo.setPreserveRatio(true);
+        
+        VBox profilePictureBox = new VBox(10);
+        profilePictureBox.setPadding(new Insets(30));
+        profilePictureBox.getChildren().addAll(photo);
+        profilePictureBox.setAlignment(Pos.CENTER);
+        profilePictureBox.setMinWidth(300);
+        
         editBox.getChildren().addAll(row, row1, row2, row4, row5, row6, row7, row8,row9, row10);        
         editBox.setPadding(new Insets(50, 50, 50, 50));
         
         profilePane.setStyle("-fx-background-color: #f5deb3");
+        profilePane.setLeft(profilePictureBox);
         profilePane.setCenter(editBox);
     }
     
@@ -237,10 +250,47 @@ public class MyAccount {
                     changeStatus = true;
             });
             
+        Button changeImage = new Button("Change Image");
+        changeImage.setOnAction(event -> {
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            fileChooser = new FileChooser();
+            fileChooser.setTitle("Open Image");
+
+            //Set to user's directory or go to the default C drvie if cannot access
+            String userDirectoryString = System.getProperty("user.home") + "\\Pictures";
+            File userDirectory = new File(userDirectoryString);
+
+            if (!userDirectory.canRead()) {
+                userDirectory = new File("user.home");
+            }
+
+            fileChooser.setInitialDirectory(userDirectory);
+
+            this.filePath = fileChooser.showOpenDialog(stage);
+
+            //Try to update the image by loading the new image
+            try {
+                BufferedImage bufferedImage = ImageIO.read(filePath);
+                Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+                this.photo.setImage(image);
+                this.image = image;
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        });
+
+        VBox profilePictureBox = new VBox(10);
+        profilePictureBox.setPadding(new Insets(50, 0, 0, 0));
+        profilePictureBox.getChildren().addAll(photo, changeImage);
+        profilePictureBox.setAlignment(Pos.TOP_CENTER);
+        profilePictureBox.setMinWidth(300);
+            
         editBox.getChildren().clear();
         editBox.getChildren().addAll(row, row1, row2, row3, row4, row5, row6, row7, row8,row9, row10,row11, row12, changePassword);        
         editBox.setPadding(new Insets(50, 50, 50, 50));
         profilePane.setStyle("-fx-background-color: #f5deb3");
+        profilePane.setLeft(profilePictureBox);
         profilePane.setCenter(editBox);
     }
     
@@ -299,6 +349,8 @@ public class MyAccount {
                         for (Account account : listAccount) {
                             
                             if(account.getUsername().equals(myAccount.getUsername())) {
+                                myAccount.setPhoto(image);
+                                this.photo.setImage(myAccount.getPhoto());
                                 Account newAccount = new Account(firstname.getText(), lastname.getText(), username.getText(), email.getText(),
                                         myAccount.getPassword(), userGender, dOB, myAccount.getQuestion(), myAccount.getAnswer(), myAccount.getIsAdmin(), myAccount.getPhoto());
                                 changeAccount.add(newAccount);
@@ -334,34 +386,6 @@ public class MyAccount {
         
             changeStatus = false;
         return editSave;
-    }
-    
-    public void chooseImageButtonPushed(ActionEvent event) {
-        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        
-        fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Image");
-        
-        //Set to user's directory or go to the default C drvie if cannot access
-        String userDirectoryString = System.getProperty("user.home") + "\\Pictures";
-        File userDirectory = new File(userDirectoryString);
-        
-        if(!userDirectory.canRead())
-            userDirectory = new File("c:/");
-        
-        fileChooser.setInitialDirectory(userDirectory);
-        
-        this.filePath = fileChooser.showOpenDialog(stage);
-        
-        //Try to update the image by loading the new image
-        try {
-            BufferedImage bufferedImage = ImageIO.read(filePath);
-            Image image = SwingFXUtils.toFXImage(bufferedImage, null);
-            myAccount.setPhoto(image);
-            this.photo.setImage(myAccount.getPhoto());
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
     }
 
     public Account getMyAccount() {

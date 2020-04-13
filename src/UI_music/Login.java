@@ -19,6 +19,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -62,10 +64,7 @@ public class Login {
     ArrayList<Account> listAccount = new ArrayList<>();
     Account userAccount = new Account();
     ArrayList<Account> addAccount = new ArrayList<>();
-    
-    private ImageView profilePicture;
-    private Image profileImage;
-    
+      
     private FileChooser fileChooser;
     private File filePath;
     private ImageView photo;
@@ -73,8 +72,9 @@ public class Login {
 
     public Login(Stage stage) throws FileNotFoundException, IOException, ClassNotFoundException {
 
+        image = new Image("/image/defaultprofile.png");
 //**READ THIS***** This save in user.dat file, if you can't run admin, try run this code only once and comment again
-//        listAccount.add(new Account("admin", "admin", "admin", "admin@gmail.com", "admin", null, null, null, null, true));
+//        listAccount.add(new Account("admin", "admin", "admin", "admin@gmail.com", "admin", null, null, null, null, true, image));
 //        writeFile(user, listAccount); 
 
         Login.stage = stage;
@@ -138,18 +138,26 @@ public class Login {
             }
             //Can Login
             if (logIn) {
-                //success goto user page
-                System.out.println("Login complete.\nWelcome, " + userAccount.getName());
-                // AlertBox.display("Login Complete", "Go to main page.");
-                Login.stage.hide();
-                if (userAccount.getIsAdmin()) {
-                    Admin_UI admin_UI = new Admin_UI(new Stage()); // <-- EDIT HERE Mr.Sirawit
-                } else {
-                    User_UI user_UI = new User_UI(new Stage(), userAccount);
+                    //success goto user page
+                    System.out.println("Login complete.\nWelcome, " + userAccount.getName());
+                    // AlertBox.display("Login Complete", "Go to main page.");
+                    Login.stage.hide();
+                    if (userAccount.getIsAdmin()) {
+                        Admin_UI admin_UI = new Admin_UI(new Stage()); // <-- EDIT HERE Mr.Sirawit
+                    } else {
+                        User_UI user_UI = new User_UI(new Stage(), userAccount);
+                    }
+                    idInput.clear();
+                    passInput.clear();
+                    
+                try {
+                    listAccount = readFile(user);
+                } catch (IOException ex) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                idInput.clear();
-                passInput.clear();
-
+                
             } else {
                 //show error
                 if (idInput.getText().isBlank() || passInput.getText().isBlank()) {
@@ -314,7 +322,7 @@ public class Login {
                         }
 
                         addAccount.add(new Account(nameIn.getText(), surnameIn.getText(), usernameIn.getText(), mailIn.getText(),
-                                passIn.getText(), userGender, dOB, question.getValue(), answer.getText(), false, profileImage));
+                                passIn.getText(), userGender, dOB, question.getValue(), answer.getText(), false,image));
 
                         try {
                             writeFile(user, addAccount);
@@ -552,7 +560,9 @@ public class Login {
 
     private ArrayList<Account> readFile(File file) throws FileNotFoundException, IOException, ClassNotFoundException {
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-        return (ArrayList<Account>) in.readObject();
+        ArrayList<Account> list = (ArrayList<Account>) in.readObject();
+        in.close();
+        return list;
     }
 
     private void writeFile(File file, ArrayList<Account> listAccount) throws FileNotFoundException, IOException {

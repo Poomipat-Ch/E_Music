@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
 
 public class Account implements Serializable {
     private String name;
@@ -28,7 +31,9 @@ public class Account implements Serializable {
     private String answer;
     private LocalDate dateOfBirth;
     private boolean isAdmin;
-    private Image photo;
+    
+    private int width, height;
+    private int[][] data;
     
     private static File user = new File("src/data/user.dat");
     
@@ -48,7 +53,7 @@ public class Account implements Serializable {
         this.question = question;
         this.answer = answer;
         this.isAdmin = isAdmin;
-        this.photo = image;
+        this.setPhoto(image);
     }
     
     public boolean getIsAdmin(){
@@ -102,13 +107,32 @@ public class Account implements Serializable {
     public String getGender() {
         return gender;
     }
+    
+    public void setPhoto(Image image) {
+        width = ((int) image.getWidth());
+        height = ((int) image.getHeight());
+        data = new int[width][height];
 
-    public Image getPhoto() {
-        return photo;
+        PixelReader r = image.getPixelReader();
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                data[i][j] = r.getArgb(i, j);
+            }
+        }
+
     }
 
-    public void setPhoto(Image photo) {
-        this.photo = photo;
+    public Image getPhoto() {
+        WritableImage img = new WritableImage(width, height);
+
+        PixelWriter w = img.getPixelWriter();
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                w.setArgb(i, j, data[i][j]);
+            }
+        }
+
+        return img;
     }
     
     /**
