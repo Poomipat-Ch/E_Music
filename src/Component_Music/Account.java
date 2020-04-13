@@ -21,6 +21,7 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 
 public class Account implements Serializable {
+
     private String name;
     private String surname;
     private String email;
@@ -31,17 +32,17 @@ public class Account implements Serializable {
     private String answer;
     private LocalDate dateOfBirth;
     private boolean isAdmin;
-    
+
     private int width, height;
     private int[][] data;
-    
+
     private static File user = new File("src/data/user.dat");
-    
+
     public Account() {
     }
 
     public Account(String name, String surname, String username, String email,
-            String password,String gender, LocalDate dateOfBirth, String question, String answer, boolean isAdmin, Image image) {
+            String password, String gender, LocalDate dateOfBirth, String question, String answer, boolean isAdmin, Image image) {
         this.name = name;
         this.surname = surname;
         this.username = username;
@@ -55,19 +56,20 @@ public class Account implements Serializable {
         this.isAdmin = isAdmin;
         this.setPhoto(image);
     }
-    
-    public boolean getIsAdmin(){
+
+    public boolean getIsAdmin() {
         return isAdmin;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
-    
-    public LocalDate getDateOfBirth(){
+
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
-    public String name(){
+
+    public String name() {
         return name;
     }
 
@@ -107,7 +109,7 @@ public class Account implements Serializable {
     public String getGender() {
         return gender;
     }
-    
+
     public void setPhoto(Image image) {
         width = ((int) image.getWidth());
         height = ((int) image.getHeight());
@@ -119,7 +121,6 @@ public class Account implements Serializable {
                 data[i][j] = r.getArgb(i, j);
             }
         }
-
     }
 
     public Image getPhoto() {
@@ -134,26 +135,23 @@ public class Account implements Serializable {
 
         return img;
     }
-    
+
     /**
      *
-     * @return
-     * @throws FileNotFoundException
+     * @return @throws FileNotFoundException
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    public static ObservableList<Account> getAccountList() throws FileNotFoundException, IOException, ClassNotFoundException{
+    public static ObservableList<Account> getAccountList() throws FileNotFoundException, IOException, ClassNotFoundException {
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(user));
- 
+
         ObservableList list = FXCollections.observableArrayList();
-        
-        for (Account account : (ArrayList<Account>)in.readObject()) {
+
+        for (Account account : (ArrayList<Account>) in.readObject()) {
             list.add(account);
         }
-    
-  
+
         return list;
     }
-    
-    
+
 }
