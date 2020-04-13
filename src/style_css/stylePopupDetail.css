@@ -1,0 +1,47 @@
+.root{
+    -fx-background-color:transparent;
+    -fx-background-radius :  50; 
+}
+.allPane{
+    -fx-background-color:#2d4059;
+    -fx-background-radius :  50; 
+}
+.nameSong{
+    -fx-font-size: 50px;
+    -fx-font-weight:300; 
+    -fx-text-fill:white;
+}
+
+.nameArtist{
+    -fx-font-size: 30px;
+    -fx-font-weight:100;
+    -fx-text-fill:white;
+}
+
+.detailSong{
+    -fx-font-size: 20px; 
+    -fx-align-content: left;
+    -fx-text-fill:white;
+}
+
+.buybtn{
+    -fx-background-color : #00a8cc;
+    -fx-text-fill : white;
+    -fx-background-radius :  10;
+    -fx-font-size : 20px;
+}
+
+.price{
+    -fx-font-size:25px;
+    -fx-padding-right: 10px;
+    -fx-text-fill:white;
+}
+
+
+.buybtn:hover{
+    -fx-background-color: #27496d;
+}
+
+.buybtn:pressed{
+     -fx-background-color: #0c7b93;
+}

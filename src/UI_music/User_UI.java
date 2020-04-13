@@ -7,6 +7,7 @@ package UI_music;
 
 import Component_Music.Account;
 import Component_Music.AlertBox;
+import Component_Music.DetailSongPopUp;
 import Component_Music.SearchSystem;
 import Component_Music.Song;
 import Component_Music.MusicFunc;
@@ -278,6 +279,13 @@ public class User_UI extends UI {
                 contentButton.setGraphic(paneContent);
                 contentButton.setMinHeight(300); // By Pop
                 contentButton.setMinWidth(300); // By Pop
+                contentButton.setOnMouseClicked(e ->{
+                    try {
+                        new DetailSongPopUp(song);
+                    } catch (InterruptedException ex) {
+                        System.out.println("Detail Song Popup : "+ex);
+                    }
+                });
 
                 tilePane.getChildren().add(contentButton);
             }
