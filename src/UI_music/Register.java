@@ -174,7 +174,7 @@ public class Register {
                         }
 
                         addAccount.add(new Account(nameIn.getText(), surnameIn.getText(), usernameIn.getText(), mailIn.getText(),
-                                passIn.getText(), userGender, dOB, question.getValue(), answer.getText(), true, image));
+                                passIn.getText(), userGender, dOB, question.getValue(), answer.getText(), false, image));
 
                         try {
                             file.writeFile(user, addAccount);
