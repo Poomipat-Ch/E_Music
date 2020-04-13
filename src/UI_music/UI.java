@@ -50,7 +50,7 @@ abstract public class UI {
        
        borderPane.setLeft(menu2());
        borderPane.setCenter(mainBox());
-      
+       
       
        
        return borderPane;
@@ -130,12 +130,12 @@ abstract public class UI {
         logoLabel.setMinWidth(250);
         logoLabel.setAlignment(Pos.CENTER);
         
-        Button main = CreaButton("All Song");
+        Button main = CreaButton("Song Management");
         main.setOnMouseClicked(e -> {
             this.vbox.getChildren().remove(1);
             this.vbox.getChildren().add(allSongPane());
         });
-        Button myLibrary = CreaButton("All Account");
+        Button myLibrary = CreaButton("Account Management");
         myLibrary.setOnMouseClicked(e -> {
             this.vbox.getChildren().remove(1);
             this.vbox.getChildren().add(mySongPane());
