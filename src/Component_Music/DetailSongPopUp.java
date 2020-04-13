@@ -87,7 +87,11 @@ public class DetailSongPopUp {
         Button buyButton = new Button("Buy");
         buyButton.getStyleClass().add("buybtn");
         buyButton.setOnMouseClicked(e ->{
-            // Gut <<<<<<<------<<<<
+            // Gut <<<<<<<------<<<< La Tonnee pen Font <-----------------------------------------------------------------------------------**********
+            System.out.println("Clicked");
+            Cashing cashing = new Cashing();
+            cashing.Info(stage, song);
+            System.out.println("Calling Info");
         });
         
         HBox buyPane = new HBox(20,songPrice,buyButton);
