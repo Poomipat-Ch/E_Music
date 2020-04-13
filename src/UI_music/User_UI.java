@@ -45,8 +45,6 @@ import javafx.stage.StageStyle;
  */
 public class User_UI extends UI {
 
-    // SearchSystem searchSystem = new SearchSystem();
-    SearchSystem searchSystemMain = new SearchSystem();
     SearchSystem searchSystemMyLibrary = new SearchSystem();
     MusicFunc nameSongFromTable = new MusicFunc();
     
@@ -233,9 +231,9 @@ public class User_UI extends UI {
         scrollPane.pannableProperty().set(true);
         scrollPane.fitToWidthProperty().set(true);
         scrollPane.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
-        scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPane.setPadding(new Insets(10));
-        scrollPane.getStyleClass().add("allSong");
+        scrollPane.getStyleClass().add("scroll-bar");
         totalPane = new VBox();
         totalPane.setAlignment(Pos.CENTER);
         totalPane.getStyleClass().add("allSong");
@@ -263,7 +261,7 @@ public class User_UI extends UI {
         
         for (Song song : list) {
             
-            if (song.getNameSong().contains(text) || song.getArtistSong().toLowerCase().contains(lowerCase)) {
+            if (song.getNameSong().toLowerCase().contains(lowerCase) || song.getArtistSong().toLowerCase().contains(lowerCase)) {
                 contentButton = new Button();
                 contentButton.getStyleClass().add("contentDetailbtn");
                 paneContent = new VBox();
@@ -291,6 +289,7 @@ public class User_UI extends UI {
     Button savebt;
     Button cancelbt;
         
+    @Override
     public BorderPane myAccount() {
         
         BorderPane accountPane = new BorderPane();
@@ -308,7 +307,7 @@ public class User_UI extends UI {
         savebt = new Button("Save");
         savebt.setOnAction(event -> {
             if(myAccount.saveAccount()) {
-                AlertBox.displayAlert("Edit Profile", "Saved.");;
+                AlertBox.displayAlert("Edit Profile", "Saved.");
                 userAccount = myAccount.getMyAccount();
                 myAccount.showAccount(userAccount);
                 accountPane.setCenter(myAccount.getProfilePane());
