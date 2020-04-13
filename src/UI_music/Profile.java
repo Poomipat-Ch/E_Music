@@ -51,12 +51,14 @@ public class Profile {
                 accountPane.setCenter(myAccount.getProfilePane());
                 bottom.getChildren().clear();
                 bottom.getChildren().addAll(editbt);
-            } 
+            } else 
+                AlertBox.displayAlert("Edit Profile", "Failed.");
         });
         
         cancelbt.setOnAction(event -> {
             myAccount.showAccount(userAccount);
             accountPane.setCenter(myAccount.getProfilePane());
+            myAccount.Clear();
             bottom.getChildren().clear();
             bottom.getChildren().addAll(editbt);
         });

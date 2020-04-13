@@ -417,7 +417,7 @@ public class Admin_UI extends UI{
     } 
     
     private void register() {
-        new Register();
+        new Register(true);
     }
         
     private void refreshTable(){ //get.list -> sorted
@@ -458,7 +458,14 @@ public class Admin_UI extends UI{
                 presentAccounts.add(account);
             }
             else{
-                System.out.println("delete " + account);
+                if(AlertBox.display("Delect Account.","Are you sure to delete this account?")) {
+                    AlertBox.displayAlert("Delect Account.","Delete account successed.");
+                    System.out.println("delete " + account);
+                } else {
+                    AlertBox.displayAlert("Delect Account.","Delete account failed.");
+                    presentAccounts.add(account);
+                }
+                    
             }
         }
         
