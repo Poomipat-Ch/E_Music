@@ -12,8 +12,12 @@ import Component_Music.SearchSystemAccount;
 import Component_Music.Song;
 import Component_Music.UploadSongPopUp;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -41,6 +45,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -51,16 +57,23 @@ import javafx.stage.StageStyle;
  */
 public class Admin_UI extends UI {
 
-    private LocalDate dOB;
-    private File user = new File("src/data/user.dat");
-    private boolean dateSet = false;
-    private ArrayList<Account> listAccount = new ArrayList<>();
-    private ArrayList<Account> addAccount = new ArrayList<>();
+    LocalDate dOB;
+    File user = new File("src/data/user.dat");
+    boolean dateSet = false;
+    ArrayList<Account> listAccount = new ArrayList<>();
+    ArrayList<Account> addAccount = new ArrayList<>();
 
-    private ObservableList<Account> list = null;
+    //Gut add
+    static String songSelectString;
+//    static ObservableList<Song> songArrayList;
+    static ArrayList<Song> songArrayList = new ArrayList<Song>();
+    static File musicFile = new File("src/data/music.dat");
 
-    private SearchSystem searchSystemMain = new SearchSystem();
-    private SearchSystemAccount searchAccount = new SearchSystemAccount();
+    ObservableList<Account> list = null;
+
+    SearchSystem searchSystemMain = new SearchSystem();
+    SearchSystemAccount searchAccount = new SearchSystemAccount();
+
 
     private TableView<Account> table;
 
@@ -69,7 +82,14 @@ public class Admin_UI extends UI {
     private ReadWriteFile file = new ReadWriteFile();
 
     public Admin_UI(Stage stage, Account userAccount) {
+
         super(stage);
+
+        try {
+            songArrayList = readFileSong(musicFile);
+        } catch (Exception e) {
+            System.out.println("readFile" + e);
+        }
 
         this.userAccount = userAccount;
 
@@ -89,7 +109,6 @@ public class Admin_UI extends UI {
         downLoadButton.setMinSize(200, 50);
 
         return downLoadButton;
-
     }
 
     @Override
@@ -113,16 +132,25 @@ public class Admin_UI extends UI {
         uploadBtn.setLayoutY(700);
         uploadBtn.setOnAction(e -> {
             new UploadSongPopUp();
+
         });
 
         Button deleteBtn = CreaButton("Delete");        //Delete Button
         deleteBtn.setLayoutX(780);
         deleteBtn.setLayoutY(770);
         deleteBtn.setOnAction(e -> {
-            //Gut
+
+            try {
+                deleteSongClicked();
+            } catch (IOException ex) {
+                Logger.getLogger(Admin_UI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Admin_UI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         });
 
-        pane.getChildren().addAll(searchBoxAll(), AllSong(), UpdateClikedPane(), title1, editBtn, uploadBtn, deleteBtn);
+        pane.getChildren().addAll(AllSong(), UpdateClikedPane(), title1, editBtn, uploadBtn, deleteBtn);
 
         return pane;
     }
@@ -306,7 +334,7 @@ public class Admin_UI extends UI {
         return new Profile(userAccount).getMainPane();
     }
 
-    private static VBox totalPane;
+    public static VBox totalPane;
 
     private ScrollPane AllSong() {
 
@@ -320,11 +348,9 @@ public class Admin_UI extends UI {
         scrollPane.setPadding(new Insets(10));
         scrollPane.getStyleClass().add("allSong"); //CSS
         scrollPane.getStyleClass().add("scroll-bar");
-
         totalPane = new VBox();
         totalPane.setAlignment(Pos.CENTER);
         totalPane.getStyleClass().add("allSong"); //CSS
-
         totalPane.getChildren().addAll(updateScrollPane(""));
 
         scrollPane.setContent(totalPane);
@@ -336,7 +362,8 @@ public class Admin_UI extends UI {
     static Label selectArtist = new Label("");
     static ImageView selectImage;
 
-    private static TilePane updateScrollPane(String text) {
+    public static TilePane updateScrollPane(String text) {
+
         VBox paneContent;
         Button contentButton;
         ImageView imageView;
@@ -347,15 +374,17 @@ public class Admin_UI extends UI {
         tilePane.setHgap(10);
         tilePane.setAlignment(Pos.CENTER);
 
-        ObservableList<Song> list = Song.getMyMusicList();
-
         String lowerCase = text.toLowerCase();
-
-        for (Song song : list) {
+        try {
+            songArrayList = readFileSong(musicFile);
+        } catch (Exception e) {
+            System.out.println("songList" + e);
+        }
+        for (Song song : songArrayList) {
 
             if (song.getNameSong().contains(text) || song.getArtistSong().toLowerCase().contains(lowerCase)) {
                 contentButton = new Button();
-                contentButton.getStyleClass().add("contentDetailbtn"); //CSS
+                contentButton.getStyleClass().add("contentDetailbtn"); //CSS           
                 contentButton.setOnAction(e -> {
                     //SELECTION 
                     Admin_UI.updateVBox.getChildren().removeAll(selectImage, selectNameSong, selectArtist);
@@ -365,6 +394,10 @@ public class Admin_UI extends UI {
                     selectImage = new ImageView(new Image("/image/1.jpg"));   //DATA...Collection from database..
                     selectImage.setFitHeight(300);
                     selectImage.setFitWidth(250);
+
+                    //Gut add
+                    songSelectString = song.getNameSong() + song.getArtistSong() + song.getDetailSong();
+                    System.out.println(songSelectString + " is selected");
 
                     selectNameSong.getStyleClass().add("nameSong");
                     selectArtist.getStyleClass().add("nameArtist");
@@ -396,6 +429,7 @@ public class Admin_UI extends UI {
     private static VBox updateVBox;
 
     private AnchorPane UpdateClikedPane() {
+
         //Image
         AnchorPane updatePane = new AnchorPane();
         updatePane.setLayoutX(760);
@@ -420,9 +454,12 @@ public class Admin_UI extends UI {
         updatePane.getChildren().add(updateVBox);
 
         return updatePane;
-    }
 
-    private void refreshTable() { //get.list -> sorted
+    } 
+        
+    private void refreshTable(){ //get.list -> sorted
+
+
         //TRY -CATCH FOR EXCEPTION ... NOTHING TO DO WITH IT
         try {
             list = Account.getAccountList();
@@ -438,8 +475,9 @@ public class Admin_UI extends UI {
         sortedList.comparatorProperty().bind(table.comparatorProperty());
         table.setItems(filterData);
     }
+    
+     private void addAccountClicked() {
 
-    private void addAccountClicked() {
         new Register(true);
     }
 
@@ -572,6 +610,7 @@ public class Admin_UI extends UI {
 
         ArrayList<Account> oldAccounts = new ArrayList<>();
         ArrayList<Account> presentAccounts = new ArrayList<>();
+
         oldAccounts = file.readFile(user);
 
         if (selectUsername.equals(userAccount.getUsername()) && selectEmail.equals(userAccount.getEmail())) {
@@ -583,11 +622,18 @@ public class Admin_UI extends UI {
             String chkUser = account.getUsername();
             String chkEmail = account.getEmail();
 
-            if (!(selectUsername.equals(chkUser) && selectEmail.equals(chkEmail))) {
+            if (selectUsername.equals(userAccount.getUsername()) && selectEmail.equals(userAccount.getEmail())) {
+                AlertBox.displayAlert("Delect Account.", "You cannot delete your account.");
                 presentAccounts.add(account);
-            } else {
-                if (AlertBox.display("Delect Account.", "Are you sure to delete this account?")) {
-                    AlertBox.displayAlert("Delect Account.", "Delete account successed.");
+            } else if (!(selectUsername.equals(chkUser) && selectEmail.equals(chkEmail))) {
+
+                presentAccounts.add(account);
+
+            }
+            else{
+                if(AlertBox.display("Delect Account.","Are you sure to delete this account?")) {
+                    AlertBox.displayAlert("Delect Account.","Delete account successed.");
+
                     System.out.println("delete " + account);
                 } else {
                     AlertBox.displayAlert("Delect Account.", "Delete account failed.");
@@ -599,8 +645,51 @@ public class Admin_UI extends UI {
 
         file.writeFile(user, presentAccounts);
 
-        return 0;
+        return 1;
 
+    }
+
+    private int deleteSongClicked() throws IOException, FileNotFoundException, ClassNotFoundException {
+
+        ArrayList<Song> oldSongList = new ArrayList<Song>();
+        ArrayList<Song> newSongList = new ArrayList<Song>();
+        File selectFileDelete = new File("src/MusicFile/"+songSelectString+".mp3");
+
+        try {
+            oldSongList = readFileSong(musicFile);
+        } catch (IOException ex) {
+            Logger.getLogger(Admin_UI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Admin_UI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        for (Song song : oldSongList) {
+
+            if (songSelectString.equals(song.getNameSong() + song.getArtistSong() + song.getDetailSong())) {
+                System.out.println("delete " + song);
+                selectFileDelete.delete();
+
+            } else {
+                newSongList.add(song);
+            }
+        }
+
+        writeFileSong(musicFile, newSongList);
+         Admin_UI.totalPane.getChildren().remove(0);
+         Admin_UI.totalPane.getChildren().add(Admin_UI.updateScrollPane(""));
+
+        return 1;
+    }
+
+    private static ArrayList<Song> readFileSong(File file) throws FileNotFoundException, IOException, ClassNotFoundException {
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+        return (ArrayList<Song>) in.readObject();
+    }
+
+    private static void writeFileSong(File file, ArrayList<Song> listSong) throws FileNotFoundException, IOException {
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+        out.writeObject(listSong);
+        out.close();
     }
 
 }

@@ -14,6 +14,8 @@ import Component_Music.MusicFunc;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -50,7 +52,9 @@ public class User_UI extends UI {
     MusicFunc nameSongFromTable = new MusicFunc();
     
     // Create File for downloader
-    File fileForDownload = new File(""+"*.mp3");
+    File fileForDownload;
+    String songNameSelected;
+    String nameSet;
     
     Account userAccount;
 
@@ -97,7 +101,7 @@ public class User_UI extends UI {
         //Download Button action
         downloadBtn.setOnMouseClicked((event) -> {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
-                nameSongFromTable.downloader();
+                this.downloader();
             }
         });
         
@@ -129,7 +133,10 @@ public class User_UI extends UI {
         table.setOnMouseClicked((event) -> {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
                 System.out.println(table.getSelectionModel().getSelectedItem().getNameSong());
-                fileForDownload = new File(table.getSelectionModel().getSelectedItem().getNameSong()+table.getSelectionModel().getSelectedItem().getArtistSong()+table.getSelectionModel().getSelectedItem().getDetailSong()+".mp3");
+                songNameSelected = table.getSelectionModel().getSelectedItem().getNameSong()+table.getSelectionModel().getSelectedItem().getArtistSong()+table.getSelectionModel().getSelectedItem().getDetailSong();
+                nameSet = table.getSelectionModel().getSelectedItem().getNameSong();
+                System.out.println(songNameSelected);
+                fileForDownload = new File("src/MusicFile/"+ songNameSelected + ".mp3");
             }
         });
 
@@ -156,7 +163,14 @@ public class User_UI extends UI {
         detailCol.setSortable(false);
 
         // Display row data
-        ObservableList<Song> list = Song.getMyMusicList();
+        ObservableList<Song> list = null;
+        try {
+            list = Song.getMyMusicList();
+        } catch (IOException ex) {
+            Logger.getLogger(User_UI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(User_UI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         FilteredList<Song> filterData = new FilteredList<>(list, b -> true);
         searchSystemMyLibrary.setFilterData(filterData);
 
@@ -256,7 +270,14 @@ public class User_UI extends UI {
         tilePane.setVgap(10);
         tilePane.setHgap(10);
         tilePane.setAlignment(Pos.CENTER_LEFT); // By POP
-        ObservableList<Song> list = Song.getMyMusicList();
+        ObservableList<Song> list = null;
+        try {
+            list = Song.getMyMusicList();
+        } catch (IOException ex) {
+            Logger.getLogger(User_UI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(User_UI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         String lowerCase = text.toLowerCase();
         
@@ -307,6 +328,7 @@ public class User_UI extends UI {
         System.out.println("Download");
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("MP3 Files", "*.mp3"));
+        fileChooser.setInitialFileName(nameSet);
         File downloadFile = fileChooser.showSaveDialog(null);
         
         if (downloadFile != null) {
