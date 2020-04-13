@@ -58,6 +58,8 @@ public class Register {
     private ReadWriteFile file = new ReadWriteFile();
 
     public Register() {
+        
+        image = new Image("/image/defaultprofile.png");
 
         Stage regisStage = new Stage();
         regisStage.initModality(Modality.APPLICATION_MODAL);

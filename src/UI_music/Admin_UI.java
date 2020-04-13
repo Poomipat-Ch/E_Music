@@ -446,7 +446,7 @@ public class Admin_UI extends UI{
         table.setItems(filterData);  
     }
     
-    private void deleteAccountClicked() throws IOException, FileNotFoundException, ClassNotFoundException {
+    private int deleteAccountClicked() throws IOException, FileNotFoundException, ClassNotFoundException {
         
         String selectUsername = table.getSelectionModel().getSelectedItem().getUsername();
         String selectEmail = table.getSelectionModel().getSelectedItem().getEmail();
@@ -458,7 +458,12 @@ public class Admin_UI extends UI{
         for (Account account : oldAccounts) {
             String chkUser = account.getUsername();
             String chkEmail = account.getEmail();
-            if (!(selectEmail.equals(chkEmail) && selectEmail.equals(chkEmail))) {  
+            
+            if(selectUsername.equals(userAccount.getUsername()) && selectEmail.equals(userAccount.getEmail())) {
+                AlertBox.displayAlert("Delect Account.","You cannot delete your account.");
+                presentAccounts.add(account);
+            } 
+            else if (!(selectUsername.equals(chkUser) && selectEmail.equals(chkEmail))) {  
                 presentAccounts.add(account);
             }
             else{
@@ -467,15 +472,9 @@ public class Admin_UI extends UI{
         }
         
         file.writeFile(user, presentAccounts);
+        
+        return 1;
 
-    }
-    
-    //Verify email address bab easy
-    //.contains = have that string in email
-    //catch case dai pra marn nee
-    private boolean isEmail(String email) {
-        return email.contains("@") && email.contains(".") && !(email.contains(" ") || email.contains(";") || email.contains(",") || email.contains("..")
-                || email.length() <= 12 || email.length() > 64);
     }
     
 }

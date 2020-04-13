@@ -253,7 +253,7 @@ public class Login {
                     ArrayList<Account> addAccount = new ArrayList<>();
 
                     addAccount.add(new Account(userAccount.getName(), userAccount.getSurname(), userAccount.getUsername(), userAccount.getEmail(),
-                            passIn1.getText(), userAccount.getGender(), userAccount.getDateOfBirth(), userAccount.getQuestion(), userAccount.getAnswer(), false, userAccount.getPhoto()));
+                            passIn1.getText(), userAccount.getGender(), userAccount.getDateOfBirth(), userAccount.getQuestion(), userAccount.getAnswer(), true, userAccount.getPhoto()));
                     addAccount.remove(userAccount);
 
                     try {
