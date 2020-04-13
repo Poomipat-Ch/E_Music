@@ -38,30 +38,7 @@ public class MusicFunc {
     ArrayList<Song> songArrayList = new ArrayList<Song>();
     Song song = new Song();
 //    Text songListText = new Text();
-    
-    public void addSongBTN(){
-        TextField nameField = new TextField();
-        TextField artistField = new TextField();
-        TextField detailField = new TextField();
-        
-        try {
-                songArrayList = readFile(musicFile);
-            } catch (IOException | ClassNotFoundException ex) {
-                System.out.println("Added READFILE" + ex);
-            }
-
-            //add Song in array to string to show in list
-            songArrayList.add(new Song(nameField.getText(), artistField.getText(), detailField.getText()));
-            nameForUpload = nameField.getText()+artistField.getText()+detailField.getText();
-            
-            try {
-                writeFile(musicFile, songArrayList);
-            } catch (IOException ex) {
-                System.out.println("Added WRITEFILE" + ex);
-            }
-        
-    }
-    
+       
     public void uploadSongBTN() {
 
             // set title for the stage 
@@ -172,9 +149,9 @@ public class MusicFunc {
         return (ArrayList<Song>) in.readObject();
     }
 
-    private void writeFile(File file, ArrayList<Song> listAccount) throws FileNotFoundException, IOException {
+    private void writeFile(File file, ArrayList<Song> listSong) throws FileNotFoundException, IOException {
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
-        out.writeObject(listAccount);
+        out.writeObject(listSong);
         out.close();
     }
 }

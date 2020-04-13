@@ -7,6 +7,7 @@ package UI_music;
 
 import Component_Music.Account;
 import Component_Music.AlertBox;
+import Component_Music.DetailSongPopUp;
 import Component_Music.SearchSystem;
 import Component_Music.Song;
 import Component_Music.MusicFunc;
@@ -51,7 +52,8 @@ public class User_UI extends UI {
     MusicFunc nameSongFromTable = new MusicFunc();
     
     // Create File for downloader
-    File fileForDownload = new File(""+"*.mp3");
+    File fileForDownload;
+    String songNameSelected;
     
     Account userAccount;
 
@@ -98,7 +100,7 @@ public class User_UI extends UI {
         //Download Button action
         downloadBtn.setOnMouseClicked((event) -> {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
-                nameSongFromTable.downloader();
+                this.downloader();
             }
         });
         
@@ -130,7 +132,9 @@ public class User_UI extends UI {
         table.setOnMouseClicked((event) -> {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
                 System.out.println(table.getSelectionModel().getSelectedItem().getNameSong());
-                fileForDownload = new File(table.getSelectionModel().getSelectedItem().getNameSong()+table.getSelectionModel().getSelectedItem().getArtistSong()+table.getSelectionModel().getSelectedItem().getDetailSong()+".mp3");
+                songNameSelected = table.getSelectionModel().getSelectedItem().getNameSong()+table.getSelectionModel().getSelectedItem().getArtistSong()+table.getSelectionModel().getSelectedItem().getDetailSong();
+                System.out.println(songNameSelected);
+                fileForDownload = new File("src/MusicFile/"+ songNameSelected + ".mp3");
             }
         });
 
@@ -294,6 +298,13 @@ public class User_UI extends UI {
                 contentButton.setGraphic(paneContent);
                 contentButton.setMinHeight(300); // By Pop
                 contentButton.setMinWidth(300); // By Pop
+                contentButton.setOnMouseClicked(e ->{
+                    try {
+                        new DetailSongPopUp(song);
+                    } catch (InterruptedException ex) {
+                        System.out.println("Detail Song Popup : "+ex);
+                    }
+                });
 
                 tilePane.getChildren().add(contentButton);
             }
@@ -306,62 +317,8 @@ public class User_UI extends UI {
     Button cancelbt;
         
     @Override
-    public BorderPane myAccount() {
-        
-        BorderPane accountPane = new BorderPane();
-        BorderPane mainPane = new BorderPane();
-        MyAccount myAccount = new MyAccount(userAccount);
-                
-        VBox head = new VBox(10);
-        head.setPadding(new Insets(0,10,20,20));
-        head.getChildren().add(new Text("MY ACCOUNT"));
-        
-         HBox bottom = new HBox(10);
-        bottom.setPadding(new Insets(20,20,0,0));
-        bottom.setAlignment(Pos.CENTER_RIGHT);
-        
-        savebt = new Button("Save");
-        savebt.setOnAction(event -> {
-            if(myAccount.saveAccount()) {
-                AlertBox.displayAlert("Edit Profile", "Saved.");
-                userAccount = myAccount.getMyAccount();
-                myAccount.showAccount(userAccount);
-                accountPane.setCenter(myAccount.getProfilePane());
-                bottom.getChildren().clear();
-                bottom.getChildren().addAll(editbt);
-            } 
-        });
-        
-        cancelbt = new Button("Cancel");
-        cancelbt.setOnAction(event -> {
-            myAccount.showAccount(userAccount);
-            accountPane.setCenter(myAccount.getProfilePane());
-            bottom.getChildren().clear();
-            bottom.getChildren().addAll(editbt);
-        });
-        
-        editbt = new Button("Edit");
-        VBox right = new VBox(10);
-        right.setPadding(new Insets(20,20,20,20));
-        editbt.setOnAction(event -> {
-            myAccount.editAccount();
-            accountPane.setCenter(myAccount.getProfilePane());
-            bottom.getChildren().clear();
-            bottom.getChildren().addAll(cancelbt, savebt);
-        });
-        
-                bottom.getChildren().add(editbt);
-        
-        accountPane.setTop(head);
-        accountPane.setCenter(myAccount.getProfilePane());
-        accountPane.setPadding(new Insets(50, 50, 50, 50));
-        accountPane.setStyle("-fx-background-color: white");
-        accountPane.setBottom(bottom);
-        
-        mainPane.setCenter(accountPane);
-        mainPane.setPadding(new Insets(50, 100, 0, 100));
-        
-        return mainPane;
+    public BorderPane myAccount() { 
+        return new Profile(userAccount).getMainPane();
     }
 
     public void downloader() {
