@@ -11,6 +11,7 @@ import Component_Music.MusicFunc;
 import Component_Music.SearchSystem;
 import Component_Music.SearchSystemAccount;
 import Component_Music.Song;
+import Component_Music.UploadSongPopUp;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -119,7 +120,7 @@ public class Admin_UI extends UI{
             uploadBtn.setLayoutX(780);
             uploadBtn.setLayoutY(700);
             uploadBtn.setOnAction(e->{
-                //Gut
+                new UploadSongPopUp();
             });
             
             Button deleteBtn = CreaButton("Delete");        //Delete Button
@@ -323,6 +324,7 @@ public class Admin_UI extends UI{
         scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.ALWAYS);
         scrollPane.setPadding(new Insets(10));
         scrollPane.getStyleClass().add("allSong"); //CSS
+        scrollPane.getStyleClass().add("scroll-bar");
         
         totalPane = new VBox();
         totalPane.setAlignment(Pos.CENTER);

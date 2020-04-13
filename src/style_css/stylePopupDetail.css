@@ -4,6 +4,7 @@
 }
 .allPane{
     -fx-background-color:#2d4059;
+    -fx-opacity: 0.95; 
     -fx-background-radius :  50; 
 }
 .nameSong{

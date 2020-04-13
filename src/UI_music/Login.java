@@ -19,6 +19,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.embed.swing.SwingFXUtils;
@@ -56,18 +57,18 @@ public class Login {
     static Stage stage;
 
     File user = new File("src/data/user.dat");
-    File admin = new File("src/data/admin.dat");
     File tempId = new File("src/data/user.txt");
 
     ArrayList<Account> listUserAccount = new ArrayList<>();
     Account userAccount = new Account();
     ArrayList<Account> addAccount = new ArrayList<>();
+    
 
     public Login(Stage stage) throws FileNotFoundException, IOException, ClassNotFoundException {
 
 //**READ THIS***** This save in user.dat file, if you can't run admin, try run this code only once and comment again
-//        listUserAccount.add(new Account("admin", "admin", "admin", "admin@gmail.com", "admin", null, null, null, null, true,  Image("/image/defaultprofile.png")));
-//        writeFile(admin, listUserAccount); 
+//        listUserAccount.add(new Account("admin", "admin", "admin", "admin@gmail.com", "admin", "N/A", LocalDate.now(), "admin", "admin", true, new Image("/image/defaultprofile.png")));
+//        writeFile(user, listUserAccount); 
 
         Login.stage = stage;
 
