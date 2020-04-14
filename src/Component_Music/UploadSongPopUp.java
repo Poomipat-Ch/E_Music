@@ -202,7 +202,7 @@ public class UploadSongPopUp {
             } catch (IOException | ClassNotFoundException ex) {
                 System.out.println("Added READFILE" + ex);
             }
-            songArrayList.add(new Song(fillNameSong.getText(), fillNameArtist.getText(), fillDetailSong.getText(), songPrice.getText(), image));
+            songArrayList.add(new Song(fillNameSong.getText(), fillDetailSong.getText(), fillNameArtist.getText(), fillSongPrice.getText(), image));
             try {
                 writeFileSong(musicFile, songArrayList);
             } catch (IOException ex) {

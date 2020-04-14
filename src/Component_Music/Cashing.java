@@ -44,7 +44,7 @@ public class Cashing {
         newTopPane.setRight(exitButton());
 
         Label orderText = new Label(song.getNameSong() + " - " + song.getArtistSong());
-        Label orderPrice = new Label("฿ " + "350"); //<------------------------------------------- Wait for update
+        Label orderPrice = new Label("฿ " + song.getPriceSong()); //<------------------------------------------- Wait for update
         BorderPane leftRow1 = new BorderPane();
         leftRow1.setLeft(orderText);
         leftRow1.setRight(orderPrice);
@@ -52,7 +52,7 @@ public class Cashing {
         leftRow1.setStyle("-fx-background-color:#ebebeb;");
 
         Label describeText = new Label("All prices include VAT if applicable.");
-        Label totalPrice = new Label("ORDER TOTAL: ฿ " + "350"); //<------------------------------ And this
+        Label totalPrice = new Label("ORDER TOTAL: ฿ " + song.getPriceSong()); //<------------------------------ And this
         BorderPane leftRow2 = new BorderPane();
         leftRow2.setLeft(describeText);
         leftRow2.setRight(totalPrice);
@@ -95,7 +95,7 @@ public class Cashing {
         inputField.getChildren().addAll(ccNumber, row1, ccName);
         inputField.setAlignment(Pos.CENTER_LEFT);
 
-        Label confirmPrice = new Label("฿ " + "350");//<----------------------------- PRICE AGAIN
+        Label confirmPrice = new Label("฿ " + song.getPriceSong());//<----------------------------- PRICE AGAIN
         Button payButton = new Button("PAY NOW");
         HBox row3 = new HBox(20);
         row3.getChildren().addAll(confirmPrice, payButton);
@@ -117,7 +117,7 @@ public class Cashing {
             } else if (hasNumber(ccName.getText())) {
                 AlertBox.displayAlert("Something went wrong!", "Some of infomation are Incorrect.\n Please check your name again.");
             } else {
-                if (AlertBox.confirmAlert("Are you sure", "\"" + song.getNameSong() + " - " + song.getArtistSong() + "\" will cost " + "350" + "฿\n"
+                if (AlertBox.confirmAlert("Are you sure", "\"" + song.getNameSong() + " - " + song.getArtistSong() + "\" will cost " + song.getPriceSong() + "฿\n"
                         + "Please confirm to make a purchase.")) {
                     AlertBox.displayAlert("Purchase Success", "\"" + song.getNameSong() + " - " + song.getArtistSong() + "\" will add to your playlist soon.");
                     System.out.println("Purchase complete");

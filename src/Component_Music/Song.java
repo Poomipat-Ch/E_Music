@@ -41,6 +41,7 @@ public class Song implements Serializable {
         this.nameSong = nameSong;
         this.detailSong = detailSong;
         this.artistSong = artistSong;
+        this.priceSong = priceSong;
         this.setPhoto(image);
     }
 

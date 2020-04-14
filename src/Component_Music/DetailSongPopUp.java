@@ -81,7 +81,7 @@ public class DetailSongPopUp {
         detailSong.getStyleClass().add("detailSong");
         
         //Button Buy
-        Label songPrice = new Label("350 Bath"); // Gut add Price Song
+        Label songPrice = new Label(song.getPriceSong() +" Bath"); // Gut add Price Song
         songPrice.getStyleClass().add("price");
         
         Button buyButton = new Button("Buy");
