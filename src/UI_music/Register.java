@@ -180,7 +180,7 @@ public class Register {
 
                         if (!isAdmin) {
                             addAccount.add(new Account(nameIn.getText(), surnameIn.getText(), usernameIn.getText(), mailIn.getText(),
-                                    passIn.getText(), userGender, dOB, question.getValue(), answer.getText(), true, image));
+                                    passIn.getText(), userGender, dOB, question.getValue(), answer.getText(), false, image));
                         } else {
                             boolean isAdminReg = false;
                             if (adminSelect.isSelected()) 
