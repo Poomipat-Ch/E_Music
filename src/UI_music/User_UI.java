@@ -14,6 +14,7 @@ import Component_Music.MusicFunc;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.ObservableList;
@@ -50,18 +51,18 @@ public class User_UI extends UI {
 
     SearchSystem searchSystemMyLibrary = new SearchSystem();
     MusicFunc nameSongFromTable = new MusicFunc();
-    
+
     // Create File for downloader
     File fileForDownload;
     String songNameSelected;
     String nameSet;
-    
+
     Account userAccount;
 
     public User_UI(Stage stage, Account userAccount) {
         super(stage);
         this.userAccount = userAccount;
-        
+
         Scene scene = new Scene(allPane(), 1280, 960);
         String stylrSheet = getClass().getResource("/style_css/style.css").toExternalForm();
         scene.getStylesheets().add(stylrSheet);
@@ -94,7 +95,7 @@ public class User_UI extends UI {
         img.getChildren().add(imgMy);
 
         Button downloadBtn = CreaButton("Download");
-        
+
         downloadBtn.setLayoutX(1030 - 250 - 20);
         downloadBtn.setLayoutY(420 + 20);
 
@@ -104,12 +105,11 @@ public class User_UI extends UI {
                 this.downloader();
             }
         });
-        
+
         pane.getChildren().addAll(img, downloadBtn, tableMyMusic(), searchBoxMy());
 
         return pane;
     }
-    
 
     private Button CreaButton(String text) {
         Button downLoadButton = new Button(text);
@@ -118,7 +118,6 @@ public class User_UI extends UI {
         return downLoadButton;
 
     }
-    
 
     private AnchorPane tableMyMusic() {
         AnchorPane anchorPane = new AnchorPane();
@@ -133,10 +132,10 @@ public class User_UI extends UI {
         table.setOnMouseClicked((event) -> {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
                 System.out.println(table.getSelectionModel().getSelectedItem().getNameSong());
-                songNameSelected = table.getSelectionModel().getSelectedItem().getNameSong()+table.getSelectionModel().getSelectedItem().getArtistSong()+table.getSelectionModel().getSelectedItem().getDetailSong();
+                songNameSelected = table.getSelectionModel().getSelectedItem().getNameSong() + table.getSelectionModel().getSelectedItem().getArtistSong() + table.getSelectionModel().getSelectedItem().getDetailSong();
                 nameSet = table.getSelectionModel().getSelectedItem().getNameSong();
                 System.out.println(songNameSelected);
-                fileForDownload = new File("src/MusicFile/"+ songNameSelected + ".mp3");
+                fileForDownload = new File("src/MusicFile/" + songNameSelected + ".mp3");
             }
         });
 
@@ -163,14 +162,7 @@ public class User_UI extends UI {
         detailCol.setSortable(false);
 
         // Display row data
-        ObservableList<Song> list = null;
-        try {
-            list = Song.getMyMusicList();
-        } catch (IOException ex) {
-            Logger.getLogger(User_UI.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(User_UI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        ObservableList<Song> list = userAccount.getMyListSong();
         FilteredList<Song> filterData = new FilteredList<>(list, b -> true);
         searchSystemMyLibrary.setFilterData(filterData);
 
@@ -195,18 +187,18 @@ public class User_UI extends UI {
         searchTextField.setMinSize(1030 - 300 - 60 - 70, 30);
 
         Button searchButton = CreaButton("Search");
-        searchButton.setOnMouseClicked(e ->{
+        searchButton.setOnMouseClicked(e -> {
             User_UI.totalPane.getChildren().remove(1);
-            User_UI.totalPane.getChildren().add(User_UI.updateScrollPane(searchTextField.getText()));
+            User_UI.totalPane.getChildren().add(updateScrollPane(searchTextField.getText()));
         });
-        
+
         searchButton.setStyle("-fx-font-size : 15px;");
         searchButton.setMinSize(50, 30);
         HBox.setMargin(searchButton, new Insets(0, 0, 0, 10));
 
         searchTextField.textProperty().addListener((ov, t, t1) -> {
             User_UI.totalPane.getChildren().remove(1);
-            User_UI.totalPane.getChildren().add(User_UI.updateScrollPane(searchTextField.getText()));
+            User_UI.totalPane.getChildren().add(updateScrollPane(searchTextField.getText()));
         });
 
         hBox.getChildren().addAll(searchTextField, searchButton);
@@ -236,11 +228,11 @@ public class User_UI extends UI {
 
         return hBox;
     }
-    
 
     public static VBox totalPane;
-    private ScrollPane  AllSong(){
-        
+
+    private ScrollPane AllSong() {
+
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setPrefSize(1030, 900);
         scrollPane.pannableProperty().set(true);
@@ -253,18 +245,18 @@ public class User_UI extends UI {
         totalPane.setAlignment(Pos.CENTER);
         totalPane.getStyleClass().add("allSong");
 
-        totalPane.getChildren().addAll(searchBoxAll(),updateScrollPane(""));
-        
+        totalPane.getChildren().addAll(searchBoxAll(), updateScrollPane(""));
+
         scrollPane.setContent(totalPane);
-        
+
         return scrollPane;
     }
-    
-    public static TilePane updateScrollPane(String text){
+
+    public TilePane updateScrollPane(String text) {
         VBox paneContent;
         Button contentButton;
         ImageView imageView;
-       
+
         TilePane tilePane = new TilePane();
         tilePane.setPadding(new Insets(10, 10, 10, 10));
         tilePane.setVgap(10);
@@ -278,48 +270,59 @@ public class User_UI extends UI {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(User_UI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         String lowerCase = text.toLowerCase();
-        
+
         for (Song song : list) {
-            
-            if (song.getNameSong().toLowerCase().contains(lowerCase) || song.getArtistSong().toLowerCase().contains(lowerCase)) {
-                contentButton = new Button();
-                contentButton.getStyleClass().add("contentDetailbtn");
-                paneContent = new VBox();
-                paneContent.setAlignment(Pos.CENTER);
-                paneContent.setPadding(new Insets(20));
-                paneContent.getStyleClass().add("content-allSong");
 
-                imageView = new ImageView(new Image("/image/1.jpg"));
-                imageView.setFitHeight(200); // By pop
-                imageView.setFitWidth(150); // By pop
-                
-                
-                paneContent.getChildren().addAll(imageView, new Label(song.getNameSong()), new Label("ARTIST : "+song.getArtistSong()));
-                contentButton.setGraphic(paneContent);
-                contentButton.setMinHeight(300); // By Pop
-                contentButton.setMinWidth(300); // By Pop
-                contentButton.setOnMouseClicked(e ->{
-                    try {
-                        new DetailSongPopUp(song);
-                    } catch (InterruptedException ex) {
-                        System.out.println("Detail Song Popup : "+ex);
+            if ((song.getNameSong().toLowerCase().contains(lowerCase) || song.getArtistSong().toLowerCase().contains(lowerCase))) {
+
+                boolean inMyList = false;
+                for (Song song1 : userAccount.getMyListSong()) {
+                    if ((song.getNameSong().toLowerCase().contains(song1.getNameSong().toLowerCase()) && song.getArtistSong().toLowerCase().contains(song1.getArtistSong().toLowerCase()))) {
+                        inMyList = true;
+                        break;
                     }
-                });
 
-                tilePane.getChildren().add(contentButton);
+                }
+
+                if (!inMyList) {
+                    contentButton = new Button();
+                    contentButton.getStyleClass().add("contentDetailbtn");
+                    paneContent = new VBox();
+                    paneContent.setAlignment(Pos.CENTER);
+                    paneContent.setPadding(new Insets(20));
+                    paneContent.getStyleClass().add("content-allSong");
+
+                    imageView = new ImageView(new Image("/image/1.jpg"));
+                    imageView.setFitHeight(200); // By pop
+                    imageView.setFitWidth(150); // By pop
+
+                    paneContent.getChildren().addAll(imageView, new Label(song.getNameSong()), new Label("ARTIST : " + song.getArtistSong()));
+                    contentButton.setGraphic(paneContent);
+                    contentButton.setMinHeight(300); // By Pop
+                    contentButton.setMinWidth(300); // By Pop
+                    contentButton.setOnMouseClicked(e -> {
+                        try {
+                            new DetailSongPopUp(song, userAccount);
+                        } catch (InterruptedException ex) {
+                            System.out.println("Detail Song Popup : " + ex);
+                        }
+                    });
+
+                    tilePane.getChildren().add(contentButton);
+                }
             }
         }
-       return tilePane;
+        return tilePane;
     }
-    
+
     Button editbt;
     Button savebt;
     Button cancelbt;
-        
+
     @Override
-    public BorderPane myAccount() { 
+    public BorderPane myAccount() {
         return new Profile(userAccount).getMainPane();
     }
 
@@ -330,7 +333,7 @@ public class User_UI extends UI {
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("MP3 Files", "*.mp3"));
         fileChooser.setInitialFileName(nameSet);
         File downloadFile = fileChooser.showSaveDialog(null);
-        
+
         if (downloadFile != null) {
             try {
                 Files.copy(fileForDownload.toPath(), downloadFile.toPath());
@@ -340,5 +343,38 @@ public class User_UI extends UI {
         }
 
     }
-    
+
+    ArrayList<Account> updateAccount = new ArrayList<>();
+    File user = new File("src/data/user.dat");
+
+    @Override
+    public void userLogout() {
+
+        ReadWriteFile file = new ReadWriteFile();
+        ArrayList<Account> nowAccount = null;
+
+        try {
+            nowAccount = file.readFile(user);
+        } catch (IOException ex) {
+            Logger.getLogger(User_UI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(User_UI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        for (Account account : nowAccount) {
+            if (account.getUsername().equals(userAccount.getUsername())) {
+                updateAccount.add(userAccount);
+            } else {
+                updateAccount.add(account);
+            }
+        }
+
+        try {
+            file.writeFile(user, updateAccount);
+        } catch (IOException ex) {
+            Logger.getLogger(User_UI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
 }

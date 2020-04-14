@@ -37,6 +37,10 @@ public class Account implements Serializable {
     private int[][] data;
 
     private static File user = new File("src/data/user.dat");
+    
+    private ArrayList<Song> listSong = new ArrayList<>();
+    
+    private boolean firstSong = true;
 
     public Account() {
     }
@@ -55,6 +59,8 @@ public class Account implements Serializable {
         this.answer = answer;
         this.isAdmin = isAdmin;
         this.setPhoto(image);
+        
+        listSong.add(new Song());
     }
 
     public boolean getIsAdmin() {
@@ -156,6 +162,24 @@ public class Account implements Serializable {
         }
 
         return list;
+    }
+    
+    public ObservableList<Song> getMyListSong() {
+        ObservableList list = FXCollections.observableArrayList();
+
+        for (Song song : listSong) {
+            list.add(song);
+        }
+
+        return list;
+    }
+    
+    public void addSong(Song song) {
+        if(firstSong)
+            listSong.remove(0);
+        listSong.add(song);
+        
+        firstSong = false;
     }
 
 }
