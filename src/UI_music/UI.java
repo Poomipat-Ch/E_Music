@@ -240,6 +240,7 @@ abstract public class UI {
     abstract public HBox searchBoxAll();
     abstract public HBox searchBoxMy();
     abstract public BorderPane myAccount();
+    abstract public void userLogout();
     
     
 }

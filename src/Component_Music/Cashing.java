@@ -5,6 +5,13 @@
  */
 package Component_Music;
 
+import UI_music.ReadWriteFile;
+import UI_music.User_UI;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -29,10 +36,13 @@ public class Cashing {
     private Stage paymentStage;
     private Scene infoScene;
     private Song song;
+    
+    private Account userAccount;
 
-    public void Info(Stage paymentStage, Song song) {
+    public void Info(Stage paymentStage, Song song, Account userAccount) {
         this.paymentStage = paymentStage;
         this.song = song;
+        this.userAccount = userAccount;
         
         Label title = new Label("YOUR ORDER");
         Label noteText = new Label("Please check every detail before making purchase.");
@@ -122,6 +132,8 @@ public class Cashing {
                     AlertBox.displayAlert("Purchase Success", "\"" + song.getNameSong() + " - " + song.getArtistSong() + "\" will add to your playlist soon.");
                     System.out.println("Purchase complete");
                     this.paymentStage.close();
+                    this.userAccount.addSong(song);
+                    this.userSaveSong();
                     //<------------------------------------------------------------ EVERYTHING CHECK PURCHASE COMPLETE Set song EVERYTHINGto the playlist pls thank you by font
                 }
             }
@@ -187,6 +199,36 @@ public class Cashing {
        exit.setPadding(Insets.EMPTY);
        
        return exit;
+    }
+    
+    ArrayList<Account> updateAccount = new ArrayList<>();
+    File user = new File("src/data/user.dat");
+
+    public void userSaveSong() {
+        
+        ReadWriteFile file = new ReadWriteFile();
+        ArrayList<Account> nowAccount = null;
+        
+        try {
+            nowAccount = file.readFile(user);
+        } catch (IOException ex) {
+            Logger.getLogger(User_UI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(User_UI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        for (Account account : nowAccount) {
+            if(account.getUsername().equals(userAccount.getUsername()))
+                updateAccount.add(userAccount);
+            else
+                updateAccount.add(account);
+        }
+        
+        try {
+            file.writeFile(user, updateAccount);
+        } catch (IOException ex) {
+            Logger.getLogger(User_UI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

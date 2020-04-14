@@ -29,14 +29,14 @@ public class DetailSongPopUp {
     //private BorderPane totalDetail;
     private Stage stage;
             
-    public DetailSongPopUp(Song song) throws InterruptedException {
+    public DetailSongPopUp(Song song, Account userAccount) throws InterruptedException {
         this.song = song;
         this.stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Detail Song");
         stage.setResizable(false);
         
-        DetailSong();
+        DetailSong(userAccount);
         Scene scene = new Scene(detail);
         String stylrSheet = getClass().getResource("/style_css/stylePopupDetail.css").toExternalForm();
         scene.getStylesheets().add(stylrSheet);
@@ -49,7 +49,7 @@ public class DetailSongPopUp {
     
     double mouse_x = 0,mouse_y = 0; // position mouse
     
-    private void DetailSong() {
+    private void DetailSong(Account userAccount) {
         this.detail = new VBox();
         detail.getStyleClass().add("allPane");
         detail.setAlignment(Pos.TOP_CENTER);
@@ -90,7 +90,7 @@ public class DetailSongPopUp {
             // Gut <<<<<<<------<<<< La Tonnee pen Font <-----------------------------------------------------------------------------------**********
             System.out.println("Clicked");
             Cashing cashing = new Cashing();
-            cashing.Info(stage, song);
+            cashing.Info(stage, song, userAccount);
             System.out.println("Calling Info");
         });
         
