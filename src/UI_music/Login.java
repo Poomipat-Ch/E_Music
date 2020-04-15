@@ -154,9 +154,17 @@ public class Login {
             System.out.println("User want to register.");
             register();
         });
+        
+        //Guest Button -> Login with Guest
+        Button guestBtn = new Button("Login with guest");
+        guestBtn.setOnAction(e->{
+            System.out.println("User login with guest");
+            Login.stage.hide();
+            Guest_UI guest_UI = new Guest_UI(new Stage(), userAccount);
+        });
 
         VBox rightMenu = new VBox(10);
-        rightMenu.getChildren().addAll(title1, idLabel, idInput, passLabel, passInput, chk1, loginBtn, forgotBtn, registerBtn);
+        rightMenu.getChildren().addAll(title1, idLabel, idInput, passLabel, passInput, chk1, loginBtn, forgotBtn, registerBtn, guestBtn);
         rightMenu.setAlignment(Pos.CENTER_LEFT);
         BorderPane borderPane = new BorderPane();
         BorderPane.setAlignment(rightMenu, Pos.CENTER);
