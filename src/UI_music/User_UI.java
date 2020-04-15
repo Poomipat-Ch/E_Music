@@ -75,7 +75,7 @@ public class User_UI extends UI {
     }
 
     @Override
-    public AnchorPane allSongPane(String page) {
+    public AnchorPane firstPagePane(String page) {
         AnchorPane pane = new AnchorPane();
         this.page = page;
         pane.getChildren().addAll(AllSong());
@@ -85,7 +85,7 @@ public class User_UI extends UI {
     private AnchorPane pane = new AnchorPane();
     private VBox detailDownload = new VBox(10);
     @Override
-    public AnchorPane mySongPane() {
+    public AnchorPane secondPagePane() {
         AnchorPane pane = this.pane;
         pane.getChildren().clear();
         detailDownload.getChildren().clear();

@@ -66,7 +66,7 @@ abstract public class UI {
     private VBox mainBox() {
 
         vbox.getStyleClass().add("mainBox");
-        vbox.getChildren().addAll(tilePane(), allSongPane(""));
+        vbox.getChildren().addAll(tilePane(), firstPagePane(""));
 
         return vbox;
     }
@@ -105,31 +105,31 @@ abstract public class UI {
         Button pop = CreateStyleButton("Pop");
         pop.setOnMouseClicked(e -> {
             this.vbox.getChildren().remove(1);
-            this.vbox.getChildren().add(allSongPane("Pop"));
+            this.vbox.getChildren().add(firstPagePane("Pop"));
         });
 
         Button jazz = CreateStyleButton("Jazz");
         jazz.setOnMouseClicked(e -> {
             this.vbox.getChildren().remove(1);
-            this.vbox.getChildren().add(allSongPane("Jazz"));
+            this.vbox.getChildren().add(firstPagePane("Jazz"));
         });
 
         Button rock = CreateStyleButton("Rock");
         rock.setOnMouseClicked(e -> {
             this.vbox.getChildren().remove(1);
-            this.vbox.getChildren().add(allSongPane("Rock"));
+            this.vbox.getChildren().add(firstPagePane("Rock"));
         });
 
         Button rnb = CreateStyleButton("R&B");
         rnb.setOnMouseClicked(e -> {
             this.vbox.getChildren().remove(1);
-            this.vbox.getChildren().add(allSongPane("R&B"));
+            this.vbox.getChildren().add(firstPagePane("R&B"));
         });
 
         Button hiphop = CreateStyleButton("Hip Hop");
         hiphop.setOnMouseClicked(e -> {
             this.vbox.getChildren().remove(1);
-            this.vbox.getChildren().add(allSongPane("Hip Hop"));
+            this.vbox.getChildren().add(firstPagePane("Hip Hop"));
         });
 
         listStyleSong.getChildren().addAll(pop, jazz, rock, rnb, hiphop);
@@ -147,7 +147,7 @@ abstract public class UI {
                 allsong.getChildren().remove(1);
             
             this.vbox.getChildren().remove(1);
-            this.vbox.getChildren().add(allSongPane(""));
+            this.vbox.getChildren().add(firstPagePane(""));
             
             this.showAllStyleSong = !this.showAllStyleSong;
         });
@@ -161,7 +161,7 @@ abstract public class UI {
             // if (userAccount.getUserRole() != "guest") { // wait
 
             this.vbox.getChildren().remove(1);
-            this.vbox.getChildren().add(mySongPane());
+            this.vbox.getChildren().add(secondPagePane());
             
             this.showAllStyleSong = !this.showMyStyleSong;
 
@@ -207,31 +207,31 @@ abstract public class UI {
         Button pop = CreateStyleButton("Pop");
         pop.setOnMouseClicked(e -> {
             this.vbox.getChildren().remove(1);
-            this.vbox.getChildren().add(allSongPane("Pop"));
+            this.vbox.getChildren().add(firstPagePane("Pop"));
         });
 
         Button jazz = CreateStyleButton("Jazz");
         jazz.setOnMouseClicked(e -> {
             this.vbox.getChildren().remove(1);
-            this.vbox.getChildren().add(allSongPane("Jazz"));
+            this.vbox.getChildren().add(firstPagePane("Jazz"));
         });
 
         Button rock = CreateStyleButton("Rock");
         rock.setOnMouseClicked(e -> {
             this.vbox.getChildren().remove(1);
-            this.vbox.getChildren().add(allSongPane("Rock"));
+            this.vbox.getChildren().add(firstPagePane("Rock"));
         });
 
         Button rnb = CreateStyleButton("R&B");
         rnb.setOnMouseClicked(e -> {
             this.vbox.getChildren().remove(1);
-            this.vbox.getChildren().add(allSongPane("R&B"));
+            this.vbox.getChildren().add(firstPagePane("R&B"));
         });
 
         Button hiphop = CreateStyleButton("Hip Hop");
         hiphop.setOnMouseClicked(e -> {
             this.vbox.getChildren().remove(1);
-            this.vbox.getChildren().add(allSongPane("Hip Hop"));
+            this.vbox.getChildren().add(firstPagePane("Hip Hop"));
         });
 
         listStyleSong.getChildren().addAll(pop, jazz, rock, rnb, hiphop);
@@ -248,7 +248,7 @@ abstract public class UI {
 //                allsong.getChildren().remove(1);
             
             this.vbox.getChildren().remove(1);
-            this.vbox.getChildren().add(allSongPane(""));
+            this.vbox.getChildren().add(firstPagePane(""));
             
 //            this.showAllStyleSong = !this.showAllStyleSong;
         });
@@ -256,7 +256,7 @@ abstract public class UI {
         Button myLibrary = CreaButton("Account Management");
         myLibrary.setOnMouseClicked(e -> {
             this.vbox.getChildren().remove(1);
-            this.vbox.getChildren().add(mySongPane());
+            this.vbox.getChildren().add(secondPagePane());
         });
         
         Button myAccount = CreaButton("My Account");
@@ -347,9 +347,9 @@ abstract public class UI {
         return minimize;
     }
 
-    abstract public AnchorPane allSongPane(String page);
+    abstract public AnchorPane firstPagePane(String page);
 
-    abstract public AnchorPane mySongPane();
+    abstract public AnchorPane secondPagePane();
 
     abstract public HBox searchBoxAll();
 

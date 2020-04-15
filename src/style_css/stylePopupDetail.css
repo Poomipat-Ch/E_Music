@@ -3,8 +3,8 @@
     -fx-background-radius :  50; 
 }
 .allPane{
-    -fx-background-color:#2d4059;
-    -fx-opacity: 0.95; 
+    -fx-background-color:radial-gradient(radius 100%,rgba(132,206,235,1) 0%, rgba(94,123,229,1) 43%, rgba(136,96,208,1) 83%);/*#2d4059*/
+    -fx-opacity: 0.99; 
     -fx-background-radius :  50; 
 }
 .nameSong{
@@ -25,32 +25,78 @@
     -fx-text-fill:white;
 }
 
-.buybtn{
-    -fx-background-color : #00a8cc;
-    -fx-text-fill : white;
-    -fx-background-radius :  10;
-    -fx-font-size : 20px;
-}
-
 .price{
     -fx-font-size:25px;
     -fx-padding-right: 10px;
     -fx-text-fill:white;
 }
 
-
-.buybtn:hover{
-    -fx-background-color: #27496d;
+.buybtn, .uploadbtn{
+    -fx-background-color: linear-gradient(to right, rgba(85,62,129,0.4) 0%, rgba(85,62,129,0.5) 81%);/* #00a8cc*/
+    -fx-text-fill : white;
+    -fx-background-radius :  10;
+    -fx-font-size : 20px;
 }
 
-.buybtn:pressed{
-     -fx-background-color: #0c7b93;
+.buybtn:hover, .uploadbtn:hover{
+    -fx-background-color: linear-gradient(to right, rgba(85,62,129,0.8) 0%, rgba(85,62,129,0.9) 81%);
+}
+
+.buybtn:pressed, .uploadbtn:pressed{
+    -fx-background-color: linear-gradient(to right, rgba(85,62,129,0.6) 0%, rgba(85,62,129,0.7) 81%);
+}
+
+.savebtn{
+    -fx-background-color : linear-gradient(to right,  rgba(0,208,100,0.7) 0%, rgba(0,208,100,0.8) 100%);
+    -fx-text-fill : white;
+    -fx-background-radius :  10;
+    -fx-font-size : 20px;
+}
+
+.savebtn:hover{
+    -fx-background-color : linear-gradient(to right,  rgba(0,208,100,0.9) 0%, rgba(0,208,100,1) 100%);
+}
+
+.savebtn:pressed{
+    -fx-background-color : linear-gradient(to right,  rgba(0,208,100,0.8) 0%, rgba(0,208,100,0.9) 100%);
+}
+
+.cancelbtn{
+    -fx-background-color : linear-gradient(to right, rgba(236,0,68,0.7) 0%, rgba(236,0,68,0.8) 100%); /*#ee4540*/
+    -fx-text-fill : white;
+    -fx-background-radius :  10;
+    -fx-font-size : 20px;
+}
+
+.cancelbtn:hover{
+    -fx-background-color : linear-gradient(to right, rgba(236,0,68,0.9) 0%, rgba(236,0,68,1) 100%);
+}
+
+.cancelbtn:pressed{
+    -fx-background-color : linear-gradient(to right, rgba(236,0,68,0.8) 0%, rgba(236,0,68,0.9) 100%);
 }
 
 .checkbox{
-    -fx-border-style: hidden none none solid;
-    -fx-border-width: 0 0 0 50;
-    -fx-border-color: #2d4059;
+    /*-fx-border-style: hidden none none solid;*/
     -fx-text-fill:white;
-    -fx-font-size:15px;
+    -fx-font-size:16px;
 }
+
+.detailUpload Label{
+    -fx-font-size: 30px;
+    -fx-font-weight:100;
+    -fx-text-fill: white;
+}
+
+.detailUploadTextFill{
+    -fx-font-size: 16px;
+    -fx-font-weight:100;
+    -fx-text-fill: black;
+}
+
+.detailUploadTextFillPath{
+    -fx-font-size: 14px;
+    -fx-font-weight:100;
+    -fx-text-fill: black;
+}
+

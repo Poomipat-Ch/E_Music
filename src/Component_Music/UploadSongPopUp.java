@@ -18,6 +18,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -28,6 +29,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -56,7 +58,7 @@ public class UploadSongPopUp {
     File file = new File("src/MusicFile/song.mp3");
     ArrayList<Song> songArrayList = new ArrayList<Song>();
     File musicFile = new File("src/data/music.dat");
-    Label path = new Label("no files selected");
+    TextField path = new TextField();
 
     public UploadSongPopUp() {
         this.stage = new Stage();
@@ -93,7 +95,7 @@ public class UploadSongPopUp {
     }
 
     private void DetailUploadSong() {
-        totalDetail = new HBox(30);
+        totalDetail = new HBox(40);
 
         VBox detail = new VBox(30);
         VBox imageDetail = new VBox(5);
@@ -152,87 +154,83 @@ public class UploadSongPopUp {
                 System.out.println("UploadSongPopUp : IOExeption upload picture in DetailUpPopSong");
             }
         });
-        photo = new ImageView(new Image("/image/defaultprofile.png"));
+        photo = new ImageView(new Image("/image/defaultmusic.png"));
         photo.setFitHeight(200);
         photo.setFitWidth(200);
         photo.setPreserveRatio(true);
         imageBtn.getStyleClass().add("buybtn"); //CSS
-
-        imageDetail.getChildren().addAll(photo, imageBtn);
-        imageDetail.setMinHeight(280);
-
-        Label label = new Label("Song's style : ");
-        label.getStyleClass().add("detailSong");
-        VBox styleSelect = new VBox(10);
-        styleSelect.setMinWidth(280);
-
+       
+        HBox styleSelect = new HBox(10);
+        styleSelect.setAlignment(Pos.CENTER);
+        
         listCheckBox.add(pop);
         listCheckBox.add(jazz);
         listCheckBox.add(rock);
         listCheckBox.add(rnb);
         listCheckBox.add(hiphop);
-        styleSelect.getChildren().addAll(label);
         for (CheckBox checkbox : listCheckBox) {
             styleSelect.getChildren().add(checkbox);
         }
-
-        VBox imagenstyle = new VBox(10);
-        imagenstyle.setAlignment(Pos.CENTER);
-        imagenstyle.getChildren().addAll(imageDetail, styleSelect);
+        
+        imageDetail.setAlignment(Pos.CENTER);
+        imageDetail.setSpacing(20);
+        imageDetail.getChildren().addAll(photo, imageBtn);
+        imageDetail.setMinHeight(280);
 
         //Detail Song
         //Upload detail song
         //Song
-        Label nameSong = new Label("Song : ");
+        Label nameSong = new Label("Song");
         TextField fillNameSong = new TextField();
         fillNameSong.setPromptText("Name");
-
-        nameSong.getStyleClass().add("nameSong"); //CSS
-        //fillNameSong.getStyleClass().add("nameSong"); //CSS
-        HBox hbox1 = new HBox();
-        hbox1.getChildren().addAll(nameSong, fillNameSong);
+        fillNameSong.setPrefWidth(300);
 
         //Artist
-        Label nameArtist = new Label("Artist : ");
+        Label nameArtist = new Label("Artist");
         TextField fillNameArtist = new TextField();
-        fillNameArtist.setPromptText("Name / Band");
-
-        nameArtist.getStyleClass().add("nameArtist"); //CSS
-        //fillNameArtist.getStyleClass().add("nameArtist"); //CSS
-        HBox hbox2 = new HBox();
-        hbox2.getChildren().addAll(nameArtist, fillNameArtist);
+        fillNameArtist.setPromptText("Singer / Band");
+        fillNameArtist.setPrefWidth(300);
 
         //Detail
-        Label detailSong = new Label("Detail : ");
+        Label detailSong = new Label("Detail");
         TextField fillDetailSong = new TextField();
-        fillDetailSong.setPromptText("min:sec/dateOfSong/Albums");
+        fillDetailSong.setPromptText("min:sec / date of song / albums");
+        fillDetailSong.setPrefWidth(293);
 
-        detailSong.getStyleClass().add("detailSong"); //CSS
-        //fillDetailSong.getStyleClass().add("detailSong"); //CSS
-        HBox hbox3 = new HBox();
-        hbox3.getChildren().addAll(detailSong, fillDetailSong);
-
+        //Song Style
+        Label songStyle = new Label("Style"); 
+        
         //Price
-        Label songPrice = new Label("Price : ");
+        Label songPrice = new Label("Price");
         TextField fillSongPrice = new TextField();
         fillSongPrice.setPromptText("e.g. 100 Bahts");
+        fillSongPrice.setPrefWidth(306);
 
-        songPrice.getStyleClass().add("price"); //CSS
-        //fillSongPrice.getStyleClass().add("detailSong"); //CSS
-        HBox hbox4 = new HBox();
-        hbox4.getChildren().addAll(songPrice, fillSongPrice);
+        nameSong.getStyleClass().add("detailUpload"); //CSS
+        nameArtist.getStyleClass().add("detailUpload"); //CSS
+        detailSong.getStyleClass().add("detailUpload"); //CSS
+        songStyle.getStyleClass().add("detailUpload"); //CSS
+        songPrice.getStyleClass().add("detailUpload"); //CSS
+        fillNameSong.getStyleClass().add("detailUploadTextFill"); //CSS
+        fillNameArtist.getStyleClass().add("detailUploadTextFill"); //CSS
+        fillDetailSong.getStyleClass().add("detailUploadTextFill"); //CSS
+        fillSongPrice.getStyleClass().add("detailUploadTextFill"); //CSS
+        
 
         //Button Buy
-        Button uploadBtn = new Button("Upload File .MP3");
-        uploadBtn.getStyleClass().add("buybtn"); // borrow...
+        Button uploadBtn = new Button("Upload File");
+        uploadBtn.getStyleClass().add("uploadbtn"); // borrow...
         uploadBtn.setOnMouseClicked(e -> {
             this.uploadSong();
         });
-        uploadBtn.setTranslateX(50);
 
-        path.getStyleClass().add("buybtn");
+        path.setPrefWidth(300);
+        path.setPromptText(".MP3");
+        path.getStyleClass().add("detailUploadTextFillPath");
+
+        
         Button saveBtn = new Button("Save");
-        saveBtn.getStyleClass().add("buybtn"); // borrow...
+        saveBtn.getStyleClass().add("savebtn"); // borrow...
         saveBtn.setOnMouseClicked(e -> {
 
             for (CheckBox checkbox : listCheckBox) {
@@ -269,12 +267,58 @@ public class UploadSongPopUp {
                 AlertBox.displayAlert("Upload Faile!", "Plese select your song' style.");
             }
         });
+        
+        Button cancelBtn = new Button("Cancel");
+        cancelBtn.getStyleClass().add("cancelbtn");
+        cancelBtn.setOnMouseClicked(e -> {
+            stage.close();
+        });
+        
+        HBox hbox6 = new HBox(20);
+        hbox6.setAlignment(Pos.BOTTOM_RIGHT);
+        hbox6.getChildren().addAll(saveBtn, cancelBtn);
 
-//        HBox buyPane = new HBox(20,songPrice,buyButton);
-//        buyPane.setAlignment(Pos.CENTER);
-//        buyPane.setPadding(new Insets(10));
-        detail.getChildren().addAll(hbox1, hbox2, hbox3, hbox4, uploadBtn, path, saveBtn, exitButton()); //,buyPane
-        totalDetail.getChildren().addAll(imagenstyle, detail);
+        Label colon1 = new Label(":");
+        Label colon2 = new Label(":");
+        Label colon3 = new Label(":");
+        Label colon4 = new Label(":");
+        Label colon5 = new Label(":");
+        Label colon6 = new Label(":");
+        
+        GridPane gridPane = new GridPane();
+        gridPane.setVgap(20);
+        gridPane.setHgap(10);
+        gridPane.getStyleClass().add("detailUpload"); //CSS
+        GridPane.setHalignment(nameSong, HPos.RIGHT);
+        GridPane.setHalignment(nameArtist, HPos.RIGHT);
+        GridPane.setHalignment(detailSong, HPos.RIGHT);
+        GridPane.setHalignment(songStyle, HPos.RIGHT);
+        GridPane.setHalignment(songPrice, HPos.RIGHT);
+        GridPane.setHalignment(uploadBtn, HPos.RIGHT);
+        GridPane.setConstraints(nameSong, 0, 0);
+        GridPane.setConstraints(nameArtist, 0, 1);
+        GridPane.setConstraints(detailSong, 0, 2);
+        GridPane.setConstraints(songStyle, 0, 3);
+        GridPane.setConstraints(songPrice, 0, 4);
+        GridPane.setConstraints(uploadBtn, 0, 5);
+        GridPane.setConstraints(colon1, 1, 0);
+        GridPane.setConstraints(colon2, 1, 1);
+        GridPane.setConstraints(colon3, 1, 2);
+        GridPane.setConstraints(colon4, 1, 3);
+        GridPane.setConstraints(colon5, 1, 4);
+        GridPane.setConstraints(colon6, 1, 5);
+        GridPane.setConstraints(fillNameSong, 2, 0);
+        GridPane.setConstraints(fillNameArtist, 2, 1);
+        GridPane.setConstraints(fillDetailSong, 2, 2);
+        GridPane.setConstraints(styleSelect, 2, 3);
+        GridPane.setConstraints(fillSongPrice, 2, 4);
+        GridPane.setConstraints(path, 2, 5);
+        gridPane.getChildren().addAll(nameSong,nameArtist,detailSong,songStyle,songPrice,uploadBtn,
+                colon1,colon2,colon3,colon4,colon5,colon6,
+                fillNameSong,fillNameArtist,fillDetailSong,styleSelect,fillSongPrice,path);
+                
+        detail.getChildren().addAll(gridPane,hbox6); 
+        totalDetail.getChildren().addAll(imageDetail, detail);
 
     }
 
@@ -316,7 +360,7 @@ public class UploadSongPopUp {
         file = fileChooser.showOpenDialog(null);
 
         if (file != null) {
-            path.setText(file.getAbsolutePath() + "  selected");
+            path.setText(file.getAbsolutePath());
         } else {
             System.out.println("upload cancel");
         }
