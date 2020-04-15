@@ -79,6 +79,10 @@ public class Admin_UI extends UI {
     private Account userAccount;
 
     private ReadWriteFile file = new ReadWriteFile();
+    
+    public Admin_UI () {
+        
+    }
 
     public Admin_UI(Stage stage, Account userAccount) {
 
@@ -285,7 +289,7 @@ public class Admin_UI extends UI {
         Button searchButton = CreaButton("Search");
         searchButton.setOnMouseClicked(e -> {
             Admin_UI.totalPane.getChildren().remove(1);
-            Admin_UI.totalPane.getChildren().add(Admin_UI.updateScrollPane(searchTextField.getText()));
+            Admin_UI.totalPane.getChildren().add(updateScrollPane(searchTextField.getText()));
         });
 
         searchButton.setStyle("-fx-font-size : 15px;");
@@ -294,7 +298,7 @@ public class Admin_UI extends UI {
 
         searchTextField.textProperty().addListener((ov, t, t1) -> {
             Admin_UI.totalPane.getChildren().remove(1);
-            Admin_UI.totalPane.getChildren().add(Admin_UI.updateScrollPane(searchTextField.getText()));
+            Admin_UI.totalPane.getChildren().add(updateScrollPane(searchTextField.getText()));
         });
 
         hBox.getChildren().addAll(searchTextField, searchButton);
@@ -382,10 +386,12 @@ public class Admin_UI extends UI {
         } catch (Exception e) {
             System.out.println("Admin_UI : dExeption in updateScrollPane");
         }
+        
         for (Song song : songArrayList) {
+            
             for (String styleSong : song.getListStyleSong()) {
                 
-                if (song.getNameSong().contains(text) || song.getArtistSong().toLowerCase().contains(lowerCase)) {
+                if ((song.getNameSong().toLowerCase().contains(lowerCase) || song.getArtistSong().toLowerCase().contains(lowerCase) )) {
                     contentButton = new Button();
                     contentButton.getStyleClass().add("contentDetailbtn"); //CSS           
                     contentButton.setOnAction(e -> {
@@ -423,6 +429,8 @@ public class Admin_UI extends UI {
                     contentButton.setMinWidth(300);
 
                     tilePane.getChildren().add(contentButton);
+                    
+                    break;
                 }
             }
         }
@@ -687,7 +695,7 @@ public class Admin_UI extends UI {
 
         writeFileSong(musicFile, newSongList);
         Admin_UI.totalPane.getChildren().remove(0);
-        Admin_UI.totalPane.getChildren().add(Admin_UI.updateScrollPane(""));
+        Admin_UI.totalPane.getChildren().add(updateScrollPane(""));
 
         return 1;
     }

@@ -31,6 +31,9 @@ abstract public class UI {
     boolean showAllStyleSong;
     boolean showMyStyleSong;
 
+    public UI() {
+    }
+
     public UI(Stage stage, Account userAccount) {
         this.stage = stage;
         this.userAccount = userAccount;
@@ -239,15 +242,15 @@ abstract public class UI {
         allsong.getChildren().add(main);
         main.setOnMouseClicked(e -> {
             
-            if(!this.showAllStyleSong) 
-                allsong.getChildren().addAll(listStyleSong);
-            else 
-                allsong.getChildren().remove(1);
+//            if(!this.showAllStyleSong) 
+//                allsong.getChildren().addAll(listStyleSong);
+//            else 
+//                allsong.getChildren().remove(1);
             
             this.vbox.getChildren().remove(1);
             this.vbox.getChildren().add(allSongPane(""));
             
-            this.showAllStyleSong = !this.showAllStyleSong;
+//            this.showAllStyleSong = !this.showAllStyleSong;
         });
         
         Button myLibrary = CreaButton("Account Management");

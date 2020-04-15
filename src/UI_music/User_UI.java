@@ -59,6 +59,9 @@ public class User_UI extends UI {
    private Account userAccount;
    private String page;
 
+    public User_UI() {
+    }
+
     public User_UI(Stage stage, Account userAccount) {
         super(stage,userAccount);
         this.userAccount = userAccount;
