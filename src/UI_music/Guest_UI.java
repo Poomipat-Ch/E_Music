@@ -83,7 +83,7 @@ public class Guest_UI extends UI {
     public AnchorPane mySongPane() {
         AlertBox registerFirst = new AlertBox();
         registerFirst.displayAlert("Register First", "Register Free Account to have My library");
-        new Register(false);
+        new Register("member");
         return null;
     }
     
@@ -334,7 +334,7 @@ public class Guest_UI extends UI {
     public BorderPane myAccount() {
         AlertBox registerFirst = new AlertBox();
         registerFirst.displayAlert("Register First", "Register Free Account to have My library");
-        new Register(false);
+        new Register("member");
         return null;
     }
 

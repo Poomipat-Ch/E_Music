@@ -18,6 +18,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -50,6 +51,7 @@ public class Register {
     private File filePath;
     private ImageView photo;
     private Image image;
+    String roles = "member";
 
     ArrayList<Account> listUserAccount = new ArrayList<>();
     Account userAccount = new Account();
@@ -57,7 +59,7 @@ public class Register {
 
     private ReadWriteFile file = new ReadWriteFile();
 
-    public Register(boolean isAdmin) {
+    public Register(String userRole) {
 
         image = new Image("/image/defaultprofile.png");
 
@@ -67,11 +69,12 @@ public class Register {
         Label title = new Label("Sign up");
         title.setPadding(new Insets(10));
         title.setAlignment(Pos.TOP_CENTER);
-        
+
         //Admin add account
         ToggleGroup statusToggle = new ToggleGroup();
-        RadioButton adminSelect = new RadioButton("Admin Account");
-        RadioButton userSelect = new RadioButton("User Account");
+        RadioButton adminSelect = new RadioButton("Admin");
+        RadioButton premiumSelect = new RadioButton("Premium");
+        RadioButton userSelect = new RadioButton("Member");
 
         //Fill name surname username email password
         TextField nameIn = new TextField();
@@ -122,6 +125,8 @@ public class Register {
         TextField answer = new TextField();
         answer.setPromptText("Answer");
 
+        CheckBox premiumBox = new CheckBox("I want to have a premium account");
+
         Button ok = new Button("OK");
         ok.setOnAction(e -> {
             System.out.println("Checking information...");
@@ -137,6 +142,10 @@ public class Register {
                 userGender = "N/A";
             }
             ArrayList<Account> addAccount = new ArrayList<>();
+
+            if (premiumBox.isSelected()) {
+                roles = "premium";
+            }
 
             try {
                 listUserAccount = file.readFile(this.user);
@@ -178,16 +187,26 @@ public class Register {
                             System.out.println("Register : IOExeption read file in Register consturtor after check");
                         }
 
-                        if (!isAdmin) {
-                            addAccount.add(new Account(nameIn.getText(), surnameIn.getText(), usernameIn.getText(), mailIn.getText(),
-                                    passIn.getText(), userGender, dOB, question.getValue(), answer.getText(),true, image));
+                        if (userRole.equals("admin") == false) {
+                            if (roles.equals("premium")) {
+                                addAccount.add(new Account(nameIn.getText(), surnameIn.getText(), usernameIn.getText(), mailIn.getText(),
+                                        passIn.getText(), userGender, dOB, question.getValue(), answer.getText(), "premium", image));
+                            } else {
+                                addAccount.add(new Account(nameIn.getText(), surnameIn.getText(), usernameIn.getText(), mailIn.getText(),
+                                        passIn.getText(), userGender, dOB, question.getValue(), answer.getText(), "member", image));
+                            }
+
                         } else {
-                            boolean isAdminReg = false;
-                            if (adminSelect.isSelected()) 
-                                isAdminReg = true;
+                            String userRoleReg = "member";
+                            if (adminSelect.isSelected()) {
+                                userRoleReg = "admin";
+                            }
+                            else if(premiumSelect.isSelected()){
+                                userRoleReg = "premium";
+                            }
 
                             addAccount.add(new Account(nameIn.getText(), surnameIn.getText(), usernameIn.getText(), mailIn.getText(),
-                                    passIn.getText(), userGender, dOB, question.getValue(), answer.getText(), isAdminReg, image));
+                                    passIn.getText(), userGender, dOB, question.getValue(), answer.getText(), userRoleReg, image));
                         }
 
                         try {
@@ -201,11 +220,12 @@ public class Register {
                         } catch (Exception ex) {
                             System.out.println("Register : Exeption read file in Register consturtor after save account");
                         }
-                        
-                        if(isAdmin)
+
+                        if (userRole.equals("admin")) {
                             AlertBox.displayAlert("Add Account Complete", "This account has been saved.");
-                        else
+                        } else {
                             AlertBox.displayAlert("Register Complete", "Your account has been saved.\nTry to login now.");
+                        }
 
                         System.out.println("Registeraion Complete!\n");
 
@@ -271,20 +291,23 @@ public class Register {
                 System.out.println("Register : IOExeption uplode file picture in Register consturtor");
             }
         });
-        
+
         VBox column1 = new VBox(20);
         column1.setPadding(new Insets(10)); //add gap 10px
         column1.setMaxWidth(300);
-        
+
         HBox statusRow = new HBox(20);
         statusRow.setAlignment(Pos.CENTER);
 
-        if (isAdmin) {
-            statusRow.getChildren().addAll(userSelect, adminSelect);
+        if (userRole.equals("admin")) {
+            statusRow.getChildren().addAll(userSelect, premiumSelect, adminSelect);
             column1.getChildren().add(statusRow);
+            column1.getChildren().addAll(row1, usernameIn, mailIn, row3, title2, date, sexText, sexRow, qText, question, answer);
         }
-        
-        column1.getChildren().addAll(row1, usernameIn, mailIn, row3, title2, date, sexText, sexRow, qText, question, answer);
+
+        else{
+            column1.getChildren().addAll(row1, usernameIn, mailIn, row3, title2, date, sexText, sexRow, qText, question, answer, premiumBox);
+        }
         column1.setAlignment(Pos.CENTER);
 
         photo = new ImageView(new Image("/image/defaultprofile.png"));
@@ -294,10 +317,11 @@ public class Register {
 
         adminSelect.setToggleGroup(statusToggle);
         userSelect.setToggleGroup(statusToggle);
+        premiumSelect.setToggleGroup(statusToggle);
         statusToggle.selectToggle(userSelect);
 
         VBox titleRow = new VBox(5);
-        titleRow.getChildren().add(title);        
+        titleRow.getChildren().add(title);
         titleRow.setAlignment(Pos.CENTER);
         titleRow.setPadding(new Insets(10));
 
@@ -318,11 +342,12 @@ public class Register {
         pane.setAlignment(column2, Pos.CENTER);
 
         Scene regScene;
-        if(isAdmin)
+        if (userRole.equals("admin")) {
+            regScene = new Scene(pane, 600, 630);
+        } else {
             regScene = new Scene(pane, 550, 630);
-        else
-            regScene = new Scene(pane, 550, 600);
-        
+        }
+
         regisStage.setScene(regScene);
         regisStage.setResizable(false);
         regisStage.setTitle("Registeration.");
