@@ -68,6 +68,8 @@ public class Admin_UI extends UI {
 //    static ObservableList<Song> songArrayList;
     static ArrayList<Song> songArrayList = new ArrayList<Song>();
     static File musicFile = new File("src/data/music.dat");
+    static String editName, editArtist, editDetail, editPrice;
+    static Image editImage;
 
     ObservableList<Account> list = null;
 
@@ -144,7 +146,7 @@ public class Admin_UI extends UI {
         editSongBtn.setLayoutX(780);
         editSongBtn.setLayoutY(600);
         editSongBtn.setOnAction(e -> {
-            new UploadSongPopUp("Edit Song","selected","selected","selected","selected","selected path",new Image("/image/defaultmusic.png"),null); // Gut
+            new UploadSongPopUp("Edit Song",editName,editArtist,editDetail,editPrice,"src/MusicFile/"+songSelectString+".mp3",editImage,null); // Gut
         });
 
         Button uploadBtn = CreaButton("Upload");        //Upload Button
@@ -421,6 +423,11 @@ public class Admin_UI extends UI {
                         //Gut add
                         songSelectString = song.getNameSong() + song.getArtistSong() + song.getDetailSong();
                         System.out.println(songSelectString + " is selected");
+                        editName = song.getNameSong();
+                        editArtist = song.getArtistSong();
+                        editDetail = song.getDetailSong();
+                        editPrice = song.getPriceSong();
+                        editImage = song.getPhoto();
 
                         selectNameSong.getStyleClass().add("nameSong");
                         selectArtist.getStyleClass().add("nameArtist");
