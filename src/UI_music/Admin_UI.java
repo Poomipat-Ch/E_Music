@@ -117,7 +117,7 @@ public class Admin_UI extends UI {
     String page;
 
     @Override
-    public AnchorPane allSongPane(String page) {   //First Page 1
+    public AnchorPane firstPagePane(String page) {   //First Page 1
         AnchorPane pane = new AnchorPane();
         this.page = page;
 
@@ -162,7 +162,7 @@ public class Admin_UI extends UI {
     }
 
     @Override
-    public AnchorPane mySongPane() {    //Accounts Page 2
+    public AnchorPane secondPagePane() {    //Accounts Page 2
         AnchorPane pane = new AnchorPane();
         pane.setMinHeight(760);
         pane.setMaxHeight(Double.MAX_VALUE);

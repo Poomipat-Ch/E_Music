@@ -71,7 +71,7 @@ public class Guest_UI extends UI {
     }
 
     @Override
-    public AnchorPane allSongPane(String page) {
+    public AnchorPane firstPagePane(String page) {
         AnchorPane pane = new AnchorPane();
         pane.getChildren().addAll(AllSong());
 
@@ -80,7 +80,7 @@ public class Guest_UI extends UI {
     private AnchorPane pane = new AnchorPane();
     private VBox detailDownload = new VBox(10);
     @Override
-    public AnchorPane mySongPane() {
+    public AnchorPane secondPagePane() {
         AlertBox registerFirst = new AlertBox();
         registerFirst.displayAlert("Register First", "Register Free Account to have My library");
         new Register("member");
