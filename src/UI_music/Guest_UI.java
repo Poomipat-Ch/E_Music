@@ -46,7 +46,7 @@ import javafx.stage.StageStyle;
  *
  * @author poomi
  */
-public class User_UI extends UI {
+public class Guest_UI extends UI {
 
     SearchSystem searchSystemMyLibrary = new SearchSystem();
     MusicFunc nameSongFromTable = new MusicFunc();
@@ -58,7 +58,7 @@ public class User_UI extends UI {
    private Song songSelected;
    private Account userAccount;
 
-    public User_UI(Stage stage, Account userAccount) {
+    public Guest_UI(Stage stage, Account userAccount) {
         super(stage,userAccount);
         this.userAccount = userAccount;
 
@@ -81,44 +81,10 @@ public class User_UI extends UI {
     private VBox detailDownload = new VBox(10);
     @Override
     public AnchorPane mySongPane() {
-        AnchorPane pane = this.pane;
-        pane.getChildren().clear();
-        detailDownload.getChildren().clear();
-        pane.setMinHeight(760);
-        pane.setMaxHeight(Double.MAX_VALUE);
-        pane.getStyleClass().add("bg-2");
-        AnchorPane img = new AnchorPane();
-        img.setPrefSize(300, 400);
-        img.setLayoutX(1030 - 300 - 20);
-        img.setLayoutY(20);
-
-        Image imageMy = new Image("/image/Music_pic.jpg");
-        ImageView imgMy = new ImageView(imageMy);
-        img.getChildren().add(imgMy);
-        
-        
-        detailDownload.getStyleClass().add("downloadSelected");
-        detailDownload.setLayoutX(1030 - 300 - 20);
-        detailDownload.setLayoutY(450);
-        Label nameSong = new Label("Song : ");
-        Label nameArtist = new Label("Artist : ");
-        Label DownloadAble = new Label("Downloadable(Time) : ");
-        detailDownload.getChildren().addAll(nameSong,nameArtist,DownloadAble);
-
-        Button downloadBtn = CreaButton("Download");
-
-        downloadBtn.setLayoutX(1030 - 250 - 20);
-        downloadBtn.setLayoutY(750);
-
-        //Download Button action
-        downloadBtn.setOnMouseClicked((event) -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                this.downloader();
-            }
-        });
-
-        pane.getChildren().addAll(img, downloadBtn, detailDownload, tableMyMusic(), searchBoxMy());
-        return pane;
+        AlertBox registerFirst = new AlertBox();
+        registerFirst.displayAlert("Register First", "Register Free Account to have My library");
+        new Register(false);
+        return null;
     }
     
     public void updateDetailDownload(){
@@ -227,8 +193,8 @@ public class User_UI extends UI {
 
         Button searchButton = CreaButton("Search");
         searchButton.setOnMouseClicked(e -> {
-            User_UI.totalPane.getChildren().remove(1);
-            User_UI.totalPane.getChildren().add(updateScrollPane(searchTextField.getText()));
+            Guest_UI.totalPane.getChildren().remove(1);
+            Guest_UI.totalPane.getChildren().add(updateScrollPane(searchTextField.getText()));
         });
 
         searchButton.setStyle("-fx-font-size : 15px;");
@@ -236,8 +202,8 @@ public class User_UI extends UI {
         HBox.setMargin(searchButton, new Insets(0, 0, 0, 10));
 
         searchTextField.textProperty().addListener((ov, t, t1) -> {
-            User_UI.totalPane.getChildren().remove(1);
-            User_UI.totalPane.getChildren().add(updateScrollPane(searchTextField.getText()));
+            Guest_UI.totalPane.getChildren().remove(1);
+            Guest_UI.totalPane.getChildren().add(updateScrollPane(searchTextField.getText()));
         });
 
         hBox.getChildren().addAll(searchTextField, searchButton);
@@ -366,7 +332,10 @@ public class User_UI extends UI {
 
     @Override
     public BorderPane myAccount() {
-        return new Profile(userAccount).getMainPane();
+        AlertBox registerFirst = new AlertBox();
+        registerFirst.displayAlert("Register First", "Register Free Account to have My library");
+        new Register(false);
+        return null;
     }
 
     public void downloader() {
@@ -399,9 +368,9 @@ public class User_UI extends UI {
         try {
             nowAccount = file.readFile(user);
         } catch (IOException ex) {
-            Logger.getLogger(User_UI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Guest_UI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(User_UI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Guest_UI.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         for (Account account : nowAccount) {
@@ -415,7 +384,7 @@ public class User_UI extends UI {
         try {
             file.writeFile(user, updateAccount);
         } catch (IOException ex) {
-            Logger.getLogger(User_UI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Guest_UI.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

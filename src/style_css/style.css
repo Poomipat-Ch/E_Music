@@ -37,11 +37,17 @@
     -fx-border-style: hidden none none solid;
     -fx-border-width: 0 0 0 10;
     -fx-border-color: #27496d;
-
 }
 
 .menubtn:pressed{
      -fx-background-color: #27496d;
+}
+
+.menubtnActive{
+    -fx-background-color: #27496d; 
+    -fx-background-radius :  0 0 0 0; 
+    -fx-text-fill : white;
+    -fx-font-size : 20px;
 }
 
 .detailbtn{
