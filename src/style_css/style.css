@@ -96,6 +96,11 @@
      -fx-background-color : #0c7b93;
 }
 
+.downloadSelected Label{
+    -fx-font-size: 25px;
+    -fx-text-fill: white;
+}
+
 
 
 /****************************************************************
