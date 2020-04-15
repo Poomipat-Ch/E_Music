@@ -31,7 +31,7 @@ public class Account implements Serializable {
     private String question;
     private String answer;
     private LocalDate dateOfBirth;
-    private boolean isAdmin;
+    private String userRole;
 
     private int width, height;
     private int[][] data;
@@ -45,8 +45,7 @@ public class Account implements Serializable {
     public Account() {
     }
 
-    public Account(String name, String surname, String username, String email,
-            String password, String gender, LocalDate dateOfBirth, String question, String answer, boolean isAdmin, Image image) {
+    public Account(String name, String surname, String username, String email, String password, String gender, LocalDate dateOfBirth, String question, String answer, String userRole, Image image) {
         this.name = name;
         this.surname = surname;
         this.username = username;
@@ -57,22 +56,24 @@ public class Account implements Serializable {
         this.dateOfBirth = dateOfBirth;
         this.question = question;
         this.answer = answer;
-        this.isAdmin = isAdmin;
+        this.userRole = userRole;
         this.setPhoto(image);
         
         listSong.add(new Song());
     }
 
-    public boolean getIsAdmin() {
-        return isAdmin;
-    }
+    
 
-    public void setIsAdmin(boolean isAdmin) {
-        this.isAdmin = isAdmin;
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+    
+    public String getUserRole() {
+        return userRole;
     }
 
     public LocalDate getDateOfBirth() {

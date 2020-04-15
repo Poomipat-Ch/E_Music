@@ -55,7 +55,7 @@ public class Login {
     public Login(Stage stage) throws FileNotFoundException, IOException, ClassNotFoundException {
 
 //**READ THIS***** This save in user.dat file, if you can't run admin, try run this code only once and comment again
-//        listUserAccount.add(new Account("admin", "admin", "admin", "admin@gmail.com", "admin", "N/A", LocalDate.now(), "admin", "admin", true, new Image("/image/defaultprofile.png")));
+//        listUserAccount.add(new Account("admin", "admin", "admin", "admin@gmail.com", "admin", "N/A", LocalDate.now(), "admin", "admin", "admin", new Image("/image/defaultprofile.png")));
 //        writeFile(user, listUserAccount); 
 
         Login.stage = stage;
@@ -126,7 +126,7 @@ public class Login {
                 System.out.println("Login complete.\nWelcome, " + userAccount.getName());
                 // AlertBox.display("Login Complete", "Go to main page.");
                 Login.stage.hide();
-                if (userAccount.getIsAdmin()) {
+                if (userAccount.getUserRole().equals("admin")) {
                     Admin_UI admin_UI = new Admin_UI(new Stage(), userAccount); // <-- EDIT HERE Mr.Sirawit
                 } else {
                     User_UI user_UI = new User_UI(new Stage(), userAccount);
@@ -154,9 +154,17 @@ public class Login {
             System.out.println("User want to register.");
             register();
         });
+        
+        //Guest Button -> Login with Guest
+        Button guestBtn = new Button("Login with guest");
+        guestBtn.setOnAction(e->{
+            System.out.println("User login with guest");
+            Login.stage.hide();
+            Guest_UI guest_UI = new Guest_UI(new Stage(), userAccount);
+        });
 
         VBox rightMenu = new VBox(10);
-        rightMenu.getChildren().addAll(title1, idLabel, idInput, passLabel, passInput, chk1, loginBtn, forgotBtn, registerBtn);
+        rightMenu.getChildren().addAll(title1, idLabel, idInput, passLabel, passInput, chk1, loginBtn, forgotBtn, registerBtn, guestBtn);
         rightMenu.setAlignment(Pos.CENTER_LEFT);
         BorderPane borderPane = new BorderPane();
         BorderPane.setAlignment(rightMenu, Pos.CENTER);
@@ -184,7 +192,7 @@ public class Login {
 
     public void register() {
         //StringProperty name, surname, mail, password, sex;
-        new Register(false);
+        new Register("member");
     }
 
     public void forgetPassword() {
@@ -242,7 +250,7 @@ public class Login {
                     ArrayList<Account> addAccount = new ArrayList<>();
 
                     addAccount.add(new Account(userAccount.getName(), userAccount.getSurname(), userAccount.getUsername(), userAccount.getEmail(),
-                            passIn1.getText(), userAccount.getGender(), userAccount.getDateOfBirth(), userAccount.getQuestion(), userAccount.getAnswer(), false, userAccount.getPhoto()));
+                            passIn1.getText(), userAccount.getGender(), userAccount.getDateOfBirth(), userAccount.getQuestion(), userAccount.getAnswer(), "member", userAccount.getPhoto()));
                     addAccount.remove(userAccount);
 
                     try {

@@ -244,8 +244,8 @@ public class Admin_UI extends UI {
         TableColumn<Account, LocalDate> dobCol = new TableColumn<>("Date of Birth");
         dobCol.setMinWidth(130);
 
-        // Create column isAdmin (Data type of Boolean).
-        TableColumn<Account, Boolean> adminCol = new TableColumn<>("Admin");
+        // Create column Role (Data type of String).
+        TableColumn<Account, String> adminCol = new TableColumn<>("Role");
         adminCol.setMinWidth(100);
 
         // Defines how to fill data for each cell.
@@ -256,7 +256,7 @@ public class Admin_UI extends UI {
         emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
         genderCol.setCellValueFactory(new PropertyValueFactory<>("gender"));
         dobCol.setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
-        adminCol.setCellValueFactory(new PropertyValueFactory<>("isAdmin"));
+        adminCol.setCellValueFactory(new PropertyValueFactory<>("userRole"));
 
         // Set Sort type for userName column
         nameCol.setSortType(TableColumn.SortType.DESCENDING);
@@ -481,7 +481,7 @@ public class Admin_UI extends UI {
 
     private void addAccountClicked() {
 
-        new Register(true);
+        new Register("admin");
     }
 
     ImageView photo;
@@ -516,9 +516,11 @@ public class Admin_UI extends UI {
         }
 
         ToggleGroup statusToggle = new ToggleGroup();
-        RadioButton adminSelect = new RadioButton("Admin Account");
-        RadioButton userSelect = new RadioButton("User Account");
+        RadioButton adminSelect = new RadioButton("Admin");
+        RadioButton premiumSelect = new RadioButton("Premium");
+        RadioButton userSelect = new RadioButton("Member");
         adminSelect.setToggleGroup(statusToggle);
+        premiumSelect.setToggleGroup(statusToggle);
         userSelect.setToggleGroup(statusToggle);
 
         for (Account account : oldAccounts) {
@@ -527,9 +529,13 @@ public class Admin_UI extends UI {
 
             if (selectUsername.equals(chkUser) && selectEmail.equals(chkEmail)) {
                 updateAccount = account;
-                if (updateAccount.getIsAdmin()) {
+                if (updateAccount.getUserRole().equals("admin")) {
                     statusToggle.selectToggle(adminSelect);
-                } else {
+                } 
+                else if(updateAccount.getUserRole().equals("premium")){
+                    statusToggle.selectToggle(premiumSelect);
+                }
+                else {
                     statusToggle.selectToggle(userSelect);
                 }
             } else {
@@ -544,11 +550,13 @@ public class Admin_UI extends UI {
 
         Button yesBtn = new Button("Yes");
         yesBtn.setOnAction(e -> {
-            if (adminSelect.isSelected()) {
-                updateAccount.setIsAdmin(true);
-            } else {
-                updateAccount.setIsAdmin(false);
-            }
+
+            if(adminSelect.isSelected())
+                updateAccount.setUserRole("admin");
+            else if(premiumSelect.isSelected())
+                updateAccount.setUserRole("premium");
+            else
+                updateAccount.setUserRole("member");
 
             presentAccounts.add(updateAccount);
 
@@ -585,7 +593,7 @@ public class Admin_UI extends UI {
         row2.setPadding(new Insets(10));
 
         HBox row3 = new HBox(20);
-        row3.getChildren().addAll(new Label("Status : "), userSelect, adminSelect);
+        row3.getChildren().addAll(new Label("Status : "), userSelect, premiumSelect, adminSelect);
         row3.setAlignment(Pos.CENTER);
         row3.setPadding(new Insets(30));
 
