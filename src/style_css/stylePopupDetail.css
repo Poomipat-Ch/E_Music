@@ -82,6 +82,12 @@
     -fx-font-size:16px;
 }
 
+.title{
+    -fx-font-size: 30px;
+    -fx-font-weight:100;
+    -fx-text-fill: white;
+}
+
 .detailUpload Label{
     -fx-font-size: 30px;
     -fx-font-weight:100;

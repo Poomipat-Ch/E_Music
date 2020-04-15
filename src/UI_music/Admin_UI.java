@@ -126,18 +126,32 @@ public class Admin_UI extends UI {
         title1.setLayoutX(50);
         title1.setLayoutY(5);
 
-        Button editBtn = CreaButton("Edit Song");       //Edit Button
-        editBtn.setLayoutX(780);
-        editBtn.setLayoutY(600);
-        editBtn.setOnAction(e -> {
-            //Gut //Edit profile / file e.g. artist, name, time, and file .mp3
+        Button editArtistBtn = CreaButton("Edit Artist");       //New Artist
+        editArtistBtn.setLayoutX(780);
+        editArtistBtn.setLayoutY(500);
+        editArtistBtn.setOnAction(e -> {
+            
+        });
+        
+        Button newArtistBtn = CreaButton("New Artist");       //New Artist
+        newArtistBtn.setLayoutX(780);
+        newArtistBtn.setLayoutY(550);
+        newArtistBtn.setOnAction(e -> {
+            
+        });
+        
+        Button editSongBtn = CreaButton("Edit Song");       //Edit Button
+        editSongBtn.setLayoutX(780);
+        editSongBtn.setLayoutY(600);
+        editSongBtn.setOnAction(e -> {
+            new UploadSongPopUp("Edit Song","selected","selected","selected","selected","selected path",new Image("/image/defaultmusic.png"),null); // Gut
         });
 
         Button uploadBtn = CreaButton("Upload");        //Upload Button
         uploadBtn.setLayoutX(780);
         uploadBtn.setLayoutY(700);
         uploadBtn.setOnAction(e -> {
-            new UploadSongPopUp();
+            new UploadSongPopUp("Upload Song");
 
         });
 
@@ -156,7 +170,7 @@ public class Admin_UI extends UI {
 
         });
 
-        pane.getChildren().addAll(AllSong(), UpdateClikedPane(), title1, editBtn, uploadBtn, deleteBtn);
+        pane.getChildren().addAll(AllSong(), UpdateClikedPane(), title1, editArtistBtn, newArtistBtn, editSongBtn, uploadBtn, deleteBtn);
 
         return pane;
     }
