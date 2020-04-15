@@ -212,9 +212,9 @@ public class Cashing {
         try {
             nowAccount = file.readFile(user);
         } catch (IOException ex) {
-            Logger.getLogger(User_UI.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("MusicFunc : IOExeption read file music in userSaveSong");
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(User_UI.class.getName()).log(Level.SEVERE, null, ex);
+           System.out.println("MusicFunc : ClassNotFoundExeption read file music in userSaveSong");
         }
         
         for (Account account : nowAccount) {
@@ -227,7 +227,7 @@ public class Cashing {
         try {
             file.writeFile(user, updateAccount);
         } catch (IOException ex) {
-            Logger.getLogger(User_UI.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Cashing : IOExeption write file music in userSaveSong");
         }
     }
 

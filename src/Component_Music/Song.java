@@ -33,16 +33,20 @@ public class Song implements Serializable {
     private int[][] data;
 
     private static File musicFile = new File("src/data/music.dat");
+    
+    private ArrayList<String> listStyleSong = new ArrayList<>();
 
     public Song() {
     }
 
-    public Song(String nameSong, String detailSong, String artistSong, String priceSong, Image image) {
+    public Song(String nameSong, String detailSong, String artistSong, String priceSong, ArrayList<String> listStyleSong, Image image) {
         this.nameSong = nameSong;
         this.detailSong = detailSong;
         this.artistSong = artistSong;
         this.priceSong = priceSong;
         this.setPhoto(image);
+        
+        this.listStyleSong = listStyleSong;
     }
 
     public Song(Song song) {
@@ -124,6 +128,10 @@ public class Song implements Serializable {
         }
 
         return img;
+    }
+
+    public ArrayList<String> getListStyleSong() {
+        return listStyleSong;
     }
     
 }

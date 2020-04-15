@@ -77,7 +77,7 @@ public class MusicFunc {
                 try {
                     Files.copy(file.toPath(), newSong.toPath());
                 } catch (IOException ex) {
-                    System.out.println("uploadFile" + ex);
+                    System.out.println("MusicFunc : IOExeption upload file picture in uploadSongBTN");
                 }
             
 
@@ -119,7 +119,7 @@ public class MusicFunc {
                 try {
                     writeFile(musicFile, songArrayList);
                 } catch (IOException ex) {
-                    System.out.println("Remove" + ex);
+                    System.out.println("MusicFunc : IOExeption write file music in listSongBTN");
                 }
 
         this.listSongBTN();
@@ -137,7 +137,7 @@ public class MusicFunc {
             try {
                 Files.copy(file.toPath(), downloadFile.toPath());
             } catch (IOException ex) {
-                System.out.println("DownloadFile" + ex);
+                System.out.println("MusicFunc : IOExeption download file music in downloader");
             }
         }
 

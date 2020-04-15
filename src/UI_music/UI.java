@@ -26,8 +26,12 @@ import javafx.stage.Stage;
 abstract public class UI {
    
     Stage stage;
+    boolean showAllStyleSong;
+    boolean showMyStyleSong;
     public UI(Stage stage){
         this.stage = stage;
+        showAllStyleSong = false;
+        showMyStyleSong = false;
     }
     
    public BorderPane allPane(){
@@ -60,7 +64,7 @@ abstract public class UI {
     private VBox mainBox(){
 
         vbox.getStyleClass().add("mainBox");
-        vbox.getChildren().addAll(tilePane(),allSongPane());
+        vbox.getChildren().addAll(tilePane(),allSongPane(""));
         
         return vbox;
     }
@@ -76,6 +80,15 @@ abstract public class UI {
         return btn;
     }
     
+    private Button CreateStyleButton(String text){
+        Button btn = new Button(text);
+        btn.getStyleClass().add("stylebtn");
+        btn.setMinWidth(250);
+        btn.setMinHeight(35);
+        
+        return btn;
+    }
+    
     private VBox menu(){
         VBox vBox = new VBox();
         vBox.getStyleClass().add("menu");
@@ -87,11 +100,43 @@ abstract public class UI {
         logoLabel.setMinWidth(250);
         logoLabel.setAlignment(Pos.CENTER);
         
+        VBox listStyleSong = new VBox();
+        
+        Button pop = CreateStyleButton("Pop");
+        pop.setOnMouseClicked(e -> {
+
+        });
+        
+        Button jazz = CreateStyleButton("Jazz");
+        jazz.setOnMouseClicked(e -> {
+
+        });
+        
+        Button rock = CreateStyleButton("Rock");
+        rock.setOnMouseClicked(e -> {
+
+        });
+        
+        Button rnb = CreateStyleButton("R&B");
+        rnb.setOnMouseClicked(e -> {
+
+        });
+        
+        Button hiphop = CreateStyleButton("Hip Hop");
+        hiphop.setOnMouseClicked(e -> {
+
+        });
+        
+        listStyleSong.getChildren().addAll(pop,jazz,rock,rnb,hiphop);
+        
+        VBox allsong = new VBox();
+        
         Button main = CreaButton("All Song");
         main.setOnMouseClicked(e -> {
             this.vbox.getChildren().remove(1);
-            this.vbox.getChildren().add(allSongPane());
+            this.vbox.getChildren().add(allSongPane(""));
         });
+        
         Button myLibrary = CreaButton("My Library");
         myLibrary.setOnMouseClicked(e -> {
             this.vbox.getChildren().remove(1);
@@ -133,7 +178,7 @@ abstract public class UI {
         Button main = CreaButton("Song Management");
         main.setOnMouseClicked(e -> {
             this.vbox.getChildren().remove(1);
-            this.vbox.getChildren().add(allSongPane());
+            this.vbox.getChildren().add(allSongPane(""));
         });
         Button myLibrary = CreaButton("Account Management");
         myLibrary.setOnMouseClicked(e -> {
@@ -235,7 +280,7 @@ abstract public class UI {
         return minimize;
     }
     
-    abstract public AnchorPane allSongPane();
+    abstract public AnchorPane allSongPane(String page);
     abstract public AnchorPane mySongPane();
     abstract public HBox searchBoxAll();
     abstract public HBox searchBoxMy();
