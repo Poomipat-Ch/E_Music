@@ -74,7 +74,6 @@ public class Admin_UI extends UI {
     SearchSystem searchSystemMain = new SearchSystem();
     SearchSystemAccount searchAccount = new SearchSystemAccount();
 
-
     private TableView<Account> table;
 
     private Account userAccount;
@@ -83,7 +82,7 @@ public class Admin_UI extends UI {
 
     public Admin_UI(Stage stage, Account userAccount) {
 
-        super(stage,userAccount);
+        super(stage, userAccount);
 
         try {
             songArrayList = readFileSong(musicFile);
@@ -111,9 +110,12 @@ public class Admin_UI extends UI {
         return downLoadButton;
     }
 
+    String page;
+
     @Override
     public AnchorPane allSongPane(String page) {   //First Page 1
         AnchorPane pane = new AnchorPane();
+        this.page = page;
 
         Label title1 = new Label("Welcome to Administrative Page!");
         title1.getStyleClass().add("titleAdmin");
@@ -381,45 +383,47 @@ public class Admin_UI extends UI {
             System.out.println("Admin_UI : dExeption in updateScrollPane");
         }
         for (Song song : songArrayList) {
+            for (String styleSong : song.getListStyleSong()) {
+                
+                if (song.getNameSong().contains(text) || song.getArtistSong().toLowerCase().contains(lowerCase)) {
+                    contentButton = new Button();
+                    contentButton.getStyleClass().add("contentDetailbtn"); //CSS           
+                    contentButton.setOnAction(e -> {
+                        //SELECTION 
+                        Admin_UI.updateVBox.getChildren().removeAll(selectImage, selectNameSong, selectArtist);
 
-            if (song.getNameSong().contains(text) || song.getArtistSong().toLowerCase().contains(lowerCase)) {
-                contentButton = new Button();
-                contentButton.getStyleClass().add("contentDetailbtn"); //CSS           
-                contentButton.setOnAction(e -> {
-                    //SELECTION 
-                    Admin_UI.updateVBox.getChildren().removeAll(selectImage, selectNameSong, selectArtist);
+                        selectNameSong = new Label(song.getNameSong());
+                        selectArtist = new Label("ARTIST : " + song.getArtistSong());
+                        selectImage = new ImageView(new Image("/image/1.jpg"));   //DATA...Collection from database..
+                        selectImage.setFitHeight(300);
+                        selectImage.setFitWidth(250);
 
-                    selectNameSong = new Label(song.getNameSong());
-                    selectArtist = new Label("ARTIST : " + song.getArtistSong());
-                    selectImage = new ImageView(new Image("/image/1.jpg"));   //DATA...Collection from database..
-                    selectImage.setFitHeight(300);
-                    selectImage.setFitWidth(250);
+                        //Gut add
+                        songSelectString = song.getNameSong() + song.getArtistSong() + song.getDetailSong();
+                        System.out.println(songSelectString + " is selected");
 
-                    //Gut add
-                    songSelectString = song.getNameSong() + song.getArtistSong() + song.getDetailSong();
-                    System.out.println(songSelectString + " is selected");
+                        selectNameSong.getStyleClass().add("nameSong");
+                        selectArtist.getStyleClass().add("nameArtist");
 
-                    selectNameSong.getStyleClass().add("nameSong");
-                    selectArtist.getStyleClass().add("nameArtist");
+                        Admin_UI.updateVBox.getChildren().addAll(selectImage, selectNameSong, selectArtist);
+                    });
 
-                    Admin_UI.updateVBox.getChildren().addAll(selectImage, selectNameSong, selectArtist);
-                });
+                    paneContent = new VBox();
+                    paneContent.setAlignment(Pos.CENTER);
+                    paneContent.setPadding(new Insets(10, 10, 10, 10));
+                    paneContent.getStyleClass().add("content-allSong"); //CSS
 
-                paneContent = new VBox();
-                paneContent.setAlignment(Pos.CENTER);
-                paneContent.setPadding(new Insets(10, 10, 10, 10));
-                paneContent.getStyleClass().add("content-allSong"); //CSS
+                    imageView = new ImageView(new Image("/image/1.jpg"));
+                    imageView.setFitHeight(200); //160
+                    imageView.setFitWidth(150); //120
 
-                imageView = new ImageView(new Image("/image/1.jpg"));
-                imageView.setFitHeight(200); //160
-                imageView.setFitWidth(150); //120
+                    paneContent.getChildren().addAll(imageView, new Label(song.getNameSong()), new Label("ARTIST : " + song.getArtistSong()));
+                    contentButton.setGraphic(paneContent);
+                    contentButton.setMinHeight(300);
+                    contentButton.setMinWidth(300);
 
-                paneContent.getChildren().addAll(imageView, new Label(song.getNameSong()), new Label("ARTIST : " + song.getArtistSong()));
-                contentButton.setGraphic(paneContent);
-                contentButton.setMinHeight(300);
-                contentButton.setMinWidth(300);
-
-                tilePane.getChildren().add(contentButton);
+                    tilePane.getChildren().add(contentButton);
+                }
             }
         }
         return tilePane;
@@ -455,10 +459,9 @@ public class Admin_UI extends UI {
 
         return updatePane;
 
-    } 
-        
-    private void refreshTable(){ //get.list -> sorted
+    }
 
+    private void refreshTable() { //get.list -> sorted
 
         //TRY -CATCH FOR EXCEPTION ... NOTHING TO DO WITH IT
         try {
@@ -475,8 +478,8 @@ public class Admin_UI extends UI {
         sortedList.comparatorProperty().bind(table.comparatorProperty());
         table.setItems(filterData);
     }
-    
-     private void addAccountClicked() {
+
+    private void addAccountClicked() {
 
         new Register("admin");
     }
@@ -491,7 +494,7 @@ public class Admin_UI extends UI {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Edit User/Admin Account");
         stage.setResizable(false);
-        
+
         oldAccounts = new ArrayList<>();
         presentAccounts = new ArrayList<>();
         updateAccount = new Account();
@@ -547,23 +550,24 @@ public class Admin_UI extends UI {
 
         Button yesBtn = new Button("Yes");
         yesBtn.setOnAction(e -> {
+
             if(adminSelect.isSelected())
                 updateAccount.setUserRole("admin");
             else if(premiumSelect.isSelected())
                 updateAccount.setUserRole("premium");
             else
                 updateAccount.setUserRole("member");
-            
+
             presentAccounts.add(updateAccount);
-            
+
             try {
                 file.writeFile(user, presentAccounts);
             } catch (IOException ex) {
                 System.out.println("Admin_UI : IOExeption writefile in updateAccountClicked");
             }
-            
+
             stage.close();
-            
+
             refreshTable();
         });
 
@@ -637,10 +641,9 @@ public class Admin_UI extends UI {
 
                 presentAccounts.add(account);
 
-            }
-            else{
-                if(AlertBox.display("Delect Account.","Are you sure to delete this account?")) {
-                    AlertBox.displayAlert("Delect Account.","Delete account successed.");
+            } else {
+                if (AlertBox.display("Delect Account.", "Are you sure to delete this account?")) {
+                    AlertBox.displayAlert("Delect Account.", "Delete account successed.");
 
                     System.out.println("delete " + account);
                 } else {
@@ -661,7 +664,7 @@ public class Admin_UI extends UI {
 
         ArrayList<Song> oldSongList = new ArrayList<Song>();
         ArrayList<Song> newSongList = new ArrayList<Song>();
-        File selectFileDelete = new File("src/MusicFile/"+songSelectString+".mp3");
+        File selectFileDelete = new File("src/MusicFile/" + songSelectString + ".mp3");
 
         try {
             oldSongList = readFileSong(musicFile);
@@ -683,8 +686,8 @@ public class Admin_UI extends UI {
         }
 
         writeFileSong(musicFile, newSongList);
-         Admin_UI.totalPane.getChildren().remove(0);
-         Admin_UI.totalPane.getChildren().add(Admin_UI.updateScrollPane(""));
+        Admin_UI.totalPane.getChildren().remove(0);
+        Admin_UI.totalPane.getChildren().add(Admin_UI.updateScrollPane(""));
 
         return 1;
     }

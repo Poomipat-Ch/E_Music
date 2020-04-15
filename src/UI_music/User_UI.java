@@ -57,6 +57,7 @@ public class User_UI extends UI {
    private String nameSet;
    private Song songSelected;
    private Account userAccount;
+   private String page;
 
     public User_UI(Stage stage, Account userAccount) {
         super(stage,userAccount);
@@ -73,7 +74,8 @@ public class User_UI extends UI {
     @Override
     public AnchorPane allSongPane(String page) {
         AnchorPane pane = new AnchorPane();
-        pane.getChildren().addAll(AllSong(page));
+        this.page = page;
+        pane.getChildren().addAll(AllSong());
 
         return pane;
     }
@@ -271,7 +273,7 @@ public class User_UI extends UI {
 
     public static VBox totalPane;
 
-    private ScrollPane AllSong(String page) {
+    private ScrollPane AllSong() {
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setPrefSize(1030, 900);
@@ -285,7 +287,7 @@ public class User_UI extends UI {
         totalPane.setAlignment(Pos.CENTER);
         totalPane.getStyleClass().add("allSong");
 
-        totalPane.getChildren().addAll(searchBoxAll(), updateScrollPane(page));
+        totalPane.getChildren().addAll(searchBoxAll(), updateScrollPane(""));
 
         scrollPane.setContent(totalPane);
 
@@ -317,7 +319,7 @@ public class User_UI extends UI {
 
             for (String styleSong : song.getListStyleSong()) {
 
-                if (song.getNameSong().toLowerCase().contains(lowerCase) || song.getArtistSong().toLowerCase().contains(lowerCase) || (styleSong.toLowerCase().contains(lowerCase) && text == "")) {
+                if ((song.getNameSong().toLowerCase().contains(lowerCase) || song.getArtistSong().toLowerCase().contains(lowerCase) ) && styleSong.contains(page)) {
 
                     boolean inMyList = false;
                     for (Song song1 : userAccount.getMyListSong()) {
