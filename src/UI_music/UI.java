@@ -6,6 +6,7 @@
 package UI_music;
 
 
+import Component_Music.Account;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -25,9 +26,13 @@ import javafx.stage.Stage;
  */
 abstract public class UI {
    
-    Stage stage;
-    public UI(Stage stage){
+    private Stage stage;
+    private int menuBtnClicked = 0;
+    private Account userAccount;
+    
+    public UI(Stage stage, Account userAccount){
         this.stage = stage;
+        this.userAccount = userAccount;
     }
     
    public BorderPane allPane(){
@@ -72,9 +77,13 @@ abstract public class UI {
         btn.getStyleClass().add("menubtn");
         btn.setMinWidth(250);
         btn.setMinHeight(50);
+
         
         return btn;
     }
+    
+
+   
     
     private VBox menu(){
         VBox vBox = new VBox();
@@ -89,18 +98,29 @@ abstract public class UI {
         
         Button main = CreaButton("All Song");
         main.setOnMouseClicked(e -> {
+            menuBtnClicked = 0;
             this.vbox.getChildren().remove(1);
             this.vbox.getChildren().add(allSongPane());
         });
         Button myLibrary = CreaButton("My Library");
         myLibrary.setOnMouseClicked(e -> {
+            menuBtnClicked = 1;
+           // if (userAccount.getUserRole() != "guest") { // wait
+           
             this.vbox.getChildren().remove(1);
-            this.vbox.getChildren().add(mySongPane());
+            this.vbox.getChildren().add(mySongPane());    
+            
+           // }
+            
         });
         Button myAccount = CreaButton("My Account");
         myAccount.setOnMouseClicked(e -> {
+            menuBtnClicked = 2;
+          // if (userAccount.getUserRole() != "guest") { // wait
             this.vbox.getChildren().remove(1);
             this.vbox.getChildren().add(myAccount());
+            
+          // }
         });
         Button logOut = CreaButton("Logout");
         logOut.setOnMouseClicked(e -> {
@@ -118,6 +138,8 @@ abstract public class UI {
         
         return vBox;
     }
+    
+    
     
     private VBox menu2(){
         VBox vBox = new VBox();
