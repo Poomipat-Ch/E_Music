@@ -47,21 +47,23 @@
     -fx-background-color: #00a8cd; 
     -fx-background-radius :  0 0 0 0; 
     -fx-text-fill : white;
-    -fx-font-size : 15px;
+    -fx-font-size : 17px;
     -fx-border-style: hidden none none solid;
-    -fx-border-width: 0 0 0 10;
+    -fx-border-width: 0 0 0 30;
     -fx-border-color: #ffffff;
 }
 
 .stylebtn:hover{
     -fx-border-style: hidden none none solid;
-    -fx-border-width: 0 0 0 30;
+    -fx-border-width: 0 0 0 50;
     -fx-border-color: #ffffff;
+    -fx-font-size : 20px;
 
 }
 
-.styletn:pressed{
-     -fx-background-color: #40496d;
+.stylebtn:pressed{
+     -fx-background-color: #ffffff;
+     -fx-text-fill : #27496d; 
 }
 
 .menubtnActive{
