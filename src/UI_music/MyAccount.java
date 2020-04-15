@@ -281,7 +281,7 @@ public class MyAccount {
                 this.photo.setImage(image);
                 this.image = image;
             } catch (IOException e) {
-                System.out.println(e.getMessage());
+                System.out.println("MyAcoount : IOExeption upload picture in editAccount");
             }
         });
 
@@ -316,7 +316,7 @@ public class MyAccount {
         try {
             listAccount = file.readFile(user);
         } catch (Exception e) {
-            System.out.println("Read File error: " + e);
+            System.out.println("MyAcoount : Exeption read file in saveAccount");
         }
 
         boolean uniqueID = true;
@@ -373,12 +373,12 @@ public class MyAccount {
                         file.writeFile(user, changeAccount);
                         System.out.println("Saving account.");
                     } catch (IOException ex) {
-                        System.out.println("Register writeFile " + ex);
+                        System.out.println("MyAcoount : IOExeption write file in saveAccount");
                     }
                     try {
                         listAccount = file.readFile(user);
                     } catch (Exception ex) {
-                        System.out.println("Error: " + ex);
+                        System.out.println("MyAcoount : IOExeption read file in saveAccount");
                     }
 
                     System.out.println("Edit Profile Complete!\n");
