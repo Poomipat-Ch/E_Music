@@ -83,7 +83,7 @@ public class Admin_UI extends UI {
 
     public Admin_UI(Stage stage, Account userAccount) {
 
-        super(stage);
+        super(stage,userAccount);
 
         try {
             songArrayList = readFileSong(musicFile);

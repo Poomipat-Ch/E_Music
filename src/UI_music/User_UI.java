@@ -38,7 +38,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -53,14 +52,14 @@ public class User_UI extends UI {
     MusicFunc nameSongFromTable = new MusicFunc();
 
     // Create File for downloader
-    File fileForDownload;
-    String songNameSelected;
-    String nameSet;
-
-    Account userAccount;
+   private File fileForDownload;
+   private String songNameSelected;
+   private String nameSet;
+   private Song songSelected;
+   private Account userAccount;
 
     public User_UI(Stage stage, Account userAccount) {
-        super(stage);
+        super(stage,userAccount);
         this.userAccount = userAccount;
 
         Scene scene = new Scene(allPane(), 1280, 960);
@@ -78,10 +77,13 @@ public class User_UI extends UI {
 
         return pane;
     }
-
+    private AnchorPane pane = new AnchorPane();
+    private VBox detailDownload = new VBox(10);
     @Override
     public AnchorPane mySongPane() {
-        AnchorPane pane = new AnchorPane();
+        AnchorPane pane = this.pane;
+        pane.getChildren().clear();
+        detailDownload.getChildren().clear();
         pane.setMinHeight(760);
         pane.setMaxHeight(Double.MAX_VALUE);
         pane.getStyleClass().add("bg-2");
@@ -93,11 +95,20 @@ public class User_UI extends UI {
         Image imageMy = new Image("/image/Music_pic.jpg");
         ImageView imgMy = new ImageView(imageMy);
         img.getChildren().add(imgMy);
+        
+        
+        detailDownload.getStyleClass().add("downloadSelected");
+        detailDownload.setLayoutX(1030 - 300 - 20);
+        detailDownload.setLayoutY(450);
+        Label nameSong = new Label("Song : ");
+        Label nameArtist = new Label("Artist : ");
+        Label DownloadAble = new Label("Downloadable(Time) : ");
+        detailDownload.getChildren().addAll(nameSong,nameArtist,DownloadAble);
 
         Button downloadBtn = CreaButton("Download");
 
         downloadBtn.setLayoutX(1030 - 250 - 20);
-        downloadBtn.setLayoutY(420 + 20);
+        downloadBtn.setLayoutY(750);
 
         //Download Button action
         downloadBtn.setOnMouseClicked((event) -> {
@@ -106,9 +117,27 @@ public class User_UI extends UI {
             }
         });
 
-        pane.getChildren().addAll(img, downloadBtn, tableMyMusic(), searchBoxMy());
-
+        pane.getChildren().addAll(img, downloadBtn, detailDownload, tableMyMusic(), searchBoxMy());
         return pane;
+    }
+    
+    public void updateDetailDownload(){
+        pane.getChildren().remove(0);
+        ((Label)detailDownload.getChildren().get(0)).setText("Song : "+ songSelected.getNameSong());
+        ((Label)detailDownload.getChildren().get(1)).setText("Artist : "+ songSelected.getArtistSong());
+        ((Label)detailDownload.getChildren().get(2)).setText("Downloadable(Time) : "+"3"); // wait
+        
+        AnchorPane img = new AnchorPane();
+        img.setMaxSize(300, 400);
+        img.setLayoutX(1030 - 300 - 20);
+        img.setLayoutY(20);
+
+        Image imageMy = songSelected.getPhoto();
+        ImageView imgMy = new ImageView(imageMy);
+        imgMy.setFitHeight(400);
+        img.getChildren().add(imgMy);
+        
+        pane.getChildren().add(0, img);
     }
 
     private Button CreaButton(String text) {
@@ -127,37 +156,46 @@ public class User_UI extends UI {
 
         TableView<Song> table = new TableView<>();
         table.setEditable(true);
-        table.setMinSize(anchorPane.getMinWidth(), anchorPane.getMinHeight());
 
-        if (!userAccount.isFirstSong()) {
-            table.setOnMouseClicked((event) -> {
-                if (event.getButton().equals(MouseButton.PRIMARY)) {
-                    System.out.println(table.getSelectionModel().getSelectedItem().getNameSong());
-                    songNameSelected = table.getSelectionModel().getSelectedItem().getNameSong() + table.getSelectionModel().getSelectedItem().getArtistSong() + table.getSelectionModel().getSelectedItem().getDetailSong();
-                    nameSet = table.getSelectionModel().getSelectedItem().getNameSong();
-                    System.out.println(songNameSelected);
-                    fileForDownload = new File("src/MusicFile/" + songNameSelected + ".mp3");
-                }
-            });
-        }
+        table.setPrefSize(anchorPane.getMinWidth(), anchorPane.getMinHeight());
+ 
+        table.setOnMouseClicked((event) -> {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                //System.out.println(table.getSelectionModel().getSelectedItem().getNameSong());
+                songSelected = table.getSelectionModel().getSelectedItem();
+                updateDetailDownload();
+                songNameSelected = table.getSelectionModel().getSelectedItem().getNameSong() + table.getSelectionModel().getSelectedItem().getArtistSong() + table.getSelectionModel().getSelectedItem().getDetailSong();
+                nameSet = table.getSelectionModel().getSelectedItem().getNameSong();
+                System.out.println(songNameSelected);
+                fileForDownload = new File("src/MusicFile/" + songNameSelected + ".mp3");
+                
+               // System.out.println(NameCol.getWidth() + " "+artistCol.getWidth()+ " "+detailCol.getWidth()+ " "+Downloadable.getWidth());
+            }
+        });
 
-        // Create column UserName (Data type of String).
+               // Create column NameSong (Data type of String).
         TableColumn<Song, String> NameCol = new TableColumn<>("Name Song");
-        NameCol.setMinWidth(250);
+        NameCol.setMinWidth(200);
 
-        // Create column Email (Data type of String).
+        // Create column NameArtist (Data type of String).
         TableColumn<Song, String> artistCol = new TableColumn<>("Artist");
-        artistCol.setMinWidth(200);
+        artistCol.setMinWidth(150);
 
-        // Create column FullName (Data type of String).
+        // Create column Detail (Data type of String).
         TableColumn<Song, String> detailCol = new TableColumn<>("Detail");
         detailCol.setMinWidth(220);
+        
+//        // Create column Downloadable (Data type of String).
+//        TableColumn<Song, String> Downloadable = new TableColumn<>("Downloadable");
+//        detailCol.setMinWidth(100);
+        
 
         // Defines how to fill data for each cell.
         // Get value from property of UserAccount. .
         NameCol.setCellValueFactory(new PropertyValueFactory<>("nameSong"));
         artistCol.setCellValueFactory(new PropertyValueFactory<>("artistSong"));
         detailCol.setCellValueFactory(new PropertyValueFactory<>("detailSong"));
+        //Downloadable.setCellValueFactory(new PropertyValueFactory<>("downloadable")); // wait nichida add dowloadable in account
 
         // Set Sort type for userName column
         NameCol.setSortType(TableColumn.SortType.DESCENDING);
