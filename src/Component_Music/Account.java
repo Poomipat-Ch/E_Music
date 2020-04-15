@@ -182,4 +182,10 @@ public class Account implements Serializable {
         firstSong = false;
     }
 
+    public boolean isFirstSong() {
+        return firstSong;
+    }
+    
+    
+
 }
