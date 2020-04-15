@@ -335,9 +335,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         Label colon4 = new Label(":");
         Label colon5 = new Label(":");
         Label colon6 = new Label(":");
-
-        title = new Label("Upload Song");
-
+        
         GridPane gridPane = new GridPane();
         gridPane.setVgap(20);
         gridPane.setHgap(10);

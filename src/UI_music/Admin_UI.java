@@ -10,6 +10,7 @@ import Component_Music.AlertBox;
 import Component_Music.SearchSystem;
 import Component_Music.SearchSystemAccount;
 import Component_Music.Song;
+import Component_Music.UploadArtistPopUp;
 import Component_Music.UploadSongPopUp;
 import java.io.File;
 import java.io.FileInputStream;
@@ -132,14 +133,14 @@ public class Admin_UI extends UI {
         editArtistBtn.setLayoutX(780);
         editArtistBtn.setLayoutY(500);
         editArtistBtn.setOnAction(e -> {
-            
+            new UploadArtistPopUp("Upload Artist","select Name Artist1","select Name Artist2(Optional)","select detail",new Image("/image/defaultprofile.png")); //Rach or Gut Su su
         });
         
         Button newArtistBtn = CreaButton("New Artist");       //New Artist
         newArtistBtn.setLayoutX(780);
         newArtistBtn.setLayoutY(550);
         newArtistBtn.setOnAction(e -> {
-            
+            new UploadArtistPopUp("Upload Artist");
         });
         
         Button editSongBtn = CreaButton("Edit Song");       //Edit Button
