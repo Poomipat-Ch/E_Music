@@ -141,7 +141,7 @@ public class Register {
             try {
                 listUserAccount = file.readFile(this.user);
             } catch (Exception ex) {
-                System.out.println("error: " + ex);
+                System.out.println("Register : IOExeption read file in Register consturtor before check");
             }
             boolean uniqueID = true;
             //Check already username / email
@@ -175,12 +175,12 @@ public class Register {
                         try {
                             addAccount = file.readFile(this.user);
                         } catch (IOException | ClassNotFoundException ex) {
-                            System.out.println("Register readFile " + ex);
+                            System.out.println("Register : IOExeption read file in Register consturtor after check");
                         }
 
                         if (!isAdmin) {
                             addAccount.add(new Account(nameIn.getText(), surnameIn.getText(), usernameIn.getText(), mailIn.getText(),
-                                    passIn.getText(), userGender, dOB, question.getValue(), answer.getText(), false, image));
+                                    passIn.getText(), userGender, dOB, question.getValue(), answer.getText(),true, image));
                         } else {
                             boolean isAdminReg = false;
                             if (adminSelect.isSelected()) 
@@ -194,12 +194,12 @@ public class Register {
                             file.writeFile(this.user, addAccount);
                             System.out.println("Saving account.");
                         } catch (IOException ex) {
-                            System.out.println("Register writeFile " + ex);
+                            System.out.println("Register : IOExeption write file in Register consturtor save account");
                         }
                         try {
                             listUserAccount = file.readFile(this.user);
                         } catch (Exception ex) {
-                            System.out.println("Error: " + ex);
+                            System.out.println("Register : Exeption read file in Register consturtor after save account");
                         }
                         
                         if(isAdmin)
@@ -268,7 +268,7 @@ public class Register {
                 this.photo.setImage(image);
 
             } catch (IOException e) {
-                System.out.println(e.getMessage());
+                System.out.println("Register : IOExeption uplode file picture in Register consturtor");
             }
         });
         

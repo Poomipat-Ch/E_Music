@@ -60,7 +60,7 @@ public class AlertBox {
         stage.setScene(scene);
         stage.showAndWait();
     }catch(Exception e){
-            System.out.println(e);
+            System.out.println("AlertBox : Exeption in display");
     }
         
         return ans;
@@ -90,7 +90,7 @@ public class AlertBox {
             stage.setScene(scene);
             stage.showAndWait();
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("AlertBox : Exeption in displayAlert");
         }
     }
     public static boolean confirmAlert(String title, String message){
@@ -130,7 +130,7 @@ public class AlertBox {
         stage.setScene(scene);
         stage.showAndWait();
     }catch(Exception e){
-            System.out.println(e);
+           System.out.println("AlertBox : Exeption in confirmAlert");
     }
         
         return ans;

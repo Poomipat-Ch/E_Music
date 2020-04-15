@@ -88,7 +88,7 @@ public class Admin_UI extends UI {
         try {
             songArrayList = readFileSong(musicFile);
         } catch (Exception e) {
-            System.out.println("readFile" + e);
+            System.out.println("readFile Song in Admin_UI constuctor ERROR!!!!!");
         }
 
         this.userAccount = userAccount;
@@ -112,7 +112,7 @@ public class Admin_UI extends UI {
     }
 
     @Override
-    public AnchorPane allSongPane() {   //First Page 1
+    public AnchorPane allSongPane(String page) {   //First Page 1
         AnchorPane pane = new AnchorPane();
 
         Label title1 = new Label("Welcome to Administrative Page!");
@@ -143,9 +143,9 @@ public class Admin_UI extends UI {
             try {
                 deleteSongClicked();
             } catch (IOException ex) {
-                Logger.getLogger(Admin_UI.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Admin_UI : IOExeption in allSongPane");
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Admin_UI.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Admin_UI : ClassNotFoundExeption in allSongPane");
             }
 
         });
@@ -190,7 +190,7 @@ public class Admin_UI extends UI {
             try {
                 deleteAccountClicked();
             } catch (IOException | ClassNotFoundException ex) {
-                Logger.getLogger(Admin_UI.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Admin_UI : Exeption in mySongPane");
             }
             refreshTable();
         });
@@ -378,7 +378,7 @@ public class Admin_UI extends UI {
         try {
             songArrayList = readFileSong(musicFile);
         } catch (Exception e) {
-            System.out.println("songList" + e);
+            System.out.println("Admin_UI : dExeption in updateScrollPane");
         }
         for (Song song : songArrayList) {
 
@@ -464,7 +464,7 @@ public class Admin_UI extends UI {
         try {
             list = Account.getAccountList();
         } catch (IOException | ClassNotFoundException ex) {
-            Logger.getLogger(Admin_UI.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Admin_UI : dExeption in rereshTable");
         }
 
         //Filter for Search and Sorted
@@ -502,9 +502,9 @@ public class Admin_UI extends UI {
         try {
             oldAccounts = file.readFile(user);
         } catch (IOException ex) {
-            Logger.getLogger(Admin_UI.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Admin_UI : IOExeption readfile in updateAccountClick");
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Admin_UI.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Admin_UI : ClassNotFoundExeption readfile in upDateAccountClick");
         }
 
         if (selectUsername.equals(userAccount.getUsername()) && selectEmail.equals(userAccount.getEmail())) {
@@ -551,7 +551,7 @@ public class Admin_UI extends UI {
             try {
                 file.writeFile(user, presentAccounts);
             } catch (IOException ex) {
-                Logger.getLogger(Admin_UI.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Admin_UI : IOExeption writefile in updateAccountClicked");
             }
             
             stage.close();
@@ -658,9 +658,9 @@ public class Admin_UI extends UI {
         try {
             oldSongList = readFileSong(musicFile);
         } catch (IOException ex) {
-            Logger.getLogger(Admin_UI.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Admin_UI : IOExeption readfile in deleteSongClicked");
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Admin_UI.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Admin_UI : ClassNotFoundExeption readfile in deleteSongClickede");
         }
 
         for (Song song : oldSongList) {

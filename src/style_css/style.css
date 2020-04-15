@@ -43,6 +43,27 @@
      -fx-background-color: #27496d;
 }
 
+.stylebtn{
+    -fx-background-color: #00a8cd; 
+    -fx-background-radius :  0 0 0 0; 
+    -fx-text-fill : white;
+    -fx-font-size : 15px;
+    -fx-border-style: hidden none none solid;
+    -fx-border-width: 0 0 0 10;
+    -fx-border-color: #ffffff;
+}
+
+.stylebtn:hover{
+    -fx-border-style: hidden none none solid;
+    -fx-border-width: 0 0 0 30;
+    -fx-border-color: #ffffff;
+
+}
+
+.styletn:pressed{
+     -fx-background-color: #40496d;
+}
+
 .menubtnActive{
     -fx-background-color: #27496d; 
     -fx-background-radius :  0 0 0 0; 

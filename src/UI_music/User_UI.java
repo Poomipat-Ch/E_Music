@@ -71,9 +71,9 @@ public class User_UI extends UI {
     }
 
     @Override
-    public AnchorPane allSongPane() {
+    public AnchorPane allSongPane(String page) {
         AnchorPane pane = new AnchorPane();
-        pane.getChildren().addAll(AllSong());
+        pane.getChildren().addAll(AllSong(page));
 
         return pane;
     }
@@ -156,6 +156,7 @@ public class User_UI extends UI {
 
         TableView<Song> table = new TableView<>();
         table.setEditable(true);
+
         table.setPrefSize(anchorPane.getMinWidth(), anchorPane.getMinHeight());
  
         table.setOnMouseClicked((event) -> {
@@ -270,7 +271,7 @@ public class User_UI extends UI {
 
     public static VBox totalPane;
 
-    private ScrollPane AllSong() {
+    private ScrollPane AllSong(String page) {
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setPrefSize(1030, 900);
@@ -284,7 +285,7 @@ public class User_UI extends UI {
         totalPane.setAlignment(Pos.CENTER);
         totalPane.getStyleClass().add("allSong");
 
-        totalPane.getChildren().addAll(searchBoxAll(), updateScrollPane(""));
+        totalPane.getChildren().addAll(searchBoxAll(), updateScrollPane(page));
 
         scrollPane.setContent(totalPane);
 
@@ -305,55 +306,57 @@ public class User_UI extends UI {
         try {
             list = Song.getMyMusicList();
         } catch (IOException ex) {
-            System.out.println("song 1");
+            System.out.println("User_UI : IOExeption getMyMusicList from class Song in updateScrollPane");
         } catch (ClassNotFoundException ex) {
-            System.out.println("song 2");
+            System.out.println("User_UI : ClassNotFoundExeption getMyMusicList from class Song in updateScrollPane");
         }
 
         String lowerCase = text.toLowerCase();
 
         for (Song song : list) {
 
-            if ((song.getNameSong().toLowerCase().contains(lowerCase) || song.getArtistSong().toLowerCase().contains(lowerCase))) {
+            for (String styleSong : song.getListStyleSong()) {
 
-                boolean inMyList = false;
-                for (Song song1 : userAccount.getMyListSong()) {
-                    System.out.println("1");
-                    if (!userAccount.isFirstSong()) {
-                        if ((song.getNameSong().toLowerCase().contains(song1.getNameSong().toLowerCase()) && song.getArtistSong().toLowerCase().contains(song1.getArtistSong().toLowerCase()))) {
-                            System.out.println("2");
-                            inMyList = true;
-                            break;
+                if (song.getNameSong().toLowerCase().contains(lowerCase) || song.getArtistSong().toLowerCase().contains(lowerCase) || (styleSong.toLowerCase().contains(lowerCase) && text == "")) {
+
+                    boolean inMyList = false;
+                    for (Song song1 : userAccount.getMyListSong()) {
+                        if (!userAccount.isFirstSong()) {
+                            if ((song.getNameSong().toLowerCase().contains(song1.getNameSong().toLowerCase()) && song.getArtistSong().toLowerCase().contains(song1.getArtistSong().toLowerCase()))) {
+                                inMyList = true;
+                                break;
+                            }
                         }
+
                     }
 
-                }
+                    if (!inMyList) {
+                        contentButton = new Button();
+                        contentButton.getStyleClass().add("contentDetailbtn");
+                        paneContent = new VBox();
+                        paneContent.setAlignment(Pos.CENTER);
+                        paneContent.setPadding(new Insets(20));
+                        paneContent.getStyleClass().add("content-allSong");
 
-                if (!inMyList) {
-                    contentButton = new Button();
-                    contentButton.getStyleClass().add("contentDetailbtn");
-                    paneContent = new VBox();
-                    paneContent.setAlignment(Pos.CENTER);
-                    paneContent.setPadding(new Insets(20));
-                    paneContent.getStyleClass().add("content-allSong");
+                        imageView = new ImageView(new Image("/image/1.jpg"));
+                        imageView.setFitHeight(200); // By pop
+                        imageView.setFitWidth(150); // By pop
 
-                    imageView = new ImageView(new Image("/image/1.jpg"));
-                    imageView.setFitHeight(200); // By pop
-                    imageView.setFitWidth(150); // By pop
+                        paneContent.getChildren().addAll(imageView, new Label(song.getNameSong()), new Label("ARTIST : " + song.getArtistSong()));
+                        contentButton.setGraphic(paneContent);
+                        contentButton.setMinHeight(300); // By Pop
+                        contentButton.setMinWidth(300); // By Pop
+                        contentButton.setOnMouseClicked(e -> {
+                            try {
+                                new DetailSongPopUp(song, userAccount);
+                            } catch (InterruptedException ex) {
+                                System.out.println("User_UI : InterrruoteddExeption DetailSongPopUp in updateScrollPane");
+                            }
+                        });
 
-                    paneContent.getChildren().addAll(imageView, new Label(song.getNameSong()), new Label("ARTIST : " + song.getArtistSong()));
-                    contentButton.setGraphic(paneContent);
-                    contentButton.setMinHeight(300); // By Pop
-                    contentButton.setMinWidth(300); // By Pop
-                    contentButton.setOnMouseClicked(e -> {
-                        try {
-                            new DetailSongPopUp(song, userAccount);
-                        } catch (InterruptedException ex) {
-                            System.out.println("Detail Song Popup : " + ex);
-                        }
-                    });
-
-                    tilePane.getChildren().add(contentButton);
+                        tilePane.getChildren().add(contentButton);
+                    }
+                    break;
                 }
             }
         }
@@ -381,7 +384,7 @@ public class User_UI extends UI {
             try {
                 Files.copy(fileForDownload.toPath(), downloadFile.toPath());
             } catch (IOException ex) {
-                System.out.println("DownloadFile" + ex);
+                System.out.println("User_UI : IOExeption download file from class Song in downloader");
             }
         }
 
@@ -399,9 +402,9 @@ public class User_UI extends UI {
         try {
             nowAccount = file.readFile(user);
         } catch (IOException ex) {
-            Logger.getLogger(User_UI.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("User_UI : IOExeption read file in userLogin");
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(User_UI.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("User_UI : ClassNotFoundExeption read file in userLogin");
         }
 
         for (Account account : nowAccount) {
@@ -415,7 +418,7 @@ public class User_UI extends UI {
         try {
             file.writeFile(user, updateAccount);
         } catch (IOException ex) {
-            Logger.getLogger(User_UI.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("User_UI : IOExeption write file in userLogin");
         }
 
     }

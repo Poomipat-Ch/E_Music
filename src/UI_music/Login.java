@@ -69,7 +69,7 @@ public class Login {
             DataInputStream tempID = new DataInputStream(new FileInputStream(tempId));
             idInput.setText(tempID.readLine());
         } catch (FileNotFoundException ex) {
-            System.out.println("File error: " + ex);
+            System.out.println("Login : FileNotFoundExeption read user.txt in Login constructor");
         }
 
         //Get Password
@@ -87,9 +87,9 @@ public class Login {
             try {
                 listUserAccount = readFile(user);
             } catch (IOException ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Login : IOExeption readfile in login constructor");
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Login : ClassNotFoundExeption writefile in Login constructor");
             }
 
             //If checkbox is checked, program will remember username to ID field
@@ -98,14 +98,14 @@ public class Login {
                     DataOutputStream tempO = new DataOutputStream(new FileOutputStream(tempId));
                     tempO.writeUTF(idInput.getText());
                 } catch (Exception ex) {
-                    System.out.println(ex);
+                    System.out.println("Login : Exeption write user.txt in login constructor");
                 }
             } else {
                 try {
                     DataOutputStream tempO = new DataOutputStream(new FileOutputStream(tempId));
                     tempO.writeUTF("");
                 } catch (Exception ex) {
-                    System.out.println(ex);
+                    System.out.println("Login : Exeption write user.txt in Login constructor");
                 }
             }
             System.out.println("Logging in...");
@@ -248,7 +248,7 @@ public class Login {
                     try {
                         writeFile(user, addAccount);
                     } catch (IOException ex) {
-                        System.out.println("Register writeFile " + ex);
+                        System.out.println("Login : IOExeption writefile in forgotpassword ");
                     }
 
                     userAccount.setPassword(passIn1.getText());

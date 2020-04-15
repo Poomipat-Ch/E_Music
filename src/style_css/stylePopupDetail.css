@@ -46,3 +46,11 @@
 .buybtn:pressed{
      -fx-background-color: #0c7b93;
 }
+
+.checkbox{
+    -fx-border-style: hidden none none solid;
+    -fx-border-width: 0 0 0 50;
+    -fx-border-color: #2d4059;
+    -fx-text-fill:white;
+    -fx-font-size:15px;
+}
