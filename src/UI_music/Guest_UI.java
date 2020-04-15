@@ -71,7 +71,7 @@ public class Guest_UI extends UI {
     }
 
     @Override
-    public AnchorPane allSongPane() {
+    public AnchorPane allSongPane(String page) {
         AnchorPane pane = new AnchorPane();
         pane.getChildren().addAll(AllSong());
 
