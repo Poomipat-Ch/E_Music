@@ -266,9 +266,9 @@ public class User_UI extends UI {
         try {
             list = Song.getMyMusicList();
         } catch (IOException ex) {
-            Logger.getLogger(User_UI.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("song 1");
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(User_UI.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("song 2");
         }
 
         String lowerCase = text.toLowerCase();
@@ -279,9 +279,13 @@ public class User_UI extends UI {
 
                 boolean inMyList = false;
                 for (Song song1 : userAccount.getMyListSong()) {
-                    if ((song.getNameSong().toLowerCase().contains(song1.getNameSong().toLowerCase()) && song.getArtistSong().toLowerCase().contains(song1.getArtistSong().toLowerCase()))) {
-                        inMyList = true;
-                        break;
+                    System.out.println("1");
+                    if (!userAccount.isFirstSong()) {
+                        if ((song.getNameSong().toLowerCase().contains(song1.getNameSong().toLowerCase()) && song.getArtistSong().toLowerCase().contains(song1.getArtistSong().toLowerCase()))) {
+                            System.out.println("2");
+                            inMyList = true;
+                            break;
+                        }
                     }
 
                 }
