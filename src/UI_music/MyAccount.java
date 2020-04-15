@@ -360,7 +360,7 @@ public class MyAccount {
                             myAccount.setPhoto(image);
                             this.photo.setImage(myAccount.getPhoto());
                             Account newAccount = new Account(firstname.getText(), lastname.getText(), username.getText(), email.getText(),
-                                    myAccount.getPassword(), userGender, dOB, myAccount.getQuestion(), myAccount.getAnswer(), myAccount.getIsAdmin(), myAccount.getPhoto());
+                                    myAccount.getPassword(), userGender, dOB, myAccount.getQuestion(), myAccount.getAnswer(), myAccount.getUserRole(), myAccount.getPhoto());
                             changeAccount.add(newAccount);
                             myAccount = newAccount;
 
