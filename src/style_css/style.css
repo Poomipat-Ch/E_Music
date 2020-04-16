@@ -257,24 +257,33 @@
 
 /****************************************************************
  
-  Browe Skin  
+  Browse Skin  
  
 ****************************************************************/
 
-.browelabel{
+.browselabel{
     -fx-text-fill : white;
     -fx-font-size : 17px;
 }
 
-.broweheadlabel{
+.browseheadlabel{
     -fx-text-fill : white;
     -fx-font-size : 45px;
 }
 
-.buttoninbrowe{
+.buttoninbrowse{
     -fx-background-color: #111111;
+    -fx-opacity: .8;
+    -fx-background-radius: 0em;
 }
 
 .borderlist {
     -fx-background-color: #111111;
+    -fx-opacity: .8;
+}
+
+.buttonlist{
+    -fx-background-color: #22222;
+    -fx-opacity: .8;
+    -fx-background-radius: 0em;
 }
