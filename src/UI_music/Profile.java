@@ -25,6 +25,7 @@ public class Profile {
     Button savebt = new Button("Save");
     Button cancelbt = new Button("Cancel");
     Button editbt = new Button("Edit");
+    Button buyPremiumbtn = new Button("Upgrade Premium");
     Account userAccount;
     
     BorderPane accountPane = new BorderPane();
@@ -50,6 +51,9 @@ public class Profile {
                 myAccount.showAccount(this.userAccount);
                 accountPane.setCenter(myAccount.getProfilePane());
                 bottom.getChildren().clear();
+                if (!"admin".equals(userAccount.getUserRole())) {
+                    bottom.getChildren().addAll(buyPremiumbtn);
+                }
                 bottom.getChildren().addAll(editbt);
             } else 
                 AlertBox.displayAlert("Edit Profile", "Failed.");
@@ -60,6 +64,9 @@ public class Profile {
             accountPane.setCenter(myAccount.getProfilePane());
             myAccount.Clear();
             bottom.getChildren().clear();
+            if (!"admin".equals(userAccount.getUserRole())) {
+                    bottom.getChildren().addAll(buyPremiumbtn);
+            }
             bottom.getChildren().addAll(editbt);
         });
         
@@ -72,13 +79,21 @@ public class Profile {
             bottom.getChildren().addAll(cancelbt, savebt);
         });
         
-                bottom.getChildren().add(editbt);
+        buyPremiumbtn.setOnMouseClicked(e -> {
+            // Font dono << ------------
+        });
+        if (!"admin".equals(userAccount.getUserRole())) {
+                    bottom.getChildren().addAll(buyPremiumbtn);
+        }
+        bottom.getChildren().addAll(editbt);
         
         accountPane.setTop(head);
         accountPane.setCenter(myAccount.getProfilePane());
         accountPane.setPadding(new Insets(50, 50, 50, 50));
         accountPane.setStyle("-fx-background-color: white");
         accountPane.setBottom(bottom);
+        
+        
         
         mainPane.setCenter(accountPane);
         mainPane.setPadding(new Insets(50, 100, 0, 100));
