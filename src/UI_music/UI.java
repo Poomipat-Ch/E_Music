@@ -138,6 +138,7 @@ abstract public class UI {
                 AlertBox registerFirst = new AlertBox();
                 registerFirst.displayAlert("Register First", "Register Free Account First");
                 new Register("member");
+                
              }
         });
         Button myAccount = CreaButton("My Account");

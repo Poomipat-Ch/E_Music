@@ -5,3 +5,54 @@
     -fx-background-position: center center;
     -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);
 }
+
+.loginLable Label,CheckBox{
+    -fx-font-size: 20px;
+    -fx-font-weight:bold; 
+}
+
+
+.loginLable TextField,.loginLable PasswordField{
+    -fx-font-size: 20px;
+    -fx-text-fill : grey;
+    -fx-font-weight:bold; 
+    -fx-background-color: transparent;
+    -fx-border-color:gray;
+    -fx-border-width: 2px;
+    -fx-border-radius:15;
+}
+
+.loginLable TextField:focused,.loginLable PasswordField:focused{
+    -fx-border-color:black;
+    -fx-text-fill:black;
+}
+
+.loginLable{
+    -fx-background-color: rgba(255,255,255,0.8);
+    -fx-background-radius : 30 30 30 30;
+    -fx-padding: 0px 50px 0px 50px;
+}
+
+.check-box {
+    /* default properties */
+    selected-box-color: gray;
+    box-color: grey;
+    mark-color: white;
+}
+
+.check-box:selected > .box {
+    /* background color for selected checkbox */
+    -fx-background-color: selected-box-color;
+}
+
+.check-box > .box {
+    /* background color of unselected checkbox */
+    -fx-background-color: box-color;
+}
+
+.check-box:selected > .box > .mark,
+.check-box:indeterminate  > .box > .mark {
+    /* modify mark color */
+    -fx-background-color: mark-color;
+}
+

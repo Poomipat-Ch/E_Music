@@ -116,6 +116,9 @@ public class BrowsePane {
 //                    vBox.getChildren().addAll(imageView,nameLabel,name2Label,imfoLabel);
                     
                    // buttonlist.setGraphic(vBox);
+                   buttonlist.setOnMouseClicked(e ->{
+                       System.out.println("click"+buttonlist.getLayoutX());
+                   });
                     borderpane.getChildren().add(buttonlist);
                 }
  
