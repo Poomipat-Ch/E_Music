@@ -61,7 +61,7 @@ abstract public class UI {
     VBox vbox = new VBox();
 
     private VBox mainBox() {
-
+  
         vbox.getStyleClass().add("mainBox");
         vbox.getChildren().addAll(tilePane(), firstPagePane(""));
 

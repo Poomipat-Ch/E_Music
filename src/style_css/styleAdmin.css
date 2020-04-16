@@ -1,17 +1,24 @@
+.titleAdmin{
+    -fx-font-size: 46px;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.9) , 5,0,2,2);
+}
+
 .table-view{
     -fx-text-fill: black;
     -fx-font-size: 16px;
-    -fx-background-color : black; 
+    -fx-background-color: radial-gradient(center 0% 0%, radius 170% , rgba(55,85,163,1)  0% ,rgba(132,206,235,1) 100%);
+    /*-fx-background-color: transparent; rgba(136,96,208,1) 83%*/
     -fx-table-cell-border-color: transparent;
 }
 .table-view .column-header {
      -fx-background-color: transparent;
-     -fx-border-color:transparent white transparent transparent;
-     -fx-border-width:0.1;
+     -fx-border-color:transparent;
 } 
 
 .table-view .column-header-background{
-    -fx-background-color: linear-gradient(#131313 0.0%, #424141 100.0%);
+    /*-fx-background-color: linear-gradient(to top,rgba(94,123,229,1) 43%, rgba(136,96,208,1) 83%);*/
+    -fx-background-color: rgba(0,0,0,0.2) ;
 }
 
 .table-view .column-header-background .label{
@@ -21,27 +28,29 @@
 }
 
 .table-view .table-cell{
-    -fx-text-fill: black;
+    -fx-text-fill: white;
+    -fx-font-weight:bold;
 }
 
 .table-row-cell{ 
+    -fx-border-color: rgba(255,255,255,0.1);
     -fx-table-cell-border-color: transparent;
 }
 
 .table-row-cell:odd{
-    -fx-background-color: F9F9F9;
+    -fx-background-color: transparent;/*rgba(0,0,0,0.2);*/
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em; /* 0 */
 }
 .table-row-cell:even{
-    -fx-background-color: FFFFFF;
+    -fx-background-color: transparent; /*rgba(0,0,0,0.25);8/
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em; /* 0 */
 }
 
 .table-row-cell:selected{
-    -fx-text-fill: white;  
-    -fx-background-color: #FFFCCC;
+    -fx-text-fill: black;  
+    -fx-background-color: rgba(0,0,0,0.1);; /*rgba(63,93,167,0.9);*/
     -fx-background-insets: 0, 0 0 1 0;
     -fx-background-radius: 1;
 }

@@ -173,7 +173,7 @@ public class Admin_UI extends UI {
 
         });
 
-        pane.getChildren().addAll(AllSong(), UpdateClikedPane(), title1, editArtistBtn, newArtistBtn, editSongBtn, uploadBtn, deleteBtn);
+        pane.getChildren().addAll(searchBoxAll(),AllSong(), UpdateClikedPane(), title1, editArtistBtn, newArtistBtn, editSongBtn, uploadBtn, deleteBtn);
 
         return pane;
     }
@@ -267,7 +267,7 @@ public class Admin_UI extends UI {
 
         // Create column Role (Data type of String).
         TableColumn<Account, String> adminCol = new TableColumn<>("Role");
-        adminCol.setMinWidth(100);
+        adminCol.setMinWidth(101);
 
         // Defines how to fill data for each cell.
         // Get value from property of UserAccount. .
@@ -305,7 +305,7 @@ public class Admin_UI extends UI {
 
         Button searchButton = CreaButton("Search");
         searchButton.setOnMouseClicked(e -> {
-            Admin_UI.totalPane.getChildren().remove(1);
+            Admin_UI.totalPane.getChildren().remove(0);
             Admin_UI.totalPane.getChildren().add(updateScrollPane(searchTextField.getText()));
         });
 
@@ -314,7 +314,7 @@ public class Admin_UI extends UI {
         HBox.setMargin(searchButton, new Insets(0, 0, 0, 10));
 
         searchTextField.textProperty().addListener((ov, t, t1) -> {
-            Admin_UI.totalPane.getChildren().remove(1);
+            Admin_UI.totalPane.getChildren().remove(0);
             Admin_UI.totalPane.getChildren().add(updateScrollPane(searchTextField.getText()));
         });
 
