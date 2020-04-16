@@ -2,24 +2,27 @@
 .logoName{
     -fx-text-fill: white;
     -fx-font-size: 50px;
-    -fx-background-color : #0c577c;
+    -fx-background-color : linear-gradient(to top, rgba(71,108,203,1) 0%, rgba(55,85,163,1) 100%);/*#0c577c*/
 
 }
 
 .bg-border{
-    -fx-background-color : #00a8cc;
+    -fx-background-color: linear-gradient(to right, rgba(71,108,203,1) 0%, rgba(55,85,163,1) 100%);
 }
 
 .mainBox{
-    -fx-background-color : #0c7b93;
+    -fx-background-color: radial-gradient(center 30% 0%, radius 100%, rgba(132,206,235,1) 0%, rgba(90,185,234,1) 20%, rgba(71,108,203,1) 100%);
+      /*radial-gradient(center 30% 50%, radius 60%, rgba(76,190,235,1) 0%, rgba(86,128,233,1) 100%);*/  
+        /*radius 100%,rgba(86,128,233,1) 0%, rgba(163,100,196,1) 100%);*/
+/*#0c7b93*/
 }
 
 .title{
-    -fx-background-color : #00a8cc;
+    -fx-background-color : radial-gradient(center 30% 100%, radius 100%, rgba(132,206,235,1) 0%, rgba(90,185,234,1) 20%, rgba(71,108,203,1) 100%); /*#00a8cc*/
 }
 
 .menu{
-    -fx-background-color : #00a8cc;
+    -fx-background-color : linear-gradient(to top, rgba(71,108,203,1) 0%, rgba(55,85,163,1) 100%); /*#00a8cc*/
 }
 
 .exitbtn{
@@ -27,20 +30,21 @@
 }
 
 .menubtn{
-    -fx-background-color: #00a8cc; 
+    -fx-background-color: rgba(41,64,124,0.2) 100%;  /*#00a8cc*/
     -fx-background-radius :  0 0 0 0; 
     -fx-text-fill : white;
     -fx-font-size : 20px;
 }
 
 .menubtn:hover{
-    -fx-border-style: hidden none none solid;
+    -fx-border-style: hidden none none solid; 
     -fx-border-width: 0 0 0 10;
-    -fx-border-color: #27496d;
+    -fx-border-color: #27496d; /**/
+    -fx-background-color: rgba(41,64,124,1) 100%;
 }
 
 .menubtn:pressed{
-    -fx-background-color: #27496d;
+    -fx-background-color: rgba(41,64,124,0.5) 100%;/*#27496d*/
 }
 
 .stylebtn{
@@ -74,23 +78,18 @@
 }
 
 .detailbtn{
-    -fx-background-color : #00a8cc;
+    -fx-background-color : rgba(55,85,163,0.6) 100%; /*#00a8cc*/
     -fx-text-fill : white;
     -fx-background-radius :  10;
     -fx-font-size : 20px;
 }
 
 .detailbtn:hover{
-    -fx-background-color: #27496d;
+    -fx-background-color: rgba(55,85,163,0.9) 100%; /*#27496d*/
 }
 
 .detailbtn:pressed{
-    -fx-background-color: #0c7b93;
-}
-
-.titleAdmin{
-    -fx-font-size: 40px;
-    -fx-text-fill: white;
+    -fx-background-color: rgba(55,85,163,0.8) 100%; /*#0c7b93*/
 }
 
 .allSong{
@@ -109,7 +108,7 @@
 }
 
 .contentDetailbtn{
-    -fx-background-color : #00a8cc;
+    -fx-background-color : rgba(55,85,163,0.6) 100%; /**/
     -fx-text-fill : white;
     -fx-background-radius :  30;
     -fx-font-size : 20px;
@@ -117,12 +116,12 @@
 }
 
 .contentDetailbtn:hover{
-    -fx-background-color : #27496d;
+    -fx-background-color : rgba(55,85,163,0.9) 100%; /**/
     -fx-opacity: 1;
 }
 
 .contentDetailbtn:pressed{
-    -fx-background-color : #0c7b93;
+    -fx-background-color : rgba(55,85,163,0.8) 100%; /**/
 }
 
 .downloadSelected Label{

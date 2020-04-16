@@ -5,7 +5,7 @@
 .allPane{
     -fx-background-color:radial-gradient(radius 100%,rgba(132,206,235,1) 0%, rgba(94,123,229,1) 43%, rgba(136,96,208,1) 83%);/*#2d4059*/
     -fx-opacity: 0.99; 
-    -fx-background-radius :  50; 
+    -fx-background-radius : 50; 
 }
 .nameSong{
     -fx-font-size: 50px;
