@@ -10,7 +10,6 @@ import Component_Music.AlertBox;
 import Component_Music.DetailSongPopUp;
 import Component_Music.SearchSystem;
 import Component_Music.Song;
-import Component_Music.MusicFunc;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -49,7 +48,6 @@ import javafx.stage.StageStyle;
 public class Guest_UI extends UI {
 
     SearchSystem searchSystemMyLibrary = new SearchSystem();
-    MusicFunc nameSongFromTable = new MusicFunc();
 
     // Create File for downloader
    private File fileForDownload;

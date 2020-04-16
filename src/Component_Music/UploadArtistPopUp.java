@@ -6,6 +6,7 @@
 package Component_Music;
 
 import UI_music.Admin_UI;
+import UI_music.ReadWriteFile;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -59,7 +60,9 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
     TextField fillNameArtist;
     TextField fillNameArtist2;
     TextField fillDetailArtist;
-
+    
+    File artistFile = new File("src/data/artist.dat");
+    ArrayList<Artist> artistArrayList = new ArrayList<Artist>();
 
     public UploadArtistPopUp(String title) { // For Upload
         this.title = new Label(title);
@@ -128,7 +131,33 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
         Button imageBtn = new Button("Upload Picture");
         imageBtn.getStyleClass().add("buybtn"); //CSS
         imageBtn.setOnAction(e -> {
-        
+            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+
+            fileChooser = new FileChooser();
+            fileChooser.setTitle("Open Image");
+            fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG Files", "*.png"), new FileChooser.ExtensionFilter("JPEG", "*.jpeg"));
+
+            //Set to user's directory or go to the default C drvie if cannot access
+            String userDirectoryString = System.getProperty("user.home") + "\\Pictures";
+            File userDirectory = new File(userDirectoryString);
+
+            if (!userDirectory.canRead()) {
+                userDirectory = new File("user.home");
+            }
+
+            fileChooser.setInitialDirectory(userDirectory);
+
+            this.filePath = fileChooser.showOpenDialog(stage);
+
+            //Try to update the image by loading the new image
+            try {
+                BufferedImage bufferedImage = ImageIO.read(filePath);
+                image = SwingFXUtils.toFXImage(bufferedImage, null);
+                this.photo.setImage(image);
+
+            } catch (IOException ex) {
+                System.out.println("UploadSongPopUp : IOExeption upload picture in DetailUpPopSong");
+            }
         });
        
         photo.setFitHeight(200);
@@ -183,7 +212,20 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
         Button saveBtn = new Button("Save");
         saveBtn.getStyleClass().add("savebtn"); // borrow...
         saveBtn.setOnMouseClicked(e -> {
-            //
+            try {
+                    artistArrayList = ReadWriteFile.readFileArist(artistFile);
+                } catch (IOException | ClassNotFoundException ex) {
+                    System.out.println("UploadSongPopUp : IOExeption read file in DetailUpPopSong");
+                }
+                artistArrayList.add(new Artist(fillNameArtist.getText(), fillNameArtist2.getText(), fillDetailArtist.getText(), image));
+                try {
+                    ReadWriteFile.writeFileArtist(artistFile, artistArrayList);
+                } catch (IOException ex) {
+                    System.out.println("UploadSongPopUp : IOExeption write file in DetailUpPopSong");
+                }
+                Admin_UI.totalPane.getChildren().remove(0);
+                Admin_UI.totalPane.getChildren().add(Admin_UI.updateScrollPane(""));
+                stage.close();
         });
         
         Button cancelBtn = new Button("Cancel");

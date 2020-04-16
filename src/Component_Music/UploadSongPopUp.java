@@ -6,6 +6,7 @@
 package Component_Music;
 
 import UI_music.Admin_UI;
+import UI_music.ReadWriteFile;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -272,7 +273,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
                     ArrayList<Song> newSongList = new ArrayList<Song>();
                     File selectFileDelete = new File("src/MusicFile/" + checkExistFile + ".mp3");
                     try {
-                        oldSongList = readFileSong(musicFile);
+                        oldSongList = ReadWriteFile.readFileSong(musicFile);
                     } catch (IOException ex) {
                         System.out.println("Admin_UI : IOExeption readfile in deleteSongClicked");
                     } catch (ClassNotFoundException ex) {
@@ -286,19 +287,19 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
                         }
                     }
                     try {
-                        writeFileSong(musicFile, newSongList);
+                        ReadWriteFile.writeFileSong(musicFile, newSongList);
                     } catch (IOException ex) {
                         Logger.getLogger(UploadSongPopUp.class.getName()).log(Level.SEVERE, null, ex);
                     }     
                 }
                 try {
-                    songArrayList = readFileSong(musicFile);
+                    songArrayList = ReadWriteFile.readFileSong(musicFile);
                 } catch (IOException | ClassNotFoundException ex) {
                     System.out.println("UploadSongPopUp : IOExeption read file in DetailUpPopSong");
                 }
                 songArrayList.add(new Song(fillNameSong.getText(), fillDetailSong.getText(), fillNameArtist.getText(), fillSongPrice.getText(), listStyleSong, image));
                 try {
-                    writeFileSong(musicFile, songArrayList);
+                    ReadWriteFile.writeFileSong(musicFile, songArrayList);
                 } catch (IOException ex) {
                     System.out.println("UploadSongPopUp : IOExeption write file in DetailUpPopSong");
                 }
@@ -414,17 +415,6 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         } else {
             System.out.println("upload cancel");
         }
-    }
-
-    private ArrayList<Song> readFileSong(File file) throws FileNotFoundException, IOException, ClassNotFoundException {
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-        return (ArrayList<Song>) in.readObject();
-    }
-
-    private void writeFileSong(File file, ArrayList<Song> listSong) throws FileNotFoundException, IOException {
-        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
-        out.writeObject(listSong);
-        out.close();
     }
 
 }

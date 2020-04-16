@@ -92,7 +92,7 @@ public class Admin_UI extends UI {
         super(stage, userAccount);
 
         try {
-            songArrayList = readFileSong(musicFile);
+            songArrayList = ReadWriteFile.readFileSong(musicFile);
         } catch (Exception e) {
             System.out.println("readFile Song in Admin_UI constuctor ERROR!!!!!");
         }
@@ -399,7 +399,7 @@ public class Admin_UI extends UI {
 
         String lowerCase = text.toLowerCase();
         try {
-            songArrayList = readFileSong(musicFile);
+            songArrayList = ReadWriteFile.readFileSong(musicFile);
         } catch (Exception e) {
             System.out.println("Admin_UI : dExeption in updateScrollPane");
         }
@@ -697,7 +697,7 @@ public class Admin_UI extends UI {
         File selectFileDelete = new File("src/MusicFile/" + songSelectString + ".mp3");
 
         try {
-            oldSongList = readFileSong(musicFile);
+            oldSongList = ReadWriteFile.readFileSong(musicFile);
         } catch (IOException ex) {
             System.out.println("Admin_UI : IOExeption readfile in deleteSongClicked");
         } catch (ClassNotFoundException ex) {
@@ -715,22 +715,11 @@ public class Admin_UI extends UI {
             }
         }
 
-        writeFileSong(musicFile, newSongList);
+        ReadWriteFile.writeFileSong(musicFile, newSongList);
         Admin_UI.totalPane.getChildren().remove(0);
         Admin_UI.totalPane.getChildren().add(updateScrollPane(""));
 
         return 1;
-    }
-
-    private static ArrayList<Song> readFileSong(File file) throws FileNotFoundException, IOException, ClassNotFoundException {
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-        return (ArrayList<Song>) in.readObject();
-    }
-
-    private static void writeFileSong(File file, ArrayList<Song> listSong) throws FileNotFoundException, IOException {
-        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
-        out.writeObject(listSong);
-        out.close();
     }
 
     @Override
