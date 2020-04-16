@@ -65,6 +65,7 @@ public class TopChartMusicPage {
         table.setEditable(true);
 
         table.setPrefWidth(anchorPane.getMinWidth() - 40);
+        table.setPrefSize(anchorPane.getMinWidth()-20, anchorPane.getMinHeight());
         
         table.setOnMouseClicked((event) -> {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
@@ -121,6 +122,7 @@ public class TopChartMusicPage {
         table.getColumns().addAll(NameCol, artistCol, detailCol);
         
         ScrollPane scrollpane = new ScrollPane();
+
         scrollpane.setPadding(Insets.EMPTY);
         scrollpane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollpane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);

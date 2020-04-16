@@ -160,6 +160,12 @@ abstract public class UI {
             this.vbox.getChildren().add(new BrowsePane().getBrowsePane());
         });
         
+        Button browe = CreaButton("BROWE");
+        browe.setOnMouseClicked(e -> {
+            this.vbox.getChildren().remove(1);
+            this.vbox.getChildren().add(new BrowePane().getBrowePane());
+        });
+        
         VBox mysong = new VBox();
 
         Button myLibrary = CreaButton("My Library");
