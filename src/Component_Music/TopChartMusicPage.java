@@ -41,9 +41,9 @@ public class TopChartMusicPage {
     private Song songSelected;
     private Account userAccount;
     private String page;
-    
+
     private ImageView imageview;
-    
+
     TableView<Song> table;
 
     public TopChartMusicPage(String string) {
@@ -52,21 +52,19 @@ public class TopChartMusicPage {
         anchorPane.setLayoutX(-3);
         anchorPane.setLayoutY(-3);
         anchorPane.getStyleClass().add("mainBox");
-        
-        
+
         imageview = new ImageView(new Image("/UI_music/defaultprofile.png"));
         imageview.setFitHeight(250);
         imageview.setFitWidth(250);
         imageview.setLayoutX(30);
         imageview.setLayoutY(50);
-        
 
         table = new TableView<>();
         table.setEditable(true);
 
         table.setPrefWidth(anchorPane.getMinWidth() - 40);
-        table.setPrefSize(anchorPane.getMinWidth()-20, anchorPane.getMinHeight());
-        
+        table.setPrefSize(anchorPane.getMinWidth() - 20, anchorPane.getMinHeight());
+
         table.setOnMouseClicked((event) -> {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
                 songSelected = table.getSelectionModel().getSelectedItem();
@@ -104,7 +102,7 @@ public class TopChartMusicPage {
 
         // Display row data
         ObservableList<Song> list = null;
-        
+
         try {
             list = Song.getMyMusicList();
         } catch (IOException ex) {
@@ -120,7 +118,7 @@ public class TopChartMusicPage {
         table.setItems(sortedList);
 
         table.getColumns().addAll(NameCol, artistCol, detailCol);
-        
+
         ScrollPane scrollpane = new ScrollPane();
 
         scrollpane.setPadding(Insets.EMPTY);
@@ -129,28 +127,28 @@ public class TopChartMusicPage {
         scrollpane.fitToWidthProperty().set(true);
         scrollpane.setLayoutX(-4);
         scrollpane.setLayoutY(-4);
-        scrollpane.setPrefSize(1030,914);
-        
+        scrollpane.setPrefSize(1030, 914);
+
         table.setLayoutX(30);
         table.setLayoutY(380);
 
         anchorPane.getChildren().addAll(table, CreateLabel(string), imageview, searchBoxMy());
-        
+
         scrollpane.setContent(anchorPane);
-        
+
         User_UI.totalPane.getChildren().remove(1);
         User_UI.totalPane.getChildren().add(scrollpane);
 
     }
-    
+
     private Label CreateLabel(String string) {
         Label label = new Label(string);
         label.getStyleClass().add("labelhead");
         label.setLayoutX(350);
         label.setLayoutY(180);
-        return label;      
+        return label;
     }
-    
+
     public HBox searchBoxMy() {
         HBox hBox = new HBox();
         hBox.setPrefSize(1030 - 100, 30);
@@ -172,7 +170,7 @@ public class TopChartMusicPage {
 
         return hBox;
     }
-    
+
     private Button CreaButton(String text) {
         Button downLoadButton = new Button(text);
         downLoadButton.getStyleClass().add("detailbtn");
@@ -180,6 +178,5 @@ public class TopChartMusicPage {
         return downLoadButton;
 
     }
-    
 
 }
