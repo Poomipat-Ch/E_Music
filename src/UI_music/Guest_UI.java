@@ -55,6 +55,7 @@ public class Guest_UI extends UI {
    private String nameSet;
    private Song songSelected;
    private Account userAccount;
+   private String page;
 
     public Guest_UI(Stage stage, Account userAccount) {
         super(stage,userAccount);
@@ -71,17 +72,18 @@ public class Guest_UI extends UI {
     @Override
     public AnchorPane firstPagePane(String page) {
         AnchorPane pane = new AnchorPane();
+        this.page = page;
         pane.getChildren().addAll(AllSong());
 
         return pane;
     }
+    
+    
     private AnchorPane pane = new AnchorPane();
     private VBox detailDownload = new VBox(10);
+    
     @Override
     public AnchorPane secondPagePane() {
-        AlertBox registerFirst = new AlertBox();
-        registerFirst.displayAlert("Register First", "Register Free Account to have My library");
-        new Register("member");
         return null;
     }
     
@@ -324,15 +326,9 @@ public class Guest_UI extends UI {
         return tilePane;
     }
 
-    Button editbt;
-    Button savebt;
-    Button cancelbt;
 
     @Override
     public BorderPane myAccount() {
-        AlertBox registerFirst = new AlertBox();
-        registerFirst.displayAlert("Register First", "Register Free Account to have My library");
-        new Register("member");
         return null;
     }
 

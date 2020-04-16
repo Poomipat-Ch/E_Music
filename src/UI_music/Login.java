@@ -48,7 +48,7 @@ public class Login {
     File tempId = new File("src/data/user.txt");
 
     ArrayList<Account> listUserAccount = new ArrayList<>();
-    Account userAccount = new Account();
+    Account userAccount = new Account("guest", "guest", "guest", "guest@gmail.com", "guest", "N/A", LocalDate.now(), "guest", "guest", "guest", new Image("/image/defaultprofile.png"));
     ArrayList<Account> addAccount = new ArrayList<>();
     
 
