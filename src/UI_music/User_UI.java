@@ -11,6 +11,7 @@ import Component_Music.DetailSongPopUp;
 import Component_Music.SearchSystem;
 import Component_Music.Song;
 import Component_Music.MusicFunc;
+import Component_Music.TopChartMusicPage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -26,6 +27,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -52,20 +54,21 @@ public class User_UI extends UI {
     MusicFunc nameSongFromTable = new MusicFunc();
 
     // Create File for downloader
-   private File fileForDownload;
-   private String songNameSelected;
-   private String nameSet;
-   private Song songSelected;
-   private Account userAccount;
-   private String page;
+    private File fileForDownload;
+    private String songNameSelected;
+    private String nameSet;
+    private Song songSelected;
+    private Account userAccount;
+    private String page;
 
     public User_UI() {
     }
 
     public User_UI(Stage stage, Account userAccount) {
-        super(stage,userAccount);
+        super(stage, userAccount);
         this.userAccount = userAccount;
-
+        
+        this.TopChartPane();
         Scene scene = new Scene(allPane(), 1280, 960);
         String stylrSheet = getClass().getResource("/style_css/style.css").toExternalForm();
         scene.getStylesheets().add(stylrSheet);
@@ -84,6 +87,7 @@ public class User_UI extends UI {
     }
     private AnchorPane pane = new AnchorPane();
     private VBox detailDownload = new VBox(10);
+
     @Override
     public AnchorPane secondPagePane() {
         AnchorPane pane = this.pane;
@@ -100,15 +104,14 @@ public class User_UI extends UI {
         Image imageMy = new Image("/image/Music_pic.jpg");
         ImageView imgMy = new ImageView(imageMy);
         img.getChildren().add(imgMy);
-        
-        
+
         detailDownload.getStyleClass().add("downloadSelected");
         detailDownload.setLayoutX(1030 - 300 - 20);
         detailDownload.setLayoutY(450);
         Label nameSong = new Label("Song : ");
         Label nameArtist = new Label("Artist : ");
         Label DownloadAble = new Label("Downloadable(Time) : ");
-        detailDownload.getChildren().addAll(nameSong,nameArtist,DownloadAble);
+        detailDownload.getChildren().addAll(nameSong, nameArtist, DownloadAble);
 
         Button downloadBtn = CreaButton("Download");
 
@@ -125,13 +128,13 @@ public class User_UI extends UI {
         pane.getChildren().addAll(img, downloadBtn, detailDownload, tableMyMusic(), searchBoxMy());
         return pane;
     }
-    
-    public void updateDetailDownload(){
+
+    public void updateDetailDownload() {
         pane.getChildren().remove(0);
-        ((Label)detailDownload.getChildren().get(0)).setText("Song : "+ songSelected.getNameSong());
-        ((Label)detailDownload.getChildren().get(1)).setText("Artist : "+ songSelected.getArtistSong());
-        ((Label)detailDownload.getChildren().get(2)).setText("Downloadable(Time) : "+"3"); // wait
-        
+        ((Label) detailDownload.getChildren().get(0)).setText("Song : " + songSelected.getNameSong());
+        ((Label) detailDownload.getChildren().get(1)).setText("Artist : " + songSelected.getArtistSong());
+        ((Label) detailDownload.getChildren().get(2)).setText("Downloadable(Time) : " + "3"); // wait
+
         AnchorPane img = new AnchorPane();
         img.setMaxSize(300, 400);
         img.setLayoutX(1030 - 300 - 20);
@@ -141,7 +144,7 @@ public class User_UI extends UI {
         ImageView imgMy = new ImageView(imageMy);
         imgMy.setFitHeight(400);
         img.getChildren().add(imgMy);
-        
+
         pane.getChildren().add(0, img);
     }
 
@@ -163,7 +166,7 @@ public class User_UI extends UI {
         table.setEditable(true);
 
         table.setPrefSize(anchorPane.getMinWidth(), anchorPane.getMinHeight());
- 
+
         table.setOnMouseClicked((event) -> {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
                 //System.out.println(table.getSelectionModel().getSelectedItem().getNameSong());
@@ -173,12 +176,12 @@ public class User_UI extends UI {
                 nameSet = table.getSelectionModel().getSelectedItem().getNameSong();
                 System.out.println(songNameSelected);
                 fileForDownload = new File("src/MusicFile/" + songNameSelected + ".mp3");
-                
-               // System.out.println(NameCol.getWidth() + " "+artistCol.getWidth()+ " "+detailCol.getWidth()+ " "+Downloadable.getWidth());
+
+                // System.out.println(NameCol.getWidth() + " "+artistCol.getWidth()+ " "+detailCol.getWidth()+ " "+Downloadable.getWidth());
             }
         });
 
-               // Create column NameSong (Data type of String).
+        // Create column NameSong (Data type of String).
         TableColumn<Song, String> NameCol = new TableColumn<>("Name Song");
         NameCol.setMinWidth(200);
 
@@ -189,12 +192,10 @@ public class User_UI extends UI {
         // Create column Detail (Data type of String).
         TableColumn<Song, String> detailCol = new TableColumn<>("Detail");
         detailCol.setMinWidth(220);
-        
+
 //        // Create column Downloadable (Data type of String).
 //        TableColumn<Song, String> Downloadable = new TableColumn<>("Downloadable");
 //        detailCol.setMinWidth(100);
-        
-
         // Defines how to fill data for each cell.
         // Get value from property of UserAccount. .
         NameCol.setCellValueFactory(new PropertyValueFactory<>("nameSong"));
@@ -225,8 +226,10 @@ public class User_UI extends UI {
     @Override
     public HBox searchBoxAll() {
         HBox hBox = new HBox();
-        hBox.setMinSize(1030 - 300 - 60, 30);
+        hBox.setMinSize(1000, 30);
         hBox.setAlignment(Pos.CENTER);
+        hBox.setLayoutX(20);
+        hBox.setLayoutY(60);
         TextField searchTextField = new TextField();
         searchTextField.setPromptText("Search Music");
         searchTextField.setMinSize(1030 - 300 - 60 - 70, 30);
@@ -274,27 +277,94 @@ public class User_UI extends UI {
         return hBox;
     }
 
-    public static VBox totalPane;
+    public static AnchorPane totalPane;
 
-    private ScrollPane AllSong() {
+    private BorderPane AllSong() {
 
-        ScrollPane scrollPane = new ScrollPane();
+        BorderPane scrollPane = new BorderPane();
         scrollPane.setPrefSize(1030, 900);
-        scrollPane.pannableProperty().set(true);
-        scrollPane.fitToWidthProperty().set(true);
-        scrollPane.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
-        scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+//        scrollPane.pannableProperty().set(true);
+//        scrollPane.fitToWidthProperty().set(true);
+//        scrollPane.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
+//        scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPane.setPadding(new Insets(10));
         scrollPane.getStyleClass().add("scroll-bar");
-        totalPane = new VBox();
-        totalPane.setAlignment(Pos.CENTER);
+        totalPane = new AnchorPane();
+        //totalPane.setAlignment(Pos.CENTER);
         totalPane.getStyleClass().add("allSong");
 
-        totalPane.getChildren().addAll(searchBoxAll(), updateScrollPane(""));
+        totalPane.getChildren().addAll(searchBoxAll(), getTopChartPane());
 
-        scrollPane.setContent(totalPane);
+        scrollPane.setCenter(totalPane);
 
         return scrollPane;
+    }
+    
+    BorderPane topchartpane;
+    
+    public BorderPane getTopChartPane() {
+        return topchartpane;
+    }
+
+    public BorderPane TopChartPane() {
+        topchartpane = new BorderPane();
+        Button topChartBtn;
+        ImageView chartImage;
+        
+        ArrayList<String> topchartlist = new ArrayList<>();
+
+        topchartlist.add("THAILAND TOP 50");
+        topchartlist.add("INTERNATIONAL TOP 50");
+
+        topchartpane.setLayoutX(20);
+        topchartpane.setLayoutY(350);
+        topchartpane.getStyleClass().add("topchart");
+        topchartpane.setMinSize(1030 - 40, 500);
+
+        VBox topChartVbox = new VBox(10);
+        topChartVbox.setMinWidth(200);
+        topChartVbox.getStyleClass().add("topchartlabel");
+        topChartVbox.setAlignment(Pos.CENTER);
+        topChartVbox.setLayoutY(20);
+
+        topChartVbox.getChildren().addAll(CreateLabel(" ", 2), CreateLabel("T", 1), CreateLabel("O", 1), CreateLabel("P", 1), CreateLabel(" ", 2),
+                CreateLabel("C", 1), CreateLabel("H", 1), CreateLabel("A", 1), CreateLabel("R", 1), CreateLabel("T", 1), CreateLabel(" ", 2));
+
+        topchartpane.setLeft(topChartVbox);
+
+        VBox topChartList = new VBox(5);
+        topChartList.setPadding(new Insets(0, 0, 0, 100));
+        
+        for (String string : topchartlist) {
+            topChartBtn = new Button();
+            topChartBtn.getStyleClass().add("topchartbtn");
+            topChartBtn.setPrefSize(600, 160);
+            
+            
+
+            topChartList.getChildren().addAll(CreateLabel("\n", 2), CreateLabel(string, 2), topChartBtn);
+
+            topChartBtn.setOnAction(event -> {
+                System.out.println(string);
+                    new TopChartMusicPage(string);
+            });
+
+        }
+
+        topchartpane.setCenter(topChartList);
+
+        return topchartpane;
+    }
+
+    private Label CreateLabel(String alphabet, int style) {
+        Label label = new Label(alphabet);
+        if (style == 1) {
+            label.getStyleClass().add("labeldetail");
+        } else if (style == 2){
+            label.getStyleClass().add("listlabeldetail");
+        }
+
+        return label;
     }
 
     public TilePane updateScrollPane(String text) {
@@ -322,7 +392,7 @@ public class User_UI extends UI {
 
             for (String styleSong : song.getListStyleSong()) {
 
-                if ((song.getNameSong().toLowerCase().contains(lowerCase) || song.getArtistSong().toLowerCase().contains(lowerCase) ) && styleSong.contains(page)) {
+                if ((song.getNameSong().toLowerCase().contains(lowerCase) || song.getArtistSong().toLowerCase().contains(lowerCase)) && styleSong.contains(page)) {
 
                     boolean inMyList = false;
                     for (Song song1 : userAccount.getMyListSong()) {
@@ -427,5 +497,5 @@ public class User_UI extends UI {
         }
 
     }
-
+    
 }
