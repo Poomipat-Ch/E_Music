@@ -90,19 +90,19 @@ public class DetailSongPopUp {
         buyButton.setOnMouseClicked(e ->{
             // Gut <<<<<<<------<<<< La Tonnee pen Font <-----------------------------------------------------------------------------------**********
             System.out.println("Clicked");
-          //  if (userAccount.getIsAdmin() == "guest") { // wait
+            if ("guest".equals(userAccount.getUserRole())) { // wait
                 
-//                AlertBox registerFirst = new AlertBox();
-//                registerFirst.displayAlert("Register First", "Register Free Account to Buy");
-//                new Register(false);
+                AlertBox registerFirst = new AlertBox();
+                registerFirst.displayAlert("Register First", "Register Free Account to Buy");
+                new Register("member");
            
                         
-          //  }else{
+            }else{
                 
                 Cashing cashing = new Cashing();
                 cashing.Info(stage, song, userAccount);
                 
-           // }
+            }
             
             System.out.println("Calling Info");
         });
