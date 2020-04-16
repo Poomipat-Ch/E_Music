@@ -30,7 +30,7 @@
 }
 
 .menubtn{
-    -fx-background-color: rgba(41,64,124,0.2) 100%;  /*#00a8cc*/
+    -fx-background-color: rgba(41,64,124,0.5) 100%;  /*#00a8cc*/
     -fx-background-radius :  0 0 0 0; 
     -fx-text-fill : white;
     -fx-font-size : 20px;
@@ -44,7 +44,7 @@
 }
 
 .menubtn:pressed{
-    -fx-background-color: rgba(41,64,124,0.5) 100%;/*#27496d*/
+    -fx-background-color: rgba(41,64,124,0.6) 100%;/*#27496d*/
 }
 
 .stylebtn{
@@ -55,6 +55,7 @@
     -fx-border-style: hidden none none solid;
     -fx-border-width: 0 0 0 30;
     -fx-border-color: #ffffff;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.5) , 5,0,2,2);
 }
 
 .stylebtn:hover{
@@ -78,10 +79,11 @@
 }
 
 .detailbtn{
-    -fx-background-color : rgba(55,85,163,0.6) 100%; /*#00a8cc*/
+    -fx-background-color : rgba(55,85,163,0.7) 100%; /*#00a8cc*/
     -fx-text-fill : white;
     -fx-background-radius :  10;
     -fx-font-size : 20px;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.3) , 5,0,2,2);
 }
 
 .detailbtn:hover{
@@ -89,7 +91,7 @@
 }
 
 .detailbtn:pressed{
-    -fx-background-color: rgba(55,85,163,0.8) 100%; /*#0c7b93*/
+    -fx-background-color: rgba(55,85,163,0.5) 100%; /*#0c7b93*/
 }
 
 .allSong{
@@ -108,11 +110,12 @@
 }
 
 .contentDetailbtn{
-    -fx-background-color : rgba(55,85,163,0.6) 100%; /**/
+    -fx-background-color : rgba(55,85,163,0.7) 100%; /**/
     -fx-text-fill : white;
     -fx-background-radius :  30;
     -fx-font-size : 20px;
     -fx-opacity: .9;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.5) , 5,0,2,2);
 }
 
 .contentDetailbtn:hover{
@@ -121,7 +124,7 @@
 }
 
 .contentDetailbtn:pressed{
-    -fx-background-color : rgba(55,85,163,0.8) 100%; /**/
+    -fx-background-color : rgba(55,85,163,0.5) 100%; /**/
 }
 
 .downloadSelected Label{
@@ -299,4 +302,95 @@
     -fx-background-color: #222222;
     -fx-opacity: .8;
     -fx-background-radius: 0em;
+}
+
+
+/****************************************************************
+ 
+  MyAccount
+ 
+****************************************************************/
+.outerPane{
+   -fx-background-color: transparent;
+}
+
+.innerPane{
+    -fx-text-fill: black;
+    -fx-font-size: 16px;
+    -fx-background-color: radial-gradient(center 0% 0%, radius 230% , rgba(55,85,163,1)  0% ,rgba(132,206,235,1) 100%);
+    /*-fx-background-color: transparent; rgba(136,96,208,1) 83%*/
+    -fx-table-cell-border-color: transparent;
+    -fx-background-radius : 15;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.5) , 10,0,2,2);
+}
+
+
+.titleMyAccount{
+    -fx-font-size: 32px;
+    -fx-font-weight:600;
+    -fx-text-fill: white;
+}
+
+.fistNameAndSurname{
+    -fx-font-size: 30px;
+    -fx-font-weight:600;
+    -fx-text-fill: white;
+}
+
+.detailMyAccount Label{
+    -fx-font-size: 20px;
+    -fx-font-weight:100;
+    -fx-text-fill: white;
+}
+
+.detailMyAccount2{
+    -fx-font-size: 18px;
+    -fx-font-weight:100;
+    -fx-text-fill: white;
+}
+.savebtn{
+    -fx-background-color : linear-gradient(to right,  rgba(0,208,100,0.7) 0%, rgba(0,208,100,0.8) 100%);
+    -fx-text-fill : white;
+    -fx-background-radius :  10;
+    -fx-font-size : 20px;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.5) , 5,0,2,2);
+}
+
+.savebtn:hover{
+    -fx-background-color : linear-gradient(to right,  rgba(0,208,100,0.9) 0%, rgba(0,208,100,1) 100%);
+}
+
+.savebtn:pressed{
+    -fx-background-color : linear-gradient(to right,  rgba(0,208,100,0.5) 0%, rgba(0,208,100,0.5) 100%);
+}
+
+.cancelbtn{
+    -fx-background-color : linear-gradient(to right, rgba(236,0,68,0.7) 0%, rgba(236,0,68,0.8) 100%); /*#ee4540*/
+    -fx-text-fill : white;
+    -fx-background-radius :  10;
+    -fx-font-size : 20px;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.5) , 5,0,2,2);
+}
+
+.cancelbtn:hover{
+    -fx-background-color : linear-gradient(to right, rgba(236,0,68,0.9) 0%, rgba(236,0,68,1) 100%);
+}
+
+.cancelbtn:pressed{
+    -fx-background-color : linear-gradient(to right, rgba(236,0,68,0.5) 0%, rgba(236,0,68,0.5) 100%);
+}
+.premiumbtn{
+    -fx-background-color : radial-gradient(center 50% 50%, radius 300%, rgba(255,183,0,0.95) 0%, rgba(87,49,0,0.95) 100%);
+    -fx-text-fill : white;
+    -fx-background-radius :  10;
+    -fx-font-size : 20px;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.5) , 5,0,2,2);
+}
+
+.premiumbtn:hover{
+    -fx-background-color : radial-gradient(center 50% 50%, radius 300%, rgba(255,183,0,1) 0%, rgba(87,49,0,0.1) 100%);
+}
+
+.premiumbtn:pressed{
+    -fx-background-color : radial-gradient(center 50% 50%, radius 300%, rgba(255,183,0,0.5) 0%, rgba(87,49,0,0.5) 100%);
 }

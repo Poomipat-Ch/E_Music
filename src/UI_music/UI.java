@@ -99,18 +99,15 @@ abstract public class UI {
         logoLabel.setMinWidth(250);
         logoLabel.setAlignment(Pos.CENTER);
 
-        VBox allsong = new VBox();
-
-        Button main = CreaButton("HOME");
-        allsong.getChildren().addAll(main);
-        main.setOnMouseClicked(e -> {
+        Button home = CreaButton("Home");
+        home.setOnMouseClicked(e -> {
             menuBtnClicked = 0;
             
             this.vbox.getChildren().remove(1);
             this.vbox.getChildren().add(firstPagePane(""));
         });
                 
-        Button browse = CreaButton("BROWE");
+        Button browse = CreaButton("Browse");
         browse.setOnMouseClicked(e -> {
             if (!"guest".equals(userAccount.getUserRole())) {
               this.vbox.getChildren().remove(1);
@@ -164,7 +161,7 @@ abstract public class UI {
         bottomVBox.setAlignment(Pos.BOTTOM_CENTER);
         VBox.setVgrow(bottomVBox, Priority.ALWAYS);
 
-        vBox.getChildren().addAll(logoLabel, allsong,browse, mysong, bottomVBox);
+        vBox.getChildren().addAll(logoLabel, home, browse, mysong, bottomVBox);
 
         return vBox;
     }
@@ -180,14 +177,14 @@ abstract public class UI {
         logoLabel.setMinWidth(250);
         logoLabel.setAlignment(Pos.CENTER);
         
-        Button main = CreaButton("Song Management");
-        main.setOnMouseClicked(e -> {
+        Button songManage = CreaButton("Song Management");
+        songManage.setOnMouseClicked(e -> {
             this.vbox.getChildren().remove(1);
             this.vbox.getChildren().add(firstPagePane(""));
         });
         
-        Button myLibrary = CreaButton("Account Management");
-        myLibrary.setOnMouseClicked(e -> {
+        Button accountManage = CreaButton("Account Management");
+        accountManage.setOnMouseClicked(e -> {
             this.vbox.getChildren().remove(1);
             this.vbox.getChildren().add(secondPagePane());
         });
@@ -208,7 +205,7 @@ abstract public class UI {
         bottomVBox.setAlignment(Pos.BOTTOM_CENTER);
         VBox.setVgrow(bottomVBox, Priority.ALWAYS);
 
-        vBox.getChildren().addAll(logoLabel, main, myLibrary, bottomVBox);
+        vBox.getChildren().addAll(logoLabel, songManage, accountManage, bottomVBox);
 
         return vBox;
     }

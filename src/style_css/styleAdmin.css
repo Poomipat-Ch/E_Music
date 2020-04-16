@@ -1,6 +1,7 @@
 .titleAdmin{
     -fx-font-size: 46px;
     -fx-text-fill: white;
+    -fx-font-weight:600;
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.9) , 5,0,2,2);
 }
 
@@ -10,6 +11,7 @@
     -fx-background-color: radial-gradient(center 0% 0%, radius 170% , rgba(55,85,163,1)  0% ,rgba(132,206,235,1) 100%);
     /*-fx-background-color: transparent; rgba(136,96,208,1) 83%*/
     -fx-table-cell-border-color: transparent;
+    -fx-background-radius : 10; 
 }
 .table-view .column-header {
      -fx-background-color: transparent;
@@ -19,6 +21,7 @@
 .table-view .column-header-background{
     /*-fx-background-color: linear-gradient(to top,rgba(94,123,229,1) 43%, rgba(136,96,208,1) 83%);*/
     -fx-background-color: rgba(0,0,0,0.2) ;
+    -fx-background-radius : 10; 
 }
 
 .table-view .column-header-background .label{
@@ -29,7 +32,7 @@
 
 .table-view .table-cell{
     -fx-text-fill: white;
-    -fx-font-weight:bold;
+    -fx-font-weight: 600;
 }
 
 .table-row-cell{ 
