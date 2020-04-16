@@ -73,6 +73,8 @@ abstract public class UI {
 
     private Button CreaButton(String text) {
         Button btn = new Button(text);
+        btn.setPadding(new Insets(0, 0, 0, 70));
+        btn.setAlignment(Pos.CENTER_LEFT);
         btn.getStyleClass().add("menubtn");
         btn.setMinWidth(250);
         btn.setMinHeight(50);
@@ -136,7 +138,7 @@ abstract public class UI {
 
         VBox allsong = new VBox();
 
-        Button main = CreaButton("All Song");
+        Button main = CreaButton("HOME");
         allsong.getChildren().addAll(main);
         main.setOnMouseClicked(e -> {
             menuBtnClicked = 0;
@@ -152,6 +154,12 @@ abstract public class UI {
             this.showAllStyleSong = !this.showAllStyleSong;
         });
         
+        Button browe = CreaButton("BROWE");
+        browe.setOnMouseClicked(e -> {
+            this.vbox.getChildren().remove(1);
+            this.vbox.getChildren().add(new BrowePane().getBrowePane());
+        });
+        
         VBox mysong = new VBox();
 
         Button myLibrary = CreaButton("My Library");
@@ -163,8 +171,6 @@ abstract public class UI {
             this.vbox.getChildren().remove(1);
             this.vbox.getChildren().add(secondPagePane());
             
-            this.showAllStyleSong = !this.showMyStyleSong;
-
             // }
         });
         Button myAccount = CreaButton("My Account");
@@ -186,7 +192,7 @@ abstract public class UI {
         bottomVBox.setAlignment(Pos.BOTTOM_CENTER);
         VBox.setVgrow(bottomVBox, Priority.ALWAYS);
 
-        vBox.getChildren().addAll(logoLabel, allsong, mysong, bottomVBox);
+        vBox.getChildren().addAll(logoLabel, allsong,browe, mysong, bottomVBox);
 
         return vBox;
     }
@@ -202,55 +208,13 @@ abstract public class UI {
         logoLabel.setMinWidth(250);
         logoLabel.setAlignment(Pos.CENTER);
 
-        VBox listStyleSong = new VBox();
-
-        Button pop = CreateStyleButton("Pop");
-        pop.setOnMouseClicked(e -> {
-            this.vbox.getChildren().remove(1);
-            this.vbox.getChildren().add(firstPagePane("Pop"));
-        });
-
-        Button jazz = CreateStyleButton("Jazz");
-        jazz.setOnMouseClicked(e -> {
-            this.vbox.getChildren().remove(1);
-            this.vbox.getChildren().add(firstPagePane("Jazz"));
-        });
-
-        Button rock = CreateStyleButton("Rock");
-        rock.setOnMouseClicked(e -> {
-            this.vbox.getChildren().remove(1);
-            this.vbox.getChildren().add(firstPagePane("Rock"));
-        });
-
-        Button rnb = CreateStyleButton("R&B");
-        rnb.setOnMouseClicked(e -> {
-            this.vbox.getChildren().remove(1);
-            this.vbox.getChildren().add(firstPagePane("R&B"));
-        });
-
-        Button hiphop = CreateStyleButton("Hip Hop");
-        hiphop.setOnMouseClicked(e -> {
-            this.vbox.getChildren().remove(1);
-            this.vbox.getChildren().add(firstPagePane("Hip Hop"));
-        });
-
-        listStyleSong.getChildren().addAll(pop, jazz, rock, rnb, hiphop);
-
         VBox allsong = new VBox();
         
         Button main = CreaButton("Song Management");
         allsong.getChildren().add(main);
         main.setOnMouseClicked(e -> {
-            
-//            if(!this.showAllStyleSong) 
-//                allsong.getChildren().addAll(listStyleSong);
-//            else 
-//                allsong.getChildren().remove(1);
-            
             this.vbox.getChildren().remove(1);
             this.vbox.getChildren().add(firstPagePane(""));
-            
-//            this.showAllStyleSong = !this.showAllStyleSong;
         });
         
         Button myLibrary = CreaButton("Account Management");
