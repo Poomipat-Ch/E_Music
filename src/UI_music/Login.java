@@ -60,7 +60,7 @@ public class Login {
 
         Label title1 = new Label("Sign in");
         //Get Username
-        Label idLabel = new Label("Email / username:");
+        Label idLabel = new Label("Email / username:");        
         TextField idInput = new TextField();
 
         try {
@@ -76,6 +76,7 @@ public class Login {
 
         //Remember me Checkbox
         CheckBox chk1 = new CheckBox("Remember this");
+        chk1.getStyleClass().add("check-box");
 
         //init read file
         //Login Action Event
@@ -156,12 +157,13 @@ public class Login {
         //Guest Button -> Login with Guest
         Button guestBtn = new Button("Login with guest");
         guestBtn.setOnAction(e->{
-            System.out.println("User login with guest");
+            System.out.println("User login with guest ");
             Login.stage.hide();
             Guest_UI guest_UI = new Guest_UI(new Stage(), userAccount);
         });
 
-        VBox rightMenu = new VBox(10);
+        VBox rightMenu = new VBox(20);
+        rightMenu.getStyleClass().add("loginLable");
         rightMenu.getChildren().addAll(title1, idLabel, idInput, passLabel, passInput, chk1, loginBtn, forgotBtn, registerBtn, guestBtn);
         rightMenu.setAlignment(Pos.CENTER_LEFT);
         BorderPane borderPane = new BorderPane();
