@@ -18,8 +18,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -107,7 +105,7 @@ public class Login {
                 } catch (Exception ex) {
                     System.out.println("Login : Exeption write user.txt in Login constructor");
                 }
-            }
+            } 
             System.out.println("Logging in...");
             boolean logIn = false; //Validating account
             for (Account account : listUserAccount) {

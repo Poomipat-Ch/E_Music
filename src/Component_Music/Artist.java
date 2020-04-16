@@ -5,7 +5,15 @@
  */
 package Component_Music;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
@@ -16,14 +24,14 @@ import javafx.scene.image.WritableImage;
  *
  * @author 62010710
  */
-public class Artist {
+public class Artist implements Serializable{
 
     private String name1, name2, infomation;
     private Image image;
     private ImageView imageView;
     private int width, height;
     private int[][] data;
-    private ArrayList<Song> listArtist = new ArrayList<>();
+    private static File artist = new File("src/data/artist.dat");
 
     public Artist(String name1, String name2, String infomation, Image image) {
         this.name1 = name1;
@@ -80,6 +88,18 @@ public class Artist {
         }
 
         return img;
+    }
+    
+    public static ObservableList<Artist> getArtistList() throws FileNotFoundException, IOException, ClassNotFoundException {
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream(artist));
+
+        ObservableList list = FXCollections.observableArrayList();
+
+        for (Artist artist : (ArrayList<Artist>) in.readObject()) {
+            list.add(artist);
+        }
+
+        return list;
     }
 
 }

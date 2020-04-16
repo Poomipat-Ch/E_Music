@@ -98,10 +98,8 @@ public class DetailSongPopUp {
            
                         
             }else{
-                
                 Cashing cashing = new Cashing();
                 cashing.Info(stage, song, userAccount);
-                
             }
             
             System.out.println("Calling Info");

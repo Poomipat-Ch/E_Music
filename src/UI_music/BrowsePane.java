@@ -5,6 +5,9 @@
  */
 package UI_music;
 
+import Component_Music.Artist;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,7 +15,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 
 /**
  *
@@ -94,18 +97,29 @@ public class BrowsePane {
         return label;
     }
 
-    private AnchorPane BorderList() {
+    private AnchorPane BorderList(){
         AnchorPane borderpane = new AnchorPane();
         borderpane.getStyleClass().add("borderlist");
         borderpane.setPrefWidth(1030);
         borderpane.setMinHeight(614);
         borderpane.setLayoutY(290);
-
-        for (int i = 0; i < 8; ++i) {
-            Button buttonlist = CreateButtonList((235 * (i % 4)) + 50, (235 * (i / 4)) + 50);
-            borderpane.getChildren().add(buttonlist);
-        }
-
+        
+        //VBox vBox;
+        
+                for (int i = 0; i < 8; ++i) {
+                    //vBox = new VBox(5);
+                    Button buttonlist = CreateButtonList((235 * (i % 4)) + 50, (235 * (i / 4)) + 50);
+//                    ImageView imageView = new ImageView(Artist.getArtistList().get(i).getPhoto());
+//                    Label nameLabel = new Label(Artist.getArtistList().get(i).getName1());
+//                    Label name2Label = new Label(Artist.getArtistList().get(i).getName2());
+//                    Label imfoLabel = new Label(Artist.getArtistList().get(i).getInfomation());
+//                    vBox.getChildren().addAll(imageView,nameLabel,name2Label,imfoLabel);
+                    
+                   // buttonlist.setGraphic(vBox);
+                    borderpane.getChildren().add(buttonlist);
+                }
+ 
+        
         return borderpane;
     }
 
