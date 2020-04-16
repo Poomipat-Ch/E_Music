@@ -11,6 +11,7 @@ import Component_Music.DetailSongPopUp;
 import Component_Music.SearchSystem;
 import Component_Music.Song;
 import Component_Music.TopChartMusicPage;
+import Component_Music.TopChartPane;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -66,7 +67,6 @@ public class User_UI extends UI {
         super(stage, userAccount);
         this.userAccount = userAccount;
         
-        this.TopChartPane();
         Scene scene = new Scene(allPane(), 1280, 960);
         String stylrSheet = getClass().getResource("/style_css/style.css").toExternalForm();
         scene.getStylesheets().add(stylrSheet);
@@ -291,78 +291,11 @@ public class User_UI extends UI {
         //totalPane.setAlignment(Pos.CENTER);
         totalPane.getStyleClass().add("allSong");
 
-        totalPane.getChildren().addAll(searchBoxAll(), getTopChartPane());
+        totalPane.getChildren().addAll(searchBoxAll(), new TopChartPane().getTopchartpane());
 
         scrollPane.setCenter(totalPane);
 
         return scrollPane;
-    }
-    
-    BorderPane topchartpane;
-    
-    public BorderPane getTopChartPane() {
-        return topchartpane;
-    }
-
-    public BorderPane TopChartPane() {
-        topchartpane = new BorderPane();
-        Button topChartBtn;
-        ImageView chartImage;
-        
-        ArrayList<String> topchartlist = new ArrayList<>();
-
-        topchartlist.add("THAILAND TOP 50");
-        topchartlist.add("INTERNATIONAL TOP 50");
-
-        topchartpane.setLayoutX(20);
-        topchartpane.setLayoutY(350);
-        topchartpane.getStyleClass().add("topchart");
-        topchartpane.setMinSize(1030 - 40, 500);
-
-        VBox topChartVbox = new VBox(10);
-        topChartVbox.setMinWidth(200);
-        topChartVbox.getStyleClass().add("topchartlabel");
-        topChartVbox.setAlignment(Pos.CENTER);
-        topChartVbox.setLayoutY(20);
-
-        topChartVbox.getChildren().addAll(CreateLabel(" ", 2), CreateLabel("T", 1), CreateLabel("O", 1), CreateLabel("P", 1), CreateLabel(" ", 2),
-                CreateLabel("C", 1), CreateLabel("H", 1), CreateLabel("A", 1), CreateLabel("R", 1), CreateLabel("T", 1), CreateLabel(" ", 2));
-
-        topchartpane.setLeft(topChartVbox);
-
-        VBox topChartList = new VBox(5);
-        topChartList.setPadding(new Insets(0, 0, 0, 100));
-        
-        for (String string : topchartlist) {
-            topChartBtn = new Button();
-            topChartBtn.getStyleClass().add("topchartbtn");
-            topChartBtn.setPrefSize(600, 160);
-            
-            
-
-            topChartList.getChildren().addAll(CreateLabel("\n", 2), CreateLabel(string, 2), topChartBtn);
-
-            topChartBtn.setOnAction(event -> {
-                System.out.println(string);
-                    new TopChartMusicPage(string);
-            });
-
-        }
-
-        topchartpane.setCenter(topChartList);
-
-        return topchartpane;
-    }
-
-    private Label CreateLabel(String alphabet, int style) {
-        Label label = new Label(alphabet);
-        if (style == 1) {
-            label.getStyleClass().add("labeldetail");
-        } else if (style == 2){
-            label.getStyleClass().add("listlabeldetail");
-        }
-
-        return label;
     }
 
     public TilePane updateScrollPane(String text) {
