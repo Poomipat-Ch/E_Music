@@ -143,15 +143,21 @@ abstract public class UI {
         main.setOnMouseClicked(e -> {
             menuBtnClicked = 0;
             
-            if(!this.showAllStyleSong) 
-                allsong.getChildren().addAll(listStyleSong);
-            else 
-                allsong.getChildren().remove(1);
+//            if(!this.showAllStyleSong) 
+//                allsong.getChildren().addAll(listStyleSong);
+//            else 
+//                allsong.getChildren().remove(1);
             
             this.vbox.getChildren().remove(1);
             this.vbox.getChildren().add(firstPagePane(""));
             
-            this.showAllStyleSong = !this.showAllStyleSong;
+//            this.showAllStyleSong = !this.showAllStyleSong;
+        });
+        
+        Button browe = CreaButton("BROWE");
+        browe.setOnMouseClicked(e -> {
+            this.vbox.getChildren().remove(1);
+            this.vbox.getChildren().add(new BrowsePane().getBrowsePane());
         });
         
         Button browe = CreaButton("BROWE");
