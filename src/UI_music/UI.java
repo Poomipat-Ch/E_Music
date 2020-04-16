@@ -6,6 +6,7 @@
 package UI_music;
 
 import Component_Music.Account;
+import Component_Music.AlertBox;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -111,8 +112,15 @@ abstract public class UI {
                 
         Button browse = CreaButton("BROWE");
         browse.setOnMouseClicked(e -> {
-            this.vbox.getChildren().remove(1);
-            this.vbox.getChildren().add(new BrowsePane().getBrowsePane());
+            if (!"guest".equals(userAccount.getUserRole())) {
+              this.vbox.getChildren().remove(1);
+              this.vbox.getChildren().add(new BrowsePane().getBrowsePane());
+            }else{
+                AlertBox registerFirst = new AlertBox();
+                registerFirst.displayAlert("Register First", "Register Free Account First");
+                new Register("member");
+             }
+           
         });
         
         VBox mysong = new VBox();
@@ -121,21 +129,29 @@ abstract public class UI {
         mysong.getChildren().add(myLibrary);
         myLibrary.setOnMouseClicked(e -> {
             menuBtnClicked = 1;
-            // if (userAccount.getUserRole() != "guest") { // wait
+             if (!"guest".equals(userAccount.getUserRole())) {
 
             this.vbox.getChildren().remove(1);
             this.vbox.getChildren().add(secondPagePane());
             
-            // }
+             }else{
+                AlertBox registerFirst = new AlertBox();
+                registerFirst.displayAlert("Register First", "Register Free Account First");
+                new Register("member");
+             }
         });
         Button myAccount = CreaButton("My Account");
         myAccount.setOnMouseClicked(e -> {
             menuBtnClicked = 2;
-            // if (userAccount.getUserRole() != "guest") { // wait
+             if (!"guest".equals(userAccount.getUserRole())) { 
             this.vbox.getChildren().remove(1);
             this.vbox.getChildren().add(myAccount());
 
-            // }
+             }else{
+                AlertBox registerFirst = new AlertBox();
+                registerFirst.displayAlert("Register First", "Register Free Account First");
+                new Register("member");
+             }
         });
         Button logOut = CreaButton("Logout");
         logOut.setOnMouseClicked(e -> {
