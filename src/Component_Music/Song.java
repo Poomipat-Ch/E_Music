@@ -69,6 +69,22 @@ public class Song implements Serializable {
         return priceSong;
     }
 
+    public void setNameSong(String nameSong) {
+        this.nameSong = nameSong;
+    }
+
+    public void setDetailSong(String detailSong) {
+        this.detailSong = detailSong;
+    }
+
+    public void setArtistSong(String artistSong) {
+        this.artistSong = artistSong;
+    }
+
+    public void setPriceSong(String priceSong) {
+        this.priceSong = priceSong;
+    }
+ 
     @Override
     public String toString() {
         return "name : " + nameSong + " artist : " + artistSong + " detail : " + detailSong + "\n";

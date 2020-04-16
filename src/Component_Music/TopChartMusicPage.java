@@ -13,15 +13,19 @@ import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 
 /**
  *
@@ -45,8 +49,8 @@ public class TopChartMusicPage {
     public TopChartMusicPage(String string) {
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.setMinSize(990, 900);
-        anchorPane.setLayoutX(-4);
-        anchorPane.setLayoutY(-4);
+        anchorPane.setLayoutX(-3);
+        anchorPane.setLayoutY(-3);
         anchorPane.getStyleClass().add("mainBox");
         
         
@@ -60,6 +64,7 @@ public class TopChartMusicPage {
         table = new TableView<>();
         table.setEditable(true);
 
+        table.setPrefWidth(anchorPane.getMinWidth() - 40);
         table.setPrefSize(anchorPane.getMinWidth()-20, anchorPane.getMinHeight());
         
         table.setOnMouseClicked((event) -> {
@@ -76,11 +81,11 @@ public class TopChartMusicPage {
 
         // Create column NameSong (Data type of String).
         TableColumn<Song, String> NameCol = new TableColumn<>("TITLE");
-        NameCol.setMinWidth(500);
+        NameCol.setMinWidth(488);
 
         // Create column NameArtist (Data type of String).
         TableColumn<Song, String> artistCol = new TableColumn<>("ARTIST");
-        artistCol.setMinWidth(350);
+        artistCol.setMinWidth(340);
 
         // Create column Detail (Data type of String).
         TableColumn<Song, String> detailCol = new TableColumn<>("DETAIL");
@@ -117,13 +122,24 @@ public class TopChartMusicPage {
         table.getColumns().addAll(NameCol, artistCol, detailCol);
         
         ScrollPane scrollpane = new ScrollPane();
-        scrollpane.setContent(table);
-        scrollpane.setLayoutX(30);
-        scrollpane.setLayoutY(380);
 
-        anchorPane.getChildren().addAll(scrollpane, CreateLabel(string), imageview);
+        scrollpane.setPadding(Insets.EMPTY);
+        scrollpane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollpane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollpane.fitToWidthProperty().set(true);
+        scrollpane.setLayoutX(-4);
+        scrollpane.setLayoutY(-4);
+        scrollpane.setPrefSize(1030,914);
         
-        User_UI.totalPane.getChildren().add(anchorPane);
+        table.setLayoutX(30);
+        table.setLayoutY(380);
+
+        anchorPane.getChildren().addAll(table, CreateLabel(string), imageview, searchBoxMy());
+        
+        scrollpane.setContent(anchorPane);
+        
+        User_UI.totalPane.getChildren().remove(1);
+        User_UI.totalPane.getChildren().add(scrollpane);
 
     }
     
@@ -133,6 +149,36 @@ public class TopChartMusicPage {
         label.setLayoutX(350);
         label.setLayoutY(180);
         return label;      
+    }
+    
+    public HBox searchBoxMy() {
+        HBox hBox = new HBox();
+        hBox.setPrefSize(1030 - 100, 30);
+        hBox.setLayoutX(30);
+        hBox.setLayoutY(320);
+
+        TextField searchTextField = new TextField();
+        searchTextField.setPromptText("Filter");
+        searchTextField.setStyle("-fx-font-size: 18px;");
+        searchTextField.setPrefSize(1030 - 200, 10);
+
+        Button searchButton = CreaButton("Refresh");
+        searchButton.setStyle("-fx-font-size : 15px;");
+        HBox.setMargin(searchButton, new Insets(0, 0, 0, 10));
+
+        searchTextField.textProperty().addListener(searchSystemMyLibrary);
+
+        hBox.getChildren().addAll(searchTextField, searchButton);
+
+        return hBox;
+    }
+    
+    private Button CreaButton(String text) {
+        Button downLoadButton = new Button(text);
+        downLoadButton.getStyleClass().add("detailbtn");
+        downLoadButton.setPrefSize(80, 40);
+        return downLoadButton;
+
     }
     
 

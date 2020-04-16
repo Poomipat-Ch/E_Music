@@ -10,6 +10,7 @@ import Component_Music.AlertBox;
 import Component_Music.SearchSystem;
 import Component_Music.SearchSystemAccount;
 import Component_Music.Song;
+import Component_Music.UploadArtistPopUp;
 import Component_Music.UploadSongPopUp;
 import java.io.File;
 import java.io.FileInputStream;
@@ -68,6 +69,8 @@ public class Admin_UI extends UI {
 //    static ObservableList<Song> songArrayList;
     static ArrayList<Song> songArrayList = new ArrayList<Song>();
     static File musicFile = new File("src/data/music.dat");
+    static String editName, editArtist, editDetail, editPrice;
+    static Image editImage;
 
     ObservableList<Account> list = null;
 
@@ -126,18 +129,32 @@ public class Admin_UI extends UI {
         title1.setLayoutX(50);
         title1.setLayoutY(5);
 
-        Button editBtn = CreaButton("Edit Song");       //Edit Button
-        editBtn.setLayoutX(780);
-        editBtn.setLayoutY(600);
-        editBtn.setOnAction(e -> {
-            //Gut //Edit profile / file e.g. artist, name, time, and file .mp3
+        Button editArtistBtn = CreaButton("Edit Artist");       //New Artist
+        editArtistBtn.setLayoutX(780);
+        editArtistBtn.setLayoutY(500);
+        editArtistBtn.setOnAction(e -> {
+            new UploadArtistPopUp("Upload Artist","select Name Artist1","select Name Artist2(Optional)","select detail",new Image("/image/defaultprofile.png")); //Rach or Gut Su su
+        });
+        
+        Button newArtistBtn = CreaButton("New Artist");       //New Artist
+        newArtistBtn.setLayoutX(780);
+        newArtistBtn.setLayoutY(550);
+        newArtistBtn.setOnAction(e -> {
+            new UploadArtistPopUp("Upload Artist");
+        });
+        
+        Button editSongBtn = CreaButton("Edit Song");       //Edit Button
+        editSongBtn.setLayoutX(780);
+        editSongBtn.setLayoutY(600);
+        editSongBtn.setOnAction(e -> {
+            new UploadSongPopUp("Edit Song",editName,editArtist,editDetail,editPrice,"src/MusicFile/"+songSelectString+".mp3",editImage,null); // Gut
         });
 
         Button uploadBtn = CreaButton("Upload");        //Upload Button
         uploadBtn.setLayoutX(780);
         uploadBtn.setLayoutY(700);
         uploadBtn.setOnAction(e -> {
-            new UploadSongPopUp();
+            new UploadSongPopUp("Upload Song");
 
         });
 
@@ -156,7 +173,7 @@ public class Admin_UI extends UI {
 
         });
 
-        pane.getChildren().addAll(AllSong(), UpdateClikedPane(), title1, editBtn, uploadBtn, deleteBtn);
+        pane.getChildren().addAll(AllSong(), UpdateClikedPane(), title1, editArtistBtn, newArtistBtn, editSongBtn, uploadBtn, deleteBtn);
 
         return pane;
     }
@@ -407,6 +424,11 @@ public class Admin_UI extends UI {
                         //Gut add
                         songSelectString = song.getNameSong() + song.getArtistSong() + song.getDetailSong();
                         System.out.println(songSelectString + " is selected");
+                        editName = song.getNameSong();
+                        editArtist = song.getArtistSong();
+                        editDetail = song.getDetailSong();
+                        editPrice = song.getPriceSong();
+                        editImage = song.getPhoto();
 
                         selectNameSong.getStyleClass().add("nameSong");
                         selectArtist.getStyleClass().add("nameArtist");
