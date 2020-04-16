@@ -7,6 +7,7 @@ package UI_music;
 
 import Component_Music.Account;
 import Component_Music.AlertBox;
+import Component_Music.Cashing;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -142,10 +143,9 @@ public class Register {
                 userGender = "N/A";
             }
             ArrayList<Account> addAccount = new ArrayList<>();
-
-            if (premiumBox.isSelected()) {
-                roles = "premium";
-            }
+//            if (premiumBox.isSelected()) { <---------------------------------------
+//                roles = "premium";
+//            }
 
             try {
                 listUserAccount = file.readFile(this.user);
@@ -187,21 +187,21 @@ public class Register {
                             System.out.println("Register : IOExeption read file in Register consturtor after check");
                         }
 
-                        if (userRole.equals("admin") == false) {
-                            if (roles.equals("premium")) {
-                                addAccount.add(new Account(nameIn.getText(), surnameIn.getText(), usernameIn.getText(), mailIn.getText(),
-                                        passIn.getText(), userGender, dOB, question.getValue(), answer.getText(), "premium", image));
-                            } else {
-                                addAccount.add(new Account(nameIn.getText(), surnameIn.getText(), usernameIn.getText(), mailIn.getText(),
-                                        passIn.getText(), userGender, dOB, question.getValue(), answer.getText(), "member", image));
-                            }
+                        if (userRole.equals("admin") == false) { //<-------------------------------------------------
+//                            if (roles.equals("premium")) {
+//                                addAccount.add(new Account(nameIn.getText(), surnameIn.getText(), usernameIn.getText(), mailIn.getText(),
+//                                        passIn.getText(), userGender, dOB, question.getValue(), answer.getText(), "premium", image));
+//                            } else {
+                            System.out.println("Adding Account1 userRole.equals(admin) == false");
+                            addAccount.add(new Account(nameIn.getText(), surnameIn.getText(), usernameIn.getText(), mailIn.getText(),
+                                    passIn.getText(), userGender, dOB, question.getValue(), answer.getText(), "member", image));
+//                            }
 
                         } else {
                             String userRoleReg = "member";
                             if (adminSelect.isSelected()) {
                                 userRoleReg = "admin";
-                            }
-                            else if(premiumSelect.isSelected()){
+                            } else if (premiumSelect.isSelected()) {
                                 userRoleReg = "premium";
                             }
 
@@ -224,6 +224,18 @@ public class Register {
                         if (userRole.equals("admin")) {
                             AlertBox.displayAlert("Add Account Complete", "This account has been saved.");
                         } else {
+                            if (premiumBox.isSelected()) { //NEW UPDATE buy premium after register then use account to upgrade can use this in user_ui too (maybe)
+                                for (Account account : listUserAccount) {
+                                    String userId = usernameIn.getText(), emailID = mailIn.getText();
+                                    String chkUser = account.getUsername(), chkEmail = account.getEmail();
+                                    if ((userId.equals(chkUser) || emailID.equals(chkEmail))) {
+                                        Cashing cashPremium = new Cashing();
+                                        cashPremium.buyPremium(new Stage(), account);
+                                        break;
+                                    }
+                                }
+
+                            }
                             AlertBox.displayAlert("Register Complete", "Your account has been saved.\nTry to login now.");
                         }
 
@@ -303,9 +315,7 @@ public class Register {
             statusRow.getChildren().addAll(userSelect, premiumSelect, adminSelect);
             column1.getChildren().add(statusRow);
             column1.getChildren().addAll(row1, usernameIn, mailIn, row3, title2, date, sexText, sexRow, qText, question, answer);
-        }
-
-        else{
+        } else {
             column1.getChildren().addAll(row1, usernameIn, mailIn, row3, title2, date, sexText, sexRow, qText, question, answer, premiumBox);
         }
         column1.setAlignment(Pos.CENTER);
