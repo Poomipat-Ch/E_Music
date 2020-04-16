@@ -48,7 +48,7 @@ public class TopChartMusicPage {
 
     public TopChartMusicPage(String string) {
         AnchorPane anchorPane = new AnchorPane();
-        anchorPane.setMinSize(990, 900);
+        anchorPane.setMinSize(990, 901);
         anchorPane.setLayoutX(-3);
         anchorPane.setLayoutY(-3);
         anchorPane.getStyleClass().add("mainBox");
@@ -63,7 +63,6 @@ public class TopChartMusicPage {
         table.setEditable(true);
 
         table.setPrefWidth(anchorPane.getMinWidth() - 40);
-        table.setPrefSize(anchorPane.getMinWidth() - 20, anchorPane.getMinHeight());
 
         table.setOnMouseClicked((event) -> {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
@@ -127,7 +126,7 @@ public class TopChartMusicPage {
         scrollpane.fitToWidthProperty().set(true);
         scrollpane.setLayoutX(-4);
         scrollpane.setLayoutY(-4);
-        scrollpane.setPrefSize(1030, 914);
+        scrollpane.setPrefSize(1030, 901);
 
         table.setLayoutX(30);
         table.setLayoutY(380);
