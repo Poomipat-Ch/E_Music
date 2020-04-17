@@ -11,6 +11,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -29,23 +30,22 @@ public class Profile {
     Account userAccount;
     
     BorderPane accountPane = new BorderPane();
-    BorderPane mainPane = new BorderPane();
     
     public Profile(Account userAccount) {
         
         this.userAccount = userAccount;
         MyAccount myAccount = new MyAccount(this.userAccount);
-                
-        VBox head = new VBox(10);
-        head.setPadding(new Insets(0,10,20,20));
-        head.getChildren().add(new Text("MY ACCOUNT"));
         
-         HBox bottom = new HBox(10);
+        accountPane.setTranslateY(20);
+        
+        HBox bottom = new HBox(10);
         bottom.setPadding(new Insets(20,20,0,0));
         bottom.setAlignment(Pos.CENTER_RIGHT);
         
+        savebt.getStyleClass().add("savebtn");
         savebt.setOnAction(event -> {
             if(myAccount.saveAccount()) {
+                accountPane.setTranslateY(20);
                 AlertBox.displayAlert("Edit Profile", "Saved.");
                 this.userAccount = myAccount.getMyAccount();
                 myAccount.showAccount(this.userAccount);
@@ -58,8 +58,9 @@ public class Profile {
             } else 
                 AlertBox.displayAlert("Edit Profile", "Failed.");
         });
-        
+        cancelbt.getStyleClass().add("cancelbtn");
         cancelbt.setOnAction(event -> {
+            accountPane.setTranslateY(20);
             myAccount.showAccount(userAccount);
             accountPane.setCenter(myAccount.getProfilePane());
             myAccount.Clear();
@@ -72,13 +73,16 @@ public class Profile {
         
         VBox right = new VBox(10);
         right.setPadding(new Insets(20,20,20,20));
+        editbt.getStyleClass().add("detailbtn");
         editbt.setOnAction(event -> {
+            accountPane.setTranslateY(10);
             myAccount.editAccount();
             accountPane.setCenter(myAccount.getProfilePane());
             bottom.getChildren().clear();
-            bottom.getChildren().addAll(cancelbt, savebt);
+            bottom.getChildren().addAll(savebt,cancelbt);
         });
         
+        buyPremiumbtn.getStyleClass().add("premiumbtn");
         buyPremiumbtn.setOnMouseClicked(e -> {
             // Font dono << ------------
         });
@@ -87,21 +91,17 @@ public class Profile {
         }
         bottom.getChildren().addAll(editbt);
         
-        accountPane.setTop(head);
+        //accountPane.setTop(head);
         accountPane.setCenter(myAccount.getProfilePane());
         accountPane.setPadding(new Insets(50, 50, 50, 50));
-        accountPane.setStyle("-fx-background-color: white");
         accountPane.setBottom(bottom);
+        accountPane.getStyleClass().add("outerPane");
         
-        
-        
-        mainPane.setCenter(accountPane);
-        mainPane.setPadding(new Insets(50, 100, 0, 100));
         
     }
 
     public BorderPane getMainPane() {
-        return mainPane;
+        return accountPane;
     }
     
     

@@ -417,7 +417,7 @@ public class Admin_UI extends UI {
 
                         selectNameSong = new Label(song.getNameSong());
                         selectArtist = new Label("ARTIST : " + song.getArtistSong());
-                        selectImage = new ImageView(new Image("/image/1.jpg"));   //DATA...Collection from database..
+                        selectImage = new ImageView(song.getPhoto());   //DATA...Collection from database..
                         selectImage.setFitHeight(300);
                         selectImage.setFitWidth(250);
 
@@ -441,7 +441,7 @@ public class Admin_UI extends UI {
                     paneContent.setPadding(new Insets(10, 10, 10, 10));
                     paneContent.getStyleClass().add("content-allSong"); //CSS
 
-                    imageView = new ImageView(new Image("/image/1.jpg"));
+                    imageView = new ImageView(song.getPhoto());
                     imageView.setFitHeight(200); //160
                     imageView.setFitWidth(150); //120
 

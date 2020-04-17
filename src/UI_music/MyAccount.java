@@ -20,6 +20,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -33,6 +34,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -57,7 +59,7 @@ public class MyAccount {
 
     private LocalDate dOB;
 
-    private VBox editBox = new VBox(10);
+    private VBox editBox = new VBox(30);
     private VBox changeBox = new VBox(10);
     private VBox leftBox = new VBox(10);
     private HBox bottomBox = new HBox();
@@ -68,6 +70,7 @@ public class MyAccount {
     private TextField lastname = new TextField();
     private TextField email = new TextField();
     private TextField currentPassword = new PasswordField();
+    private TextField currentPasswordInGrid = new PasswordField();
     private TextField password = new PasswordField();
     private TextField passwordConfirm = new PasswordField();
 
@@ -94,41 +97,62 @@ public class MyAccount {
     public void showAccount(Account myAccount) {
         this.myAccount = myAccount;
         editBox.getChildren().clear();
+        
+        Label titleHead = new Label("My Account");
+        titleHead.getStyleClass().add("titleMyAccount");
+        
+        Label firstnameLabel = new Label(myAccount.getName());
+        Label lastnameLabel = new Label(myAccount.getSurname());
+        firstnameLabel.getStyleClass().add("fistNameAndSurname");
+        lastnameLabel.getStyleClass().add("fistNameAndSurname");
+        
+        HBox hboxNameSurname = new HBox(30);
+        hboxNameSurname.setAlignment(Pos.CENTER);
+        hboxNameSurname.getChildren().addAll(firstnameLabel,lastnameLabel);
 
-        VBox row = new VBox(10);
-        row.getChildren().addAll(new Text("Username : \t"), new Label(myAccount.getUsername()));
-
-        HBox row2 = new HBox(10);
-        row2.getChildren().addAll(new Text("Name : "), new Label(myAccount.getName()), new Label(myAccount.getSurname()));
-
-        HBox row3 = new HBox(5);
-        row3.getChildren().addAll(new Text("Last Name : \t\t\t    "), new Label(myAccount.getSurname()));
-
-        VBox row5 = new VBox(10);
-        row5.getChildren().addAll(new Text("Email : \t\t"), new Label(myAccount.getEmail()));
-
-        HBox row7 = new HBox(10);
+        Label usernameTitleLabel = new Label("Username");
+        Label usernameLabel = new Label(myAccount.getUsername());
+        Label emailTitleLabel = new Label("E-mail");
+        Label emailLabel = new Label(myAccount.getEmail());
+        Label dateOfBirthLabelTitle = new Label("Date of Birth");
+        
         DatePicker date = new DatePicker();
         dOB = myAccount.getDateOfBirth();
         date.setValue(dOB);
-        row7.getChildren().addAll(new Text("Date of Birth : "), new Label(dOB.format(DateTimeFormatter.ISO_DATE)));
-
-        HBox row9 = new HBox(10);
-        row9.getChildren().addAll(new Label("Gender : "), new Label(myAccount.getGender()));
-
-        //Blank line
-        HBox row1 = new HBox(10);
-        row1.getChildren().add(new Text(" "));
-        HBox row4 = new HBox(10);
-        row4.getChildren().add(new Text(" "));
-        HBox row6 = new HBox(10);
-        row6.getChildren().add(new Text(" "));
-        HBox row8 = new HBox(10);
-        row8.getChildren().add(new Text(" "));
-        HBox row10 = new HBox(10);
-        row10.getChildren().add(new Text(" "));
-        HBox row12 = new HBox(10);
-
+        Label dateOfBirthLabel = new Label(dOB.format(DateTimeFormatter.ISO_DATE));
+        Label genderTitleLabel = new Label("Gender");
+        Label genderLabel = new Label(myAccount.getGender());       
+        
+        Label colon1 = new Label(":");
+        Label colon2 = new Label(":");
+        Label colon3 = new Label(":");
+        Label colon4 = new Label(":");  
+        
+        GridPane gridPane = new GridPane();
+        gridPane.setAlignment(Pos.CENTER);
+        gridPane.getStyleClass().add("detailMyAccount");
+        gridPane.setVgap(20);
+        gridPane.setHgap(10);
+        GridPane.setHalignment(usernameTitleLabel, HPos.LEFT);
+        GridPane.setHalignment(emailTitleLabel, HPos.LEFT);
+        GridPane.setHalignment(dateOfBirthLabelTitle, HPos.LEFT);
+        GridPane.setHalignment(genderTitleLabel, HPos.LEFT);
+        GridPane.setConstraints(usernameTitleLabel, 0, 0);
+        GridPane.setConstraints(emailTitleLabel, 0, 1);
+        GridPane.setConstraints(genderTitleLabel, 0, 2);
+        GridPane.setConstraints(dateOfBirthLabelTitle, 0, 3);
+        GridPane.setConstraints(colon1, 1, 0);
+        GridPane.setConstraints(colon2, 1, 1);
+        GridPane.setConstraints(colon3, 1, 2);
+        GridPane.setConstraints(colon4, 1, 3);
+        GridPane.setConstraints(usernameLabel, 2, 0);
+        GridPane.setConstraints(emailLabel, 2, 1);
+        GridPane.setConstraints(genderLabel, 2, 2);
+        GridPane.setConstraints(dateOfBirthLabel, 2, 3);
+        gridPane.getChildren().addAll(usernameTitleLabel,emailTitleLabel,dateOfBirthLabelTitle,genderTitleLabel,
+                                      colon1,colon2,colon3,colon4,
+                                      usernameLabel,emailLabel,genderLabel,dateOfBirthLabel);       
+        
         image = myAccount.getPhoto();
         photo = new ImageView(image);
         photo.setFitHeight(200);
@@ -136,15 +160,16 @@ public class MyAccount {
         photo.setPreserveRatio(true);
 
         VBox profilePictureBox = new VBox(10);
-        profilePictureBox.setPadding(new Insets(30));
+        //profilePictureBox.setPadding(new Insets(30));
         profilePictureBox.getChildren().addAll(photo);
-        profilePictureBox.setAlignment(Pos.CENTER);
+        profilePictureBox.setAlignment(Pos.CENTER_RIGHT);
         profilePictureBox.setMinWidth(300);
-
-        editBox.getChildren().addAll(row, row1, row2, row4, row5, row6, row7, row8, row9, row10);
-        editBox.setPadding(new Insets(50, 50, 50, 50));
-
-        profilePane.setStyle("-fx-background-color: #f5deb3");
+        
+        editBox.setAlignment(Pos.CENTER);
+        editBox.getChildren().addAll(titleHead, hboxNameSurname, gridPane);
+        //editBox.setPadding(new Insets(10));
+        profilePane.setPadding(new Insets(30));
+        profilePane.getStyleClass().add("innerPane");
         profilePane.setLeft(profilePictureBox);
         profilePane.setCenter(editBox);
     }
@@ -152,36 +177,33 @@ public class MyAccount {
     public void editAccount() {
         
         this.changeStatus = false;
+        
+        Label usernameTitleLabel = new Label("Username");
+        Label firstnameTitleLabel = new Label("First Name ");
+        Label lastnameTitleLabel = new Label("Last Name");
+        Label emailTitleLabel = new Label("E-mail");
+        Label dateOfBirthLabelTitle = new Label("Date of Birth");
+        Label genderTitleLabel = new Label("Gender");
+        
         username.setPromptText("Usrname");
         username.setText(this.myAccount.getUsername());
-        username.setMaxWidth(300);
-
-        VBox row = new VBox(10);
-        row.getChildren().addAll(new Text("Username : \t"), username);
-
+        username.setMaxWidth(280);
+        
         firstname.setPromptText("First Name");
         firstname.setText(this.myAccount.getName());
-        firstname.setMaxWidth(300);
-
-        HBox row2 = new HBox(10);
-        row2.getChildren().addAll(new Text("First Name : \t\t\t    "), new Text("Last Name : \t"));
+        firstname.setMaxWidth(280);
 
         lastname.setPromptText("Last Name");
         lastname.setText(this.myAccount.getSurname());
-        lastname.setMaxWidth(300);
-
-        HBox row3 = new HBox(5);
-        row3.getChildren().addAll(firstname, lastname);
+        lastname.setMaxWidth(280);
 
         email.setPromptText("Email e.g. Spookify@gmail.com");
         email.setText(this.myAccount.getEmail());
-        email.setMaxWidth(300);
-
-        VBox row5 = new VBox(10);
-        row5.getChildren().addAll(new Text("Email : \t\t"), email);
-
+        email.setMaxWidth(280);
+        
         // create a date picker 
         DatePicker date = new DatePicker();
+        date.setMaxWidth(280);
         // show week numbers 
         date.setShowWeekNumbers(false);
         // when datePicker is pressed 
@@ -190,12 +212,9 @@ public class MyAccount {
         date.setOnAction(e -> {
             dOB = date.getValue();
         });
-
-        HBox row7 = new HBox(10);
-        row7.getChildren().addAll(new Text("Date of Birth : "), date);
-
+        
+        
         //Select Gender
-        Label sexText = new Label("Gender : ");
         ToggleGroup sexToggle = new ToggleGroup(); //create radio button group
         male = new RadioButton("Male"); //create radio button
         female = new RadioButton("Female");
@@ -212,51 +231,112 @@ public class MyAccount {
             sexToggle.selectToggle(otherRadio);
         }
 
-        HBox row9 = new HBox(10);
-        row9.getChildren().addAll(sexText, male, female, otherRadio);
+        male.getStyleClass().add("detailMyAccount2");
+        female.getStyleClass().add("detailMyAccount2");
+        otherRadio.getStyleClass().add("detailMyAccount2");
+        HBox rowGender = new HBox(10);
+        rowGender.getChildren().addAll(male, female, otherRadio);
+        
+        Label colon1 = new Label(":");
+        Label colon2 = new Label(":");
+        Label colon3 = new Label(":");
+        Label colon4 = new Label(":");
+        Label colon5 = new Label(":");
+        Label colon6 = new Label(":");     
+        
+        GridPane gridPaneEdit = new GridPane();
+        gridPaneEdit.getStyleClass().add("detailMyAccount");
+        gridPaneEdit.setVgap(20);
+        gridPaneEdit.setHgap(10);
+        gridPaneEdit.setAlignment(Pos.CENTER_LEFT);
+        GridPane.setHalignment(usernameTitleLabel, HPos.RIGHT);
+        GridPane.setHalignment(firstnameTitleLabel, HPos.RIGHT);
+        GridPane.setHalignment(lastnameTitleLabel, HPos.RIGHT);
+        GridPane.setHalignment(emailTitleLabel, HPos.RIGHT);
+        GridPane.setHalignment(dateOfBirthLabelTitle, HPos.RIGHT);
+        GridPane.setHalignment(genderTitleLabel, HPos.RIGHT);
+        GridPane.setConstraints(firstnameTitleLabel, 0, 0);
+        GridPane.setConstraints(lastnameTitleLabel, 0, 1);
+        GridPane.setConstraints(usernameTitleLabel, 0, 2);
+        GridPane.setConstraints(emailTitleLabel, 0, 3);
+        GridPane.setConstraints(dateOfBirthLabelTitle, 0, 4);
+        GridPane.setConstraints(genderTitleLabel, 0, 5);
+        GridPane.setConstraints(colon1, 1, 0);
+        GridPane.setConstraints(colon2, 1, 1);
+        GridPane.setConstraints(colon3, 1, 2);
+        GridPane.setConstraints(colon4, 1, 3);
+        GridPane.setConstraints(colon5, 1, 4);
+        GridPane.setConstraints(colon6, 1, 5);
+        GridPane.setConstraints(firstname, 2, 0);
+        GridPane.setConstraints(lastname, 2, 1);
+        GridPane.setConstraints(username, 2, 2);
+        GridPane.setConstraints(email, 2, 3);
+        GridPane.setConstraints(date, 2, 4);
+        GridPane.setConstraints(rowGender, 2, 5);
+        gridPaneEdit.getChildren().addAll(usernameTitleLabel,firstnameTitleLabel,lastnameTitleLabel,emailTitleLabel,dateOfBirthLabelTitle,genderTitleLabel,
+                                      colon1,colon2,colon3,colon4,colon5,colon6,
+                                      username,firstname,lastname,email,date,rowGender);
+        
 
-        currentPassword.setMaxWidth(300);
 
-        VBox row11 = new VBox(10);
-        row11.getChildren().addAll(new Text("Current Password : \t"), currentPassword);
-
-        //Blank line
-        HBox row1 = new HBox(10);
-        row1.getChildren().add(new Text(" "));
-        HBox row4 = new HBox(10);
-        row4.getChildren().add(new Text(" "));
-        HBox row6 = new HBox(10);
-        row6.getChildren().add(new Text(" "));
-        HBox row8 = new HBox(10);
-        row8.getChildren().add(new Text(" "));
-        HBox row10 = new HBox(10);
-        row10.getChildren().add(new Text(" "));
-        HBox row12 = new HBox(10);
-        row12.getChildren().add(new Text(" "));
-        HBox row14 = new HBox(10);
-        row14.getChildren().add(new Text(" "));
-
-        password.setMaxWidth(300);
-
-        HBox row13 = new HBox(10);
-        row13.getChildren().addAll(new Text("New Password : \t"), password);
-
-        passwordConfirm.setMaxWidth(300);
-
-        HBox row15 = new HBox(10);
-        row15.getChildren().addAll(new Text("Confirm New Password :"), passwordConfirm);
-
+        Label currentPasswordTitle = new Label("Current Password");
+        currentPasswordTitle.getStyleClass().add("detailMyAccount2");
+        currentPassword.setMaxWidth(180);
+        currentPasswordInGrid.setMaxWidth(180);
+        
         Label changePassword = new Label("Change Password?");
+        changePassword.getStyleClass().add("detailMyAccount2");
         changePassword.setStyle("-fx-underline: true");
-
+       
+        HBox rowCurrentPass = new HBox(10);
+        rowCurrentPass.getChildren().addAll(currentPasswordTitle,currentPassword);
+        
+        Label currentPasswordTitleInGrid = new Label("Current Password");
+        Label passwordTitle = new Label("New Password");
+        Label passwordConfirmTitle = new Label("Confirm New Password");
+        password.setMaxWidth(180);
+        passwordConfirm.setMaxWidth(180);
+        
+        Label colonA = new Label(":");
+        Label colonB = new Label(":");
+        Label colonC = new Label(":");
+        
+        GridPane gridPanePass = new GridPane();
+        gridPanePass.setVgap(20);
+        gridPanePass.setHgap(10);
+        gridPanePass.getStyleClass().add("detailMyAccount");
+        GridPane.setHalignment(currentPasswordTitleInGrid, HPos.RIGHT);
+        GridPane.setHalignment(passwordTitle, HPos.RIGHT);
+        GridPane.setHalignment(passwordConfirmTitle, HPos.RIGHT);
+        GridPane.setConstraints(currentPasswordTitle, 0, 0);
+        GridPane.setConstraints(passwordTitle, 0, 1);
+        GridPane.setConstraints(passwordConfirmTitle, 0, 2);
+        GridPane.setConstraints(colonA, 1, 0);
+        GridPane.setConstraints(colonB, 1, 1);
+        GridPane.setConstraints(colonC, 1, 2);
+        GridPane.setConstraints(currentPasswordInGrid, 2, 0);
+        GridPane.setConstraints(password, 2, 1);
+        GridPane.setConstraints(passwordConfirm, 2, 2);
+        gridPanePass.getChildren().addAll(currentPasswordTitleInGrid,passwordTitle,passwordConfirmTitle,
+                                        colonA,colonB,colonC,
+                                        currentPasswordInGrid,password,passwordConfirm);
+        
         changePassword.setOnMouseClicked(event -> {
-            editBox.getChildren().remove(13);
-            editBox.getChildren().addAll(row13, row14, row15);
+            currentPassword.clear();
+            currentPasswordInGrid.clear();
+            editBox.getChildren().removeAll(rowCurrentPass,changePassword);
+            editBox.getChildren().addAll(gridPanePass);
             changeStatus = true;
         });
 
-        Button changeImage = new Button("Change Image");
-        changeImage.setOnAction(event -> {
+        editBox.getChildren().clear();
+        editBox.getChildren().addAll(gridPaneEdit,rowCurrentPass,changePassword);
+        editBox.setPadding(new Insets(50, 50, 50, 50));
+        
+        Button uploadBtn = new Button("Change Image");
+        //Upload Picture 
+        uploadBtn.getStyleClass().add("detailbtn");
+        uploadBtn.setOnAction(event -> {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             fileChooser = new FileChooser();
@@ -281,26 +361,29 @@ public class MyAccount {
                 this.photo.setImage(image);
                 this.image = image;
             } catch (IOException e) {
-                System.out.println("MyAcoount : IOExeption upload picture in editAccount");
+                System.out.println("MyAccount : IOExeption upload picture in editAccount");
             }
         });
-
+        //
+        
         VBox profilePictureBox = new VBox(10);
-        profilePictureBox.setPadding(new Insets(50, 0, 0, 0));
-        profilePictureBox.getChildren().addAll(photo, changeImage);
+        profilePictureBox.setPadding(new Insets(40));
+        profilePictureBox.getChildren().addAll(photo, uploadBtn);
         profilePictureBox.setAlignment(Pos.TOP_CENTER);
         profilePictureBox.setMinWidth(300);
 
-        editBox.getChildren().clear();
-        editBox.getChildren().addAll(row, row1, row2, row3, row4, row5, row6, row7, row8, row9, row10, row11, row12, changePassword);
-        editBox.setPadding(new Insets(50, 50, 50, 50));
-        profilePane.setStyle("-fx-background-color: #f5deb3");
+        profilePane.getStyleClass().add("innerPane");
         profilePane.setLeft(profilePictureBox);
         profilePane.setCenter(editBox);
     }
 
     public boolean saveAccount() {
 
+        if(currentPassword.getText().equals("")){
+            currentPassword.setText(currentPasswordInGrid.getText());   //By Pop Solve UI Grid Problems
+        }
+        
+        
         boolean editSave = false;
 
         String userGender;

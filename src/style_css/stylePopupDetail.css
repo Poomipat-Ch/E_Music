@@ -5,7 +5,7 @@
 .allPane{
     -fx-background-color:radial-gradient(radius 100%,rgba(132,206,235,1) 0%, rgba(94,123,229,1) 43%, rgba(136,96,208,1) 83%);/*#2d4059*/
     -fx-opacity: 0.99; 
-    -fx-background-radius : 50; 
+    -fx-background-radius : 10; 
 }
 .nameSong{
     -fx-font-size: 50px;
@@ -36,6 +36,7 @@
     -fx-text-fill : white;
     -fx-background-radius :  10;
     -fx-font-size : 20px;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.5) , 5,0,2,2);
 }
 
 .buybtn:hover, .uploadbtn:hover{
@@ -43,7 +44,7 @@
 }
 
 .buybtn:pressed, .uploadbtn:pressed{
-    -fx-background-color: linear-gradient(to right, rgba(85,62,129,0.6) 0%, rgba(85,62,129,0.7) 81%);
+    -fx-background-color: linear-gradient(to right, rgba(85,62,129,0.5) 0%, rgba(85,62,129,0.5) 81%);
 }
 
 .savebtn{
@@ -51,6 +52,7 @@
     -fx-text-fill : white;
     -fx-background-radius :  10;
     -fx-font-size : 20px;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.5) , 5,0,2,2);
 }
 
 .savebtn:hover{
@@ -58,7 +60,7 @@
 }
 
 .savebtn:pressed{
-    -fx-background-color : linear-gradient(to right,  rgba(0,208,100,0.8) 0%, rgba(0,208,100,0.9) 100%);
+    -fx-background-color : linear-gradient(to right,  rgba(0,208,100,0.5) 0%, rgba(0,208,100,0.5) 100%);
 }
 
 .cancelbtn{
@@ -66,6 +68,7 @@
     -fx-text-fill : white;
     -fx-background-radius :  10;
     -fx-font-size : 20px;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.5) , 5,0,2,2);
 }
 
 .cancelbtn:hover{
@@ -73,7 +76,7 @@
 }
 
 .cancelbtn:pressed{
-    -fx-background-color : linear-gradient(to right, rgba(236,0,68,0.8) 0%, rgba(236,0,68,0.9) 100%);
+    -fx-background-color : linear-gradient(to right, rgba(236,0,68,0.5) 0%, rgba(236,0,68,0.5) 100%);
 }
 
 .checkbox{
