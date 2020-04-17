@@ -235,21 +235,14 @@ public class User_UI extends UI {
         searchTextField.setStyle("-fx-font-size: 12px;");
         searchTextField.setPrefSize(250, 30);
 
-//        Button searchButton = CreaButton("Refresh");
-//        searchButton.setStyle("-fx-font-size : 15px;");
-//        HBox.setMargin(searchButton, new Insets(0, 0, 0, 10));
         searchTextField.setOnMouseClicked(event -> {
-
-//            for (int i = 0; i < 2; ++i) 
-//                totalPane.getChildren().remove(0);
-            User_UI.totalPane.getChildren().addAll(new SearchPage("").getSearchPane());
             UI.vbox.getChildren().remove(1);
-            UI.vbox.getChildren().add(totalPane);
+            UI.vbox.getChildren().addAll(new SearchPage("").getSearchPane());
         });
 
         /// 1030-300-60-70
         searchTextField.textProperty().addListener((ov, t, t1) -> {
-            User_UI.totalPane.getChildren().remove(1);
+            User_UI.totalPane.getChildren().remove(0);
             User_UI.totalPane.getChildren().add(new SearchPage(searchTextField.getText()).getSearchPane());
         });
         hBox.getChildren().addAll(searchTextField);
@@ -286,14 +279,9 @@ public class User_UI extends UI {
 
         BorderPane scrollPane = new BorderPane();
         scrollPane.setPrefSize(1030, 900);
-//        scrollPane.pannableProperty().set(true);
-//        scrollPane.fitToWidthProperty().set(true);
-//        scrollPane.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
-//        scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPane.setPadding(new Insets(10));
         scrollPane.getStyleClass().add("scroll-bar");
         totalPane = new AnchorPane();
-        //totalPane.setAlignment(Pos.CENTER);
         totalPane.getStyleClass().add("allSong");
 
         totalPane.getChildren().addAll(new TopChartPane(userAccount).getTopchartpane());

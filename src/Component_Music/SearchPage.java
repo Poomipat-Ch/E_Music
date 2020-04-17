@@ -36,27 +36,10 @@ public class SearchPage {
 
         AnchorPane background = new AnchorPane();
         background.getStyleClass().add("backgroundsearch");
-        background.setPrefSize(1030, 901);
+        background.setPrefSize(1030, 902);
         background.setPadding(Insets.EMPTY);
-        background.setLayoutX(-1);
-        background.setLayoutY(1);
-
-        HBox hBox = new HBox();
-        hBox.setPrefSize(1030, 30);
-        hBox.setAlignment(Pos.CENTER);
-        hBox.setLayoutY(100);
-
-        TextField searchTextField = new TextField();
-        searchTextField.setPromptText("Search");
-        searchTextField.setStyle("-fx-font-size: 18px;");
-        searchTextField.setPrefSize(1030 - 300 - 60 - 70, 30);
-
-        searchTextField.textProperty().addListener((ov, t, t1) -> {
-            User_UI.totalPane.getChildren().remove(1);
-            //User_UI.totalPane.getChildren().add(updateScrollPane(searchTextField.getText()));
-        });
-
-        hBox.getChildren().addAll(searchTextField);
+        background.setLayoutX(0);
+        background.setLayoutY(2);
 
         if (text.toLowerCase().equals("")) {
             anchorPane.getChildren().addAll(background, FoundListPane("Spokify"));
@@ -96,7 +79,7 @@ public class SearchPage {
         borderpane.setPrefHeight(341);
 
         borderpane.setTop(HeadBox(string, filename, foundtext, 880));
-        borderpane.setCenter(Playlist(foundtext));
+        borderpane.setCenter(Playlist(foundtext,4,12));
 
         return borderpane;
     }
@@ -109,7 +92,7 @@ public class SearchPage {
         borderpane.setPrefHeight(341);
 
         borderpane.setTop(HeadBox(string, filename, foundtext, 390));
-        borderpane.setCenter(Playlist(foundtext));
+        borderpane.setCenter(Playlist(foundtext,2,0));
 
         return borderpane;
     }
@@ -146,12 +129,12 @@ public class SearchPage {
         return label;
     }
 
-    private AnchorPane Playlist(String foundtextt) {
+    private AnchorPane Playlist(String foundtextt, int column, int dis) {
         AnchorPane anchorpane = new AnchorPane();
 //        borderpane.set
 
-        for (int i = 0; i < 8; ++i) {
-            anchorpane.getChildren().add(CreateList((230 * (i % 2)), (80 * (i / 2)) + 20, ""));
+        for (int i = 0; i < 8 + (dis/3); ++i) {
+            anchorpane.getChildren().add(CreateList((230 * (i % column)) + dis, (80 * (i / column)) + 30, ""));
 
         }
 

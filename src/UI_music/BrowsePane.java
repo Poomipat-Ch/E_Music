@@ -62,7 +62,7 @@ public class BrowsePane {
     private HBox CreateButton(double x, double y, double width) {
         HBox button = new HBox();
         button.getStyleClass().add("buttoninbrowse");
-        button.setPrefSize(width, 99);
+        button.setPrefSize(width, 100);
         button.setLayoutX(x);
         button.setLayoutY(y);
 

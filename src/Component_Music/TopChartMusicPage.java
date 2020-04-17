@@ -5,6 +5,7 @@
  */
 package Component_Music;
 
+import UI_music.UI;
 import UI_music.User_UI;
 import java.io.File;
 import java.io.IOException;
@@ -141,8 +142,8 @@ public class TopChartMusicPage {
 
         scrollpane.setContent(anchorPane);
 
-        //User_UI.totalPane.getChildren().remove(1);
-        User_UI.totalPane.getChildren().add(scrollpane);
+        UI.vbox.getChildren().remove(1);
+        UI.vbox.getChildren().add(scrollpane);
 
     }
 
