@@ -38,8 +38,8 @@ abstract public class UI {
         this.userAccount = userAccount;
         vbox = new VBox();
     }
-    
-    public static VBox vbox ;
+
+    public static VBox vbox;
 
     public BorderPane allPane() {
         BorderPane borderPane = new BorderPane();
@@ -62,15 +62,15 @@ abstract public class UI {
     }
 
     private VBox mainBox() {
-        
+
         vbox.getStyleClass().add("mainBox");
         vbox.getChildren().addAll(tilePane(), firstPagePane(""));
 
         return vbox;
     }
-    
+
     private VBox mainBox2() {
-  
+
         vbox.getStyleClass().add("mainBox");
         vbox.getChildren().addAll(tilePane2(), firstPagePane(""));
 
@@ -111,54 +111,59 @@ abstract public class UI {
         Button home = CreaButton("Home");
         home.setOnMouseClicked(e -> {
             menuBtnClicked = 0;
-            
+
             this.vbox.getChildren().remove(1);
             this.vbox.getChildren().add(firstPagePane(""));
         });
-                
+
         Button browse = CreaButton("Browse");
         browse.setOnMouseClicked(e -> {
             if (!"guest".equals(userAccount.getUserRole())) {
-              this.vbox.getChildren().remove(1);
-              this.vbox.getChildren().add(new BrowsePane().getBrowsePane());
-            }else{
+                this.vbox.getChildren().remove(1);
+                this.vbox.getChildren().add(new BrowsePane().getBrowsePane());
+            } else {
                 AlertBox registerFirst = new AlertBox();
                 registerFirst.displayAlert("Register First", "Register Free Account First");
                 new Register("member");
-             }
-           
+                this.stage.close();
+                Login.stage.show();
+            }
+
         });
-        
+
         VBox mysong = new VBox();
 
         Button myLibrary = CreaButton("My Library");
         mysong.getChildren().add(myLibrary);
         myLibrary.setOnMouseClicked(e -> {
             menuBtnClicked = 1;
-             if (!"guest".equals(userAccount.getUserRole())) {
+            if (!"guest".equals(userAccount.getUserRole())) {
 
-            this.vbox.getChildren().remove(1);
-            this.vbox.getChildren().add(secondPagePane());
-            
-             }else{
+                this.vbox.getChildren().remove(1);
+                this.vbox.getChildren().add(secondPagePane());
+
+            } else {
                 AlertBox registerFirst = new AlertBox();
                 registerFirst.displayAlert("Register First", "Register Free Account First");
                 new Register("member");
-                
-             }
+                this.stage.close();
+                Login.stage.show();
+            }
         });
         Button myAccount = CreaButton("My Account");
         myAccount.setOnMouseClicked(e -> {
             menuBtnClicked = 2;
-             if (!"guest".equals(userAccount.getUserRole())) { 
-            this.vbox.getChildren().remove(1);
-            this.vbox.getChildren().add(myAccount());
+            if (!"guest".equals(userAccount.getUserRole())) {
+                this.vbox.getChildren().remove(1);
+                this.vbox.getChildren().add(myAccount());
 
-             }else{
+            } else {
                 AlertBox registerFirst = new AlertBox();
                 registerFirst.displayAlert("Register First", "Register Free Account First");
                 new Register("member");
-             }
+                this.stage.close();
+                Login.stage.show();
+            }
         });
         Button logOut = CreaButton("Logout");
         logOut.setOnMouseClicked(e -> {
@@ -185,25 +190,25 @@ abstract public class UI {
         logoLabel.getStyleClass().add("logoName");
         logoLabel.setMinWidth(250);
         logoLabel.setAlignment(Pos.CENTER);
-        
+
         Button songManage = CreaButton("Song Management");
         songManage.setOnMouseClicked(e -> {
             this.vbox.getChildren().remove(1);
             this.vbox.getChildren().add(firstPagePane(""));
         });
-        
+
         Button accountManage = CreaButton("Account Management");
         accountManage.setOnMouseClicked(e -> {
             this.vbox.getChildren().remove(1);
             this.vbox.getChildren().add(secondPagePane());
         });
-        
+
         Button myAccount = CreaButton("My Account");
         myAccount.setOnMouseClicked(e -> {
             this.vbox.getChildren().remove(1);
             this.vbox.getChildren().add(myAccount());
         });
-        
+
         Button logOut = CreaButton("Logout");
         logOut.setOnMouseClicked(e -> {
             this.stage.close();
@@ -226,7 +231,7 @@ abstract public class UI {
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.getStyleClass().add("title");
         anchorPane.setPadding(new Insets(5));
-        anchorPane.getChildren().addAll(searchBoxAll(),exitButton(), minimizeButton());
+        anchorPane.getChildren().addAll(searchBoxAll(), exitButton(), minimizeButton());
         anchorPane.setOnMousePressed(e -> {
             mouse_x = e.getSceneX();
             mouse_y = e.getSceneY();
@@ -239,8 +244,8 @@ abstract public class UI {
 
         return anchorPane;
     }
-    
-     public AnchorPane tilePane2() {
+
+    public AnchorPane tilePane2() {
 
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.getStyleClass().add("title");
