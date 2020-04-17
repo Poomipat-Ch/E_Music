@@ -67,6 +67,7 @@ public class SearchPage {
         borderpane.setLayoutY(300);
         
         borderpane.setLeft(PlaylistPane("Songs","music.dat"));
+        borderpane.setRight(PlaylistPane("Artists","artist.dat"));
         
         return borderpane;
     }
@@ -85,21 +86,22 @@ public class SearchPage {
         return borderpane;
     }
     
-    private HBox HeadBox(String string, String filename) {
-        HBox hbox = new HBox();
-        hbox.getStyleClass().add("hbox");
+    private AnchorPane HeadBox(String string, String filename) {
+        AnchorPane head = new AnchorPane();
+        head.getStyleClass().add("hbox");
         Label seeall = CreateSeeAll(filename);
-        HBox.setHgrow(seeall,Priority.ALWAYS);
+
         
-        hbox.getChildren().addAll(CreateLabel(string), seeall);
+        head.getChildren().addAll(CreateLabel(string), seeall);
         
-        return hbox;
+        return head;
     }
     
     private Label CreateLabel(String string) {
         Label label = new Label(string);
         label.getStyleClass().add("headlabel");
         label.setAlignment(Pos.CENTER_LEFT);
+        
         
         return label;
     }
@@ -108,6 +110,8 @@ public class SearchPage {
         Label label = new Label("SEE ALL");
         label.setAlignment(Pos.CENTER_RIGHT);
         label.getStyleClass().add("seealllabel");
+        label.setLayoutX(390);
+        label.setLayoutY(8);
         
         label.setOnMouseClicked(event -> {
                 
