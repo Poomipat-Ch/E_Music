@@ -36,7 +36,7 @@ public class TopChartPane {
         topchartpane.setLayoutX(20);
         topchartpane.setLayoutY(350);
         topchartpane.getStyleClass().add("topchart");
-        topchartpane.setMinSize(1030 - 40, 500);
+        topchartpane.setMinSize(1030 - 50, 500);
 
         VBox topChartVbox = new VBox(10);
         topChartVbox.setMinWidth(200);
@@ -69,7 +69,7 @@ public class TopChartPane {
         }
         
         AnchorPane centerTopChart = new AnchorPane();
-        centerTopChart.getChildren().addAll(topChartList,CreateSeeAll(topchartlist.get(0),640,200),CreateSeeAll(topchartlist.get(1),640,400));
+        centerTopChart.getChildren().addAll(topChartList,CreateSeeAll(topchartlist.get(0),640,200),CreateSeeAll(topchartlist.get(1),640,430));
 
         topchartpane.setCenter(centerTopChart);
 
