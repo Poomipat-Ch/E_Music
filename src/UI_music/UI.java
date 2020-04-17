@@ -36,7 +36,10 @@ abstract public class UI {
     public UI(Stage stage, Account userAccount) {
         this.stage = stage;
         this.userAccount = userAccount;
+        vbox = new VBox();
     }
+    
+    public static VBox vbox ;
 
     public BorderPane allPane() {
         BorderPane borderPane = new BorderPane();
@@ -58,10 +61,8 @@ abstract public class UI {
         return borderPane;
     }
 
-    public static VBox vbox = new VBox();
-
     private VBox mainBox() {
-  
+        
         vbox.getStyleClass().add("mainBox");
         vbox.getChildren().addAll(tilePane(), firstPagePane(""));
 

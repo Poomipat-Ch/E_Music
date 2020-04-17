@@ -5,6 +5,7 @@
  */
 package Component_Music;
 
+import UI_music.UI;
 import UI_music.User_UI;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -54,8 +55,8 @@ public class ShowingSearchPage {
             anchorpane.getChildren().addAll(CreateHead(page, foundtext), new ShowingSongs().table);
         
         
-        User_UI.totalPane.getChildren().remove(0);
-        User_UI.totalPane.getChildren().add(anchorpane);
+        UI.vbox.getChildren().remove(0);
+        UI.vbox.getChildren().add(anchorpane);
     }
     
     private HBox CreateHead(String page, String foundtext) {
