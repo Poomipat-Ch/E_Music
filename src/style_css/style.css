@@ -305,7 +305,7 @@
 
 /****************************************************************
  
-  Browse Skin  
+  Search page Skin  
  
 ****************************************************************/
 
@@ -322,7 +322,6 @@
 .headlabel {
     -fx-text-fill : white;
     -fx-font-size : 20px;
-    -fx-text-fill : white;
     -fx-bold : true;
 }
 
@@ -331,6 +330,42 @@
     -fx-border-width: 0 0 1 0;
     
     -fx-border-color: white;
+}
+
+.topbox{
+    -fx-border-style: hidden hidden solid hidden; 
+    -fx-border-width: 0 0 1 0;
+    
+    -fx-border-color: #bbbbbb;
+}
+
+.borderplaylist {
+    -fx-background-radius: 0em;
+    -fx-background-color : transparent;
+}
+
+.borderplaylist:hover {
+    -fx-background-color : #111111;
+    -fx-opacity: 0.5;
+}
+
+/****************************************************************
+ 
+  Search page Skin  
+ 
+****************************************************************/
+
+.showing {
+    -fx-text-fill : dddddd;
+    -fx-font-size : 45px;
+    
+
+}
+
+.foundtext{
+    -fx-text-fill : white;
+    -fx-font-size : 45px;
+    -fx-bold : true;
 }
 
 

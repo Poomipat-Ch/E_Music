@@ -58,7 +58,7 @@ public class User_UI extends UI {
     private String songNameSelected;
     private String nameSet;
     private Song songSelected;
-    private Account userAccount;
+    public static Account userAccount;
     private String page;
 
     public User_UI() {
@@ -225,32 +225,33 @@ public class User_UI extends UI {
     @Override
     public HBox searchBoxAll() {
         HBox hBox = new HBox();
-        hBox.setPrefSize(1030-300-60-70, 30);
+        hBox.setPrefSize(1030 - 300 - 60 - 70, 30);
         //hBox.setAlignment(Pos.CENTER);
-        hBox.setLayoutX(720);
-        hBox.setLayoutY(30);
+        hBox.setLayoutX(20);
+        hBox.setLayoutY(15);
 
         TextField searchTextField = new TextField();
         searchTextField.setPromptText("Search");
         searchTextField.setStyle("-fx-font-size: 12px;");
-        searchTextField.setPrefSize(250, 20);
+        searchTextField.setPrefSize(250, 30);
 
 //        Button searchButton = CreaButton("Refresh");
 //        searchButton.setStyle("-fx-font-size : 15px;");
 //        HBox.setMargin(searchButton, new Insets(0, 0, 0, 10));
         searchTextField.setOnMouseClicked(event -> {
-                        
-            for (int i = 0; i < 2; ++i) 
-                totalPane.getChildren().remove(0);
-                
-            totalPane.getChildren().addAll(new SearchPage().getSearchPane());
+
+//            for (int i = 0; i < 2; ++i) 
+//                totalPane.getChildren().remove(0);
+            User_UI.totalPane.getChildren().addAll(new SearchPage("").getSearchPane());
+            UI.vbox.getChildren().remove(1);
+            UI.vbox.getChildren().add(totalPane);
         });
 
         /// 1030-300-60-70
-//        searchTextField.textProperty().addListener((ov, t, t1) -> {
-//            User_UI.totalPane.getChildren().remove(1);
-//            User_UI.totalPane.getChildren().add(updateScrollPane(searchTextField.getText()));
-//        });
+        searchTextField.textProperty().addListener((ov, t, t1) -> {
+            User_UI.totalPane.getChildren().remove(1);
+            User_UI.totalPane.getChildren().add(new SearchPage(searchTextField.getText()).getSearchPane());
+        });
         hBox.getChildren().addAll(searchTextField);
 
         return hBox;
@@ -295,7 +296,7 @@ public class User_UI extends UI {
         //totalPane.setAlignment(Pos.CENTER);
         totalPane.getStyleClass().add("allSong");
 
-        totalPane.getChildren().addAll(searchBoxAll(), new TopChartPane().getTopchartpane());
+        totalPane.getChildren().addAll(new TopChartPane(userAccount).getTopchartpane());
 
         scrollPane.setCenter(totalPane);
 

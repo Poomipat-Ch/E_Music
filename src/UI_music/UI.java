@@ -53,17 +53,25 @@ abstract public class UI {
         borderPane.getStyleClass().add("bg-border");
 
         borderPane.setLeft(menu2());
-        borderPane.setCenter(mainBox());
+        borderPane.setCenter(mainBox2());
 
         return borderPane;
     }
 
-    VBox vbox = new VBox();
+    public static VBox vbox = new VBox();
 
     private VBox mainBox() {
   
         vbox.getStyleClass().add("mainBox");
         vbox.getChildren().addAll(tilePane(), firstPagePane(""));
+
+        return vbox;
+    }
+    
+    private VBox mainBox2() {
+  
+        vbox.getStyleClass().add("mainBox");
+        vbox.getChildren().addAll(tilePane2(), firstPagePane(""));
 
         return vbox;
     }
@@ -213,6 +221,25 @@ abstract public class UI {
     double mouse_x = 0, mouse_y = 0; // position mouse
 
     public AnchorPane tilePane() {
+
+        AnchorPane anchorPane = new AnchorPane();
+        anchorPane.getStyleClass().add("title");
+        anchorPane.setPadding(new Insets(5));
+        anchorPane.getChildren().addAll(searchBoxAll(),exitButton(), minimizeButton());
+        anchorPane.setOnMousePressed(e -> {
+            mouse_x = e.getSceneX();
+            mouse_y = e.getSceneY();
+            //System.out.println(mouse_x + " " + mouse_y);
+        });
+        anchorPane.setOnMouseDragged(e -> {
+            stage.setX(e.getScreenX() - mouse_x);
+            stage.setY(e.getScreenY() - mouse_y);
+        });
+
+        return anchorPane;
+    }
+    
+     public AnchorPane tilePane2() {
 
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.getStyleClass().add("title");
