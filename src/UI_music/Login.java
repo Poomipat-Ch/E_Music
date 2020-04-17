@@ -59,7 +59,7 @@ public class Login {
 
         Login.stage = stage;
 
-        Label title1 = new Label("Sign in");
+        Label title1 = new Label("ยินดีต้อนรับ");
         //Get Username
         Label idLabel = new Label("Email / username:");        
         TextField idInput = new TextField();
@@ -82,6 +82,7 @@ public class Login {
         //init read file
         //Login Action Event
         Button loginBtn = new Button("Login");
+        loginBtn.getStyleClass().add("loginBtn");
         loginBtn.setOnAction(e -> {
 
             try {
@@ -165,12 +166,13 @@ public class Login {
 
         VBox rightMenu = new VBox(20);
         rightMenu.getStyleClass().add("loginLable");
+        rightMenu.setMaxSize(350, 576);
         rightMenu.getChildren().addAll(title1, idLabel, idInput, passLabel, passInput, chk1, loginBtn, forgotBtn, registerBtn, guestBtn);
-        rightMenu.setAlignment(Pos.CENTER_LEFT);
+        rightMenu.setAlignment(Pos.CENTER);
         BorderPane borderPane = new BorderPane();
         BorderPane.setAlignment(rightMenu, Pos.CENTER);
         BorderPane.setMargin(rightMenu, new Insets(15, 15, 15, 15));
-        borderPane.setRight(rightMenu);
+        borderPane.setCenter(rightMenu);
         borderPane.getStyleClass().add("backgroundImage");
 
         scene1 = new Scene(borderPane, 720, 576);
