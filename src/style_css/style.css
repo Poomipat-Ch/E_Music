@@ -1,8 +1,12 @@
-
+@font-face{
+    font-family: Itim;
+    src: url("/font/Itim-Regular.ttf");
+}
 .logoName{
     -fx-text-fill: white;
     -fx-font-size: 50px;
     -fx-background-color : linear-gradient(to top, rgba(71,108,203,1) 0%, rgba(55,85,163,1) 100%);/*#0c577c*/
+    -fx-font-family: "Itim";
 
 }
 
@@ -34,6 +38,7 @@
     -fx-background-radius :  0 0 0 0; 
     -fx-text-fill : white;
     -fx-font-size : 20px;
+    -fx-font-family: "Itim";
 }
 
 .menubtn:hover{
@@ -47,6 +52,25 @@
     -fx-background-color: rgba(41,64,124,0.6) 100%;/*#27496d*/
 }
 
+.menuAdminbtn{
+    -fx-background-color: rgba(41,64,124,0.5) 100%;  /*#00a8cc*/
+    -fx-background-radius :  0 0 0 0; 
+    -fx-text-fill : white;
+    -fx-font-size : 18px;
+    -fx-font-family: "Itim";
+}
+
+.menuAdminbtn:hover{
+    -fx-border-style: hidden none none solid; 
+    -fx-border-width: 0 0 0 10;
+    -fx-border-color: #27496d; /**/
+    -fx-background-color: rgba(41,64,124,1) 100%;
+}
+
+.menuAdminbtn:pressed{
+    -fx-background-color: rgba(41,64,124,0.6) 100%;/*#27496d*/
+}
+
 .stylebtn{
     -fx-background-color: #00a8cd; 
     -fx-background-radius :  0 0 0 0; 
@@ -56,6 +80,7 @@
     -fx-border-width: 0 0 0 30;
     -fx-border-color: #ffffff;
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.5) , 5,0,2,2);
+    -fx-font-family: "Itim";
 }
 
 .stylebtn:hover{
@@ -84,6 +109,7 @@
     -fx-background-radius :  10;
     -fx-font-size : 20px;
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.3) , 5,0,2,2);
+    -fx-font-family: "Itim";
 }
 
 .detailbtn:hover{
@@ -102,11 +128,13 @@
     -fx-text-fill:white;
     -fx-font-size:20px;
     -fx-align-items:center;
+    -fx-font-family: "Itim";
 }
 
 .content-allSong Label{
     -fx-text-fill:white;
     -fx-font-size:20px;
+    -fx-font-family: "Itim";
 }
 
 .contentDetailbtn{
@@ -116,6 +144,7 @@
     -fx-font-size : 20px;
     -fx-opacity: .9;
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.5) , 5,0,2,2);
+    -fx-font-family: "Itim";
 }
 
 .contentDetailbtn:hover{
@@ -141,7 +170,7 @@
     -fx-background-color:transparent;
     -fx-background-radius: 0;
     -fx-font-size: 25px;
-    -fx-padding: 0px;
+    -fx-padding:4px;
 }
 .scroll-bar .viewport {
     -fx-background-color: transparent;
@@ -276,18 +305,9 @@
  
 ****************************************************************/
 
-.scrollbarbrowse {
-    -fx-background-color: write;
-}
 .browselabel{
     -fx-text-fill : white;
     -fx-font-size : 17px;
-    -fx-background-radius: 0em;
-    -fx-background-color: transparent;
-}
-
-.browselabel:hover{
-    -fx-underline: true;
 }
 
 .browseheadlabel{
@@ -310,20 +330,6 @@
     -fx-background-color: #222222;
     -fx-opacity: .8;
     -fx-background-radius: 0em;
-}
-
-.namelabel {
-    -fx-text-fill : white;
-    -fx-font-size : 20px;
-    -fx-bold: true;
-}
-
-.namelabel:hover {
-    -fx-underline: true;
-}
-
-.image {
-    -fx-background-color: white;
 }
 
 /****************************************************************
@@ -416,24 +422,35 @@
     -fx-font-size: 32px;
     -fx-font-weight:600;
     -fx-text-fill: white;
+    -fx-font-family: "Itim";
 }
 
 .fistNameAndSurname{
     -fx-font-size: 30px;
     -fx-font-weight:600;
     -fx-text-fill: white;
+    -fx-font-family: "Itim";
 }
 
 .detailMyAccount Label{
     -fx-font-size: 20px;
     -fx-font-weight:100;
     -fx-text-fill: white;
+    -fx-font-family: "Itim";
+}
+
+.detailMyAccountFillText{
+    -fx-font-size: 20px;
+    -fx-font-weight:100;
+    -fx-text-fill: black;
+    -fx-font-family: "Itim";
 }
 
 .detailMyAccount2{
     -fx-font-size: 18px;
     -fx-font-weight:100;
     -fx-text-fill: white;
+    -fx-font-family: "Itim";
 }
 .savebtn{
     -fx-background-color : linear-gradient(to right,  rgba(0,208,100,0.7) 0%, rgba(0,208,100,0.8) 100%);
@@ -441,6 +458,7 @@
     -fx-background-radius :  10;
     -fx-font-size : 20px;
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.5) , 5,0,2,2);
+    -fx-font-family: "Itim";
 }
 
 .savebtn:hover{
@@ -457,6 +475,7 @@
     -fx-background-radius :  10;
     -fx-font-size : 20px;
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.5) , 5,0,2,2);
+    -fx-font-family: "Itim";
 }
 
 .cancelbtn:hover{
@@ -472,6 +491,7 @@
     -fx-background-radius :  10;
     -fx-font-size : 20px;
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.5) , 5,0,2,2);
+    -fx-font-family: "Itim";
 }
 
 .premiumbtn:hover{

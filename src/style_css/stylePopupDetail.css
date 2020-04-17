@@ -11,24 +11,28 @@
     -fx-font-size: 50px;
     -fx-font-weight:300; 
     -fx-text-fill:white;
+    -fx-font-family: "Itim";
 }
 
 .nameArtist{
     -fx-font-size: 30px;
     -fx-font-weight:100;
     -fx-text-fill:white;
+    -fx-font-family: "Itim";
 }
 
 .detailSong{
     -fx-font-size: 20px; 
     -fx-align-content: left;
     -fx-text-fill:white;
+    -fx-font-family: "Itim";
 }
 
 .price{
     -fx-font-size:25px;
     -fx-padding-right: 10px;
     -fx-text-fill:white;
+    -fx-font-family: "Itim";
 }
 
 .buybtn, .uploadbtn{
@@ -37,6 +41,7 @@
     -fx-background-radius :  10;
     -fx-font-size : 20px;
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.5) , 5,0,2,2);
+    -fx-font-family: "Itim";
 }
 
 .buybtn:hover, .uploadbtn:hover{
@@ -53,6 +58,7 @@
     -fx-background-radius :  10;
     -fx-font-size : 20px;
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.5) , 5,0,2,2);
+    -fx-font-family: "Itim";
 }
 
 .savebtn:hover{
@@ -69,6 +75,7 @@
     -fx-background-radius :  10;
     -fx-font-size : 20px;
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.5) , 5,0,2,2);
+    -fx-font-family: "Itim";
 }
 
 .cancelbtn:hover{
@@ -83,29 +90,34 @@
     /*-fx-border-style: hidden none none solid;*/
     -fx-text-fill:white;
     -fx-font-size:16px;
+    -fx-font-family: "Itim";
 }
 
 .title{
     -fx-font-size: 30px;
     -fx-font-weight:100;
     -fx-text-fill: white;
+    -fx-font-family: "Itim";
 }
 
 .detailUpload Label{
     -fx-font-size: 30px;
     -fx-font-weight:100;
     -fx-text-fill: white;
+    -fx-font-family: "Itim";
 }
 
 .detailUploadTextFill{
     -fx-font-size: 16px;
     -fx-font-weight:100;
     -fx-text-fill: black;
+    -fx-font-family: "Itim";
 }
 
 .detailUploadTextFillPath{
     -fx-font-size: 14px;
     -fx-font-weight:100;
     -fx-text-fill: black;
+    -fx-font-family: "Itim";
 }
 

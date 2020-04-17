@@ -37,7 +37,7 @@ public class Artist implements Serializable{
         this.name1 = name1;
         this.name2 = name2;
         this.infomation = infomation;
-        this.image = image;
+        this.setPhoto(image);
     }
 
     public String getName1() {
@@ -90,7 +90,7 @@ public class Artist implements Serializable{
         return img;
     }
     
-    public static ObservableList<Artist> getArtistList() throws FileNotFoundException, IOException, ClassNotFoundException {
+    public static ObservableList<Artist> getArtistList() throws IOException, ClassNotFoundException  {
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(artist));
 
         ObservableList list = FXCollections.observableArrayList();

@@ -87,6 +87,17 @@ abstract public class UI {
 
         return btn;
     }
+    
+    private Button CreaButtonAdmin(String text) {
+        Button btn = new Button(text);
+        btn.setPadding(new Insets(0, 0, 0, 50));
+        btn.setAlignment(Pos.CENTER_LEFT);
+        btn.getStyleClass().add("menuAdminbtn");
+        btn.setMinWidth(250);
+        btn.setMinHeight(50);
+
+        return btn;
+    }
 
     private Button CreateStyleButton(String text) {
         Button btn = new Button(text);
@@ -191,13 +202,19 @@ abstract public class UI {
         logoLabel.setMinWidth(250);
         logoLabel.setAlignment(Pos.CENTER);
 
-        Button songManage = CreaButton("Song Management");
+        Button songManage = CreaButtonAdmin("Music Management");
         songManage.setOnMouseClicked(e -> {
             this.vbox.getChildren().remove(1);
             this.vbox.getChildren().add(firstPagePane(""));
         });
+        
+        Button artistManage = CreaButtonAdmin("Artist Management");
+        artistManage.setOnMouseClicked(e -> {
+            this.vbox.getChildren().remove(1);
+            this.vbox.getChildren().add(new Admin_UI().ArtistPane(""));////
+        });
 
-        Button accountManage = CreaButton("Account Management");
+        Button accountManage = CreaButtonAdmin("Account Management");
         accountManage.setOnMouseClicked(e -> {
             this.vbox.getChildren().remove(1);
             this.vbox.getChildren().add(secondPagePane());
@@ -219,7 +236,7 @@ abstract public class UI {
         bottomVBox.setAlignment(Pos.BOTTOM_CENTER);
         VBox.setVgrow(bottomVBox, Priority.ALWAYS);
 
-        vBox.getChildren().addAll(logoLabel, songManage, accountManage, bottomVBox);
+        vBox.getChildren().addAll(logoLabel, songManage, artistManage, accountManage, bottomVBox);
 
         return vBox;
     }

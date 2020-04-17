@@ -215,16 +215,16 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
             try {
                     artistArrayList = ReadWriteFile.readFileArist(artistFile);
                 } catch (IOException | ClassNotFoundException ex) {
-                    System.out.println("UploadSongPopUp : IOExeption read file in DetailUpPopSong");
+                    System.out.println("UploadArtistPopUp : IOExeption read file in DetailUpPopArtist");
                 }
                 artistArrayList.add(new Artist(fillNameArtist.getText(), fillNameArtist2.getText(), fillDetailArtist.getText(), image));
                 try {
                     ReadWriteFile.writeFileArtist(artistFile, artistArrayList);
                 } catch (IOException ex) {
-                    System.out.println("UploadSongPopUp : IOExeption write file in DetailUpPopSong");
+                    System.out.println("UploadArtistPopUp : IOExeption write file in DetailUpPopArtist");
                 }
-                Admin_UI.totalPane.getChildren().remove(0);
-                Admin_UI.totalPane.getChildren().add(Admin_UI.updateScrollPane(""));
+                Admin_UI.totalArtistPane.getChildren().remove(0);
+                Admin_UI.totalArtistPane.getChildren().add(Admin_UI.updateScrollArtistPane(""));
                 stage.close();
         });
         

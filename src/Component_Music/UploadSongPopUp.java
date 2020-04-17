@@ -314,7 +314,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
                 } catch (IOException ex) {
                     System.out.println("UploadSongPopUp : IOExeption upload file song in DetailUpPopSong");
                 }
-                Admin_UI.totalPane.getChildren().remove(0);
+                Admin_UI.totalPane.getChildren().clear();
                 Admin_UI.totalPane.getChildren().add(Admin_UI.updateScrollPane(""));
                 stage.close();
             } else {

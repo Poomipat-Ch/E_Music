@@ -98,7 +98,7 @@ public class MyAccount {
         this.myAccount = myAccount;
         editBox.getChildren().clear();
         
-        Label titleHead = new Label("My Account");
+        Label titleHead = new Label("My Account / บัญชีของฉัน");
         titleHead.getStyleClass().add("titleMyAccount");
         
         Label firstnameLabel = new Label(myAccount.getName());
@@ -188,18 +188,23 @@ public class MyAccount {
         username.setPromptText("Usrname");
         username.setText(this.myAccount.getUsername());
         username.setMaxWidth(280);
-        
+                
         firstname.setPromptText("First Name");
         firstname.setText(this.myAccount.getName());
         firstname.setMaxWidth(280);
-
+        
         lastname.setPromptText("Last Name");
         lastname.setText(this.myAccount.getSurname());
         lastname.setMaxWidth(280);
-
+        
         email.setPromptText("Email e.g. Spookify@gmail.com");
         email.setText(this.myAccount.getEmail());
         email.setMaxWidth(280);
+        
+        username.getStyleClass().add("detailMyAccountFillText");
+        firstname.getStyleClass().add("detailMyAccountFillText");
+        lastname.getStyleClass().add("detailMyAccountFillText");
+        email.getStyleClass().add("detailMyAccountFillText");
         
         // create a date picker 
         DatePicker date = new DatePicker();
@@ -213,6 +218,7 @@ public class MyAccount {
             dOB = date.getValue();
         });
         
+        date.getStyleClass().add("detailMyAccountFillText");
         
         //Select Gender
         ToggleGroup sexToggle = new ToggleGroup(); //create radio button group
@@ -283,6 +289,9 @@ public class MyAccount {
         currentPasswordTitle.getStyleClass().add("detailMyAccount2");
         currentPassword.setMaxWidth(180);
         currentPasswordInGrid.setMaxWidth(180);
+        currentPassword.getStyleClass().add("detailMyAccountFillText");
+        currentPasswordInGrid.getStyleClass().add("detailMyAccountFillText");
+        
         
         Label changePassword = new Label("Change Password?");
         changePassword.getStyleClass().add("detailMyAccount2");
@@ -294,6 +303,9 @@ public class MyAccount {
         Label currentPasswordTitleInGrid = new Label("Current Password");
         Label passwordTitle = new Label("New Password");
         Label passwordConfirmTitle = new Label("Confirm New Password");
+        currentPassword.getStyleClass().add("detailMyAccountFillText");
+        password.getStyleClass().add("detailMyAccountFillText");
+        passwordConfirm.getStyleClass().add("detailMyAccountFillText");
         password.setMaxWidth(180);
         passwordConfirm.setMaxWidth(180);
         
