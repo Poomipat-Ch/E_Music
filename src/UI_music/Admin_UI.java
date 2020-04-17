@@ -10,6 +10,7 @@ import Component_Music.AlertBox;
 import Component_Music.SearchSystem;
 import Component_Music.SearchSystemAccount;
 import Component_Music.Song;
+import Component_Music.Artist;
 import Component_Music.UploadArtistPopUp;
 import Component_Music.UploadSongPopUp;
 import java.io.File;
@@ -67,8 +68,10 @@ public class Admin_UI extends UI {
     //Gut add
     static String songSelectString;
 //    static ObservableList<Song> songArrayList;
-    static ArrayList<Song> songArrayList = new ArrayList<Song>();
+    static ArrayList<Song> songArrayList = new ArrayList<>();
+    static ArrayList<Artist> artistArrayList = new ArrayList<>();
     static File musicFile = new File("src/data/music.dat");
+    static File artistFile = new File("src/data/artist.dat");
     static String editName, editArtist, editDetail, editPrice;
     static Image editImage;
 
@@ -95,6 +98,12 @@ public class Admin_UI extends UI {
             songArrayList = ReadWriteFile.readFileSong(musicFile);
         } catch (Exception e) {
             System.out.println("readFile Song in Admin_UI constuctor ERROR!!!!!");
+        }
+        
+        try {
+            artistArrayList = ReadWriteFile.readFileArist(artistFile);
+        } catch (Exception e) {
+            System.out.println("readFile Artist in Admin_UI constuctor ERROR!!!!!");
         }
 
         this.userAccount = userAccount;
@@ -124,30 +133,16 @@ public class Admin_UI extends UI {
         AnchorPane pane = new AnchorPane();
         this.page = page;
 
-        Label title1 = new Label("Welcome to Administrative Page!");
+        Label title1 = new Label("Music Management / จัดการเพลง");
         title1.getStyleClass().add("titleAdmin");
         title1.setLayoutX(50);
         title1.setLayoutY(5);
-
-        Button editArtistBtn = CreaButton("Edit Artist");       //New Artist
-        editArtistBtn.setLayoutX(780);
-        editArtistBtn.setLayoutY(500);
-        editArtistBtn.setOnAction(e -> {
-            new UploadArtistPopUp("Upload Artist","select Name Artist1","select Name Artist2(Optional)","select detail",new Image("/image/defaultprofile.png")); //Rach or Gut Su su
-        });
-        
-        Button newArtistBtn = CreaButton("New Artist");       //New Artist
-        newArtistBtn.setLayoutX(780);
-        newArtistBtn.setLayoutY(550);
-        newArtistBtn.setOnAction(e -> {
-            new UploadArtistPopUp("Upload Artist");
-        });
         
         Button editSongBtn = CreaButton("Edit Song");       //Edit Button
         editSongBtn.setLayoutX(780);
         editSongBtn.setLayoutY(600);
         editSongBtn.setOnAction(e -> {
-            new UploadSongPopUp("Edit Song",editName,editArtist,editDetail,editPrice,"src/MusicFile/"+songSelectString+".mp3",editImage,null); // Gut
+            new UploadSongPopUp("Edit Song",editName,editArtist,editDetail,editPrice,"src/MusicFile/"+songSelectString+".mp3",editImage,null); 
         });
 
         Button uploadBtn = CreaButton("Upload");        //Upload Button
@@ -165,26 +160,63 @@ public class Admin_UI extends UI {
 
             try {
                 deleteSongClicked();
-            } catch (IOException ex) {
-                System.out.println("Admin_UI : IOExeption in allSongPane");
-            } catch (ClassNotFoundException ex) {
-                System.out.println("Admin_UI : ClassNotFoundExeption in allSongPane");
+            } catch (IOException | ClassNotFoundException ex) {
+                System.out.println("Error: delete Song has a problem when clicked");
             }
 
         });
 
-        pane.getChildren().addAll(searchBoxAll(),AllSong(), UpdateClikedPane(), title1, editArtistBtn, newArtistBtn, editSongBtn, uploadBtn, deleteBtn);
+        pane.getChildren().addAll(searchBoxAll(),AllSong(), UpdateClikedPane(), title1, editSongBtn, uploadBtn, deleteBtn); 
 
         return pane;
     }
+    
+    public AnchorPane ArtistPane(String page) {   //Second Page 2
+        AnchorPane pane = new AnchorPane();
+        this.page = page;
 
+        Label title2 = new Label("Artist Management / จัดการศิลปิน");
+        title2.getStyleClass().add("titleAdmin");
+        title2.setLayoutX(50);
+        title2.setLayoutY(5);
+
+        Button editArtistBtn = CreaButton("Edit Artist");       //New Artist
+        editArtistBtn.setLayoutX(780);
+        editArtistBtn.setLayoutY(600);
+        editArtistBtn.setOnAction(e -> {
+            new UploadArtistPopUp("Upload Artist","select Name Artist1","select Name Artist2(Optional)","select detail",new Image("/image/defaultprofile.png")); //<<-- Gut 
+        });
+        
+        Button newArtistBtn = CreaButton("New Artist");       //New Artist
+        newArtistBtn.setLayoutX(780);
+        newArtistBtn.setLayoutY(700);
+        newArtistBtn.setOnAction(e -> {
+            new UploadArtistPopUp("Upload Artist");
+        });
+
+        Button deleteArtistBtn = CreaButton("Delete");        //Delete Button
+        deleteArtistBtn.setLayoutX(780);
+        deleteArtistBtn.setLayoutY(770);
+        deleteArtistBtn.setOnAction(e -> {
+            try {
+                deleteArtistClicked();
+            } catch (IOException | ClassNotFoundException ex) {
+                System.out.println("Error: delete Artist has a problem when clicked");
+            }
+        });
+
+        pane.getChildren().addAll(searchArtistBox(), AllArtist(),UpdateClikedArtistPane(), title2, editArtistBtn, newArtistBtn,deleteArtistBtn); // editArtistBtn, newArtistBtn, 
+
+        return pane;
+    }
+    
     @Override
-    public AnchorPane secondPagePane() {    //Accounts Page 2
+    public AnchorPane secondPagePane() {    //Accounts Page 3
         AnchorPane pane = new AnchorPane();
         pane.setMinHeight(760);
         pane.setMaxHeight(Double.MAX_VALUE);
 
-        Label title2 = new Label("Account Management System");
+        Label title2 = new Label("Account Management / จัดการบัญชีผู้ใช้");
         title2.getStyleClass().add("titleAdmin");
         title2.setLayoutX(50);
         title2.setLayoutY(5);
@@ -301,6 +333,7 @@ public class Admin_UI extends UI {
         hBox.setPadding(new Insets(10));
         TextField searchTextField = new TextField();
         searchTextField.setPromptText("Search Music");
+        searchTextField.getStyleClass().add("searchBox");
         searchTextField.setMinSize(1030 - 300 - 60 - 70, 30);
 
         Button searchButton = CreaButton("Search");
@@ -322,9 +355,41 @@ public class Admin_UI extends UI {
 
         return hBox;
     }
+    
+    public HBox searchArtistBox() { // All Song First Page
+        HBox hBox = new HBox();
+        hBox.setLayoutX(40);
+        hBox.setLayoutY(90);
+        hBox.setMinSize(1030 - 300 - 60, 30);
+        hBox.setAlignment(Pos.CENTER);
+        hBox.setPadding(new Insets(10));
+        TextField searchTextField = new TextField();
+        searchTextField.setPromptText("Search Artist");
+        searchTextField.getStyleClass().add("searchBox");
+        searchTextField.setMinSize(1030 - 300 - 60 - 70, 30);
+
+        Button searchButton = CreaButton("Search");
+        searchButton.setOnMouseClicked(e -> {
+            Admin_UI.totalArtistPane.getChildren().remove(0);
+            Admin_UI.totalArtistPane.getChildren().add(updateScrollArtistPane(searchTextField.getText()));
+        });
+
+        searchButton.setStyle("-fx-font-size : 15px;");
+        searchButton.setMinSize(50, 30);
+        HBox.setMargin(searchButton, new Insets(0, 0, 0, 10));
+
+        searchTextField.textProperty().addListener((ov, t, t1) -> {
+            Admin_UI.totalArtistPane.getChildren().remove(0);
+            Admin_UI.totalArtistPane.getChildren().add(updateScrollArtistPane(searchTextField.getText()));
+        });
+
+        hBox.getChildren().addAll(searchTextField, searchButton);
+
+        return hBox;
+    }
 
     @Override
-    public HBox searchBoxMy() {  // All Account Second page
+    public HBox searchBoxMy() {  // All Account Third page // Account
         HBox hBox = new HBox();
         hBox.setMinSize(670, 30); //1030 - 300 - 60
         hBox.setLayoutX(20);
@@ -333,6 +398,7 @@ public class Admin_UI extends UI {
         TextField searchTextField = new TextField();
         searchTextField.setPromptText("Search Account");
         searchTextField.setMinSize(850, 32); //1030 - 300 - 60 - 70
+        searchTextField.getStyleClass().add("searchBox");
 
         Button searchButton = CreaButton("Refresh");
         searchButton.setStyle("-fx-font-size : 15px;");
@@ -380,6 +446,30 @@ public class Admin_UI extends UI {
 
         return scrollPane;
     }
+    
+    public static VBox totalArtistPane;
+     
+    private ScrollPane AllArtist() {
+
+        ScrollPane scrollArtistPane = new ScrollPane();
+        scrollArtistPane.setPrefSize(750, 750);
+        scrollArtistPane.setLayoutY(140);
+        scrollArtistPane.pannableProperty().set(true);
+        scrollArtistPane.fitToWidthProperty().set(true);
+        scrollArtistPane.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollArtistPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.ALWAYS);
+        scrollArtistPane.setPadding(new Insets(10));
+        scrollArtistPane.getStyleClass().add("allSong"); //CSS
+        scrollArtistPane.getStyleClass().add("scroll-bar");
+        totalArtistPane = new VBox();
+        totalArtistPane.setAlignment(Pos.CENTER);
+        totalArtistPane.getStyleClass().add("allSong"); //CSS
+        totalArtistPane.getChildren().addAll(updateScrollArtistPane(""));
+
+        scrollArtistPane.setContent(totalArtistPane);
+
+        return scrollArtistPane;
+    }
 
     static Label selectNameSong = new Label("");
     static Label selectArtist = new Label("");
@@ -418,7 +508,7 @@ public class Admin_UI extends UI {
                         selectNameSong = new Label(song.getNameSong());
                         selectArtist = new Label("ARTIST : " + song.getArtistSong());
                         selectImage = new ImageView(song.getPhoto());   //DATA...Collection from database..
-                        selectImage.setFitHeight(300);
+                        selectImage.setFitHeight(250);
                         selectImage.setFitWidth(250);
 
                         //Gut add
@@ -429,7 +519,8 @@ public class Admin_UI extends UI {
                         editDetail = song.getDetailSong();
                         editPrice = song.getPriceSong();
                         editImage = song.getPhoto();
-
+                        
+                        selectImage.getStyleClass().add("pictureAppear");
                         selectNameSong.getStyleClass().add("nameSong");
                         selectArtist.getStyleClass().add("nameArtist");
 
@@ -442,8 +533,8 @@ public class Admin_UI extends UI {
                     paneContent.getStyleClass().add("content-allSong"); //CSS
 
                     imageView = new ImageView(song.getPhoto());
-                    imageView.setFitHeight(200); //160
-                    imageView.setFitWidth(150); //120
+                    imageView.setFitHeight(180); //160
+                    imageView.setFitWidth(180); //120
 
                     paneContent.getChildren().addAll(imageView, new Label(song.getNameSong()), new Label("ARTIST : " + song.getArtistSong()));
                     contentButton.setGraphic(paneContent);
@@ -458,6 +549,74 @@ public class Admin_UI extends UI {
         }
         return tilePane;
     }
+    
+    static Label selectArtist2 = new Label("");
+    static Label selectDetail2 = new Label("");
+    static ImageView selectImageArtist2;
+    
+    public static TilePane updateScrollArtistPane(String text){
+        
+        try {
+            artistArrayList = ReadWriteFile.readFileArist(artistFile);
+        } catch (Exception e) {
+            System.out.println("readFile Artist in Admin_UI updateScrollArtistPane ERROR!!!!!");
+        }
+
+        VBox paneContent;
+        Button contentButton;
+        ImageView imageView;
+
+        TilePane tilePane = new TilePane();
+        tilePane.setPadding(new Insets(10, 10, 10, 10)); // Top,Bottom,Right,Left
+        tilePane.setVgap(10);
+        tilePane.setHgap(10);
+        tilePane.setAlignment(Pos.CENTER);
+
+        String lowerCase = text.toLowerCase();
+        
+        for (Artist artist : artistArrayList) {
+            
+            if ((artist.getName1().toLowerCase().contains(lowerCase) || artist.getName2().toLowerCase().contains(lowerCase) || artist.getInfomation().toLowerCase().contains(lowerCase))) {
+                contentButton = new Button();
+                contentButton.getStyleClass().add("contentDetailbtn"); //CSS           
+                contentButton.setOnAction(e -> {
+                    //SELECTION 
+                    Admin_UI.updateArtistVBox.getChildren().removeAll(selectImageArtist2, selectArtist2, selectDetail2);
+
+                    selectArtist2 = new Label("selected Artists");
+                    selectDetail2 = new Label("selected Detail");
+                    selectImageArtist2 = new ImageView(new Image("/image/defaultprofile.png"));   //DATA...Collection from database..
+                    selectImageArtist2.setFitHeight(250);
+                    selectImageArtist2.setFitWidth(250);
+
+                    selectImageArtist2.getStyleClass().add("pictureAppear");
+                    selectArtist2.getStyleClass().add("nameSong");
+                    selectDetail2.getStyleClass().add("nameArtist");
+
+                    Admin_UI.updateArtistVBox.getChildren().addAll(selectImageArtist2, selectArtist2, selectDetail2);
+                });
+
+                paneContent = new VBox();
+                paneContent.setAlignment(Pos.CENTER);
+                paneContent.setPadding(new Insets(10, 10, 10, 10));
+                paneContent.getStyleClass().add("content-allSong"); //CSS
+
+                imageView = new ImageView(artist.getPhoto());
+                imageView.setFitHeight(180); //160
+                imageView.setFitWidth(180); //120
+
+                paneContent.getChildren().addAll(imageView, new Label(artist.getName1()), new Label("Detail : " + artist.getInfomation()));
+                contentButton.setGraphic(paneContent);
+                contentButton.setMinHeight(300);
+                contentButton.setMinWidth(300);
+
+                tilePane.getChildren().add(contentButton);
+            }
+        }
+        
+        return tilePane;
+    }
+    
 
     //UPDATE CLICKPANE // RUN ONLY ONCE THE PROGRAM RUN 1 PAGE
     private static VBox updateVBox;
@@ -466,30 +625,72 @@ public class Admin_UI extends UI {
 
         //Image
         AnchorPane updatePane = new AnchorPane();
-        updatePane.setLayoutX(760);
+        updatePane.setLayoutX(765);
         updatePane.setLayoutY(100);
 
-        updateVBox = new VBox();
+        updateVBox = new VBox(10);
 
-        selectImage = new ImageView(new Image("/image/blankimage.jpg"));
-        selectImage.setFitHeight(300);
-        selectImage.setFitWidth(250);
+        selectImage = new ImageView(new Image("/image/defaultmusic.png"));
+        selectImage.setFitHeight(230);
+        selectImage.setFitWidth(230);
 
-        selectNameSong = new Label("N/A");
-        selectArtist = new Label("Artist: N/A");
+        selectNameSong = new Label("Please select song");
+        selectArtist = new Label("");
 
+        selectImage.getStyleClass().add("pictureAppear");
         selectNameSong.getStyleClass().add("nameSong");
         selectArtist.getStyleClass().add("nameArtist");
 
         selectNameSong.setAlignment(Pos.CENTER);
         selectArtist.setAlignment(Pos.CENTER_LEFT);
+        
+        if(selectArtist.getText().equals("")) { selectNameSong.setTranslateY(20); } // Ship Y axis 
+        else{ selectNameSong.setTranslateY(0); }
 
+        updateVBox.setAlignment(Pos.CENTER);
         updateVBox.getChildren().addAll(selectImage, selectNameSong, selectArtist);
         updatePane.getChildren().add(updateVBox);
 
         return updatePane;
 
     }
+    
+    //UPDATE CLICKPANE ARTIST // RUN ONLY ONCE THE PROGRAM RUN 2 PAGE
+    private static VBox updateArtistVBox;
+
+    private AnchorPane UpdateClikedArtistPane() {
+
+        //Image
+        AnchorPane updatePane = new AnchorPane();
+        updatePane.setLayoutX(765);
+        updatePane.setLayoutY(100);
+
+        updateArtistVBox = new VBox(10);
+
+        selectImageArtist2 = new ImageView(new Image("/image/defaultprofile.png"));
+        selectImageArtist2.setFitHeight(230);
+        selectImageArtist2.setFitWidth(230);
+
+        selectArtist2 = new Label("Please select artist");
+        selectDetail2 = new Label("");
+
+        selectImageArtist2.getStyleClass().add("pictureAppear");
+        selectArtist2.getStyleClass().add("nameSong");
+        selectDetail2.getStyleClass().add("nameArtist");
+
+        selectArtist2.setAlignment(Pos.CENTER);
+        selectDetail2.setAlignment(Pos.CENTER_LEFT);
+        
+        if(selectDetail2.getText().equals("")) { selectArtist2.setTranslateY(20); } // Ship Y axis 
+        else{ selectArtist2.setTranslateY(0); }
+
+        updateArtistVBox.setAlignment(Pos.CENTER);
+        updateArtistVBox.getChildren().addAll(selectImageArtist2, selectArtist2, selectDetail2);
+        updatePane.getChildren().add(updateArtistVBox);
+
+        return updatePane;
+
+    }    
 
     private void refreshTable() { //get.list -> sorted
 
@@ -722,6 +923,44 @@ public class Admin_UI extends UI {
         return 1;
     }
 
+    
+    private int deleteArtistClicked() throws IOException, FileNotFoundException, ClassNotFoundException {
+
+        ArrayList<Artist> oldArtistList = new ArrayList<>();
+        ArrayList<Artist> newArtistList = new ArrayList<>();
+        File selectFileDelete = new File("src/MusicFile/" + songSelectString + ".mp3");
+
+        
+        //Gut ... Do one favor for me By Pop VVV
+        
+        
+//        try {
+//            oldSongList = ReadWriteFile.readFileSong(musicFile);
+//        } catch (IOException ex) {
+//            System.out.println("Admin_UI : IOExeption readfile in deleteSongClicked");
+//        } catch (ClassNotFoundException ex) {
+//            System.out.println("Admin_UI : ClassNotFoundExeption readfile in deleteSongClickede");
+//        }
+//
+//        for (Song song : oldSongList) {
+//
+//            if (songSelectString.equals(song.getNameSong() + song.getArtistSong() + song.getDetailSong())) {
+//                System.out.println("delete " + song);
+//                selectFileDelete.delete();
+//
+//            } else {
+//                newSongList.add(song);
+//            }
+//        }
+//
+//        ReadWriteFile.writeFileSong(musicFile, newSongList);
+        Admin_UI.totalArtistPane.getChildren().remove(0);
+        Admin_UI.totalArtistPane.getChildren().add(updateScrollArtistPane(""));
+
+        return 1;
+    }
+    
+    
     @Override
     public void userLogout() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
