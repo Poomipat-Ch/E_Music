@@ -73,6 +73,12 @@ public class TopChartMusicPage {
                 System.out.println(songNameSelected);
                 fileForDownload = new File("src/MusicFile/" + songNameSelected + ".mp3");
 
+                try {
+                    new DetailSongPopUp(table.getSelectionModel().getSelectedItem().getSong(), userAccount);
+                } catch (InterruptedException ex) {
+                    System.out.println("TopChartMusicPane : InterrruoteddExeption DetailSongPopUp in updateScrollPane");
+                }
+
             }
         });
 

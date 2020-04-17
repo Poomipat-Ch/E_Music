@@ -150,4 +150,8 @@ public class Song implements Serializable {
         return listStyleSong;
     }
     
+    public Song getSong() {
+        return this;
+    }
+    
 }
