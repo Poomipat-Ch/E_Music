@@ -46,7 +46,8 @@ public class Login {
     File tempId = new File("src/data/user.txt");
 
     ArrayList<Account> listUserAccount = new ArrayList<>();
-    Account userAccount = new Account("guest", "guest", "guest", "guest@gmail.com", "guest", "N/A", LocalDate.now(), "guest", "guest", "guest", new Image("/image/defaultprofile.png"));
+    Account userAccount = new Account();
+    Account guestAccount = new Account("guest", "guest", "guest", "guest@gmail.com", "guest", "N/A", LocalDate.now(), "guest", "guest", "guest", new Image("/image/defaultprofile.png"));
     ArrayList<Account> addAccount = new ArrayList<>();
     
 
@@ -159,7 +160,7 @@ public class Login {
         guestBtn.setOnAction(e->{
             System.out.println("User login with guest ");
             Login.stage.hide();
-            Guest_UI guest_UI = new Guest_UI(new Stage(), userAccount);
+            Guest_UI guest_UI = new Guest_UI(new Stage(), guestAccount);
         });
 
         VBox rightMenu = new VBox(20);
