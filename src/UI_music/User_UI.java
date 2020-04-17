@@ -8,6 +8,7 @@ package UI_music;
 import Component_Music.Account;
 import Component_Music.AlertBox;
 import Component_Music.DetailSongPopUp;
+import Component_Music.SearchPage;
 import Component_Music.SearchSystem;
 import Component_Music.Song;
 import Component_Music.TopChartMusicPage;
@@ -66,7 +67,7 @@ public class User_UI extends UI {
     public User_UI(Stage stage, Account userAccount) {
         super(stage, userAccount);
         this.userAccount = userAccount;
-        
+
         Scene scene = new Scene(allPane(), 1280, 960);
         String stylrSheet = getClass().getResource("/style_css/style.css").toExternalForm();
         scene.getStylesheets().add(stylrSheet);
@@ -224,30 +225,33 @@ public class User_UI extends UI {
     @Override
     public HBox searchBoxAll() {
         HBox hBox = new HBox();
-        hBox.setMinSize(1000, 30);
-        hBox.setAlignment(Pos.CENTER);
-        hBox.setLayoutX(20);
-        hBox.setLayoutY(60);
+        hBox.setPrefSize(1030-300-60-70, 30);
+        //hBox.setAlignment(Pos.CENTER);
+        hBox.setLayoutX(720);
+        hBox.setLayoutY(30);
+
         TextField searchTextField = new TextField();
-        searchTextField.setPromptText("Search Music");
-        searchTextField.setMinSize(1030 - 300 - 60 - 70, 30);
+        searchTextField.setPromptText("Search");
+        searchTextField.setStyle("-fx-font-size: 12px;");
+        searchTextField.setPrefSize(250, 20);
 
-        Button searchButton = CreaButton("Search");
-        searchButton.setOnMouseClicked(e -> {
-            User_UI.totalPane.getChildren().remove(1);
-            User_UI.totalPane.getChildren().add(updateScrollPane(searchTextField.getText()));
+//        Button searchButton = CreaButton("Refresh");
+//        searchButton.setStyle("-fx-font-size : 15px;");
+//        HBox.setMargin(searchButton, new Insets(0, 0, 0, 10));
+        searchTextField.setOnMouseClicked(event -> {
+                        
+            for (int i = 0; i < 2; ++i) 
+                totalPane.getChildren().remove(0);
+                
+            totalPane.getChildren().addAll(new SearchPage().getSearchPane());
         });
 
-        searchButton.setStyle("-fx-font-size : 15px;");
-        searchButton.setMinSize(50, 30);
-        HBox.setMargin(searchButton, new Insets(0, 0, 0, 10));
-
-        searchTextField.textProperty().addListener((ov, t, t1) -> {
-            User_UI.totalPane.getChildren().remove(1);
-            User_UI.totalPane.getChildren().add(updateScrollPane(searchTextField.getText()));
-        });
-
-        hBox.getChildren().addAll(searchTextField, searchButton);
+        /// 1030-300-60-70
+//        searchTextField.textProperty().addListener((ov, t, t1) -> {
+//            User_UI.totalPane.getChildren().remove(1);
+//            User_UI.totalPane.getChildren().add(updateScrollPane(searchTextField.getText()));
+//        });
+        hBox.getChildren().addAll(searchTextField);
 
         return hBox;
     }
@@ -428,5 +432,5 @@ public class User_UI extends UI {
         }
 
     }
-    
+
 }

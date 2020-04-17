@@ -15,6 +15,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
@@ -36,6 +37,7 @@ public class BrowsePane {
 
         AnchorPane backgroundpane = new AnchorPane();
         backgroundpane.setPrefSize(1030, 900);
+        backgroundpane.setLayoutX(1);
         backgroundpane.getStyleClass().add("mainBox");
 
         ImageView playlist = CreateImageView(50, 200);
@@ -43,8 +45,8 @@ public class BrowsePane {
         Label genres = CreateLabel("GENRES & MOODS", 150, 220);
         Label production = CreateLabel("ARTIST", 450, 220);
         Label browse = CreateHead("Browse", 50, 100);
-        Button genresbtn = CreateButton(40, 190, 280);
-        Button artistbtn = CreateButton(340, 190, 200);
+        HBox genresbtn = CreateButton(40, 190, 280);
+        HBox artistbtn = CreateButton(340, 190, 200);
 
         backgroundpane.getChildren().addAll(genresbtn, artistbtn, playlist, artist, genres, production, browse, BorderList());
 
@@ -57,8 +59,8 @@ public class BrowsePane {
         return this.scrollpane;
     }
 
-    private Button CreateButton(double x, double y, double width) {
-        Button button = new Button();
+    private HBox CreateButton(double x, double y, double width) {
+        HBox button = new HBox();
         button.getStyleClass().add("buttoninbrowse");
         button.setPrefSize(width, 99);
         button.setLayoutX(x);

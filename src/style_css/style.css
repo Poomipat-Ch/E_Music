@@ -234,7 +234,6 @@
 }
 .seealllabel:pressed {
     -fx-underline: true;
-    -fx-text-fill: black;
 }
 
 
@@ -299,4 +298,33 @@
     -fx-background-color: #222222;
     -fx-opacity: .8;
     -fx-background-radius: 0em;
+}
+/****************************************************************
+ 
+  Browse Skin  
+ 
+****************************************************************/
+
+.backgroundsearch{
+    -fx-background-color : #27496d;
+    -fx-opacity: 0.6;
+}
+
+.playlistpane{
+    -fx-background-color : #00a8cc;
+    -fx-opacity: 0.4;
+}
+
+.headlabel {
+    -fx-text-fill : white;
+    -fx-font-size : 20px;
+    -fx-text-fill : white;
+    -fx-bold : true;
+}
+
+.hbox{
+    -fx-border-style: hidden hidden solid hidden; 
+    -fx-border-width: 0 0 1 0;
+    
+    -fx-border-color: white;
 }
