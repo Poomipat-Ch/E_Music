@@ -51,11 +51,14 @@ public class ShowingSearchPage {
 //        
 //        hBox.getChildren().addAll(searchTextField);
         
-        if(page.toLowerCase().equals("songs"));
+        if(page.toLowerCase().equals("songs"))
             anchorpane.getChildren().addAll(CreateHead(page, foundtext), new ShowingSongs().table);
+        else if(page.toLowerCase().equals("artists"))
+            anchorpane.getChildren().addAll(CreateHead(page, foundtext));
+        else
+            anchorpane.getChildren().addAll(CreateHead(page, foundtext));          
         
-        
-        UI.vbox.getChildren().remove(0);
+        UI.vbox.getChildren().remove(1);
         UI.vbox.getChildren().add(anchorpane);
     }
     
