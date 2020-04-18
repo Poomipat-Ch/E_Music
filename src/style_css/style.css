@@ -308,6 +308,8 @@
 .browselabel{
     -fx-text-fill : white;
     -fx-font-size : 17px;
+    -fx-background-radius :  0;
+    -fx-background-color: transparent;
 }
 
 .browseheadlabel{
