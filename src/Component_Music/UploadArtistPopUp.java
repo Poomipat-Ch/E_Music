@@ -84,6 +84,7 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
         image = editArtist.getPhoto();
         photo = new ImageView(image);
         this.editArtist = editArtist;
+        changePhoto = true;
         runOnce();
 
     }
@@ -94,7 +95,7 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
         stage.setTitle("Upload New Song");
         stage.setResizable(false);
 
-        DetailUploadSong();
+        DetailUploadArtist();
         Scene scene = new Scene(totalDetail);
         String stylrSheet = getClass().getResource("/style_css/stylePopupDetail.css").toExternalForm(); // From PopUpdetail CSS
         scene.getStylesheets().add(stylrSheet); // CSS
@@ -107,7 +108,7 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
 
     double mouse_x = 0, mouse_y = 0; // position mouse
 
-    private void DetailUploadSong() {
+    private void DetailUploadArtist() {
 
         title.getStyleClass().add("title"); //CSS
 
@@ -219,7 +220,7 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
         Button saveBtn = new Button("Save");
         saveBtn.getStyleClass().add("savebtn"); // borrow...
         saveBtn.setOnMouseClicked(e -> {
-            if(!fillNameArtist.getText().isEmpty() && !fillNameArtist2.getText().isEmpty() && !fillDetailArtist.getText().isEmpty())
+            if(!fillNameArtist.getText().isEmpty() && !fillDetailArtist.getText().isEmpty())
             {
             try {
                 artistArrayList = ReadWriteFile.readFileArist(artistFile);

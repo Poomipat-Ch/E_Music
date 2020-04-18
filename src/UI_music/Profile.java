@@ -53,7 +53,7 @@ public class Profile {
                 myAccount.showAccount(this.userAccount);
                 accountPane.setCenter(myAccount.getProfilePane());
                 bottom.getChildren().clear();
-                if (!"admin".equals(userAccount.getUserRole())) {
+                if (!"admin".equals(userAccount.getUserRole()) && !"premium".equals(userAccount.getUserRole())) {
                     bottom.getChildren().addAll(buyPremiumbtn);
                 }
                 bottom.getChildren().addAll(editbt);
@@ -68,7 +68,7 @@ public class Profile {
             accountPane.setCenter(myAccount.getProfilePane());
             myAccount.Clear();
             bottom.getChildren().clear();
-            if (!"admin".equals(userAccount.getUserRole())) {
+            if (!"admin".equals(userAccount.getUserRole()) && !"premium".equals(userAccount.getUserRole())) {
                 bottom.getChildren().addAll(buyPremiumbtn);
             }
             bottom.getChildren().addAll(editbt);
@@ -91,7 +91,8 @@ public class Profile {
             Cashing cashPremium = new Cashing();
             cashPremium.buyPremium(new Stage(), userAccount);
         });
-        if (!"admin".equals(userAccount.getUserRole()) || !"premium".equals(userAccount.getUserRole())) {
+        
+        if (!"admin".equals(userAccount.getUserRole()) && !"premium".equals(userAccount.getUserRole())) {
             bottom.getChildren().addAll(buyPremiumbtn);
         }
         bottom.getChildren().addAll(editbt);

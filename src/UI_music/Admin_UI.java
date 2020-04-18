@@ -27,6 +27,7 @@ import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -44,9 +45,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -760,12 +763,13 @@ public class Admin_UI extends UI {
     ArrayList<Account> oldAccounts;
     ArrayList<Account> presentAccounts;
     Account updateAccount;
-
+    Stage stageUpdateAccount;   
+    
     private int updateAccountClicked() {
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Edit User/Admin Account");
-        stage.setResizable(false);
+        stageUpdateAccount = new Stage();
+        stageUpdateAccount.initModality(Modality.APPLICATION_MODAL);
+        stageUpdateAccount.setTitle("Edit User/Admin Account");
+        stageUpdateAccount.setResizable(false);
 
         oldAccounts = new ArrayList<>();
         presentAccounts = new ArrayList<>();
@@ -783,7 +787,7 @@ public class Admin_UI extends UI {
         }
 
         if (selectUsername.equals(userAccount.getUsername()) && selectEmail.equals(userAccount.getEmail())) {
-            AlertBox.displayAlert("Delect Account.", "You cannot delete your account.");
+            AlertBox.displayAlert("Update Account.", "Your status is already Admin.");
             return 0;
         }
 
@@ -791,6 +795,9 @@ public class Admin_UI extends UI {
         RadioButton adminSelect = new RadioButton("Admin");
         RadioButton premiumSelect = new RadioButton("Premium");
         RadioButton userSelect = new RadioButton("Member");
+        adminSelect.getStyleClass().add("detailUpdateChoice");
+        premiumSelect.getStyleClass().add("detailUpdateChoice");
+        userSelect.getStyleClass().add("detailUpdateChoice");
         adminSelect.setToggleGroup(statusToggle);
         premiumSelect.setToggleGroup(statusToggle);
         userSelect.setToggleGroup(statusToggle);
@@ -818,8 +825,9 @@ public class Admin_UI extends UI {
         photo.setFitWidth(200);
         photo.setPreserveRatio(true);
 
-        Button yesBtn = new Button("Yes");
-        yesBtn.setOnAction(e -> {
+        Button SaveBtn = new Button("Save");
+        SaveBtn.getStyleClass().add("savebtn");
+        SaveBtn.setOnAction(e -> {
 
             if (adminSelect.isSelected()) {
                 updateAccount.setUserRole("admin");
@@ -837,51 +845,89 @@ public class Admin_UI extends UI {
                 System.out.println("Admin_UI : IOExeption writefile in updateAccountClicked");
             }
 
-            stage.close();
+            stageUpdateAccount.close();
 
             refreshTable();
         });
 
-        Button noBtn = new Button("No");
-        noBtn.setOnAction(e -> {
-            stage.close();
+        Button cancelBtn = new Button("Cancel");
+        cancelBtn .getStyleClass().add("cancelbtn");
+        cancelBtn.setOnAction(e -> {
+            stageUpdateAccount.close();
         });
+        
+        
+        Label usernameLabel = new Label("Username");
+        Label nameLabel = new Label("Name / Surname");
+        Label statusLabel = new Label("Status");
+        
+        Label username = new Label(updateAccount.getUsername());
+        Label name = new Label(updateAccount.getName()+"  "+updateAccount.getSurname()); 
+        
+        HBox selectHBox = new HBox(15);
+        selectHBox.setAlignment(Pos.CENTER);
+        selectHBox.getChildren().addAll(userSelect, premiumSelect, adminSelect);
+        //selectHBox.setPadding(new Insets(10));
+        
+        Label colon1 = new Label(":");
+        Label colon2 = new Label(":");
+        Label colon3 = new Label(":"); 
+        
+        GridPane gridPane = new GridPane();
+        gridPane.setAlignment(Pos.CENTER);
+        gridPane.getStyleClass().add("detailUpdate");
+        gridPane.setVgap(20);
+        gridPane.setHgap(10);
+        GridPane.setHalignment(usernameLabel, HPos.RIGHT);
+        GridPane.setHalignment(nameLabel, HPos.RIGHT);
+        GridPane.setHalignment(statusLabel, HPos.RIGHT);
+        GridPane.setConstraints(usernameLabel, 0, 0);
+        GridPane.setConstraints(nameLabel, 0, 1);
+        GridPane.setConstraints(statusLabel, 0, 2);
+        GridPane.setConstraints(colon1, 1, 0);
+        GridPane.setConstraints(colon2, 1, 1);
+        GridPane.setConstraints(colon3, 1, 2);
+        GridPane.setConstraints(username, 2, 0);
+        GridPane.setConstraints(name, 2, 1);
+        GridPane.setConstraints(selectHBox, 2, 2);
+        colon3.setStyle("-fx-text-fill: yellow");
+        statusLabel.setStyle("-fx-text-fill: yellow");
+        gridPane.getChildren().addAll(usernameLabel,nameLabel,statusLabel,
+                                      colon1,colon2,colon3,
+                                      username,name,selectHBox);  
+        
 
-        VBox row0 = new VBox(10);
-        row0.getChildren().addAll(photo);
-        row0.setAlignment(Pos.CENTER);
-        row0.setPadding(new Insets(10));
-        row0.setMinHeight(200);
+        HBox lastHbox = new HBox(20);
+        lastHbox.getChildren().addAll(SaveBtn, cancelBtn);
+        lastHbox.setAlignment(Pos.CENTER);
+        lastHbox.setPadding(new Insets(20));
 
-        HBox row1 = new HBox(20);
-        row1.getChildren().addAll(new Label("Username : "), new Label(updateAccount.getUsername()));
-        row1.setAlignment(Pos.CENTER);
-        row1.setPadding(new Insets(10));
-
-        HBox row2 = new HBox(20);
-        row2.getChildren().addAll(new Label("Name : "), new Label(updateAccount.getName()), new Label(updateAccount.getSurname()));
-        row2.setAlignment(Pos.CENTER);
-        row2.setPadding(new Insets(10));
-
-        HBox row3 = new HBox(20);
-        row3.getChildren().addAll(new Label("Status : "), userSelect, premiumSelect, adminSelect);
-        row3.setAlignment(Pos.CENTER);
-        row3.setPadding(new Insets(30));
-
-        HBox row4 = new HBox(20);
-        row4.getChildren().addAll(yesBtn, noBtn);
-        row4.setAlignment(Pos.CENTER);
-        row4.setPadding(new Insets(20));
-
-        VBox layout1 = new VBox(20);
-        layout1.getChildren().addAll(row0, row1, row2, row3, row4);
-        layout1.setAlignment(Pos.TOP_CENTER);
-        layout1.setPadding(new Insets(30, 0, 0, 0));
-
-        Scene scene = new Scene(layout1, 500, 600);
-
-        stage.setScene(scene);
-        stage.showAndWait();
+        VBox mainVBox = new VBox(20);
+        mainVBox.getChildren().addAll(photo, gridPane, lastHbox);
+        mainVBox.setAlignment(Pos.TOP_CENTER);
+        //mainVBox.setPadding(new Insets(30));
+        mainVBox.setOnMousePressed(e -> {
+            mouse_x = e.getSceneX();
+            mouse_y = e.getSceneY();
+            //System.out.println(mouse_x + " " + mouse_y);
+        });
+        mainVBox.setOnMouseDragged(e -> {
+            stageUpdateAccount.setX(e.getScreenX() - mouse_x);
+            stageUpdateAccount.setY(e.getScreenY() - mouse_y);
+        });
+        
+        HBox totalHBox = new HBox(mainVBox,exitButton());
+        totalHBox.setPadding(new Insets(30));
+        totalHBox.getStyleClass().add("allPane");
+        
+        Scene scene = new Scene(totalHBox);
+        scene.setFill(Color.TRANSPARENT);
+        String stylrSheet = getClass().getResource("/style_css/stylePopupDetail.css").toExternalForm(); // From PopUpdetail CSS
+        scene.getStylesheets().add(stylrSheet); // CSS
+        
+        stageUpdateAccount.initStyle(StageStyle.TRANSPARENT);
+        stageUpdateAccount.setScene(scene);
+        stageUpdateAccount.showAndWait();
 
         return 0;
     }
@@ -997,6 +1043,37 @@ public class Admin_UI extends UI {
     @Override
     public void userLogout() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+   //Exit button for Popup
+    private Button exitButton() {
+
+        //Exit with Decoration
+        Image exit_icon = new Image("/icon/close-512-detail.png");
+        Image exit_hover_icon = new Image("/icon/close-512_hover.png");
+
+        ImageView imageView = new ImageView(exit_icon);
+        imageView.setFitHeight(20);
+        imageView.setFitWidth(20);
+
+        ImageView imageView_hover = new ImageView(exit_hover_icon);
+        imageView_hover.setFitHeight(20);
+        imageView_hover.setFitWidth(20);
+
+        Button exit = new Button("", imageView);
+        exit.setOnMouseEntered(e -> {
+            exit.setGraphic(imageView_hover);
+        });
+        exit.setOnMouseExited(e -> {
+            exit.setGraphic(imageView);
+        });
+        exit.setOnMouseClicked(e -> {
+            stageUpdateAccount.close();
+        });
+        exit.setStyle("-fx-background-color : transparent;"); //CSS
+        //exit.setPadding(Insets.EMPTY);
+
+        return exit;
     }
 
 }

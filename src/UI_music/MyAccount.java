@@ -133,10 +133,10 @@ public class MyAccount {
         gridPane.getStyleClass().add("detailMyAccount");
         gridPane.setVgap(20);
         gridPane.setHgap(10);
-        GridPane.setHalignment(usernameTitleLabel, HPos.LEFT);
-        GridPane.setHalignment(emailTitleLabel, HPos.LEFT);
-        GridPane.setHalignment(dateOfBirthLabelTitle, HPos.LEFT);
-        GridPane.setHalignment(genderTitleLabel, HPos.LEFT);
+        GridPane.setHalignment(usernameTitleLabel, HPos.RIGHT);
+        GridPane.setHalignment(emailTitleLabel, HPos.RIGHT);
+        GridPane.setHalignment(dateOfBirthLabelTitle, HPos.RIGHT);
+        GridPane.setHalignment(genderTitleLabel, HPos.RIGHT);
         GridPane.setConstraints(usernameTitleLabel, 0, 0);
         GridPane.setConstraints(emailTitleLabel, 0, 1);
         GridPane.setConstraints(genderTitleLabel, 0, 2);
