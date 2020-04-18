@@ -55,7 +55,7 @@ public class TopChartPane {
         topchartpane.setLeft(topChartVbox);
 
         VBox topChartList = new VBox(5);
-        topChartList.setPadding(new Insets(0, 0, 0, 100));
+        topChartList.setPadding(new Insets(20, 0, 0, 100));
         
         for (String string : topchartlist) {
             topChartBtn = new Button();
@@ -74,30 +74,17 @@ public class TopChartPane {
         }
         
         AnchorPane centerTopChart = new AnchorPane();
-        centerTopChart.getChildren().addAll(topChartList,CreateSeeAll(topchartlist.get(0),640,200),CreateSeeAll(topchartlist.get(1),640,430));
+        centerTopChart.getChildren().addAll(topChartList,CreateSeeAll(topchartlist.get(0),640,210),CreateSeeAll(topchartlist.get(1),640,430));
 
         topchartpane.setCenter(centerTopChart);
         
-        pane.getChildren().addAll(AutoSlide(), topchartpane);
+        pane.getChildren().addAll(new ImageSlide().getAnchorpane(), topchartpane);
 
 
     }
 
     public AnchorPane getTopchartpane() {
         return pane;
-    }
-    
-    private AnchorPane AutoSlide() {
-        AnchorPane anchorpane = new AnchorPane();
-        anchorpane.setPrefWidth(1030);
-        
-        ImageView image = new ImageView(new Image("/image/first.png"));
-        image.setFitWidth(1030);
-        image.setPreserveRatio(true);
-        
-        anchorpane.getChildren().add(image);
-        
-        return anchorpane;
     }
 
     private Label CreateLabel(String alphabet, int style) {

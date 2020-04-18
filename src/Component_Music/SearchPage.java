@@ -42,16 +42,24 @@ public class SearchPage {
         background.setLayoutX(0);
         background.setLayoutY(2);
         
+        BorderPane borderpane = new BorderPane();
+        borderpane.getStyleClass().add("backgroundsearch");
+        borderpane.setPrefWidth(970);
+        borderpane.setMinHeight(762);
+        borderpane.setLayoutX(30);
+        borderpane.setLayoutY(60);
+        
         searchTextField.textProperty().addListener((ov, t, t1) -> {
             anchorPane.getChildren().remove(1);
-            if(searchTextField.getText().equals("")) 
+            if(searchTextField.getText().equals(""))  
                 anchorPane.getChildren().addAll(BlankPane());
-            else
-                anchorPane.getChildren().add(FoundListPane(searchTextField.getText()));
+            else 
+                anchorPane.getChildren().addAll(FoundListPane(searchTextField.getText()));
+            
         });
         
+        anchorPane.getChildren().addAll(background, BlankPane());
         
-            anchorPane.getChildren().addAll(background, BlankPane());
 
     }
 
@@ -90,7 +98,7 @@ public class SearchPage {
 //    private AnchorPane //empty page
     private BorderPane FoundListPane(String foundtext) {
         BorderPane borderpane = new BorderPane();
-        borderpane.getStyleClass().add("backgroundsearch");
+        //borderpane.getStyleClass().add("backgroundsearch");
         borderpane.setPadding(new Insets(0, 10, 0, 10));
 
         borderpane.setPrefWidth(970);
@@ -108,26 +116,13 @@ public class SearchPage {
     
     private BorderPane TopPlaylistPane(String string, String filename, String foundtext) {
         BorderPane borderpane = new BorderPane();
-        borderpane.setPadding(new Insets(0, 10, 20, 10));
+        borderpane.setPadding(new Insets(20, 10, 20, 10));
 
         borderpane.setPrefWidth(950);
         borderpane.setPrefHeight(341);
 
         borderpane.setTop(HeadBox(string, filename, foundtext, 880));
         borderpane.setCenter(Playlist(foundtext,4,12));
-
-        return borderpane;
-    }
-
-    private BorderPane PlaylistPane(String string, String filename, String foundtext) {
-        BorderPane borderpane = new BorderPane();
-        borderpane.setPadding(new Insets(0, 10, 0, 10));
-        
-        borderpane.setPrefWidth(460);
-        borderpane.setPrefHeight(341);
-
-        borderpane.setTop(HeadBox(string, filename, foundtext, 390));
-        borderpane.setCenter(Playlist(foundtext,2,0));
 
         return borderpane;
     }
@@ -159,6 +154,7 @@ public class SearchPage {
 
         label.setOnMouseClicked(event -> {
             new ShowingSearchPage(string, foundtext);
+            searchTextField.clear();
         });
 
         return label;
@@ -169,7 +165,7 @@ public class SearchPage {
 //        borderpane.set
 
         for (int i = 0; i < 8 + (dis/3); ++i) {
-            anchorpane.getChildren().add(CreateList((230 * (i % column)) + dis, (80 * (i / column)) + 30, ""));
+            anchorpane.getChildren().add(CreateList((230 * (i % column)) + dis, (80 * (i / column)) + 50, ""));
 
         }
 

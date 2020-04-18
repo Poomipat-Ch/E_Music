@@ -36,6 +36,7 @@ import javafx.scene.layout.VBox;
 public class BrowsePane {
     
     ScrollPane scrollpane;
+    AnchorPane backgroundpane;
     
     public BrowsePane() {
         scrollpane = new ScrollPane();
@@ -46,7 +47,7 @@ public class BrowsePane {
         scrollpane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollpane.fitToWidthProperty().set(true);
         
-        AnchorPane backgroundpane = new AnchorPane();
+        backgroundpane = new AnchorPane();
         backgroundpane.setPrefWidth(1030);
         backgroundpane.setMinHeight(901);
         backgroundpane.getStyleClass().add("mainBox");
@@ -64,7 +65,7 @@ public class BrowsePane {
         
         try {
             backgroundpane.getChildren().addAll(thaigenresbg, thaigenresbtn, thaiartistbg, thaiartistbtn, intergenresbg, intergenresbtn, 
-                    interartistbg, interartistbtn, browse, BorderList());
+                    interartistbg, interartistbtn, browse, BorderList("หมวดหมู่ และ อารมณ์"));
         } catch (IOException ex) {
             Logger.getLogger(BrowsePane.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -82,9 +83,20 @@ public class BrowsePane {
     private Button CreateButton(String name,double x, double y, double width) {
         Button button = new Button(name);
         button.getStyleClass().add("buttoninbrowse");
-        button.setPrefSize(width, 100);
+        button.setPrefSize(width, 50);
         button.setLayoutX(x);
         button.setLayoutY(y);
+        
+        button.setOnAction(event -> {
+            this.backgroundpane.getChildren().remove(9);
+            
+            try {
+                this.backgroundpane.getChildren().add(BorderList(name));
+            } catch (IOException ex) {
+                Logger.getLogger(BrowsePane.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        });
         
         return button;
     }
@@ -92,7 +104,7 @@ public class BrowsePane {
     private Button CreateBackgroundButton(double x, double y, double width) {
         Button button = new Button();
         button.getStyleClass().add("backgroundbuttoninbrowse");
-        button.setPrefSize(width, 100);
+        button.setPrefSize(width, 50);
         button.setLayoutX(x);
         button.setLayoutY(y);
         
@@ -109,15 +121,6 @@ public class BrowsePane {
         return image;
     }
     
-    private Label CreateLabel(String string, double x, double y) {
-        Label label = new Label(string);
-        label.getStyleClass().add("browselabel");
-        label.setLayoutX(x);
-        label.setLayoutY(y);
-        
-        return label;
-    }
-    
     private Label CreateHead(String string, double x, double y) {
         Label label = new Label(string);
         label.getStyleClass().add("browseheadlabel");
@@ -127,27 +130,41 @@ public class BrowsePane {
         return label;
     }
     
-    private AnchorPane BorderList() throws IOException {
-        AnchorPane borderpane = new AnchorPane();
-        borderpane.getStyleClass().add("borderlist");
-        borderpane.setPrefWidth(1030);
-        borderpane.setMinHeight(614);
-        borderpane.setLayoutY(290);
-        borderpane.setPadding(new Insets(0, 0, 50, 0));
+    private AnchorPane BorderList(String name) throws IOException {
+        AnchorPane anchorpane = new AnchorPane();
+        anchorpane.getStyleClass().add("borderlist");
+        anchorpane.setPrefWidth(1030);
+        anchorpane.setMinHeight(614);
+        anchorpane.setLayoutY(240);
+        anchorpane.setPadding(new Insets(0, 0, 50, 0));
 
         //VBox vBox;
         int i = 0;
         for (String string : ReadFile()) {
-            AnchorPane listAlbums = CreateAlbumsList(string, (235 * (i % 4)) + 50, (235 * (i / 4)) + 50);
+            AnchorPane listAlbums = CreateAlbumsList(string, (235 * (i % 4)) + 50, (235 * (i / 4)) + 75);
             i++;
             
             listAlbums.setOnMouseClicked(e -> {
                 System.out.println("click" + listAlbums.getLayoutX());
             });
             
-            borderpane.getChildren().add(listAlbums);
+            anchorpane.getChildren().add(listAlbums);
         }
-        return borderpane;
+        
+        anchorpane.getChildren().add(CreateLabel(name, 50, 15));
+        
+        return anchorpane;
+    }
+    
+    private Label CreateLabel(String string, double x, double y) {
+        Label label = new Label(string);
+        label.setPadding(new Insets(5));
+        label.getStyleClass().add("browselabel");
+        label.setMinWidth(930);
+        label.setLayoutX(x);
+        label.setLayoutY(y);
+        
+        return label;
     }
     
     private AnchorPane CreateAlbumsList(String string, double x, double y) {
@@ -179,7 +196,7 @@ public class BrowsePane {
         button.setPrefSize(225, 225);
 //        button.setLayoutY(180);
         button.setAlignment(Pos.CENTER);
-        button.getStyleClass().add("browselabel");
+        button.getStyleClass().add("browsebuttonlabel");
         button.setPadding(new Insets(160, 0, 0, 0));
         
         button.setOnMouseClicked(event -> {
