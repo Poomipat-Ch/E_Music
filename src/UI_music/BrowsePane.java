@@ -152,11 +152,11 @@ public class BrowsePane {
     private ImageView CreateIcon(String name) {
         System.out.println(name);
         ImageView image = new ImageView(new Image("/icon/" + name + "icon.png"));
-        image.setFitHeight(100);
-        image.setFitWidth(100);
+        image.setFitHeight(60);
+        image.setFitWidth(60);
         image.setPreserveRatio(true);
-        image.setLayoutX(62.5);
-        image.setLayoutY(50);
+        image.setLayoutX(82.5);
+        image.setLayoutY(70);
         image.getStyleClass().add("image");
         
         return image;
