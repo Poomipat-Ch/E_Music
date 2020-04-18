@@ -27,11 +27,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  *
@@ -41,7 +44,7 @@ public class Login {
 
     Scene scene1;
     static Stage stage;
-
+    double mouse_x = 0, mouse_y = 0; // position mouse
     File user = new File("src/data/user.dat");
     File tempId = new File("src/data/user.txt");
 
@@ -145,12 +148,14 @@ public class Login {
         });
 
         Button forgotBtn = new Button("Forgot Password?");
+        forgotBtn.getStyleClass().add("forgotBtn");
         forgotBtn.setOnAction(e -> {
             System.out.println("User forgot password.");
             forgetPassword();
         });
 
         Button registerBtn = new Button("Create a new account");
+        registerBtn.getStyleClass().add("registerBtn");
         registerBtn.setOnAction(e -> {
             System.out.println("User want to register.");
             register();
@@ -158,6 +163,7 @@ public class Login {
         
         //Guest Button -> Login with Guest
         Button guestBtn = new Button("Login with guest");
+        guestBtn.getStyleClass().add("guestLogin");
         guestBtn.setOnAction(e->{
             System.out.println("User login with guest ");
             Login.stage.hide();
@@ -165,17 +171,28 @@ public class Login {
         });
 
         VBox rightMenu = new VBox(20);
+        rightMenu.setMargin(registerBtn, new Insets(0, 0, 30, 0));
         rightMenu.getStyleClass().add("loginLable");
-        rightMenu.setMaxSize(350, 576);
-        rightMenu.getChildren().addAll(title1, idLabel, idInput, passLabel, passInput, chk1, loginBtn, forgotBtn, registerBtn, guestBtn);
+        rightMenu.setMaxSize(350, 600);
+        rightMenu.getChildren().addAll(exitButton(),title1, idLabel, idInput, passLabel, passInput, chk1, loginBtn, forgotBtn, guestBtn, registerBtn);
         rightMenu.setAlignment(Pos.CENTER);
         BorderPane borderPane = new BorderPane();
         BorderPane.setAlignment(rightMenu, Pos.CENTER);
-        BorderPane.setMargin(rightMenu, new Insets(15, 15, 15, 15));
-        borderPane.setCenter(rightMenu);
+        //BorderPane.setMargin(rightMenu, new Insets(15, 15, 15, 15));
+        borderPane.setRight(rightMenu);
         borderPane.getStyleClass().add("backgroundImage");
-
-        scene1 = new Scene(borderPane, 720, 576);
+        
+        borderPane.setOnMousePressed(e -> {
+            mouse_x = e.getSceneX();
+            mouse_y = e.getSceneY();
+            //System.out.println(mouse_x + " " + mouse_y);
+        });
+        borderPane.setOnMouseDragged(e -> {
+            stage.setX(e.getScreenX() - mouse_x);
+            stage.setY(e.getScreenY() - mouse_y);
+        });
+        
+        scene1 = new Scene(borderPane, 900, 600);
 
         scene1.getStylesheets().add(getClass().getResource("/style_css/styleLogin.css").toExternalForm());
 
@@ -189,8 +206,36 @@ public class Login {
                 stage.close();
             }
         });
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
 
+    }
+    
+     private Button exitButton() {
+
+        ImageView exit_icon = new ImageView(new Image("/icon/close-512.png"));
+        ImageView exit_hover_icon = new ImageView(new Image("/icon/close-512_hover.png"));
+        exit_icon.setFitWidth(15);
+        exit_icon.setFitHeight(15);
+        exit_hover_icon.setFitWidth(15);
+        exit_hover_icon.setFitHeight(15);
+        
+        Button exit = new Button("", exit_icon);
+        exit.setOnMouseEntered(e -> {
+            exit.setGraphic(exit_hover_icon);
+        });
+        exit.setOnMouseExited(e -> {
+            exit.setGraphic(exit_icon);
+        });
+        exit.setOnMouseClicked(e -> {
+            stage.close();
+        });
+        exit.setStyle("-fx-background-color : transparent;");
+        exit.setPadding(Insets.EMPTY);
+        exit.setTranslateX(140);
+        exit.setTranslateY(0);
+
+        return exit;
     }
 
     public void register() {
