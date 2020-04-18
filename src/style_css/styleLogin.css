@@ -5,9 +5,8 @@
 .backgroundImage{
     -fx-background-image: url("/image/bg.png");
     -fx-background-repeat: stretch;
-    -fx-background-size: 720 576;
+    -fx-background-size: 900 600;
     -fx-background-position: center center;
-    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);
 }
 
 
@@ -15,9 +14,7 @@
 .loginLable{
     -fx-background-color: rgb(255,255,255);
     -fx-font-family: "Itim";
-    -fx-background-radius : 5;
     -fx-padding: 0px 50px 0px 50px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 10, 0, 1, 1);
 }
 
 .loginLable Label,CheckBox{
@@ -69,12 +66,50 @@
 .loginBtn{
     -fx-font-size:20px;
     -fx-text-fill:white;
-    -fx-background-color:#333;
+    -fx-background-color: #61a6dd;
     -fx-background-radius :10px;
     -fx-padding: 10 70 10 70;
     
 }
 
 .loginBtn:hover{
-    -fx-background-color:#222;
+    -fx-background-color:#487fc7;
+}
+
+.loginBtn:pressed{
+    -fx-background-color:#4578c1;
+}
+
+.guestLogin{
+    -fx-font-size:20px;
+    -fx-text-fill:white;
+    -fx-background-color:#61a6dd;
+    -fx-background-radius :10px;
+    -fx-padding: 5 40 5 40;
+}
+
+.guestLogin:hover{
+    -fx-background-color:#487fc7;
+}
+
+.guestLogin:pressed{
+    -fx-background-color:#4578c1;
+}
+
+.forgotBtn,.registerBtn{
+    -fx-font-size:15px;
+    -fx-text-fill:white;
+    -fx-background-color:#04c0d0;
+    -fx-background-radius :10px;
+    -fx-padding: 5 40 5 40;
+}
+
+.forgotBtn:hover,.registerBtn:hover{
+    
+    -fx-background-color:#68d4dd;
+}
+
+.forgotBtn:pressed,.registerBtn:pressed{
+    
+    -fx-background-color:#21b7c4;
 }

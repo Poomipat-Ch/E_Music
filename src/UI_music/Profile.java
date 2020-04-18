@@ -91,7 +91,7 @@ public class Profile {
             Cashing cashPremium = new Cashing();
             cashPremium.buyPremium(new Stage(), userAccount);
         });
-        if (!"admin".equals(userAccount.getUserRole())) {
+        if (!"admin".equals(userAccount.getUserRole()) || !"premium".equals(userAccount.getUserRole())) {
             bottom.getChildren().addAll(buyPremiumbtn);
         }
         bottom.getChildren().addAll(editbt);
