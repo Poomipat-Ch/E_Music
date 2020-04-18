@@ -62,6 +62,7 @@ public class TopChartMusicPage {
 
         table = new TableView<>();
         table.setEditable(true);
+        table.getStyleClass().add("tableTopChartMusic");
 
         table.setPrefWidth(anchorPane.getMinWidth() - 40);
 
