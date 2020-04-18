@@ -10,6 +10,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -23,8 +24,10 @@ public class TopChartPane {
     
     private BorderPane topchartpane;
     private Account userAccount;
+    private AnchorPane pane;
     
     public TopChartPane(Account userAccount) {
+        pane = new AnchorPane();
         topchartpane = new BorderPane();
         Button topChartBtn;
         ImageView chartImage;
@@ -36,7 +39,7 @@ public class TopChartPane {
         topchartlist.add("INTERNATIONAL TOP 50");
 
         topchartpane.setLayoutX(20);
-        topchartpane.setLayoutY(350);
+        topchartpane.setLayoutY(375);
         topchartpane.getStyleClass().add("topchart");
         topchartpane.setMinSize(1030 - 50, 500);
 
@@ -74,11 +77,27 @@ public class TopChartPane {
         centerTopChart.getChildren().addAll(topChartList,CreateSeeAll(topchartlist.get(0),640,200),CreateSeeAll(topchartlist.get(1),640,430));
 
         topchartpane.setCenter(centerTopChart);
+        
+        pane.getChildren().addAll(AutoSlide(), topchartpane);
+
 
     }
 
-    public BorderPane getTopchartpane() {
-        return topchartpane;
+    public AnchorPane getTopchartpane() {
+        return pane;
+    }
+    
+    private AnchorPane AutoSlide() {
+        AnchorPane anchorpane = new AnchorPane();
+        anchorpane.setPrefWidth(1030);
+        
+        ImageView image = new ImageView(new Image("/image/first.png"));
+        image.setFitWidth(1030);
+        image.setPreserveRatio(true);
+        
+        anchorpane.getChildren().add(image);
+        
+        return anchorpane;
     }
 
     private Label CreateLabel(String alphabet, int style) {

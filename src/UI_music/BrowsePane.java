@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -51,16 +52,19 @@ public class BrowsePane {
         backgroundpane.getStyleClass().add("mainBox");
         //backgroundpane.setPadding(new Insets(0, 0 ,50,0));
 
-        ImageView playlist = CreateImageView(50, 200);
-        ImageView artist = CreateImageView(350, 200);
-        Label genres = CreateLabel("GENRES & MOODS", 150, 220);
-        Label production = CreateLabel("ARTIST", 450, 220);
-        Label browse = CreateHead("Browse", 50, 100);
-        HBox genresbtn = CreateButton(40, 190, 280);
-        HBox artistbtn = CreateButton(340, 190, 200);
+        Label browse = CreateHead("Browse", 50, 70);
+        Button thaigenresbtn = CreateButton("หมวดหมู่ และ อารมณ์",40, 190, 260);
+            Button thaigenresbg = CreateBackgroundButton(40, 190, 260);
+        Button thaiartistbtn = CreateButton("ศิลปิน",320, 190, 180);
+            Button thaiartistbg = CreateBackgroundButton(320, 190, 180);
+        Button intergenresbtn = CreateButton("GENRES & MOODS",520, 190, 260);
+            Button intergenresbg = CreateBackgroundButton(520, 190, 260);
+        Button interartistbtn = CreateButton("ARTIST",800, 190, 180);
+            Button interartistbg = CreateBackgroundButton(800, 190, 180);
         
         try {
-            backgroundpane.getChildren().addAll(genresbtn, artistbtn, playlist, artist, genres, production, browse, BorderList());
+            backgroundpane.getChildren().addAll(thaigenresbg, thaigenresbtn, thaiartistbg, thaiartistbtn, intergenresbg, intergenresbtn, 
+                    interartistbg, interartistbtn, browse, BorderList());
         } catch (IOException ex) {
             Logger.getLogger(BrowsePane.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -75,8 +79,8 @@ public class BrowsePane {
         return this.scrollpane;
     }
     
-    private HBox CreateButton(double x, double y, double width) {
-        HBox button = new HBox();
+    private Button CreateButton(String name,double x, double y, double width) {
+        Button button = new Button(name);
         button.getStyleClass().add("buttoninbrowse");
         button.setPrefSize(width, 100);
         button.setLayoutX(x);
@@ -85,7 +89,15 @@ public class BrowsePane {
         return button;
     }
     
-    ;
+    private Button CreateBackgroundButton(double x, double y, double width) {
+        Button button = new Button();
+        button.getStyleClass().add("backgroundbuttoninbrowse");
+        button.setPrefSize(width, 100);
+        button.setLayoutX(x);
+        button.setLayoutY(y);
+        
+        return button;
+    }
     
     private ImageView CreateImageView(double x, double y) {
         ImageView image = new ImageView(new Image("/UI_music/defaultprofile.png"));
