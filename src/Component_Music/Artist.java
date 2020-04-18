@@ -33,6 +33,9 @@ public class Artist implements Serializable{
     private int[][] data;
     private static File artist = new File("src/data/artist.dat");
 
+    public Artist() {
+    }
+
     public Artist(String name1, String name2, String infomation, Image image) {
         this.name1 = name1;
         this.name2 = name2;
