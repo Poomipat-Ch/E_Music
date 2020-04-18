@@ -163,6 +163,7 @@ public class User_UI extends UI {
 
         TableView<Song> table = new TableView<>();
         table.setEditable(true);
+        table.getStyleClass().add("tableMyLibrary");
 
         table.setPrefSize(anchorPane.getMinWidth(), anchorPane.getMinHeight());
 

@@ -555,3 +555,90 @@
 .premiumbtn:pressed{
     -fx-background-color : radial-gradient(center 50% 50%, radius 300%, rgba(255,183,0,0.5) 0%, rgba(87,49,0,0.5) 100%);
 }
+
+
+
+
+/****************************************************************
+ 
+  Table TopChart Music
+ 
+****************************************************************/
+
+
+.tableTopChartMusic,tableTopChartMusic:focused{
+    -fx-background-color:transparent;
+    -fx-font-family: "Itim";
+    -fx-border-radius: 10 10 0 0;
+    -fx-background-radius: 10 10 0 0;
+}
+
+.tableTopChartMusic .column-header-background{
+    -fx-background-color: rgba(52, 152, 219,1);
+    -fx-padding: 10px;
+}
+
+.tableTopChartMusic .column-header-background .label{
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+}
+
+.tableTopChartMusic .column-header {
+    -fx-background-color: transparent;
+}
+
+.tableTopChartMusic .table-cell{
+    -fx-text-fill: white;
+}
+
+
+.tableTopChartMusic .table-row-cell:selected,.tableTopChartMusic .table-row-cell:hover{
+    -fx-background-color: rgba(255,255,255,0.4);
+}
+
+.tableTopChartMusic .table-row-cell,.tableTopChartMusic .table-row-cell Lable{
+-fx-background-color: rgba(255,255,255,0.2);
+-fx-table-cell-border-color: transparent;
+-fx-font-size:15px;
+}
+
+/****************************************************************
+ 
+  Table My Library
+ 
+****************************************************************/
+
+.tableMyLibrary,tableMyLibrary:focused{
+    -fx-background-color:transparent;
+    -fx-font-family: "Itim";
+    -fx-border-radius: 10 10 0 0;
+    -fx-background-radius: 10 10 0 0;
+}
+
+.tableMyLibrary .column-header-background{
+    -fx-background-color: rgba(52, 152, 219,1);
+}
+
+.tableMyLibrary .column-header-background .label{
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.tableMyLibrary .column-header {
+    -fx-background-color: transparent;
+}
+
+.tableMyLibrary .table-cell{
+    -fx-text-fill: white;
+}
+
+
+.tableMyLibrary .table-row-cell:selected,.tableMyLibrary .table-row-cell:hover{
+    -fx-background-color: rgba(255,255,255,0.4);
+}
+
+.tableMyLibrary .table-row-cell,.tableMyLibrary .table-row-cell Lable{
+-fx-background-color: rgba(255,255,255,0.2);
+-fx-table-cell-border-color: transparent;
+}
