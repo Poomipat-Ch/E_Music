@@ -6,6 +6,7 @@
 package Component_Music;
 
 import UI_music.User_UI;
+import static UI_music.User_UI.searchTextField;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -40,17 +41,50 @@ public class SearchPage {
         background.setPadding(Insets.EMPTY);
         background.setLayoutX(0);
         background.setLayoutY(2);
-
-        if (text.toLowerCase().equals("")) {
-            anchorPane.getChildren().addAll(background, FoundListPane("Spokify"));
-        } else {
-            anchorPane.getChildren().addAll(background, FoundListPane(text));
-        }
+        
+        searchTextField.textProperty().addListener((ov, t, t1) -> {
+            anchorPane.getChildren().remove(1);
+            if(searchTextField.getText().equals("")) 
+                anchorPane.getChildren().addAll(BlankPane());
+            else
+                anchorPane.getChildren().add(FoundListPane(searchTextField.getText()));
+        });
+        
+        
+            anchorPane.getChildren().addAll(background, BlankPane());
 
     }
 
     public AnchorPane getSearchPane() {
         return anchorPane;
+    }
+    
+    private AnchorPane BlankPane() {
+        AnchorPane anchorpane = new AnchorPane();
+        anchorpane.setMinWidth(1030);
+        ImageView image = new ImageView(new Image("/icon/search.png"));
+        image.setFitWidth(60);
+        image.setPreserveRatio(true);
+        image.setLayoutX(485);
+        image.setLayoutY(350);
+        image.setStyle("-fx-opacity: .7;");
+        
+        Label searchlabel = new Label("Search Spookify");
+        searchlabel.getStyleClass().add("searchlabel");
+        searchlabel.setLayoutY(430);
+        searchlabel.setMinWidth(1030);
+        searchlabel.setAlignment(Pos.CENTER);
+        
+        Label detaillabel = new Label("Find your favorite songs and artists.");
+        detaillabel.getStyleClass().add("detaillabel");
+        detaillabel.setLayoutY(480);
+        detaillabel.setMinWidth(1030);
+        detaillabel.setAlignment(Pos.CENTER);
+        
+        
+        anchorpane.getChildren().addAll(image, searchlabel, detaillabel);
+        
+        return anchorpane;
     }
 
 //    private AnchorPane //empty page
@@ -65,8 +99,9 @@ public class SearchPage {
         borderpane.setLayoutY(60);
         
         borderpane.setTop(TopPlaylistPane("Songs", "music.dat", foundtext));
-        borderpane.setLeft(PlaylistPane("Genres & Moods", "stylemusiclist.txt", foundtext));
-        borderpane.setRight(PlaylistPane("Artists", "artist.dat", foundtext));
+//        borderpane.setLeft(PlaylistPane("Genres & Moods", "stylemusiclist.txt", foundtext));
+//        borderpane.setRight(PlaylistPane("Artists", "artist.dat", foundtext));
+        borderpane.setCenter(TopPlaylistPane("Artists", "artist.dat", foundtext));
 
         return borderpane;
     }

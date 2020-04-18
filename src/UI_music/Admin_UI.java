@@ -469,7 +469,7 @@ public class Admin_UI extends UI {
         scrollPane.pannableProperty().set(true);
         scrollPane.fitToWidthProperty().set(true);
         scrollPane.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
-        scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.ALWAYS);
+        scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPane.setPadding(new Insets(10));
         scrollPane.getStyleClass().add("allSong"); //CSS
         scrollPane.getStyleClass().add("scroll-bar");
@@ -493,7 +493,7 @@ public class Admin_UI extends UI {
         scrollArtistPane.pannableProperty().set(true);
         scrollArtistPane.fitToWidthProperty().set(true);
         scrollArtistPane.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
-        scrollArtistPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.ALWAYS);
+        scrollArtistPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollArtistPane.setPadding(new Insets(10));
         scrollArtistPane.getStyleClass().add("allSong"); //CSS
         scrollArtistPane.getStyleClass().add("scroll-bar");
