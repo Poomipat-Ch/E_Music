@@ -221,6 +221,8 @@ public class User_UI extends UI {
 
         return anchorPane;
     }
+    
+    public static TextField searchTextField;
 
     @Override
     public HBox searchBoxAll() {
@@ -230,7 +232,7 @@ public class User_UI extends UI {
         hBox.setLayoutX(20);
         hBox.setLayoutY(15);
 
-        TextField searchTextField = new TextField();
+        searchTextField = new TextField();
         searchTextField.setPromptText("Search");
         searchTextField.setStyle("-fx-font-size: 12px;");
         searchTextField.setPrefSize(250, 30);
@@ -241,10 +243,7 @@ public class User_UI extends UI {
         });
 
         /// 1030-300-60-70
-        searchTextField.textProperty().addListener((ov, t, t1) -> {
-            User_UI.totalPane.getChildren().remove(0);
-            User_UI.totalPane.getChildren().add(new SearchPage(searchTextField.getText()).getSearchPane());
-        });
+        
         hBox.getChildren().addAll(searchTextField);
 
         return hBox;
