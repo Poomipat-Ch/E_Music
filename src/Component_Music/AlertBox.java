@@ -16,55 +16,59 @@ import javafx.stage.Stage;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Frontae
  */
 public class AlertBox {
+
     static boolean ans;
-    public static boolean display(String title, String message){
-        try{
-        Stage stage = new Stage();
-        
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle(title);
-        stage.setResizable(false);
-        
-        Label label1 = new Label();
-        label1.setText(message);
-        
-        Button yesBtn = new Button("Yes");
-        yesBtn.setOnAction(e -> {
-            ans = true;
-            stage.close();
-                });
-        
-        Button noBtn = new Button("No");
-        noBtn.setOnAction(e -> {
-            ans = false;
-            stage.close();
-                });
-        
-        HBox row1 = new HBox(20);
-        row1.getChildren().addAll(yesBtn,noBtn);
-        row1.setAlignment(Pos.CENTER);
-        
-        VBox layout1 = new VBox(20);
-        layout1.getChildren().addAll(label1, row1);
-        layout1.setAlignment(Pos.CENTER);
-        
-        Scene scene = new Scene(layout1,200,100);
-        
-        
-        stage.setScene(scene);
-        stage.showAndWait();
-    }catch(Exception e){
+
+    public static boolean display(String title, String message) {
+        try {
+            Stage stage = new Stage();
+
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle(title);
+            stage.setResizable(false);
+
+            Label label1 = new Label();
+            label1.setText(message);
+
+            Button yesBtn = new Button("Yes");
+            yesBtn.setOnAction(e -> {
+                ans = true;
+                stage.close();
+            });
+
+            Button noBtn = new Button("No");
+            noBtn.setOnAction(e -> {
+                ans = false;
+                stage.close();
+            });
+
+            HBox row1 = new HBox(20);
+            row1.getChildren().addAll(yesBtn, noBtn);
+            row1.setAlignment(Pos.CENTER);
+
+            VBox layout1 = new VBox(20);
+            layout1.getChildren().addAll(label1, row1);
+            layout1.setAlignment(Pos.CENTER);
+
+            Scene scene = new Scene(layout1, 200, 100);
+            stage.setOnCloseRequest(e -> {
+                ans = false;
+                stage.close();
+            });
+            stage.setScene(scene);
+            stage.showAndWait();
+        } catch (Exception e) {
             System.out.println("AlertBox : Exeption in display");
-    }
-        
+        }
+
         return ans;
     }
+
     public static void displayAlert(String title, String message) {
         try {
             Stage stage = new Stage();
@@ -93,46 +97,47 @@ public class AlertBox {
             System.out.println("AlertBox : Exeption in displayAlert");
         }
     }
-    public static boolean confirmAlert(String title, String message){
-        try{
-        Stage stage = new Stage();
-        
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle(title);
-        stage.setResizable(false);
-        
-        Label label1 = new Label();
-        label1.setText(message);
-        
-        Button yesBtn = new Button("Confirm");
-        yesBtn.setOnAction(e -> {
-            ans = true;
-            stage.close();
-                });
-        
-        Button noBtn = new Button("Cancel");
-        noBtn.setOnAction(e -> {
-            ans = false;
-            stage.close();
-                });
-        
-        HBox row1 = new HBox(20);
-        row1.getChildren().addAll(yesBtn,noBtn);
-        row1.setAlignment(Pos.CENTER);
-        
-        VBox layout1 = new VBox(20);
-        layout1.getChildren().addAll(label1, row1);
-        layout1.setAlignment(Pos.CENTER);
-        
-        Scene scene = new Scene(layout1,350,100);
-        
-        
-        stage.setScene(scene);
-        stage.showAndWait();
-    }catch(Exception e){
-           System.out.println("AlertBox : Exeption in confirmAlert");
-    }
-        
+
+    public static boolean confirmAlert(String title, String message) {
+        try {
+            Stage stage = new Stage();
+
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle(title);
+            stage.setResizable(false);
+
+            Label label1 = new Label();
+            label1.setText(message);
+
+            Button yesBtn = new Button("Confirm");
+            yesBtn.setOnAction(e -> {
+                ans = true;
+                stage.close();
+            });
+
+            Button noBtn = new Button("Cancel");
+            noBtn.setOnAction(e -> {
+                ans = false;
+                stage.close();
+            });
+
+            HBox row1 = new HBox(20);
+            row1.getChildren().addAll(yesBtn, noBtn);
+            row1.setAlignment(Pos.CENTER);
+
+            VBox layout1 = new VBox(20);
+            layout1.getChildren().addAll(label1, row1);
+            layout1.setAlignment(Pos.CENTER);
+
+            Scene scene = new Scene(layout1, 350, 100);
+
+            stage.setScene(scene);
+            stage.showAndWait();
+        } catch (Exception e) {
+            System.out.println("AlertBox : Exeption in confirmAlert");
+        }
+
         return ans;
     }
+
 }
