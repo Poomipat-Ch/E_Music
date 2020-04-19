@@ -57,8 +57,8 @@ public class Login {
     public Login(Stage stage) throws FileNotFoundException, IOException, ClassNotFoundException {
 
 //**READ THIS***** This save in user.dat file, if you can't run admin, try run this code only once and comment again
-//        listUserAccount.add(new Account("admin", "admin", "admin", "admin@gmail.com", "admin", "N/A", LocalDate.now(), "admin", "admin", "admin", new Image("/image/defaultprofile.png")));
-//        writeFile(user, listUserAccount); 
+////        listUserAccount.add(new Account("admin", "admin", "admin", "admin@gmail.com", "admin", "N/A", LocalDate.now(), "admin", "admin", "admin", new Image("/image/defaultprofile.png")));
+////        writeFile(user, listUserAccount); 
 
         Login.stage = stage;
 
@@ -173,13 +173,22 @@ public class Login {
         VBox rightMenu = new VBox(20);
         rightMenu.setMargin(registerBtn, new Insets(0, 0, 30, 0));
         rightMenu.getStyleClass().add("loginLable");
-        rightMenu.setMaxSize(350, 600);
-        rightMenu.getChildren().addAll(exitButton(),title1, idLabel, idInput, passLabel, passInput, chk1, loginBtn, forgotBtn, guestBtn, registerBtn);
+        rightMenu.setMinSize(350, 600);
+        rightMenu.getChildren().addAll( exitButton(),title1, idLabel, idInput, passLabel, passInput, chk1, loginBtn, forgotBtn, guestBtn, registerBtn);
         rightMenu.setAlignment(Pos.CENTER);
+        
+        Label backgroundRightMenu = new Label();
+        backgroundRightMenu.setMinSize(350, 600);
+        backgroundRightMenu.getStyleClass().add("backgroundLoginLabel");
+        
+        AnchorPane anchorpane = new AnchorPane();
+        anchorpane.getChildren().addAll(backgroundRightMenu, rightMenu);
+        
         BorderPane borderPane = new BorderPane();
-        BorderPane.setAlignment(rightMenu, Pos.CENTER);
+        
+        BorderPane.setAlignment(anchorpane, Pos.CENTER);
         //BorderPane.setMargin(rightMenu, new Insets(15, 15, 15, 15));
-        borderPane.setRight(rightMenu);
+        borderPane.setRight(anchorpane);
         borderPane.getStyleClass().add("backgroundImage");
         
         borderPane.setOnMousePressed(e -> {

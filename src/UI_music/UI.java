@@ -28,7 +28,7 @@ abstract public class UI {
 
     private Stage stage;
     private int menuBtnClicked = 0;
-    private Account userAccount;
+    public static Account userAccount;
 
     public UI() {
     }
@@ -129,7 +129,7 @@ abstract public class UI {
 
         Button browse = CreaButton("Browse");
         browse.setOnMouseClicked(e -> {
-            if (!"guest".equals(userAccount.getUserRole())) {
+            if (!"guest".equals(UI.userAccount.getUserRole())) {
                 this.vbox.getChildren().remove(1);
                 this.vbox.getChildren().add(new BrowsePane().getBrowsePane());
             } else {
@@ -148,7 +148,7 @@ abstract public class UI {
         mysong.getChildren().add(myLibrary);
         myLibrary.setOnMouseClicked(e -> {
             menuBtnClicked = 1;
-            if (!"guest".equals(userAccount.getUserRole())) {
+            if (!"guest".equals(UI.userAccount.getUserRole())) {
 
                 this.vbox.getChildren().remove(1);
                 this.vbox.getChildren().add(secondPagePane());
@@ -164,7 +164,7 @@ abstract public class UI {
         Button myAccount = CreaButton("My Account");
         myAccount.setOnMouseClicked(e -> {
             menuBtnClicked = 2;
-            if (!"guest".equals(userAccount.getUserRole())) {
+            if (!"guest".equals(UI.userAccount.getUserRole())) {
                 this.vbox.getChildren().remove(1);
                 this.vbox.getChildren().add(myAccount());
 

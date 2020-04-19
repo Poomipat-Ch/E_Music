@@ -11,31 +11,36 @@
 
 
 
-.loginLable{
-    -fx-background-color: rgb(255,255,255);
+.loginLable{   
     -fx-font-family: "Itim";
     -fx-padding: 0px 50px 0px 50px;
 }
 
+.backgroundLoginLabel {
+    -fx-background-color: #222222;
+    -fx-opacity: .75;
+}
+
 .loginLable Label,CheckBox{
     -fx-font-size: 20px;
-    -fx-font-weight:bold; 
+    -fx-font-weight:bold;
+    -fx-text-fill: white;
 }
 
 
 .loginLable TextField,.loginLable PasswordField{
     -fx-font-size: 20px;
-    -fx-text-fill : grey;
+    -fx-text-fill : #bbbbbb;
     -fx-font-weight:bold; 
     -fx-background-color: transparent;
-    -fx-border-color:gray;
+    -fx-border-color: #bbbbbb;
     -fx-border-width: 2px;
     -fx-border-radius:15;
 }
 
 .loginLable TextField:focused,.loginLable PasswordField:focused{
-    -fx-border-color:black;
-    -fx-text-fill:black;
+    -fx-border-color: #ffffff;
+    -fx-text-fill: #ffffff;
 }
 
 

@@ -165,9 +165,6 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
 
         totalDetail = new HBox(40);
 
-        VBox detail = new VBox(30);
-        VBox imageDetail = new VBox(5);
-
         listStyleSong = new ArrayList<>();
         listCheckBox = new ArrayList<>();
 
@@ -187,7 +184,17 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
 //        ImageView imageSong = new ImageView(img);      //commend by gut
 //        imageSong.setFitWidth(250);
 //        imageSong.setFitHeight(300);
-        //Upload Picture
+        if(this.title.getText().equals("Upload Song"))
+            setupInterPane();
+        else
+            setupThaiPane();
+    }
+    
+    private void setupInterPane() {
+        
+        VBox detail = new VBox(30);
+        VBox imageDetail = new VBox(5);
+        
         Button imageBtn = new Button("Upload Picture");
         imageBtn.setOnAction(e -> {
             Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
@@ -307,9 +314,9 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
                     try {
                         oldSongList = ReadWriteFile.readFileSong(musicFile);
                     } catch (IOException ex) {
-                        System.out.println("Admin_UI : IOExeption readfile in deleteSongClicked");
+                        System.out.println("UploadSongPopUp : IOExeption read file in DetailUpPopSong");
                     } catch (ClassNotFoundException ex) {
-                        System.out.println("Admin_UI : ClassNotFoundExeption readfile in deleteSongClicked");
+                        System.out.println("UploadSongPopUp : ClassNotFoundExeption read file in DetailUpPopSong");
                     }
                     for (Song song : oldSongList) {
                         if (checkExistFile.equals(song.getNameSong() + song.getArtistSong() + song.getDetailSong())) {
@@ -403,7 +410,229 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
 
         detail.getChildren().addAll(gridPane, hbox6);
         totalDetail.getChildren().addAll(imageDetail, detail, exitButton());
+    }
+    
+    private void setupThaiPane() {
+        
+        VBox detail = new VBox(30);
+        VBox imageDetail = new VBox(5);
+        
+        Button imageBtn = new Button("เพิ่มรูปภาพ");
+        imageBtn.setOnAction(e -> {
+            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
 
+            fileChooser = new FileChooser();
+            fileChooser.setTitle("Open Image");
+            fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG Files", "*.png"), new FileChooser.ExtensionFilter("JPEG", "*.jpeg"));
+
+            //Set to user's directory or go to the default C drvie if cannot access
+            String userDirectoryString = System.getProperty("user.home") + "\\Pictures";
+            File userDirectory = new File(userDirectoryString);
+
+            if (!userDirectory.canRead()) {
+                userDirectory = new File("user.home");
+            }
+
+            fileChooser.setInitialDirectory(userDirectory);
+
+            this.filePath = fileChooser.showOpenDialog(stage);
+
+            //Try to update the image by loading the new image
+            if (filePath != null) {
+                try {
+                    BufferedImage bufferedImage = ImageIO.read(filePath);
+                    image = SwingFXUtils.toFXImage(bufferedImage, null);
+                    this.photo.setImage(image);
+
+                } catch (IOException ex) {
+                    System.out.println("UploadSongPopUp : IOExeption upload picture in DetailUpPopSong");
+                }
+                changePhoto = true;
+            } else {
+                System.out.println("upload cancel");
+            }
+
+        });
+
+        photo.setFitHeight(200);
+        photo.setFitWidth(200);
+        photo.setPreserveRatio(true);
+        imageBtn.getStyleClass().add("buybtn"); //CSS
+
+        HBox styleSelect = new HBox(10);
+        styleSelect.setAlignment(Pos.CENTER);
+
+        listCheckBox.add(pop);
+        listCheckBox.add(jazz);
+        listCheckBox.add(rock);
+        listCheckBox.add(rnb);
+        listCheckBox.add(hiphop);
+        for (CheckBox checkbox : listCheckBox) {
+            styleSelect.getChildren().add(checkbox);
+        }
+
+        imageDetail.setAlignment(Pos.TOP_CENTER);
+        imageDetail.setSpacing(20);
+        imageDetail.getChildren().addAll(title, photo, imageBtn);
+        imageDetail.setMinHeight(280);
+
+        //Detail Song
+        //Upload detail song
+        //Song
+        Label nameSong = new Label("เพลง");
+        fillNameSong.setPromptText("ชื่อเพลง");
+        fillNameSong.setPrefWidth(300);
+
+        //Artist
+        Label nameArtist = new Label("ศิลปิน");
+
+        fillNameArtist.setPromptText("ชื่อ นักร้อง / วงดนตรี");
+        fillNameArtist.setPrefWidth(300);
+
+        //Detail
+        Label detailSong = new Label("รายละเอียด");
+        fillDetailSong.setPromptText("ความยาวเพลง นาที : วินาที / อัลบั้ม");
+        fillDetailSong.setPrefWidth(293);
+
+        //Song Style
+        Label songStyle = new Label("แนวเพลง");
+
+        //Price
+        Label songPrice = new Label("ราคา");
+        fillSongPrice.setPromptText("ตัวอย่าง 100 บาท");
+        fillSongPrice.setPrefWidth(306);
+
+        fillNameSong.getStyleClass().add("detailUploadTextFill"); //CSS
+        fillNameArtist.getStyleClass().add("detailUploadTextFill"); //CSS
+        fillDetailSong.getStyleClass().add("detailUploadTextFill"); //CSS
+        fillSongPrice.getStyleClass().add("detailUploadTextFill"); //CSS
+
+        //Button Buy
+        Button uploadBtn = new Button("เพิ่มไฟล์เพลง");
+        uploadBtn.getStyleClass().add("uploadbtn"); // borrow...
+        uploadBtn.setOnMouseClicked(e -> {
+            this.uploadSong();
+        });
+
+        path.setPrefWidth(300);
+        path.setPromptText(".MP3");
+        path.getStyleClass().add("detailUploadTextFillPath");
+
+        Button saveBtn = new Button("บันทึก");
+        saveBtn.getStyleClass().add("savebtn"); // borrow...
+        saveBtn.setOnMouseClicked(e -> {
+
+            for (CheckBox checkbox : listCheckBox) {
+                if (checkbox.isSelected()) {
+                    listStyleSong.add(checkbox.getText());
+                }
+            }
+
+            if (!listStyleSong.isEmpty() && !fillDetailSong.getText().isEmpty() && !fillNameArtist.getText().isEmpty() && !fillDetailSong.getText().isEmpty() && !fillSongPrice.getText().isEmpty() && !songUploadEmply) {
+                if (!checkExistFile.equals("")) {
+                    ArrayList<Song> oldSongList = new ArrayList<Song>();
+                    ArrayList<Song> newSongList = new ArrayList<Song>();
+                    selectFileDelete = new File("src/MusicFile/" + checkExistFile + ".mp3");
+                    try {
+                        oldSongList = ReadWriteFile.readFileSong(musicFile);
+                    } catch (IOException ex) {
+                        System.out.println("UploadSongPopUp : IOExeption read file in DetailUpPopSong");
+                    } catch (ClassNotFoundException ex) {
+                        System.out.println("UploadSongPopUp : ClassNotFoundExeption read file in DetailUpPopSong");
+                    }
+                    for (Song song : oldSongList) {
+                        if (checkExistFile.equals(song.getNameSong() + song.getArtistSong() + song.getDetailSong())) {
+
+                        } else {
+                            newSongList.add(song);
+                        }
+                    }
+                    try {
+                        ReadWriteFile.writeFileSong(musicFile, newSongList);
+                    } catch (IOException ex) {
+                        Logger.getLogger(UploadSongPopUp.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    changePhoto = true;
+                }
+                try {
+                    songArrayList = ReadWriteFile.readFileSong(musicFile);
+                } catch (IOException | ClassNotFoundException ex) {
+                    System.out.println("UploadSongPopUp : IOExeption read file in DetailUpPopSong");
+                }
+                if (checkSong(songArrayList, fillNameSong.getText(), fillNameArtist.getText()) == 0) {
+                    if (changePhoto) {
+                        this.saveSong();
+                    } else {
+                        if(changePhoto = AlertBox.display("ไม่มีรูปภาพ?", "คุณแน่ใจหรือไม่? ที่จะทำการ\nบันทึกโดยการไม่มีรูปภาพ")){
+                            this.saveSong();
+                        }
+                        else{
+                            System.out.println("save cancel");
+                        }
+                    }
+                } else {
+                    AlertBox.displayAlert("Upload Fail!", "This song already exist");
+                }
+
+            } else if (songUploadEmply) {
+                AlertBox.displayAlert("Upload Fail!", "Plese upload song.");
+            } else {
+                AlertBox.displayAlert("Upload Fail!", "Plese complete the form.");
+            }
+        });
+
+        Button cancelBtn = new Button("ยกเลิก");
+        cancelBtn.getStyleClass().add("cancelbtn");
+        cancelBtn.setOnMouseClicked(e -> {
+            stage.close();
+        });
+
+        HBox hbox6 = new HBox(20);
+        hbox6.setAlignment(Pos.BOTTOM_RIGHT);
+        hbox6.getChildren().addAll(saveBtn, cancelBtn);
+
+        Label colon1 = new Label(":");
+        Label colon2 = new Label(":");
+        Label colon3 = new Label(":");
+        Label colon4 = new Label(":");
+        Label colon5 = new Label(":");
+        Label colon6 = new Label(":");
+
+        GridPane gridPane = new GridPane();
+        gridPane.setVgap(20);
+        gridPane.setHgap(10);
+        gridPane.getStyleClass().add("detailUpload"); //CSS
+        GridPane.setHalignment(nameSong, HPos.RIGHT);
+        GridPane.setHalignment(nameArtist, HPos.RIGHT);
+        GridPane.setHalignment(detailSong, HPos.RIGHT);
+        GridPane.setHalignment(songStyle, HPos.RIGHT);
+        GridPane.setHalignment(songPrice, HPos.RIGHT);
+        GridPane.setHalignment(uploadBtn, HPos.RIGHT);
+        GridPane.setConstraints(nameSong, 0, 0);
+        GridPane.setConstraints(nameArtist, 0, 1);
+        GridPane.setConstraints(detailSong, 0, 2);
+        GridPane.setConstraints(songStyle, 0, 3);
+        GridPane.setConstraints(songPrice, 0, 4);
+        GridPane.setConstraints(uploadBtn, 0, 5);
+        GridPane.setConstraints(colon1, 1, 0);
+        GridPane.setConstraints(colon2, 1, 1);
+        GridPane.setConstraints(colon3, 1, 2);
+        GridPane.setConstraints(colon4, 1, 3);
+        GridPane.setConstraints(colon5, 1, 4);
+        GridPane.setConstraints(colon6, 1, 5);
+        GridPane.setConstraints(fillNameSong, 2, 0);
+        GridPane.setConstraints(fillNameArtist, 2, 1);
+        GridPane.setConstraints(fillDetailSong, 2, 2);
+        GridPane.setConstraints(styleSelect, 2, 3);
+        GridPane.setConstraints(fillSongPrice, 2, 4);
+        GridPane.setConstraints(path, 2, 5);
+        gridPane.getChildren().addAll(nameSong, nameArtist, detailSong, songStyle, songPrice, uploadBtn,
+                colon1, colon2, colon3, colon4, colon5, colon6,
+                fillNameSong, fillNameArtist, fillDetailSong, styleSelect, fillSongPrice, path);
+
+        detail.getChildren().addAll(gridPane, hbox6);
+        totalDetail.getChildren().addAll(imageDetail, detail, exitButton());
+        
     }
 
     private Button exitButton() {
@@ -484,7 +713,11 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         }
         Admin_UI.totalPane.getChildren().clear();
         Admin_UI.totalPane.getChildren().add(Admin_UI.updateScrollPane(""));
-        AlertBox.displayAlert("Upload Success!", "Upload Success!");
+        
+        if(this.title.getText().equals("Upload Song"))
+            AlertBox.displayAlert("Upload Success!", "Upload Success!");
+        else
+            AlertBox.displayAlert("เพิ่มเพลงสำเร็จ!", "เพิ่มเพลงสำเร็จ!");
         stage.close();
     }
 }

@@ -6,6 +6,7 @@
 package Component_Music;
 
 import UI_music.Register;
+import UI_music.UI;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -30,14 +31,14 @@ public class DetailSongPopUp {
     //private BorderPane totalDetail;
     private Stage stage;
             
-    public DetailSongPopUp(Song song, Account userAccount) throws InterruptedException {
+    public DetailSongPopUp(Song song) throws InterruptedException {
         this.song = song;
         this.stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Detail Song");
         stage.setResizable(false);
         
-        DetailSong(userAccount);
+        DetailSong();
         Scene scene = new Scene(detail);
         String stylrSheet = getClass().getResource("/style_css/stylePopupDetail.css").toExternalForm();
         scene.getStylesheets().add(stylrSheet);
@@ -50,7 +51,7 @@ public class DetailSongPopUp {
     
     double mouse_x = 0,mouse_y = 0; // position mouse
     
-    private void DetailSong(Account userAccount) {
+    private void DetailSong() {
         this.detail = new VBox();
         detail.getStyleClass().add("allPane");
         detail.setAlignment(Pos.TOP_CENTER);
@@ -90,7 +91,7 @@ public class DetailSongPopUp {
         buyButton.setOnMouseClicked(e ->{
             // Gut <<<<<<<------<<<< La Tonnee pen Font <-----------------------------------------------------------------------------------**********
             System.out.println("Clicked");
-            if ("guest".equals(userAccount.getUserRole())) { // wait
+            if ("guest".equals(UI.userAccount.getUserRole())) { // wait
                 
                 AlertBox registerFirst = new AlertBox();
                 registerFirst.displayAlert("Register First", "Register Free Account to Buy");
@@ -99,7 +100,7 @@ public class DetailSongPopUp {
                         
             }else{
                 Cashing cashing = new Cashing();
-                cashing.Info(stage, song, userAccount);
+                cashing.Info(stage, song);
             }
             
             System.out.println("Calling Info");

@@ -121,6 +121,19 @@ public class Account implements Serializable {
         return gender;
     }
 
+    public void reset(String name, String surname, String email, String username, String password, String gender, LocalDate dateOfBirth) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.gender = gender;
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    
+    
+
     public void setPhoto(Image image) {
         width = ((int) image.getWidth());
         height = ((int) image.getHeight());

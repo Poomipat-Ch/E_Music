@@ -24,7 +24,7 @@ import javafx.stage.StageStyle;
  */
 abstract public class SelectTypePopUp {
     
-    Stage stage;
+    static Stage stage;
 
     public SelectTypePopUp() {
         stage = new Stage();
@@ -48,7 +48,7 @@ abstract public class SelectTypePopUp {
         anchorpane.getStyleClass().add("mainBox");
         
         AnchorPane backgroundpane = new AnchorPane();
-        backgroundpane.setStyle("-fx-background-color: tranparent;");
+        backgroundpane.setStyle("-fx-background-color: tranparent");
         //backgroundpane.getStyleClass().add("backgroundSelect");
         backgroundpane.setPrefSize(500, 500);
         
@@ -64,9 +64,10 @@ abstract public class SelectTypePopUp {
     private Label CreateCloseButton () {
                 
         Label close = new Label("CLOSE");
-        close.getStyleClass().add("closebutton");
+        close.getStyleClass().add("cancelbtn");
         close.setAlignment(Pos.CENTER);
-        close.setPrefSize(500, 20);
+        close.setPrefSize(100, 20);
+        close.setLayoutX(200);
         close.setLayoutY(460);
         
         close.setOnMouseClicked(clicked -> {

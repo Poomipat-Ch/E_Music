@@ -3,7 +3,7 @@
     -fx-background-radius :  50; 
 }
 .allPane{
-    -fx-background-color:radial-gradient(radius 100%,rgba(132,206,235,1) 0%, rgba(94,123,229,1) 43%, rgba(136,96,208,1) 83%);/*#2d4059*/
+    -fx-background-color:radial-gradient(center 40% 0%, radius 100%, rgb(90 ,160, 255, 1) 40%,rgba(94,123,229,1) 90% /*,rgba(136,96,255,1) 60% */, rgba(132,206,235,1) 90%);/*#2d4059*/
     -fx-opacity: 0.99; 
     -fx-background-radius : 10; 
 }
@@ -209,7 +209,7 @@
 }
 
 .mainBox{
-    -fx-background-color: radial-gradient(center 30% 0%, radius 100%, rgba(132,206,235,1) 0%, rgba(90,185,234,1) 20%, rgba(71,108,203,1) 100%);
+    -fx-background-color: radial-gradient(center 30% 0%, radius 100%, rgba(71,108,203,1) 80%, rgba(90,185,234,1) 70%, rgba(132,206,235,1) 100%);
       /*radial-gradient(center 30% 50%, radius 60%, rgba(76,190,235,1) 0%, rgba(86,128,233,1) 100%);*/  
         /*radius 100%,rgba(86,128,233,1) 0%, rgba(163,100,196,1) 100%);*/
 /*#0c7b93*/
@@ -261,6 +261,7 @@
     -fx-font-size: 14px;
     -fx-underline: true;
     -fx-font-family: "Itim";
+    -fx-font-weight:bold;
 }
 
 .closebutton:hover {
