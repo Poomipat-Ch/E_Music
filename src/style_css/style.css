@@ -569,19 +569,19 @@
 .tableTopChartMusic,tableTopChartMusic:focused{
     -fx-background-color:transparent;
     -fx-font-family: "Itim";
-    -fx-border-radius: 10 10 0 0;
-    -fx-background-radius: 10 10 0 0;
 }
 
 .tableTopChartMusic .column-header-background{
-    -fx-background-color: rgba(52, 152, 219,1);
-    -fx-padding: 10px;
+    -fx-background-color: rgba(23, 115, 188,1);
+    -fx-background-radius : 10 10 0 0; 
 }
 
 .tableTopChartMusic .column-header-background .label{
     -fx-background-color: transparent;
+    -fx-font-size:20px;
+    -fx-padding: 10 0 10 0;
+    -fx-font-weight:bold;
     -fx-text-fill: white;
-    -fx-font-size: 20px;
 }
 
 .tableTopChartMusic .column-header {
@@ -594,7 +594,9 @@
 
 
 .tableTopChartMusic .table-row-cell:selected,.tableTopChartMusic .table-row-cell:hover{
-    -fx-background-color: rgba(255,255,255,0.4);
+    -fx-text-fill: black;  
+    -fx-background-color: rgba(0,0,0,0.1);; /*rgba(63,93,167,0.9);*/
+    -fx-font-size:15px;
 }
 
 .tableTopChartMusic .table-row-cell,.tableTopChartMusic .table-row-cell Lable{
@@ -612,21 +614,24 @@
 .tableMyLibrary,tableMyLibrary:focused{
     -fx-background-color:transparent;
     -fx-font-family: "Itim";
-    -fx-border-radius: 10 10 0 0;
-    -fx-background-radius: 10 10 0 0;
 }
 
 .tableMyLibrary .column-header-background{
-    -fx-background-color: rgba(52, 152, 219,1);
+    -fx-background-color: rgba(23, 115, 188,1);
+    -fx-background-radius : 10 10 0 0; 
 }
 
 .tableMyLibrary .column-header-background .label{
     -fx-background-color: transparent;
+    -fx-font-size:20px;
+    -fx-padding: 10 0 10 0;
+    -fx-font-weight:bold;
     -fx-text-fill: white;
 }
 
 .tableMyLibrary .column-header {
     -fx-background-color: transparent;
+    -fx-border-color: transparent;
 }
 
 .tableMyLibrary .table-cell{
@@ -635,7 +640,9 @@
 
 
 .tableMyLibrary .table-row-cell:selected,.tableMyLibrary .table-row-cell:hover{
-    -fx-background-color: rgba(255,255,255,0.4);
+    -fx-text-fill: black;  
+    -fx-background-color: rgba(0,0,0,0.1);; /*rgba(63,93,167,0.9);*/
+    -fx-font-size:15px;
 }
 
 .tableMyLibrary .table-row-cell,.tableMyLibrary .table-row-cell Lable{
