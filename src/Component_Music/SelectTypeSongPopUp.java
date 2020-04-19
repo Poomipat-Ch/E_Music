@@ -84,8 +84,10 @@ public class SelectTypeSongPopUp extends SelectTypePopUp {
 
             button.setOnAction(clicked -> {
                 if (string.equals("International Song")) {
+                    stage.close();
                     new UploadSongPopUp("Upload Song");
                 } else {
+                    stage.close();
                     new UploadSongPopUp("เพิ่มเพลง");
                 }
             });
