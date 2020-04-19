@@ -29,14 +29,12 @@ public class Profile {
     Button cancelbt = new Button("Cancel");
     Button editbt = new Button("Edit");
     Button buyPremiumbtn = new Button("Upgrade Premium");
-    Account userAccount;
 
     BorderPane accountPane = new BorderPane();
 
-    public Profile(Account userAccount) {
+    public Profile() {
 
-        this.userAccount = userAccount;
-        MyAccount myAccount = new MyAccount(this.userAccount);
+        MyAccount myAccount = new MyAccount();
 
         accountPane.setTranslateY(20);
 
@@ -49,11 +47,11 @@ public class Profile {
             if (myAccount.saveAccount()) {
                 accountPane.setTranslateY(20);
                 AlertBox.displayAlert("Edit Profile", "Saved.");
-                this.userAccount = myAccount.getMyAccount();
-                myAccount.showAccount(this.userAccount);
+//                UI.userAccount = myAccount.getMyAccount();
+                myAccount.showAccount();
                 accountPane.setCenter(myAccount.getProfilePane());
                 bottom.getChildren().clear();
-                if (!"admin".equals(userAccount.getUserRole()) && !"premium".equals(userAccount.getUserRole())) {
+                if (!"admin".equals(UI.userAccount.getUserRole()) && !"premium".equals(UI.userAccount.getUserRole())) {
                     bottom.getChildren().addAll(buyPremiumbtn);
                 }
                 bottom.getChildren().addAll(editbt);
@@ -64,11 +62,11 @@ public class Profile {
         cancelbt.getStyleClass().add("cancelbtn");
         cancelbt.setOnAction(event -> {
             accountPane.setTranslateY(20);
-            myAccount.showAccount(userAccount);
+            myAccount.showAccount();
             accountPane.setCenter(myAccount.getProfilePane());
             myAccount.Clear();
             bottom.getChildren().clear();
-            if (!"admin".equals(userAccount.getUserRole()) && !"premium".equals(userAccount.getUserRole())) {
+            if (!"admin".equals(UI.userAccount.getUserRole()) && !"premium".equals(UI.userAccount.getUserRole())) {
                 bottom.getChildren().addAll(buyPremiumbtn);
             }
             bottom.getChildren().addAll(editbt);
@@ -89,10 +87,10 @@ public class Profile {
         buyPremiumbtn.setOnMouseClicked(e -> {
             // Font dono << ------------
             Cashing cashPremium = new Cashing();
-            cashPremium.buyPremium(new Stage(), userAccount);
+            cashPremium.buyPremium(new Stage(), UI.userAccount);
         });
         
-        if (!"admin".equals(userAccount.getUserRole()) && !"premium".equals(userAccount.getUserRole())) {
+        if (!"admin".equals(UI.userAccount.getUserRole()) && !"premium".equals(UI.userAccount.getUserRole())) {
             bottom.getChildren().addAll(buyPremiumbtn);
         }
         bottom.getChildren().addAll(editbt);

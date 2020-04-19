@@ -45,7 +45,7 @@ public class ShowingSongs {
                 fileForDownload = new File("src/MusicFile/" + songNameSelected + ".mp3");
 
                 try {
-                    new DetailSongPopUp(table.getSelectionModel().getSelectedItem().getSong(), User_UI.userAccount);
+                    new DetailSongPopUp(table.getSelectionModel().getSelectedItem().getSong());
                 } catch (InterruptedException ex) {
                     System.out.println("TopChartMusicPane : InterrruoteddExeption DetailSongPopUp in updateScrollPane");
                 }

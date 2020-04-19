@@ -23,15 +23,13 @@ import javafx.scene.layout.VBox;
 public class TopChartPane {
     
     private BorderPane topchartpane;
-    private Account userAccount;
     private AnchorPane pane;
     
-    public TopChartPane(Account userAccount) {
+    public TopChartPane() {
         pane = new AnchorPane();
         topchartpane = new BorderPane();
         Button topChartBtn;
         ImageView chartImage;
-        this.userAccount = userAccount;
         
         ArrayList<String> topchartlist = new ArrayList<>();
 
@@ -68,7 +66,7 @@ public class TopChartPane {
 
             topChartBtn.setOnAction(event -> {
                 System.out.println(string);
-                    new TopChartMusicPage(string, userAccount);
+                    new TopChartMusicPage(string);
             });
 
         }
@@ -106,7 +104,7 @@ public class TopChartPane {
         
         label.setOnMouseClicked(event -> {
                 System.out.println(string);
-                    new TopChartMusicPage(string, this.userAccount);
+                    new TopChartMusicPage(string);
             });
         
         return label;

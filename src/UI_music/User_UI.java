@@ -58,7 +58,6 @@ public class User_UI extends UI {
     private String songNameSelected;
     private String nameSet;
     private Song songSelected;
-    public static Account userAccount;
     private String page;
 
     public User_UI() {
@@ -66,7 +65,6 @@ public class User_UI extends UI {
 
     public User_UI(Stage stage, Account userAccount) {
         super(stage, userAccount);
-        this.userAccount = userAccount;
 
         Scene scene = new Scene(allPane(), 1280, 960);
         String stylrSheet = getClass().getResource("/style_css/style.css").toExternalForm();
@@ -208,7 +206,7 @@ public class User_UI extends UI {
         detailCol.setSortable(false);
 
         // Display row data
-        ObservableList<Song> list = userAccount.getMyListSong();
+        ObservableList<Song> list = UI.userAccount.getMyListSong();
         FilteredList<Song> filterData = new FilteredList<>(list, b -> true);
         searchSystemMyLibrary.setFilterData(filterData);
 
@@ -284,7 +282,7 @@ public class User_UI extends UI {
         totalPane = new AnchorPane();
         totalPane.getStyleClass().add("allSong");
 
-        totalPane.getChildren().addAll(new TopChartPane(userAccount).getTopchartpane());
+        totalPane.getChildren().addAll(new TopChartPane().getTopchartpane());
 
         scrollPane.setCenter(totalPane);
 
@@ -319,8 +317,8 @@ public class User_UI extends UI {
                 if ((song.getNameSong().toLowerCase().contains(lowerCase) || song.getArtistSong().toLowerCase().contains(lowerCase)) && styleSong.contains(page)) {
 
                     boolean inMyList = false;
-                    for (Song song1 : userAccount.getMyListSong()) {
-                        if (!userAccount.isFirstSong()) {
+                    for (Song song1 : UI.userAccount.getMyListSong()) {
+                        if (!UI.userAccount.isFirstSong()) {
                             if ((song.getNameSong().toLowerCase().contains(song1.getNameSong().toLowerCase()) && song.getArtistSong().toLowerCase().contains(song1.getArtistSong().toLowerCase()))) {
                                 inMyList = true;
                                 break;
@@ -347,7 +345,7 @@ public class User_UI extends UI {
                         contentButton.setMinWidth(300); // By Pop
                         contentButton.setOnMouseClicked(e -> {
                             try {
-                                new DetailSongPopUp(song, userAccount);
+                                new DetailSongPopUp(song);
                             } catch (InterruptedException ex) {
                                 System.out.println("User_UI : InterrruoteddExeption DetailSongPopUp in updateScrollPane");
                             }
@@ -368,7 +366,7 @@ public class User_UI extends UI {
 
     @Override
     public BorderPane myAccount() {
-        return new Profile(userAccount).getMainPane();
+        return new Profile().getMainPane();
     }
 
     public void downloader() {
@@ -408,7 +406,7 @@ public class User_UI extends UI {
 
         for (Account account : nowAccount) {
             if (account.getUsername().equals(userAccount.getUsername())) {
-                updateAccount.add(userAccount);
+                updateAccount.add(UI.userAccount);
             } else {
                 updateAccount.add(account);
             }

@@ -54,7 +54,6 @@ public class MyAccount {
     private File user = new File("src/data/user.dat");
     private ReadWriteFile file = new ReadWriteFile();
 
-    private Account myAccount;
     private ArrayList<Account> listAccount = new ArrayList<>();
 
     private LocalDate dOB;
@@ -86,23 +85,22 @@ public class MyAccount {
     private ImageView photo;
     private Image image;
 
-    public MyAccount(Account myAccount) {
-        this.showAccount(myAccount);
+    public MyAccount() {
+        this.showAccount();
     }
 
     public BorderPane getProfilePane() {
         return profilePane;
     }
 
-    public void showAccount(Account myAccount) {
-        this.myAccount = myAccount;
+    public void showAccount() {
         editBox.getChildren().clear();
         
         Label titleHead = new Label("My Account / บัญชีของฉัน");
         titleHead.getStyleClass().add("titleMyAccount");
         
-        Label firstnameLabel = new Label(myAccount.getName());
-        Label lastnameLabel = new Label(myAccount.getSurname());
+        Label firstnameLabel = new Label(UI.userAccount.getName());
+        Label lastnameLabel = new Label(UI.userAccount.getSurname());
         firstnameLabel.getStyleClass().add("fistNameAndSurname");
         lastnameLabel.getStyleClass().add("fistNameAndSurname");
         
@@ -111,17 +109,17 @@ public class MyAccount {
         hboxNameSurname.getChildren().addAll(firstnameLabel,lastnameLabel);
 
         Label usernameTitleLabel = new Label("Username");
-        Label usernameLabel = new Label(myAccount.getUsername());
+        Label usernameLabel = new Label(UI.userAccount.getUsername());
         Label emailTitleLabel = new Label("E-mail");
-        Label emailLabel = new Label(myAccount.getEmail());
+        Label emailLabel = new Label(UI.userAccount.getEmail());
         Label dateOfBirthLabelTitle = new Label("Date of Birth");
         
         DatePicker date = new DatePicker();
-        dOB = myAccount.getDateOfBirth();
+        dOB = UI.userAccount.getDateOfBirth();
         date.setValue(dOB);
         Label dateOfBirthLabel = new Label(dOB.format(DateTimeFormatter.ISO_DATE));
         Label genderTitleLabel = new Label("Gender");
-        Label genderLabel = new Label(myAccount.getGender());       
+        Label genderLabel = new Label(UI.userAccount.getGender());       
         
         Label colon1 = new Label(":");
         Label colon2 = new Label(":");
@@ -153,7 +151,7 @@ public class MyAccount {
                                       colon1,colon2,colon3,colon4,
                                       usernameLabel,emailLabel,genderLabel,dateOfBirthLabel);       
         
-        image = myAccount.getPhoto();
+        image = UI.userAccount.getPhoto();
         photo = new ImageView(image);
         photo.setFitHeight(200);
         photo.setFitWidth(200);
@@ -186,19 +184,19 @@ public class MyAccount {
         Label genderTitleLabel = new Label("Gender");
         
         username.setPromptText("Usrname");
-        username.setText(this.myAccount.getUsername());
+        username.setText(UI.userAccount.getUsername());
         username.setMaxWidth(280);
                 
         firstname.setPromptText("First Name");
-        firstname.setText(this.myAccount.getName());
+        firstname.setText(UI.userAccount.getName());
         firstname.setMaxWidth(280);
         
         lastname.setPromptText("Last Name");
-        lastname.setText(this.myAccount.getSurname());
+        lastname.setText(UI.userAccount.getSurname());
         lastname.setMaxWidth(280);
         
         email.setPromptText("Email e.g. Spookify@gmail.com");
-        email.setText(this.myAccount.getEmail());
+        email.setText(UI.userAccount.getEmail());
         email.setMaxWidth(280);
         
         username.getStyleClass().add("detailMyAccountFillText");
@@ -212,7 +210,7 @@ public class MyAccount {
         // show week numbers 
         date.setShowWeekNumbers(false);
         // when datePicker is pressed 
-        dOB = myAccount.getDateOfBirth();
+        dOB = UI.userAccount.getDateOfBirth();
         date.setValue(dOB);
         date.setOnAction(e -> {
             dOB = date.getValue();
@@ -229,9 +227,9 @@ public class MyAccount {
         female.setToggleGroup(sexToggle);
         otherRadio.setToggleGroup(sexToggle);
 
-        if (myAccount.getGender().equals("Male")) {
+        if (UI.userAccount.getGender().equals("Male")) {
             sexToggle.selectToggle(male);
-        } else if (myAccount.getGender().equals("Female")) {
+        } else if (UI.userAccount.getGender().equals("Female")) {
             sexToggle.selectToggle(female);
         } else {
             sexToggle.selectToggle(otherRadio);
@@ -418,7 +416,7 @@ public class MyAccount {
         for (Account account : listAccount) {
             String userId = username.getText(), emailID = email.getText();
             String chkUser = account.getUsername(), chkEmail = account.getEmail();
-            if (((userId.equals(chkUser) && !userId.equals(myAccount.getUsername())) || (emailID.equals(chkEmail) && !emailID.equals(myAccount.getEmail())))) {
+            if (((userId.equals(chkUser) && !userId.equals(UI.userAccount.getUsername())) || (emailID.equals(chkEmail) && !emailID.equals(UI.userAccount.getEmail())))) {
                 uniqueID = false;
                 break;
             }
@@ -428,7 +426,7 @@ public class MyAccount {
         
         if (uniqueID == false) {
             AlertBox.displayAlert("Something went wrong!", "Email / username is already exists.");
-        } else if (currentPassword.getText().equals(myAccount.getPassword())) {
+        } else if (currentPassword.getText().equals(UI.userAccount.getPassword())) {
             if(this.changeStatus && !password.getText().equals(passwordConfirm.getText())) {
                 AlertBox.displayAlert("Something went wrong!", "Confirm password is not as same as password.");
             }
@@ -447,17 +445,16 @@ public class MyAccount {
                     ArrayList<Account> changeAccount = new ArrayList<>();
 
                     if (changeStatus) {
-                        myAccount.setPassword(this.password.getText());
+                        UI.userAccount.setPassword(this.password.getText());
                     }
 
                     for (Account account : listAccount) {
-                        if (account.getUsername().equals(myAccount.getUsername())) {
-                            myAccount.setPhoto(image);
-                            this.photo.setImage(myAccount.getPhoto());
-                            Account newAccount = new Account(firstname.getText(), lastname.getText(), username.getText(), email.getText(),
-                                    myAccount.getPassword(), userGender, dOB, myAccount.getQuestion(), myAccount.getAnswer(), myAccount.getUserRole(), myAccount.getPhoto());
-                            changeAccount.add(newAccount);
-                            myAccount = newAccount;
+                        if (account.getUsername().equals(UI.userAccount.getUsername())) {
+                            UI.userAccount.setPhoto(image);
+                            UI.userAccount.reset(firstname.getText(), lastname.getText(), email.getText(), username.getText(),
+                                    UI.userAccount.getPassword(), userGender, dOB);
+                            this.photo.setImage(UI.userAccount.getPhoto());                         
+                            changeAccount.add(UI.userAccount);
 
                         } else {
                             changeAccount.add(account);
@@ -484,16 +481,12 @@ public class MyAccount {
 
             this.Clear();
 
-        } else if (!currentPassword.getText().equals(myAccount.getPassword())) {
+        } else if (!currentPassword.getText().equals(UI.userAccount.getPassword())) {
             AlertBox.displayAlert("Something went wrong!", "Current password is not correct.");
         }
 
         changeStatus = false;
         return editSave;
-    }
-
-    public Account getMyAccount() {
-        return myAccount;
     }
 
     public void Clear() {

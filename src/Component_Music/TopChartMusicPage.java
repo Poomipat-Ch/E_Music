@@ -40,14 +40,13 @@ public class TopChartMusicPage {
     private String songNameSelected;
     private String nameSet;
     private Song songSelected;
-    private Account userAccount;
     private String page;
 
     private ImageView imageview;
 
     TableView<Song> table;
 
-    public TopChartMusicPage(String string, Account userAccount) {
+    public TopChartMusicPage(String string) {
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.setMinSize(990, 901);
         anchorPane.setLayoutX(-3);
@@ -76,7 +75,7 @@ public class TopChartMusicPage {
                 fileForDownload = new File("src/MusicFile/" + songNameSelected + ".mp3");
 
                 try {
-                    new DetailSongPopUp(table.getSelectionModel().getSelectedItem().getSong(), userAccount);
+                    new DetailSongPopUp(table.getSelectionModel().getSelectedItem().getSong());
                 } catch (InterruptedException ex) {
                     System.out.println("TopChartMusicPane : InterrruoteddExeption DetailSongPopUp in updateScrollPane");
                 }

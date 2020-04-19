@@ -6,6 +6,7 @@
 package Component_Music;
 
 import UI_music.ReadWriteFile;
+import UI_music.UI;
 import UI_music.User_UI;
 import java.io.File;
 import java.io.IOException;
@@ -48,16 +49,13 @@ public class Cashing {
     ArrayList<Account> listAccount = new ArrayList<>();
     ArrayList<Account> addAccount = new ArrayList<>();
 
-    private Account userAccount;
-
     private ReadWriteFile file = new ReadWriteFile();
-    
+
     double mouse_x = 0, mouse_y = 0; // position mouse
 
-    public void Info(Stage paymentStage, Song song, Account userAccount) {
+    public void Info(Stage paymentStage, Song song) {
         this.paymentStage = paymentStage;
         this.song = song;
-        this.userAccount = userAccount;
 
         Label title = new Label("YOUR ORDER");
         Label noteText = new Label("Please check every detail before making purchase.");
@@ -149,7 +147,7 @@ public class Cashing {
                     AlertBox.displayAlert("Purchase Success", "\"" + song.getNameSong() + " - " + song.getArtistSong() + "\" will add to your playlist soon.");
                     System.out.println("Purchase complete");
                     this.paymentStage.close();
-                    this.userAccount.addSong(song);
+                    UI.userAccount.addSong(song);
                     this.userSaveSong();
                     //<------------------------------------------------------------ EVERYTHING CHECK PURCHASE COMPLETE Set song EVERYTHINGto the playlist pls thank you by font
                 }
@@ -167,7 +165,7 @@ public class Cashing {
         borderPane.setStyle("-fx-background-color:#bbbbbb;");
 
         infoScene = new Scene(borderPane); //, 600, 525
-        
+
         //infoScene.setFill(Color.TRANSPARENT);
         //String stylrSheet = getClass().getResource("/style_css/stylePopupDetail.css").toExternalForm(); // From PopUpdetail CSS
         //infoScene.getStylesheets().add(stylrSheet); // CSS
@@ -175,7 +173,7 @@ public class Cashing {
         //paymentStage.initStyle(StageStyle.TRANSPARENT);
         //paymentStage.setTitle("PAYMENT");
         paymentStage.showAndWait();
-        
+
     }
 
     public static boolean isInteger(String s) {
@@ -227,7 +225,6 @@ public class Cashing {
     }
 
     ArrayList<Account> updateAccount = new ArrayList<>();
-    
 
     public void userSaveSong() {
 
@@ -243,8 +240,8 @@ public class Cashing {
         }
 
         for (Account account : nowAccount) {
-            if (account.getUsername().equals(userAccount.getUsername())) {
-                updateAccount.add(userAccount);
+            if (account.getUsername().equals(UI.userAccount.getUsername())) {
+                updateAccount.add(UI.userAccount);
             } else {
                 updateAccount.add(account);
             }
@@ -261,6 +258,7 @@ public class Cashing {
     ArrayList<Account> oldAccounts;
     ArrayList<Account> presentAccounts;
     Account updateAccount2;
+    private Account userAccount;
 
     public void buyPremium(Stage paymentStage, Account userAccount) { //copy from Info and UpdateAccountClicked in Admin_UI
         //Payment
@@ -411,7 +409,7 @@ public class Cashing {
                     this.paymentStage.close();
 //                    this.userAccount.addSong(song);
 //                    this.userSaveSong();
-
+                    UI.userAccount = updateAccount2;
                 }
             }
         });
@@ -435,7 +433,7 @@ public class Cashing {
             paymentStage.setX(e.getScreenX() - mouse_x);
             paymentStage.setY(e.getScreenY() - mouse_y);
         });
-        
+
         infoScene = new Scene(borderPane);//, 600, 525
         infoScene.setFill(Color.TRANSPARENT);
         String stylrSheet = getClass().getResource("/style_css/stylePopupDetail.css").toExternalForm(); // From PopUpdetail CSS

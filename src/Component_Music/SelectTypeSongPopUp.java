@@ -25,19 +25,12 @@ public class SelectTypeSongPopUp extends SelectTypePopUp {
 
     public SelectTypeSongPopUp() {
         super();
-//        String stylrSheet = getClass().getResource("/style_css/stylePopupDetail.css").toExternalForm(); // From PopUpdetail CSS
-//        scene.getStylesheets().add(stylrSheet); // CSS
-//
-//        scene.setFill(Color.TRANSPARENT);
-//        stage.setScene(scene);
-//        stage.initStyle(StageStyle.TRANSPARENT);
-//        stage.showAndWait();
     }
 
     @Override
     AnchorPane CreateHeadLabel() {
 
-        Label label = new Label("Please select song's type /\n\tโปรดเลือกประเภทของเพลง");
+        Label label = new Label("Please select song's type\nโปรดเลือกประเภทของเพลง");
         label.getStyleClass().add("selectlabel");
         label.setAlignment(Pos.CENTER);
         label.setMinWidth(500);
@@ -50,7 +43,7 @@ public class SelectTypeSongPopUp extends SelectTypePopUp {
         headlabel.setLayoutY(5);
 
         AnchorPane anchorpane = new AnchorPane();
-        anchorpane.getChildren().addAll(headlabel, label);
+        anchorpane.getChildren().addAll(label);
 
         return anchorpane;
     }
@@ -84,12 +77,11 @@ public class SelectTypeSongPopUp extends SelectTypePopUp {
 
             button.setOnAction(clicked -> {
                 if (string.equals("International Song")) {
-                    stage.close();
                     new UploadSongPopUp("Upload Song");
                 } else {
-                    stage.close();
                     new UploadSongPopUp("เพิ่มเพลง");
                 }
+                SelectTypePopUp.stage.close();
             });
             
             anchorpane.getChildren().addAll(button);

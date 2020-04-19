@@ -313,7 +313,7 @@ public class Guest_UI extends UI {
                     contentButton.setMinWidth(300); // By Pop
                     contentButton.setOnMouseClicked(e -> {
                         try {
-                            new DetailSongPopUp(song, userAccount);
+                            new DetailSongPopUp(song);
                         } catch (InterruptedException ex) {
                             System.out.println("Detail Song Popup : " + ex);
                         }

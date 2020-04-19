@@ -200,7 +200,7 @@ public class BrowsePane {
         button.setPadding(new Insets(160, 0, 0, 0));
         
         button.setOnMouseClicked(event -> {
-            new TopChartMusicPage(string, User_UI.userAccount);
+            new TopChartMusicPage(string);
         });
         
         return button;

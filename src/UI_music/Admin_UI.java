@@ -11,6 +11,7 @@ import Component_Music.SearchSystem;
 import Component_Music.SearchSystemAccount;
 import Component_Music.Song;
 import Component_Music.Artist;
+import Component_Music.SelectTypeArtistPopUp;
 import Component_Music.SelectTypeSongPopUp;
 import Component_Music.UploadArtistPopUp;
 import Component_Music.UploadSongPopUp;
@@ -89,8 +90,6 @@ public class Admin_UI extends UI {
 
     private TableView<Account> table;
 
-    private Account userAccount;
-
     private ReadWriteFile file = new ReadWriteFile();
 
     public Admin_UI() {
@@ -112,8 +111,6 @@ public class Admin_UI extends UI {
         } catch (Exception e) {
             System.out.println("readFile Artist in Admin_UI constuctor ERROR!!!!!");
         }
-
-        this.userAccount = userAccount;
 
         Scene scene = new Scene(allPane2(), 1280, 960);
         String stylrSheet = getClass().getResource("/style_css/style.css").toExternalForm();
@@ -213,7 +210,7 @@ public class Admin_UI extends UI {
         newArtistBtn.setLayoutX(780);
         newArtistBtn.setLayoutY(700);
         newArtistBtn.setOnAction(e -> {
-            new UploadArtistPopUp("Upload Artist");
+            new SelectTypeArtistPopUp();
         });
 
         Button deleteArtistBtn = CreaButton("Delete");        //Delete Button
@@ -460,7 +457,7 @@ public class Admin_UI extends UI {
 
     @Override
     public BorderPane myAccount() {
-        return new Profile(userAccount).getMainPane();
+        return new Profile().getMainPane();
     }
 
     public static VBox totalPane;
@@ -787,7 +784,7 @@ public class Admin_UI extends UI {
             System.out.println("Admin_UI : ClassNotFoundExeption readfile in upDateAccountClick");
         }
 
-        if (selectUsername.equals(userAccount.getUsername()) && selectEmail.equals(userAccount.getEmail())) {
+        if (selectUsername.equals(UI.userAccount.getUsername()) && selectEmail.equals(UI.userAccount.getEmail())) {
             AlertBox.displayAlert("Update Account.", "Your status is already Admin.");
             return 0;
         }
@@ -943,7 +940,7 @@ public class Admin_UI extends UI {
 
         oldAccounts = file.readFile(user);
 
-        if (selectUsername.equals(userAccount.getUsername()) && selectEmail.equals(userAccount.getEmail())) {
+        if (selectUsername.equals(UI.userAccount.getUsername()) && selectEmail.equals(UI.userAccount.getEmail())) {
             AlertBox.displayAlert("Delect Account.", "You cannot delete your account.");
             return 0;
         }
@@ -952,7 +949,7 @@ public class Admin_UI extends UI {
             String chkUser = account.getUsername();
             String chkEmail = account.getEmail();
 
-            if (selectUsername.equals(userAccount.getUsername()) && selectEmail.equals(userAccount.getEmail())) {
+            if (selectUsername.equals(UI.userAccount.getUsername()) && selectEmail.equals(userAccount.getEmail())) {
                 AlertBox.displayAlert("Delect Account.", "You cannot delete your account.");
                 presentAccounts.add(account);
             } else if (!(selectUsername.equals(chkUser) && selectEmail.equals(chkEmail))) {
