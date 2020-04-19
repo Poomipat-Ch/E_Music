@@ -197,4 +197,73 @@
     -fx-font-family: "Itim";
 }
 
+/****************************************************************
+ 
+  Select Type Pop Up
+ 
+****************************************************************/
+
+@font-face{
+    font-family: Itim;
+    src: url("/font/Itim-Regular.ttf");
+}
+
+.mainBox{
+    -fx-background-color: radial-gradient(center 30% 0%, radius 100%, rgba(132,206,235,1) 0%, rgba(90,185,234,1) 20%, rgba(71,108,203,1) 100%);
+      /*radial-gradient(center 30% 50%, radius 60%, rgba(76,190,235,1) 0%, rgba(86,128,233,1) 100%);*/  
+        /*radius 100%,rgba(86,128,233,1) 0%, rgba(163,100,196,1) 100%);*/
+/*#0c7b93*/
+    -fx-background-radius: 20;
+}
+
+.backgroundSelect{
+    -fx-background-color: #222222;
+    -fx-opacity: 0.2;
+    -fx-background-radius :  20;
+}
+
+.selectlabel {
+    -fx-text-fill: white;
+    -fx-font-size : 28px;  
+    -fx-font-family: "Itim";
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.9) , 5,0,2,2);
+}
+
+.headselectlabel {
+    -fx-text-fill: #eeeeee;
+    -fx-font-size : 18px;  
+    -fx-font-family: "Itim";
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #eeeeee;
+    /*-fx-effect: dropshadow( gaussian , rgba(0,0,0,0.9) , 5,0,2,2);
+    */
+}
+
+.buttonselect{
+    -fx-background-color : linear-gradient(to right,  rgba(0,208,100,0.7) 0%, rgba(0,208,100,0.8) 100%);
+    -fx-text-fill : white;
+    -fx-background-radius :  30;
+    -fx-font-size : 24px;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.5) , 5,0,2,2);
+    -fx-font-family: "Itim";
+}
+
+.buttonselect:hover{
+    -fx-background-color : linear-gradient(to right,  rgba(0,208,100,0.9) 0%, rgba(0,208,100,1) 100%);
+}
+
+.buttonselect:pressed{
+    -fx-background-color : linear-gradient(to right,  rgba(0,208,100,0.5) 0%, rgba(0,208,100,0.5) 100%);
+}
+
+.closebutton {
+    -fx-text-fill: #eeeeee;
+    -fx-font-size: 14px;
+    -fx-underline: true;
+    -fx-font-family: "Itim";
+}
+
+.closebutton:hover {
+    -fx-text-fill: #dc143c;
+}
 /*Premium End*/

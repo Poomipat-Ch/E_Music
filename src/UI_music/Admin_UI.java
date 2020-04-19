@@ -11,6 +11,7 @@ import Component_Music.SearchSystem;
 import Component_Music.SearchSystemAccount;
 import Component_Music.Song;
 import Component_Music.Artist;
+import Component_Music.SelectTypeSongPopUp;
 import Component_Music.UploadArtistPopUp;
 import Component_Music.UploadSongPopUp;
 import java.io.File;
@@ -160,7 +161,7 @@ public class Admin_UI extends UI {
         uploadBtn.setLayoutY(700);
         uploadBtn.setOnAction(e -> {
             System.out.println(songSelectString);
-            new UploadSongPopUp("Upload Song");
+            new SelectTypeSongPopUp();
         });
 
         Button deleteBtn = CreaButton("Delete");        //Delete Button
