@@ -124,6 +124,8 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
                 hiphop.setSelected(true);
             }
         }
+        changePhoto = true;
+        
         songUploadEmply = false;
         runOnce();
 
@@ -307,7 +309,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
                     } catch (IOException ex) {
                         System.out.println("Admin_UI : IOExeption readfile in deleteSongClicked");
                     } catch (ClassNotFoundException ex) {
-                        System.out.println("Admin_UI : ClassNotFoundExeption readfile in deleteSongClickede");
+                        System.out.println("Admin_UI : ClassNotFoundExeption readfile in deleteSongClicked");
                     }
                     for (Song song : oldSongList) {
                         if (checkExistFile.equals(song.getNameSong() + song.getArtistSong() + song.getDetailSong())) {

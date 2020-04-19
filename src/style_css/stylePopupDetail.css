@@ -107,6 +107,43 @@
     -fx-font-family: "Itim";
 }
 
+/*Update start*/
+
+.detailUpdate Label{
+    -fx-font-size: 26px;
+    -fx-font-weight:100;
+    -fx-text-fill: white;
+    -fx-font-family: "Itim";
+}
+.detailUpdateChoice{
+    -fx-font-size: 21px;
+    -fx-font-weight:100;
+    -fx-text-fill: yellow;
+    -fx-font-family: "Itim";
+}
+/*Update End*/
+/*Regist start*/
+.detailRegist{
+    -fx-font-size: 18.5px;
+    -fx-font-weight:600;
+    -fx-text-fill: white;
+    -fx-font-family: "Itim";
+}
+.detailRegistChoice{
+    -fx-font-size: 16px;
+    -fx-font-weight:600;
+    -fx-text-fill: white;
+    -fx-font-family: "Itim";
+} 
+.detailRegistChoiceAdmin{
+    -fx-font-size: 16px;
+    -fx-font-weight:600;
+    -fx-text-fill: yellow;
+    -fx-font-family: "Itim";
+}
+/*Regist end*/
+
+
 .detailUploadTextFill{
     -fx-font-size: 16px;
     -fx-font-weight:100;
@@ -116,6 +153,45 @@
 
 .detailUploadTextFillPath{
     -fx-font-size: 14px;
+    -fx-font-weight:100;
+    -fx-text-fill: black;
+    -fx-font-family: "Itim";
+}
+.pictureAppear{
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.7) , 10,0,2,2);
+}
+
+/*Premium Start*/
+.allPanePremium{
+    -fx-background-color:radial-gradient(radius 100%, rgba(94,123,229,1) 0%, rgba(136,96,208,1) 90%);/*#2d4059*/
+    -fx-opacity: 0.99; 
+    -fx-background-radius : 10; 
+}
+
+.titlePremium{
+    -fx-font-size: 30px;
+    -fx-font-weight:100;
+    -fx-text-fill: white;
+    -fx-font-family: "Itim";
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.5) , 5,0,2,2);
+}
+.detailPremium{
+    -fx-font-size: 20px;
+    -fx-font-weight:600;
+    -fx-text-fill: white;
+    -fx-font-family: "Itim";
+}
+.detailPremiumChoice{
+    -fx-font-size: 15px;
+    -fx-font-weight:600;
+    -fx-text-fill: white;
+    -fx-font-family: "Itim";
+}
+.subPane{
+ -fx-background-color: rgba(0,0,0,0.3);
+} 
+.detailPremiumTextFill{
+    -fx-font-size: 15px;
     -fx-font-weight:100;
     -fx-text-fill: black;
     -fx-font-family: "Itim";
@@ -190,3 +266,4 @@
 .closebutton:hover {
     -fx-text-fill: #dc143c;
 }
+/*Premium End*/

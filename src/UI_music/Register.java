@@ -32,9 +32,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javax.imageio.ImageIO;
 
 /**
@@ -59,15 +61,20 @@ public class Register {
     ArrayList<Account> addAccount = new ArrayList<>();
 
     private ReadWriteFile file = new ReadWriteFile();
+    
+    Stage regisStage;
+    
+    double mouse_x = 0, mouse_y = 0;
 
     public Register(String userRole) {
 
         image = new Image("/image/defaultprofile.png");
 
-        Stage regisStage = new Stage();
+        regisStage = new Stage();
         regisStage.initModality(Modality.APPLICATION_MODAL);
 
-        Label title = new Label("Sign up");
+        Label title = new Label("Create New Account");
+        title.getStyleClass().add("title");
         title.setPadding(new Insets(10));
         title.setAlignment(Pos.TOP_CENTER);
 
@@ -90,6 +97,14 @@ public class Register {
         passIn.setPromptText("New Password");
         TextField cfPassIn = new PasswordField();
         cfPassIn.setPromptText("Confirm Password");
+        
+        nameIn.getStyleClass().add("detailUploadTextFill");
+        surnameIn.getStyleClass().add("detailUploadTextFill");
+        usernameIn.getStyleClass().add("detailUploadTextFill");
+        mailIn.getStyleClass().add("detailUploadTextFill");
+        passIn.getStyleClass().add("detailUploadTextFill");
+        cfPassIn.getStyleClass().add("detailUploadTextFill");
+                
 
         // create a date picker 
         DatePicker date = new DatePicker();
@@ -100,6 +115,8 @@ public class Register {
             dOB = date.getValue();
             dateSet = true;
         });
+        
+        date.getStyleClass().add("detailUploadTextFill");
 
         //Select Gender
         Label sexText = new Label("Gender");
@@ -111,10 +128,17 @@ public class Register {
         female.setToggleGroup(sexToggle);
         otherRadio.setToggleGroup(sexToggle);
         sexToggle.selectToggle(male); // Set default = male
+        
+        sexText.getStyleClass().add("detailRegist");
+        male.getStyleClass().add("detailRegistChoice");
+        female.getStyleClass().add("detailRegistChoice");
+        otherRadio.getStyleClass().add("detailRegistChoice");
 
         //FORGOT QUESTION
         Label qText = new Label("Security Question");
+        qText.getStyleClass().add("detailRegist");
         ComboBox<String> question = new ComboBox<>();
+        question.getStyleClass().add("detailUploadTextFill");
         question.getItems().addAll(
                 "What's your first school.",
                 "Your favourite pet's name.",
@@ -124,12 +148,15 @@ public class Register {
         question.setEditable(true); //USER CAN WRITE THEIR OWN QUESTION
         //FORGOT ANSWER
         TextField answer = new TextField();
+        answer.getStyleClass().add("detailUploadTextFill");
         answer.setPromptText("Answer");
 
         CheckBox premiumBox = new CheckBox("I want to have a premium account");
+        premiumBox.getStyleClass().add("detailRegist");
 
-        Button ok = new Button("OK");
-        ok.setOnAction(e -> {
+        Button saveBtn = new Button("Save");
+        saveBtn.getStyleClass().add("savebtn");
+        saveBtn.setOnAction(e -> {
             System.out.println("Checking information...");
 
             String userGender = "";
@@ -249,8 +276,9 @@ public class Register {
             }
 
         });
-        Button cancel = new Button("Cancel");
-        cancel.setOnAction(e -> {
+        Button cancelBtn = new Button("Cancel");
+        cancelBtn.getStyleClass().add("cancelbtn");
+        cancelBtn.setOnAction(e -> {
             System.out.println("Canceling Registeration.");
             regisStage.close();
         });
@@ -264,17 +292,19 @@ public class Register {
         row3.setAlignment(Pos.CENTER);
 
         Label title2 = new Label("Date of birth");
+        title2.getStyleClass().add("detailRegist");
 
         HBox sexRow = new HBox(20);
         sexRow.getChildren().addAll(male, female, otherRadio);
         sexRow.setAlignment(Pos.CENTER);
 
         HBox row2 = new HBox(20); //Button Row
-        row2.getChildren().addAll(ok, cancel);
+        row2.getChildren().addAll(saveBtn, cancelBtn);
         row2.setAlignment(Pos.CENTER);
         row2.setPadding(new Insets(20));
 
         Button changeImage = new Button("Change Image");
+        changeImage.getStyleClass().add("buybtn");
         changeImage.setOnAction(event -> {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
@@ -306,7 +336,7 @@ public class Register {
 
         VBox column1 = new VBox(20);
         column1.setPadding(new Insets(10)); //add gap 10px
-        column1.setMaxWidth(300);
+        column1.setMaxWidth(330);
 
         HBox statusRow = new HBox(20);
         statusRow.setAlignment(Pos.CENTER);
@@ -324,11 +354,15 @@ public class Register {
         photo.setFitHeight(200);
         photo.setFitWidth(200);
         photo.setPreserveRatio(true);
+        photo.getStyleClass().add("pictureAppear");
 
         adminSelect.setToggleGroup(statusToggle);
         userSelect.setToggleGroup(statusToggle);
         premiumSelect.setToggleGroup(statusToggle);
         statusToggle.selectToggle(userSelect);
+        adminSelect.getStyleClass().add("detailRegistChoiceAdmin");
+        userSelect.getStyleClass().add("detailRegistChoiceAdmin");
+        premiumSelect.getStyleClass().add("detailRegistChoiceAdmin");
 
         VBox titleRow = new VBox(5);
         titleRow.getChildren().add(title);
@@ -341,7 +375,7 @@ public class Register {
         column2.setAlignment(Pos.CENTER);
 
         BorderPane pane = new BorderPane();
-        pane.setPadding(new Insets(10));
+        //pane.setPadding(new Insets(10));
 
         pane.setTop(titleRow);
         pane.setCenter(column1);
@@ -351,13 +385,34 @@ public class Register {
         pane.setAlignment(title, Pos.CENTER);
         pane.setAlignment(column2, Pos.CENTER);
 
+        
+        HBox totalHBox = new HBox(pane,exitButton());
+        totalHBox.setPadding(new Insets(20));
+        totalHBox.getStyleClass().add("allPane");
+        totalHBox.getStyleClass().add("allPane"); //CSS
+        totalHBox.setOnMousePressed(e -> {
+            mouse_x = e.getSceneX();
+            mouse_y = e.getSceneY();
+            //System.out.println(mouse_x + " " + mouse_y);
+        });
+        totalHBox.setOnMouseDragged(e -> {
+            regisStage.setX(e.getScreenX() - mouse_x);
+            regisStage.setY(e.getScreenY() - mouse_y);
+        });
+        
+        
         Scene regScene;
         if (userRole.equals("admin")) {
-            regScene = new Scene(pane, 600, 630);
+            regScene = new Scene(totalHBox); //, 600, 630
         } else {
-            regScene = new Scene(pane, 550, 630);
+            regScene = new Scene(totalHBox); //, 550, 630
         }
+        
+        regScene.setFill(Color.TRANSPARENT);
+        String stylrSheet = getClass().getResource("/style_css/stylePopupDetail.css").toExternalForm(); // From PopUpdetail CSS
+        regScene.getStylesheets().add(stylrSheet); // CSS
 
+        regisStage.initStyle(StageStyle.TRANSPARENT);
         regisStage.setScene(regScene);
         regisStage.setResizable(false);
         regisStage.setTitle("Registeration.");
@@ -369,4 +424,34 @@ public class Register {
                 || email.length() <= 12 || email.length() > 64);
     }
 
+    private Button exitButton() {
+
+        //Exit with Decoration
+        Image exit_icon = new Image("/icon/close-512-detail.png");
+        Image exit_hover_icon = new Image("/icon/close-512_hover.png");
+
+        ImageView imageView = new ImageView(exit_icon);
+        imageView.setFitHeight(20);
+        imageView.setFitWidth(20);
+
+        ImageView imageView_hover = new ImageView(exit_hover_icon);
+        imageView_hover.setFitHeight(20);
+        imageView_hover.setFitWidth(20);
+
+        Button exit = new Button("", imageView);
+        exit.setOnMouseEntered(e -> {
+            exit.setGraphic(imageView_hover);
+        });
+        exit.setOnMouseExited(e -> {
+            exit.setGraphic(imageView);
+        });
+        exit.setOnMouseClicked(e -> {
+            regisStage.close();
+        });
+        exit.setStyle("-fx-background-color : transparent;"); //CSS
+        //exit.setPadding(Insets.EMPTY);
+
+        return exit;
+    }
+    
 }
