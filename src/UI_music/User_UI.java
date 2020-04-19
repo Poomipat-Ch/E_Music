@@ -129,7 +129,9 @@ public class User_UI extends UI {
     }
 
     public void updateDetailDownload() {
-        pane.getChildren().remove(0);
+        if (true) {
+            pane.getChildren().remove(0);
+        }
         ((Label) detailDownload.getChildren().get(0)).setText("Song : " + songSelected.getNameSong());
         ((Label) detailDownload.getChildren().get(1)).setText("Artist : " + songSelected.getArtistSong());
         ((Label) detailDownload.getChildren().get(2)).setText("Downloadable(Time) : " + "3"); // wait
@@ -171,7 +173,9 @@ public class User_UI extends UI {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
                 //System.out.println(table.getSelectionModel().getSelectedItem().getNameSong());
                 songSelected = table.getSelectionModel().getSelectedItem();
-                updateDetailDownload();
+                if (table.getSelectionModel().isEmpty() || table.getSelectionModel() == null) {
+                  updateDetailDownload();  
+                }
                 songNameSelected = table.getSelectionModel().getSelectedItem().getNameSong() + table.getSelectionModel().getSelectedItem().getArtistSong() + table.getSelectionModel().getSelectedItem().getDetailSong();
                 nameSet = table.getSelectionModel().getSelectedItem().getNameSong();
                 System.out.println(songNameSelected);
