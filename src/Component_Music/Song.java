@@ -29,6 +29,7 @@ public class Song implements Serializable {
     private String detailSong;
     private String artistSong;
     private String priceSong;
+    private String nationality;
     private int width, height;
     private int[][] data;
 
@@ -39,12 +40,13 @@ public class Song implements Serializable {
     public Song() {
     }
 
-    public Song(String nameSong, String detailSong, String artistSong, String priceSong, ArrayList<String> listStyleSong, Image image) {
+    public Song(String nameSong, String detailSong, String artistSong, String priceSong, ArrayList<String> listStyleSong, Image image, String nationality) {
         this.nameSong = nameSong;
         this.detailSong = detailSong;
         this.artistSong = artistSong;
         this.priceSong = priceSong;
         this.setPhoto(image);
+        this.nationality = nationality;
         
         this.listStyleSong = listStyleSong;
     }
@@ -83,6 +85,14 @@ public class Song implements Serializable {
 
     public void setPriceSong(String priceSong) {
         this.priceSong = priceSong;
+    }
+
+    public String getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
     }
  
     @Override
