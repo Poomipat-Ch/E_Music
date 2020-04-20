@@ -57,8 +57,8 @@ public class Login {
     public Login(Stage stage) throws FileNotFoundException, IOException, ClassNotFoundException {
 
 //**READ THIS***** This save in user.dat file, if you can't run admin, try run this code only once and comment again
-////        listUserAccount.add(new Account("admin", "admin", "admin", "admin@gmail.com", "admin", "N/A", LocalDate.now(), "admin", "admin", "admin", new Image("/image/defaultprofile.png")));
-////        writeFile(user, listUserAccount); 
+//        listUserAccount.add(new Account("admin", "admin", "admin", "admin@gmail.com", "admin", "N/A", LocalDate.now(), "admin", "admin", "admin", new Image("/image/defaultprofile.png")));
+//        writeFile(user, listUserAccount); 
 
         Login.stage = stage;
 
@@ -206,7 +206,7 @@ public class Login {
         scene1.getStylesheets().add(getClass().getResource("/style_css/styleLogin.css").toExternalForm());
 
         stage.setScene(scene1);
-        stage.setTitle("Spookify - Login/Register");
+        stage.setTitle("Spookify - E-Music");
 
         stage.setOnCloseRequest(e -> {
             e.consume();
@@ -222,7 +222,7 @@ public class Login {
     
      private Button exitButton() {
 
-        ImageView exit_icon = new ImageView(new Image("/icon/close-512.png"));
+        ImageView exit_icon = new ImageView(new Image("/icon/close-512-detail.png"));
         ImageView exit_hover_icon = new ImageView(new Image("/icon/close-512_hover.png"));
         exit_icon.setFitWidth(15);
         exit_icon.setFitHeight(15);
