@@ -412,11 +412,14 @@
 .borderplaylist {
     -fx-background-radius: 0em;
     -fx-background-color : transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
 }
 
 .borderplaylist:hover {
     -fx-background-color : #111111;
     -fx-opacity: 0.5;
+    -fx-underline: true;
 }
 
 .searchlabel {
