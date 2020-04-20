@@ -7,6 +7,7 @@ package Component_Music;
 
 import UI_music.Admin_UI;
 import UI_music.ReadWriteFile;
+import UI_music.TileTagBar;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,6 +20,8 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.geometry.HPos;
@@ -29,6 +32,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
@@ -79,11 +85,11 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
     
     String nationality;
     
-    private CheckBox pop = createCheckBox("Pop");
-    private CheckBox jazz = createCheckBox("Jazz");
-    private CheckBox rock = createCheckBox("Rock");
-    private CheckBox rnb = createCheckBox("R&B");
-    private CheckBox hiphop = createCheckBox("Hip Hop");
+//    private CheckBox pop = createCheckBox("Pop");
+//    private CheckBox jazz = createCheckBox("Jazz");
+//    private CheckBox rock = createCheckBox("Rock");
+//    private CheckBox rnb = createCheckBox("R&B");
+//    private CheckBox hiphop = createCheckBox("Hip Hop");
 
     public UploadSongPopUp(String title, String nationality) { // For Upload
         this.title = new Label(title);
@@ -110,24 +116,24 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         this.nationality = editSong.getNationality();
         photo = new ImageView(image);
         file = new File("src/MusicFile/" + checkExistFile + ".mp3");
-        for(String styleString : editSong.getListStyleSong()){
-            System.out.println(styleString);
-            if(styleString.equals("Pop")){
-                pop.setSelected(true);
-            }
-            if(styleString.equals("Jazz")){
-                jazz.setSelected(true);
-            }
-            if(styleString.equals("Rock")){
-                rock.setSelected(true);
-            }
-            if(styleString.equals("R&B")){
-                rnb.setSelected(true);
-            }
-            if(styleString.equals("Hip Hop")){
-                hiphop.setSelected(true);
-            }
-        }
+//        for(String styleString : editSong.getListStyleSong()){                    //COMMENT BY POP -> send to Gut or Rach
+//            System.out.println(styleString);
+//            if(styleString.equals("Pop")){
+//                pop.setSelected(true);
+//            }
+//            if(styleString.equals("Jazz")){
+//                jazz.setSelected(true);
+//            }
+//            if(styleString.equals("Rock")){
+//                rock.setSelected(true);
+//            }
+//            if(styleString.equals("R&B")){
+//                rnb.setSelected(true);
+//            }
+//            if(styleString.equals("Hip Hop")){
+//                hiphop.setSelected(true);
+//            }
+//        }
         changePhoto = true;
         
         songUploadEmply = false;
@@ -240,18 +246,109 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         photo.setFitWidth(200);
         photo.setPreserveRatio(true);
         imageBtn.getStyleClass().add("buybtn"); //CSS
+        
+//        listCheckBox.add(pop);
+//        listCheckBox.add(jazz);
+//        listCheckBox.add(rock);
+//        listCheckBox.add(rnb);
+//        listCheckBox.add(hiphop);
+//        for (CheckBox checkbox : listCheckBox) {
+//            styleSelect.getChildren().add(checkbox);
+//        }
 
+    //Style Tag !!!! By Pop  /////////////////////////////////////////////////////////////////////
+    
+        tagBar = new TileTagBar(); // Own Class see in TileTagBar.java
+        
+        ScrollPane tagScrollPane= new ScrollPane();
+        
+        //setPrefSize(300, 400);
+        //pannableProperty().set(true);
+        tagScrollPane.fitToWidthProperty().set(true);
+        tagScrollPane.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
+        tagScrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        tagScrollPane.setPrefWidth(300);
+        tagScrollPane.setMinHeight(60);
+        tagScrollPane.setMaxHeight(100);
+        tagScrollPane.getStyleClass().add("scroll-bar");
+        
+        tagScrollPane.setContent(tagBar);
+        
+        
+
+        Button selectBtn = new Button("Select");
+        selectBtn.getStyleClass().add("buybtn");
+        selectBtn.setOnAction(e -> { // Select and open new Stage(New Window)
+                selectStage = new Stage();
+                selectStage.initModality(Modality.APPLICATION_MODAL);
+                selectStage.setResizable(false);
+                selectStage.initStyle(StageStyle.TRANSPARENT);
+
+                listView = new ListView<>();
+                listView.getItems().addAll("Gud","I","Find","Naa","Hee","Len","tae","Game","-3-"); //Pull DATA
+                listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+                Button summitBtn = new Button("Summit");
+                summitBtn.getStyleClass().add("savebtn");
+                summitBtn.setOnAction(evt -> {
+
+                    summitClicked();
+                    //When Everything is Done! 
+                    selectStage.close();
+                });
+
+                Button cancelBtn = new Button("Cancel");
+                cancelBtn.getStyleClass().add("cancelbtn");
+                cancelBtn.setOnAction(evt -> selectStage.close()); // Force Close!
+                //HBox
+                HBox summitAndCancelBox = new HBox(30);
+                summitAndCancelBox.setAlignment(Pos.CENTER);
+                summitAndCancelBox.getChildren().addAll(summitBtn,cancelBtn); //Botton of Window
+
+                Label selectStyleLabel = new Label("Select Song Style");
+                selectStyleLabel.getStyleClass().add("title");
+                
+                //VBox 
+                VBox totalVBox = new VBox(15);
+                totalVBox.getChildren().addAll(exitButtonForStyleSelection(),selectStyleLabel,listView,summitAndCancelBox);
+                totalVBox.getStyleClass().add("allPanePremium");
+                totalVBox.setAlignment(Pos.TOP_CENTER);
+                totalVBox.setPadding(new Insets(30));
+                totalVBox.setOnMousePressed(evt -> {
+                    mouse_x = evt.getSceneX();
+                    mouse_y = evt.getSceneY();
+                    //System.out.println(mouse_x + " " + mouse_y);
+                });
+                totalVBox.setOnMouseDragged(evt -> {
+                    selectStage.setX(evt.getScreenX() - mouse_x);
+                    selectStage.setY(evt.getScreenY() - mouse_y);
+                });
+
+
+                Scene selectScene = new Scene(totalVBox);
+                String stylrSheet = getClass().getResource("/style_css/stylePopupDetail.css").toExternalForm(); // From PopUpdetail CSS
+                selectScene.getStylesheets().add(stylrSheet); // CSS
+                selectScene.setFill(Color.TRANSPARENT);
+                selectStage.setScene(selectScene);
+                selectStage.showAndWait();
+        });
+        
+        Button sortBtn = new Button("Sort");
+        sortBtn.getStyleClass().add("buybtn");
+        sortBtn.setOnAction(e -> {
+            FXCollections.sort(tagBar.getTags()); //Sort from A-Z a->z
+        });
+
+        
         HBox styleSelect = new HBox(10);
-        styleSelect.setAlignment(Pos.CENTER);
+        styleSelect.setAlignment(Pos.CENTER_LEFT);
+        styleSelect.getChildren().addAll(tagScrollPane, selectBtn, sortBtn);
 
-        listCheckBox.add(pop);
-        listCheckBox.add(jazz);
-        listCheckBox.add(rock);
-        listCheckBox.add(rnb);
-        listCheckBox.add(hiphop);
-        for (CheckBox checkbox : listCheckBox) {
-            styleSelect.getChildren().add(checkbox);
-        }
+
+    /////////////////////////////////////////////////////////////////////
+
+
+
 
         imageDetail.setAlignment(Pos.TOP_CENTER);
         imageDetail.setSpacing(20);
@@ -416,6 +513,12 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         totalDetail.getChildren().addAll(imageDetail, detail, exitButton());
     }
     
+    ListView<String> listView;
+    
+    Stage selectStage;
+    
+    TileTagBar tagBar;
+    
     private void setupThaiPane() {
         
         VBox detail = new VBox(30);
@@ -463,17 +566,109 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         photo.setPreserveRatio(true);
         imageBtn.getStyleClass().add("buybtn"); //CSS
 
-        HBox styleSelect = new HBox(10);
-        styleSelect.setAlignment(Pos.CENTER);
+//        listCheckBox.add(pop);
+//        listCheckBox.add(jazz);
+//        listCheckBox.add(rock);
+//        listCheckBox.add(rnb);
+//        listCheckBox.add(hiphop);
+//        for (CheckBox checkbox : listCheckBox) {
+//            styleSelect.getChildren().add(checkbox);
+//        }
+    
+    //Style Tag !!!! By Pop  /////////////////////////////////////////////////////////////////////
+    
+        tagBar = new TileTagBar(); // Own Class see in TileTagBar.java
+        
+        ScrollPane tagScrollPane= new ScrollPane();
+        
+        //setPrefSize(300, 400);
+        //pannableProperty().set(true);
+        tagScrollPane.fitToWidthProperty().set(true);
+        tagScrollPane.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
+        tagScrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        tagScrollPane.setPrefWidth(300);
+        tagScrollPane.setMinHeight(60);
+        tagScrollPane.setMaxHeight(100);
+        tagScrollPane.getStyleClass().add("scroll-bar");
+        
+        tagScrollPane.setContent(tagBar);
+        
+        
 
-        listCheckBox.add(pop);
-        listCheckBox.add(jazz);
-        listCheckBox.add(rock);
-        listCheckBox.add(rnb);
-        listCheckBox.add(hiphop);
-        for (CheckBox checkbox : listCheckBox) {
-            styleSelect.getChildren().add(checkbox);
-        }
+        Button selectBtn = new Button("เลือก");
+        selectBtn.getStyleClass().add("buybtn");
+        selectBtn.setOnAction(e -> { // Select and open new Stage(New Window)
+                selectStage = new Stage();
+                selectStage.initModality(Modality.APPLICATION_MODAL);
+                selectStage.setResizable(false);
+                selectStage.initStyle(StageStyle.TRANSPARENT);
+
+                listView = new ListView<>();
+                listView.getItems().addAll("Gud","I","Find","Naa","Hee","Len","tae","Game","-3-"); //Pull DATA
+                listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+                Button summitBtn = new Button("ตกลง");
+                summitBtn.getStyleClass().add("savebtn");
+                summitBtn.setOnAction(evt -> {
+
+                    summitClicked();
+                    //When Everything is Done! 
+                    selectStage.close();
+                });
+
+                Button cancelBtn = new Button("ยกเลิก");
+                cancelBtn.getStyleClass().add("cancelbtn");
+                cancelBtn.setOnAction(evt -> selectStage.close()); // Force Close!
+                //HBox
+                HBox summitAndCancelBox = new HBox(30);
+                summitAndCancelBox.setAlignment(Pos.CENTER);
+                summitAndCancelBox.getChildren().addAll(summitBtn,cancelBtn); //Botton of Window
+
+                Label selectStyleLabel = new Label("เลือกแนวเพลง");
+                selectStyleLabel.getStyleClass().add("title");
+                
+                //VBox 
+                VBox totalVBox = new VBox(15);
+                totalVBox.getChildren().addAll(exitButtonForStyleSelection(),selectStyleLabel,listView,summitAndCancelBox);
+                totalVBox.getStyleClass().add("allPanePremium");
+                totalVBox.setAlignment(Pos.TOP_CENTER);
+                totalVBox.setPadding(new Insets(30));
+                totalVBox.setOnMousePressed(evt -> {
+                    mouse_x = evt.getSceneX();
+                    mouse_y = evt.getSceneY();
+                    //System.out.println(mouse_x + " " + mouse_y);
+                });
+                totalVBox.setOnMouseDragged(evt -> {
+                    selectStage.setX(evt.getScreenX() - mouse_x);
+                    selectStage.setY(evt.getScreenY() - mouse_y);
+                });
+
+
+                Scene selectScene = new Scene(totalVBox);
+                String stylrSheet = getClass().getResource("/style_css/stylePopupDetail.css").toExternalForm(); // From PopUpdetail CSS
+                selectScene.getStylesheets().add(stylrSheet); // CSS
+                selectScene.setFill(Color.TRANSPARENT);
+                selectStage.setScene(selectScene);
+                selectStage.showAndWait();
+        });
+        
+        Button sortBtn = new Button("Sort");
+        sortBtn.getStyleClass().add("buybtn");
+        sortBtn.setOnAction(e -> {
+            FXCollections.sort(tagBar.getTags()); //Sort from A-Z a->z
+        });
+
+        
+        HBox styleSelect = new HBox(10);
+        styleSelect.setAlignment(Pos.CENTER_LEFT);
+        styleSelect.getChildren().addAll(tagScrollPane, selectBtn, sortBtn);
+
+
+    /////////////////////////////////////////////////////////////////////
+
+
+
+
 
         imageDetail.setAlignment(Pos.TOP_CENTER);
         imageDetail.setSpacing(20);
@@ -638,6 +833,26 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         totalDetail.getChildren().addAll(imageDetail, detail, exitButton());
         
     }
+    
+    private void summitClicked() { // For Tag Style
+        String testMessage = "";
+        ObservableList<String> styleList;
+        styleList = listView.getSelectionModel().getSelectedItems();
+        
+        for (String list : styleList) {
+            
+            if (!tagBar.getTags().contains(list)) {
+                tagBar.getTags().add(list);
+            }
+            
+            testMessage += list + ", ";
+        }
+        
+        
+        
+        System.out.println("You have been selected style(s) :\n" + testMessage);
+        
+    }
 
     private Button exitButton() {
 
@@ -665,6 +880,37 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         });
         exit.setStyle("-fx-background-color : transparent;"); //CSS
         //exit.setPadding(Insets.EMPTY);
+
+        return exit;
+    }
+    
+    private Button exitButtonForStyleSelection() {
+
+        //Exit with Decoration
+        Image exit_icon = new Image("/icon/close-512-detail.png");
+        Image exit_hover_icon = new Image("/icon/close-512_hover.png");
+
+        ImageView imageView = new ImageView(exit_icon);
+        imageView.setFitHeight(20);
+        imageView.setFitWidth(20);
+
+        ImageView imageView_hover = new ImageView(exit_hover_icon);
+        imageView_hover.setFitHeight(20);
+        imageView_hover.setFitWidth(20);
+
+        Button exit = new Button("", imageView);
+        exit.setOnMouseEntered(e -> {
+            exit.setGraphic(imageView_hover);
+        });
+        exit.setOnMouseExited(e -> {
+            exit.setGraphic(imageView);
+        });
+        exit.setOnMouseClicked(e -> {
+            selectStage.close();
+        });
+        exit.setStyle("-fx-background-color : transparent;"); //CSS
+        //exit.setPadding(Insets.EMPTY);
+        exit.setTranslateX(110);
 
         return exit;
     }
@@ -738,4 +984,8 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
             AlertBox.displayAlert("Fail!", "Please check your price.");
         }
     }
+    
+
+   
+    
 }
