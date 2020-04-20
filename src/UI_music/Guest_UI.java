@@ -17,21 +17,15 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -51,7 +45,6 @@ public class Guest_UI extends UI {
 
     // Create File for downloader
    private File fileForDownload;
-   private String songNameSelected;
    private String nameSet;
    private Song songSelected;
    private Account userAccount;
@@ -112,74 +105,6 @@ public class Guest_UI extends UI {
         downLoadButton.setMinSize(200, 50);
         return downLoadButton;
 
-    }
-
-    private AnchorPane tableMyMusic() {
-        AnchorPane anchorPane = new AnchorPane();
-        anchorPane.setMinSize(1030 - 300 - 60, 700);
-        anchorPane.setLayoutX(20);
-        anchorPane.setLayoutY(100);
-
-        TableView<Song> table = new TableView<>();
-        table.setEditable(true);
-        table.setPrefSize(anchorPane.getMinWidth(), anchorPane.getMinHeight());
- 
-        table.setOnMouseClicked((event) -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                //System.out.println(table.getSelectionModel().getSelectedItem().getNameSong());
-                songSelected = table.getSelectionModel().getSelectedItem();
-                updateDetailDownload();
-                songNameSelected = table.getSelectionModel().getSelectedItem().getNameSong() + table.getSelectionModel().getSelectedItem().getArtistSong() + table.getSelectionModel().getSelectedItem().getDetailSong();
-                nameSet = table.getSelectionModel().getSelectedItem().getNameSong();
-                System.out.println(songNameSelected);
-                fileForDownload = new File("src/MusicFile/" + songNameSelected + ".mp3");
-                
-               // System.out.println(NameCol.getWidth() + " "+artistCol.getWidth()+ " "+detailCol.getWidth()+ " "+Downloadable.getWidth());
-            }
-        });
-
-               // Create column NameSong (Data type of String).
-        TableColumn<Song, String> NameCol = new TableColumn<>("Name Song");
-        NameCol.setMinWidth(200);
-
-        // Create column NameArtist (Data type of String).
-        TableColumn<Song, String> artistCol = new TableColumn<>("Artist");
-        artistCol.setMinWidth(150);
-
-        // Create column Detail (Data type of String).
-        TableColumn<Song, String> detailCol = new TableColumn<>("Detail");
-        detailCol.setMinWidth(220);
-        
-//        // Create column Downloadable (Data type of String).
-//        TableColumn<Song, String> Downloadable = new TableColumn<>("Downloadable");
-//        detailCol.setMinWidth(100);
-        
-
-        // Defines how to fill data for each cell.
-        // Get value from property of UserAccount. .
-        NameCol.setCellValueFactory(new PropertyValueFactory<>("nameSong"));
-        artistCol.setCellValueFactory(new PropertyValueFactory<>("artistSong"));
-        detailCol.setCellValueFactory(new PropertyValueFactory<>("detailSong"));
-        //Downloadable.setCellValueFactory(new PropertyValueFactory<>("downloadable")); // wait nichida add dowloadable in account
-
-        // Set Sort type for userName column
-        NameCol.setSortType(TableColumn.SortType.DESCENDING);
-        detailCol.setSortable(false);
-
-        // Display row data
-        ObservableList<Song> list = userAccount.getMyListSong();
-        FilteredList<Song> filterData = new FilteredList<>(list, b -> true);
-        searchSystemMyLibrary.setFilterData(filterData);
-
-        SortedList<Song> sortedList = new SortedList<>(searchSystemMyLibrary.getFilterData());
-        sortedList.comparatorProperty().bind(table.comparatorProperty());
-        table.setItems(sortedList);
-
-        table.getColumns().addAll(NameCol, artistCol, detailCol);
-
-        anchorPane.getChildren().addAll(table);
-
-        return anchorPane;
     }
 
     @Override
