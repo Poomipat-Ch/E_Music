@@ -258,12 +258,13 @@
 }
 
 .seealllabel {
-    -fx-font-size: 15px;
-    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-text-fill: #cccccc;
     -fx-font-family: "Itim";
 }
 
 .seealllabel:hover {
+    -fx-text-fill: #eeeeee;
     -fx-underline: true;
 }
 .seealllabel:pressed {
