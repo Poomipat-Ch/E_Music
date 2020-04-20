@@ -23,7 +23,7 @@ public class ImageSlide {
     private final double IMG_WIDTH = 1030;
     private final double IMG_HEIGHT = 300 * 1300 / 900;
  
-    private final int NUM_OF_IMGS = 2;
+    private final int NUM_OF_IMGS = 4;
     private final int SLIDE_FREQ = 4; // in secs
     
     private AnchorPane anchorpane;
@@ -57,7 +57,7 @@ public class ImageSlide {
     private HBox addPicture() {
         
         HBox imgContainer = new HBox();
-        for(int i=1; i<= 2; ++i) {
+        for(int i=1; i<= NUM_OF_IMGS; ++i) {
             ImageView image = new ImageView(new Image("/image/banner" + i +".png"));
             image.setFitWidth(1030);
             image.setPreserveRatio(true);

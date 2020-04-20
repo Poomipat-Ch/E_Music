@@ -190,7 +190,7 @@ public class BrowsePane {
         image.setLayoutX(82.5);
         image.setLayoutY(70);
         image.getStyleClass().add("image");
-        
+
         return image;
     }
     
@@ -244,12 +244,12 @@ public class BrowsePane {
         
         ArrayList<String> thaiList = new ArrayList<>();
 
-        thaiList.add("ป๊ปบ");
+        thaiList.add("ป๊อป");
         thaiList.add("โรแมนติก");
         thaiList.add("สบาย");
-        thaiList.add("แจ็ส");
+        thaiList.add("แจ๊ส");
         thaiList.add("ร็อค");
-        thaiList.add("อ่ร์แอนด์บี");
+        thaiList.add("อาร์แอนด์บี");
         thaiList.add("ฮิป-ฮอป");
         thaiList.add("ลูกทุ่ง");
         thaiList.add("คลาสสิก");
