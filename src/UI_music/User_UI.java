@@ -41,6 +41,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -111,7 +113,6 @@ public class User_UI extends UI {
         detailDownload.getChildren().addAll(nameSong, nameArtist, DownloadAble);
 
         Button downloadBtn = CreaButton("Download");
-
         downloadBtn.setLayoutX(1030 - 250 - 20);
         downloadBtn.setLayoutY(750);
 
@@ -121,15 +122,27 @@ public class User_UI extends UI {
                 this.downloader();
             }
         });
+        
+        Button songPlayer = CreaButton("Play");
+        songPlayer.setLayoutX(1030-250-20);
+        songPlayer.setLayoutY(820);
 
-        pane.getChildren().addAll(img, downloadBtn, detailDownload, tableMyMusic(), searchBoxMy());
+        songPlayer.setOnMouseClicked(e -> {
+            if (songSelected != null && "".equals(MusicPlayer.getStatus())) {
+                MusicPlayer musicPlayer = new MusicPlayer(songSelected);
+            }else if(songSelected == null){
+                AlertBox.displayAlert("Alert!!!", "Please Select the song");
+            }else{
+                AlertBox.displayAlert(MusicPlayer.getStatus(), "Music Player is Open");
+            }
+        });
+
+        pane.getChildren().addAll(img, downloadBtn, songPlayer, detailDownload, tableMyMusic(), searchBoxMy());
         return pane;
     }
 
     public void updateDetailDownload() {
-        if (true) {
-            pane.getChildren().remove(0);
-        }
+        pane.getChildren().remove(0);
         ((Label) detailDownload.getChildren().get(0)).setText("Song : " + songSelected.getNameSong());
         ((Label) detailDownload.getChildren().get(1)).setText("Artist : " + songSelected.getArtistSong());
         ((Label) detailDownload.getChildren().get(2)).setText("Downloadable(Time) : " + "3"); // wait
@@ -171,9 +184,10 @@ public class User_UI extends UI {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
                 //System.out.println(table.getSelectionModel().getSelectedItem().getNameSong());
                 songSelected = table.getSelectionModel().getSelectedItem();
-                if (table.getSelectionModel().isEmpty() || table.getSelectionModel() == null) {
-                  updateDetailDownload();  
+                if (table.getSelectionModel().getSelectedItem() != null) {
+                     updateDetailDownload();  
                 }
+               
                 songNameSelected = table.getSelectionModel().getSelectedItem().getNameSong() + table.getSelectionModel().getSelectedItem().getArtistSong() + table.getSelectionModel().getSelectedItem().getDetailSong();
                 nameSet = table.getSelectionModel().getSelectedItem().getNameSong();
                 System.out.println(songNameSelected);
