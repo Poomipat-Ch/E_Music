@@ -5,8 +5,14 @@
  */
 package Component_Music;
 
+import UI_music.ReadWriteFile;
 import UI_music.User_UI;
 import static UI_music.User_UI.searchTextField;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -106,35 +112,35 @@ public class SearchPage {
         borderpane.setLayoutX(30);
         borderpane.setLayoutY(60);
         
-        borderpane.setTop(TopPlaylistPane("Songs", "music.dat", foundtext));
+        borderpane.setTop(PlaylistPane("Songs", "music.dat", foundtext));
 //        borderpane.setLeft(PlaylistPane("Genres & Moods", "stylemusiclist.txt", foundtext));
 //        borderpane.setRight(PlaylistPane("Artists", "artist.dat", foundtext));
-        borderpane.setCenter(TopPlaylistPane("Artists", "artist.dat", foundtext));
+        borderpane.setCenter(PlaylistPane("Artists", "artist.dat", foundtext));
 
         return borderpane;
     }
     
-    private BorderPane TopPlaylistPane(String string, String filename, String foundtext) {
+    private BorderPane PlaylistPane(String string, String filename, String foundtext) {
         BorderPane borderpane = new BorderPane();
         borderpane.setPadding(new Insets(20, 10, 20, 10));
 
         borderpane.setPrefWidth(950);
         borderpane.setPrefHeight(341);
 
-        borderpane.setTop(HeadBox(string, filename, foundtext, 880));
-        borderpane.setCenter(Playlist(foundtext,4,12));
+        borderpane.setTop(HeadPane(string, filename, foundtext, 880));
+        borderpane.setCenter(Playlist(foundtext, filename, 4,12));
 
         return borderpane;
     }
 
-    private AnchorPane HeadBox(String string, String filename, String foundtext, double x) {
-        AnchorPane head = new AnchorPane();
-        head.getStyleClass().add("hbox");
+    private AnchorPane HeadPane(String string, String filename, String foundtext, double x) {
+        AnchorPane pane = new AnchorPane();
+        pane.getStyleClass().add("hbox");
         Label seeall = CreateSeeAll(string, filename, foundtext, x);
 
-        head.getChildren().addAll(CreateLabel(string), seeall);
+        pane.getChildren().addAll(CreateLabel(string), seeall);
 
-        return head;
+        return pane;
     }
 
     private Label CreateLabel(String string) {
@@ -160,13 +166,42 @@ public class SearchPage {
         return label;
     }
 
-    private AnchorPane Playlist(String foundtextt, int column, int dis) {
+    private AnchorPane Playlist(String foundtext, String filename,  int column, int dis) {
         AnchorPane anchorpane = new AnchorPane();
 //        borderpane.set
 
-        for (int i = 0; i < 8 + (dis/3); ++i) {
-            anchorpane.getChildren().add(CreateList((230 * (i % column)) + dis, (80 * (i / column)) + 50, ""));
-
+        File file = new File("src/data/" + filename);
+        
+        if(filename.equals("music.dat")) {
+            ArrayList<Song> Song = null;
+            try {
+                Song = new ReadWriteFile().readFileSong(file);
+            } catch (IOException | ClassNotFoundException ex) {
+                System.out.println("SearchPage: ERROR READ MUSIC.DAT");
+            } 
+            
+            int count = 0;
+            for (Song song : Song) {
+                if(song.getNameSong().toLowerCase().contains(foundtext.toLowerCase())) {
+                    anchorpane.getChildren().add(CreateList((230 * (count % column)) + dis, (80 * (count / column)) + 50, song.getNameSong()));
+                    count++;
+                }
+            }
+        } else {
+            ArrayList<Artist> Artist = null;
+            try {
+                Artist = new ReadWriteFile().readFileArtist(file);
+            } catch (IOException | ClassNotFoundException ex) {
+                System.out.println("SearchPage: ERROR READ MUSIC.DAT");
+            } 
+            
+            int count = 0;
+            for (Artist artist : Artist) {
+                if(artist.getName1().toLowerCase().contains(foundtext.toLowerCase()) || artist.getName2().toLowerCase().contains(foundtext.toLowerCase())) {
+                    anchorpane.getChildren().add(CreateList((230 * (count % column)) + dis, (80 * (count / column)) + 50, artist.getName1()));
+                    count++;
+                }
+            }
         }
 
         return anchorpane;
@@ -180,7 +215,7 @@ public class SearchPage {
         anchorpane.setLayoutX(x);
         anchorpane.setLayoutY(y);
 
-        Button button = new Button();
+        Button button = new Button(namesong);
         button.setPrefSize(215, 60);
         button.getStyleClass().add("borderplaylist");
         button.setLayoutX(0);

@@ -50,7 +50,7 @@ public class ReadWriteFile {
         out.close();
     }
     
-    public static ArrayList<Artist> readFileArist(File file) throws FileNotFoundException, IOException, ClassNotFoundException {
+    public static ArrayList<Artist> readFileArtist(File file) throws FileNotFoundException, IOException, ClassNotFoundException {
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
         return (ArrayList<Artist>) in.readObject();
     }
@@ -60,4 +60,5 @@ public class ReadWriteFile {
         out.writeObject(listArtist);
         out.close();
     }
+    
 }

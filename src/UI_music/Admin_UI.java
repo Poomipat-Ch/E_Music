@@ -107,7 +107,7 @@ public class Admin_UI extends UI {
         }
 
         try {
-            artistArrayList = ReadWriteFile.readFileArist(artistFile);
+            artistArrayList = ReadWriteFile.readFileArtist(artistFile);
         } catch (Exception e) {
             System.out.println("readFile Artist in Admin_UI constuctor ERROR!!!!!");
         }
@@ -590,7 +590,7 @@ public class Admin_UI extends UI {
     public static TilePane updateScrollArtistPane(String text) {
 
         try {
-            artistArrayList = ReadWriteFile.readFileArist(artistFile);
+            artistArrayList = ReadWriteFile.readFileArtist(artistFile);
         } catch (Exception e) {
             System.out.println("readFile Artist in Admin_UI updateScrollArtistPane ERROR!!!!!");
         }
@@ -1014,7 +1014,7 @@ public class Admin_UI extends UI {
 
         //Gut ... Do one favor for me By Pop VVV
         try {
-            oldArtistList = ReadWriteFile.readFileArist(artistFile);
+            oldArtistList = ReadWriteFile.readFileArtist(artistFile);
         } catch (IOException ex) {
             System.out.println("Admin_UI : IOExeption readfile in deleteSongClicked");
         } catch (ClassNotFoundException ex) {

@@ -182,7 +182,7 @@ public class BrowsePane {
     }
     
     private ImageView CreateIcon(String name) {
-        System.out.println(name);
+//        System.out.println(name);
         ImageView image = new ImageView(new Image("/icon/" + name + "icon.png"));
         image.setFitHeight(60);
         image.setFitWidth(60);
@@ -213,66 +213,66 @@ public class BrowsePane {
         
         ArrayList<ArrayList> list = new ArrayList<>();
         
-        ObjectOutputStream outfile = null;
-        try {
-            outfile = new ObjectOutputStream(new FileOutputStream("src/data/stylemusiclist.dat"));
-        } catch (IOException ex) {
-            Logger.getLogger(BrowsePane.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        ArrayList<String> interList = new ArrayList<>();
-
-        interList.add("Pop");
-        interList.add("Romance");
-        interList.add("Chill");
-        interList.add("Jazz");
-        interList.add("Rock");
-        interList.add("R&B");
-        interList.add("Hip-Hop");
-        interList.add("Country");
-        interList.add("Blues");
-        interList.add("Classical");
-        interList.add("Metal");
-        interList.add("Reggae");
-        interList.add("Folk & Acoustic");
-        interList.add("Punk");
-        interList.add("Anime");
-        interList.add("Party");
-        interList.add("Dance");
-        interList.add("Indie");
-        interList.add("Soul");
-        
-        ArrayList<String> thaiList = new ArrayList<>();
-
-        thaiList.add("ป๊อป");
-        thaiList.add("โรแมนติก");
-        thaiList.add("สบาย");
-        thaiList.add("แจ๊ส");
-        thaiList.add("ร็อค");
-        thaiList.add("อาร์แอนด์บี");
-        thaiList.add("ฮิป-ฮอป");
-        thaiList.add("ลูกทุ่ง");
-        thaiList.add("คลาสสิก");
-        thaiList.add("เร็กเก");
-        thaiList.add("สังสรรค์");
-        thaiList.add("แดนซ์");
-        thaiList.add("อินดี้");
-        thaiList.add("เพื่อชีวิต");
-        
-        list.add(interList);
-        list.add(thaiList);
-
-
-        try {
-            outfile.writeObject(list);
-        } catch (IOException ex) {
-            Logger.getLogger(BrowsePane.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            outfile.close();
-        } catch (IOException ex) {
-            Logger.getLogger(BrowsePane.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        ObjectOutputStream outfile = null;
+//        try {
+//            outfile = new ObjectOutputStream(new FileOutputStream("src/data/stylemusiclist.dat"));
+//        } catch (IOException ex) {
+//            Logger.getLogger(BrowsePane.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        
+//        ArrayList<String> interList = new ArrayList<>();
+//
+//        interList.add("Pop");
+//        interList.add("Romance");
+//        interList.add("Chill");
+//        interList.add("Jazz");
+//        interList.add("Rock");
+//        interList.add("R&B");
+//        interList.add("Hip-Hop");
+//        interList.add("Country");
+//        interList.add("Blues");
+//        interList.add("Classical");
+//        interList.add("Metal");
+//        interList.add("Reggae");
+//        interList.add("Folk & Acoustic");
+//        interList.add("Punk");
+//        interList.add("Anime");
+//        interList.add("Party");
+//        interList.add("Dance");
+//        interList.add("Indie");
+//        interList.add("Soul");
+//        
+//        ArrayList<String> thaiList = new ArrayList<>();
+//
+//        thaiList.add("ป๊อป");
+//        thaiList.add("โรแมนติก");
+//        thaiList.add("สบาย");
+//        thaiList.add("แจ๊ส");
+//        thaiList.add("ร็อค");
+//        thaiList.add("อาร์แอนด์บี");
+//        thaiList.add("ฮิป-ฮอป");
+//        thaiList.add("ลูกทุ่ง");
+//        thaiList.add("คลาสสิก");
+//        thaiList.add("เร็กเก");
+//        thaiList.add("สังสรรค์");
+//        thaiList.add("แดนซ์");
+//        thaiList.add("อินดี้");
+//        thaiList.add("เพื่อชีวิต");
+//        
+//        list.add(interList);
+//        list.add(thaiList);
+//
+//
+//        try {
+//            outfile.writeObject(list);
+//        } catch (IOException ex) {
+//            Logger.getLogger(BrowsePane.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        try {
+//            outfile.close();
+//        } catch (IOException ex) {
+//            Logger.getLogger(BrowsePane.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         
         ObjectInputStream file = null;
         try {

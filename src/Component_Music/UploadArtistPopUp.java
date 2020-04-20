@@ -235,7 +235,7 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
             if(!fillNameArtist.getText().isEmpty() && !fillDetailArtist.getText().isEmpty())
             {
             try {
-                artistArrayList = ReadWriteFile.readFileArist(artistFile);
+                artistArrayList = ReadWriteFile.readFileArtist(artistFile);
             } catch (IOException | ClassNotFoundException ex) {
                 System.out.println("UploadArtistPopUp : IOExeption read file in DetailUpPopArtist");
             }
@@ -380,7 +380,7 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
             if(!fillNameArtist.getText().isEmpty() && !fillDetailArtist.getText().isEmpty())
             {
             try {
-                artistArrayList = ReadWriteFile.readFileArist(artistFile);
+                artistArrayList = ReadWriteFile.readFileArtist(artistFile);
             } catch (IOException | ClassNotFoundException ex) {
                 System.out.println("UploadArtistPopUp : IOExeption read file in DetailUpPopArtist");
             }
