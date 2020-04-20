@@ -32,7 +32,9 @@ import javafx.scene.layout.VBox;
  */
 public class SearchPage {
 
-    AnchorPane anchorPane;
+    private AnchorPane anchorPane;
+    private int songCount = 0;
+    private int artistCount = 0;
 
     public SearchPage(String text) {
         anchorPane = new AnchorPane();
@@ -112,22 +114,28 @@ public class SearchPage {
         borderpane.setLayoutX(30);
         borderpane.setLayoutY(60);
         
-        borderpane.setTop(PlaylistPane("Songs", "music.dat", foundtext));
+        borderpane.setLeft(PlaylistPane("Songs", "music.dat", foundtext));
 //        borderpane.setLeft(PlaylistPane("Genres & Moods", "stylemusiclist.txt", foundtext));
 //        borderpane.setRight(PlaylistPane("Artists", "artist.dat", foundtext));
-        borderpane.setCenter(PlaylistPane("Artists", "artist.dat", foundtext));
+        if(this.songCount == 0)
+            borderpane.setLeft(PlaylistPane("Artists", "artist.dat", foundtext));
+        else
+            borderpane.setRight(PlaylistPane("Artists", "artist.dat", foundtext));
+        
+        if(this.songCount == 0 && this.artistCount == 0)
+            borderpane.setLeft(PlaylistPane("Artists", "artist.dat", foundtext));
 
         return borderpane;
     }
     
     private BorderPane PlaylistPane(String string, String filename, String foundtext) {
         BorderPane borderpane = new BorderPane();
-        borderpane.setPadding(new Insets(20, 10, 20, 10));
+        borderpane.setPadding(new Insets(20, 0, 20, 0));
 
-        borderpane.setPrefWidth(950);
+        borderpane.setPrefWidth(455);
         borderpane.setPrefHeight(341);
 
-        borderpane.setTop(HeadPane(string, filename, foundtext, 880));
+        borderpane.setTop(HeadPane(string, filename, foundtext, 400));
         borderpane.setCenter(Playlist(foundtext, filename, 4,12));
 
         return borderpane;
@@ -180,11 +188,11 @@ public class SearchPage {
                 System.out.println("SearchPage: ERROR READ MUSIC.DAT");
             } 
             
-            int count = 0;
+            songCount = 0;
             for (Song song : Song) {
                 if(song.getNameSong().toLowerCase().contains(foundtext.toLowerCase())) {
-                    anchorpane.getChildren().add(CreateList((230 * (count % column)) + dis, (80 * (count / column)) + 50, song.getNameSong()));
-                    count++;
+                    anchorpane.getChildren().add(CreateList((230 * (songCount  % column)) + dis, (80 * (songCount / column)) + 50, song.getNameSong()));
+                    songCount++;
                 }
             }
         } else {
@@ -195,11 +203,11 @@ public class SearchPage {
                 System.out.println("SearchPage: ERROR READ MUSIC.DAT");
             } 
             
-            int count = 0;
+            artistCount = 0;
             for (Artist artist : Artist) {
                 if(artist.getName1().toLowerCase().contains(foundtext.toLowerCase()) || artist.getName2().toLowerCase().contains(foundtext.toLowerCase())) {
-                    anchorpane.getChildren().add(CreateList((230 * (count % column)) + dis, (80 * (count / column)) + 50, artist.getName1()));
-                    count++;
+                    anchorpane.getChildren().add(CreateList((230 * (artistCount % column)) + dis, (80 * (artistCount / column)) + 50, artist.getName1()));
+                    artistCount++;
                 }
             }
         }
