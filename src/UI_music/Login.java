@@ -56,7 +56,7 @@ public class Login {
 
     public Login(Stage stage) throws FileNotFoundException, IOException, ClassNotFoundException {
 
-//**READ THIS***** This save in user.dat file, if you can't run admin, try run this code only once and comment again
+////**READ THIS***** This save in user.dat file, if you can't run admin, try run this code only once and comment again
 //        listUserAccount.add(new Account("admin", "admin", "admin", "admin@gmail.com", "admin", "N/A", LocalDate.now(), "admin", "admin", "admin", new Image("/image/defaultprofile.png")));
 //        writeFile(user, listUserAccount); 
 

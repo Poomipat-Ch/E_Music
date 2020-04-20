@@ -51,9 +51,9 @@ public class SelectTypeArtistPopUp extends SelectTypePopUp {
 
             button.setOnAction(clicked -> {
                 if (string.equals("International Artist")) {
-                    new UploadArtistPopUp("New Artist");
+                    new UploadArtistPopUp("New Artist", "international");
                 } else {
-                    new UploadArtistPopUp("เพิ่มศิลปิน");
+                    new UploadArtistPopUp("เพิ่มศิลปิน", "thai");
                 }
                 SelectTypePopUp.stage.close();
             });

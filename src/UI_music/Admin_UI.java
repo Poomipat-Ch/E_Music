@@ -549,7 +549,7 @@ public class Admin_UI extends UI {
                         selectImage.setFitWidth(250);
 
                         //Gut add
-                        songSelectString = song.getNameSong() + song.getArtistSong() + song.getDetailSong();
+                        songSelectString = (song.getNameSong() + song.getArtistSong()).replaceAll("\\s","");
                         System.out.println(songSelectString + " is selected");
                         songSelected = song;
                         songSelectedBoolean = true;
@@ -991,7 +991,7 @@ public class Admin_UI extends UI {
 
         for (Song song : oldSongList) {
 
-            if (songSelectString.equals(song.getNameSong() + song.getArtistSong() + song.getDetailSong())) {
+            if (songSelectString.equals((song.getNameSong() + song.getArtistSong()).replaceAll("\\s",""))) {
                 System.out.println("delete " + song);
                 selectFileDelete.delete();
 

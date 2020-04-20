@@ -96,7 +96,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
     }
 
     public UploadSongPopUp(String title, Song editSong, String path) { //For Edit //Gut you can change this
-        this.checkExistFile = editSong.getNameSong() + editSong.getArtistSong() + editSong.getDetailSong();
+        this.checkExistFile = (editSong.getNameSong() + editSong.getArtistSong().replaceAll("\\s",""));
         this.title = new Label(title);
         this.fillNameSong = new TextField(editSong.getNameSong());
         this.fillNameArtist = new TextField(editSong.getArtistSong());
@@ -319,7 +319,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
                         System.out.println("UploadSongPopUp : ClassNotFoundExeption read file in DetailUpPopSong");
                     }
                     for (Song song : oldSongList) {
-                        if (checkExistFile.equals(song.getNameSong() + song.getArtistSong() + song.getDetailSong())) {
+                        if (checkExistFile.equals((song.getNameSong() + song.getArtistSong()).replaceAll("\\s",""))) {
 
                         } else {
                             newSongList.add(song);
@@ -541,7 +541,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
                         System.out.println("UploadSongPopUp : ClassNotFoundExeption read file in DetailUpPopSong");
                     }
                     for (Song song : oldSongList) {
-                        if (checkExistFile.equals(song.getNameSong() + song.getArtistSong() + song.getDetailSong())) {
+                        if (checkExistFile.equals((song.getNameSong() + song.getArtistSong()).replaceAll("\\s",""))) {
 
                         } else {
                             newSongList.add(song);
@@ -692,6 +692,16 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
     }
 
     private void saveSong() {
+        int priceCorrect = 0;
+        Boolean priceCorrectBoolean = false;
+        try {
+            priceCorrect = Integer.parseInt(fillSongPrice.getText());
+            priceCorrectBoolean = true;
+        } catch (Exception e) {
+            System.out.println(e);
+            priceCorrectBoolean = false;
+        }
+        if(priceCorrect >= 0 && priceCorrectBoolean){
         songArrayList.add(new Song(fillNameSong.getText(), fillDetailSong.getText(), fillNameArtist.getText(), fillSongPrice.getText(), listStyleSong, image));
         try {
             ReadWriteFile.writeFileSong(musicFile, songArrayList);
@@ -700,7 +710,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         }
         //Upload file .mp3
 //                file = new File(nameForUpload);
-        nameForUpload = fillNameSong.getText() + fillNameArtist.getText() + fillDetailSong.getText();
+        nameForUpload = (fillNameSong.getText() + fillNameArtist.getText()).replaceAll("\\s","");
         File newSong = new File("src/MusicFile/" + nameForUpload + ".mp3");
         System.out.println(newSong.getName());
         try {
@@ -719,5 +729,9 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         else
             AlertBox.displayAlert("เพิ่มเพลงสำเร็จ!", "เพิ่มเพลงสำเร็จ!");
         stage.close();
+        }
+        else{
+            AlertBox.displayAlert("Fail!", "Please check your price.");
+        }
     }
 }
