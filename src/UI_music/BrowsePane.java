@@ -54,18 +54,18 @@ public class BrowsePane {
         //backgroundpane.setPadding(new Insets(0, 0 ,50,0));
 
         Label browse = CreateHead("Browse", 50, 70);
-        Button thaigenresbtn = CreateButton("หมวดหมู่ และ อารมณ์",40, 190, 260);
+        Button thaigenresbtn = CreateButton("หมวดหมู่ และ อารมณ์",40, 190, 260, 1);
             Button thaigenresbg = CreateBackgroundButton(40, 190, 260);
-        Button thaiartistbtn = CreateButton("ศิลปิน",320, 190, 180);
+        Button thaiartistbtn = CreateButton("ศิลปิน",320, 190, 180, 1);
             Button thaiartistbg = CreateBackgroundButton(320, 190, 180);
-        Button intergenresbtn = CreateButton("GENRES & MOODS",520, 190, 260);
+        Button intergenresbtn = CreateButton("GENRES & MOODS",520, 190, 260, 0);
             Button intergenresbg = CreateBackgroundButton(520, 190, 260);
-        Button interartistbtn = CreateButton("ARTIST",800, 190, 180);
+        Button interartistbtn = CreateButton("ARTIST",800, 190, 180, 0);
             Button interartistbg = CreateBackgroundButton(800, 190, 180);
         
         try {
             backgroundpane.getChildren().addAll(thaigenresbg, thaigenresbtn, thaiartistbg, thaiartistbtn, intergenresbg, intergenresbtn, 
-                    interartistbg, interartistbtn, browse, BorderList("หมวดหมู่ และ อารมณ์"));
+                    interartistbg, interartistbtn, browse, BorderList("หมวดหมู่ และ อารมณ์", 1));
         } catch (IOException ex) {
             Logger.getLogger(BrowsePane.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -80,7 +80,7 @@ public class BrowsePane {
         return this.scrollpane;
     }
     
-    private Button CreateButton(String name,double x, double y, double width) {
+    private Button CreateButton(String name,double x, double y, double width, int index) {
         Button button = new Button(name);
         button.getStyleClass().add("buttoninbrowse");
         button.setPrefSize(width, 50);
@@ -91,7 +91,7 @@ public class BrowsePane {
             this.backgroundpane.getChildren().remove(9);
             
             try {
-                this.backgroundpane.getChildren().add(BorderList(name));
+                this.backgroundpane.getChildren().add(BorderList(name, index));
             } catch (IOException ex) {
                 Logger.getLogger(BrowsePane.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -130,7 +130,7 @@ public class BrowsePane {
         return label;
     }
     
-    private AnchorPane BorderList(String name) throws IOException {
+    private AnchorPane BorderList(String name, double index) throws IOException {
         AnchorPane anchorpane = new AnchorPane();
         anchorpane.getStyleClass().add("borderlist");
         anchorpane.setPrefWidth(1030);
@@ -140,7 +140,10 @@ public class BrowsePane {
 
         //VBox vBox;
         int i = 0;
-        for (String string : ReadFile()) {
+        
+        ArrayList<String> list = ReadFile().get((int) index);
+        
+        for (String string : list) {
             AnchorPane listAlbums = CreateAlbumsList(string, (235 * (i % 4)) + 50, (235 * (i / 4)) + 75);
             i++;
             
@@ -206,48 +209,70 @@ public class BrowsePane {
         return button;
     }
     
-    private ArrayList<String> ReadFile() {
+    private ArrayList<ArrayList> ReadFile() {
         
-        ArrayList<String> list = new ArrayList<>();
+        ArrayList<ArrayList> list = new ArrayList<>();
+        
+        ObjectOutputStream outfile = null;
+        try {
+            outfile = new ObjectOutputStream(new FileOutputStream("src/data/stylemusiclist.dat"));
+        } catch (IOException ex) {
+            Logger.getLogger(BrowsePane.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        ArrayList<String> interList = new ArrayList<>();
 
-//        ObjectOutputStream outfile = null;
-//        try {
-//            outfile = new ObjectOutputStream(new FileOutputStream("src/data/stylemusiclist.dat"));
-//        } catch (IOException ex) {
-//            Logger.getLogger(BrowsePane.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//
-//        list.add("Pop");
-//        list.add("Romance");
-//        list.add("Chill");
-//        list.add("Jazz");
-//        list.add("Rock");
-//        list.add("R&B");
-//        list.add("Hip-Hop");
-//        list.add("Country");
-//        list.add("Blues");
-//        list.add("Classical");
-//        list.add("Metal");
-//        list.add("Reggae");
-//        list.add("Folk & Acoustic");
-//        list.add("Punk");
-//        list.add("Anime");
-//        list.add("Party");
-//        list.add("Dance");
-//        list.add("Indie");
-//        list.add("Soul");
-//
-//
-//        try {
-//            outfile.writeObject(list);
-//        } catch (IOException ex) {
-//            Logger.getLogger(BrowsePane.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        try {
-//            outfile.close();
-//        } catch (IOException ex) {
-//            Logger.getLogger(BrowsePane.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        interList.add("Pop");
+        interList.add("Romance");
+        interList.add("Chill");
+        interList.add("Jazz");
+        interList.add("Rock");
+        interList.add("R&B");
+        interList.add("Hip-Hop");
+        interList.add("Country");
+        interList.add("Blues");
+        interList.add("Classical");
+        interList.add("Metal");
+        interList.add("Reggae");
+        interList.add("Folk & Acoustic");
+        interList.add("Punk");
+        interList.add("Anime");
+        interList.add("Party");
+        interList.add("Dance");
+        interList.add("Indie");
+        interList.add("Soul");
+        
+        ArrayList<String> thaiList = new ArrayList<>();
+
+        thaiList.add("ป๊ปบ");
+        thaiList.add("โรแมนติก");
+        thaiList.add("สบาย");
+        thaiList.add("แจ็ส");
+        thaiList.add("ร็อค");
+        thaiList.add("อ่ร์แอนด์บี");
+        thaiList.add("ฮิป-ฮอป");
+        thaiList.add("ลูกทุ่ง");
+        thaiList.add("คลาสสิก");
+        thaiList.add("เร็กเก");
+        thaiList.add("สังสรรค์");
+        thaiList.add("แดนซ์");
+        thaiList.add("อินดี้");
+        thaiList.add("เพื่อชีวิต");
+        
+        list.add(interList);
+        list.add(thaiList);
+
+
+        try {
+            outfile.writeObject(list);
+        } catch (IOException ex) {
+            Logger.getLogger(BrowsePane.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            outfile.close();
+        } catch (IOException ex) {
+            Logger.getLogger(BrowsePane.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         ObjectInputStream file = null;
         try {
@@ -258,7 +283,7 @@ public class BrowsePane {
         
         try {
             try {
-                list = (ArrayList<String>) file.readObject();
+                list = (ArrayList<ArrayList>) file.readObject();
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(BrowsePane.class.getName()).log(Level.SEVERE, null, ex);
             }
