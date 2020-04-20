@@ -77,13 +77,15 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
     TextField path;
     String checkExistFile = "";
     
+    String nationality;
+    
     private CheckBox pop = createCheckBox("Pop");
     private CheckBox jazz = createCheckBox("Jazz");
     private CheckBox rock = createCheckBox("Rock");
     private CheckBox rnb = createCheckBox("R&B");
     private CheckBox hiphop = createCheckBox("Hip Hop");
 
-    public UploadSongPopUp(String title) { // For Upload
+    public UploadSongPopUp(String title, String nationality) { // For Upload
         this.title = new Label(title);
         this.fillNameSong = new TextField();
         this.fillNameArtist = new TextField();
@@ -92,6 +94,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         this.path = new TextField();
         image = new Image("/image/defaultmusic.png");
         photo = new ImageView(image);
+        this.nationality = nationality;
         runOnce();
     }
 
@@ -104,6 +107,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         this.fillSongPrice = new TextField(editSong.getPriceSong());
         this.path = new TextField(path);
         image = editSong.getPhoto();
+        this.nationality = editSong.getNationality();
         photo = new ImageView(image);
         file = new File("src/MusicFile/" + checkExistFile + ".mp3");
         for(String styleString : editSong.getListStyleSong()){
@@ -702,7 +706,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
             priceCorrectBoolean = false;
         }
         if(priceCorrect >= 0 && priceCorrectBoolean){
-        songArrayList.add(new Song(fillNameSong.getText(), fillDetailSong.getText(), fillNameArtist.getText(), fillSongPrice.getText(), listStyleSong, image));
+        songArrayList.add(new Song(fillNameSong.getText(), fillDetailSong.getText(), fillNameArtist.getText(), fillSongPrice.getText(), listStyleSong, image, nationality));
         try {
             ReadWriteFile.writeFileSong(musicFile, songArrayList);
         } catch (IOException ex) {
