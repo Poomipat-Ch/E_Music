@@ -26,7 +26,7 @@ import javafx.scene.image.WritableImage;
  */
 public class Artist implements Serializable{
 
-    private String name1, name2, infomation;
+    private String name1, name2, infomation, nationality;
     private Image image;
     private ImageView imageView;
     private int width, height;
@@ -36,11 +36,12 @@ public class Artist implements Serializable{
     public Artist() {
     }
 
-    public Artist(String name1, String name2, String infomation, Image image) {
+    public Artist(String name1, String name2, String infomation, Image image, String nationality) {
         this.name1 = name1;
         this.name2 = name2;
         this.infomation = infomation;
         this.setPhoto(image);
+        this.nationality = nationality;
     }
 
     public String getName1() {
@@ -67,6 +68,14 @@ public class Artist implements Serializable{
         this.infomation = infomation;
     }
 
+    public String getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
+    }
+    
     public void setPhoto(Image image) {
         width = ((int) image.getWidth());
         height = ((int) image.getHeight());

@@ -65,12 +65,14 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
     ArrayList<Artist> artistArrayList = new ArrayList<Artist>();
     Artist editArtist;
     Boolean changePhoto = false;
+    private String nationality;
 
-    public UploadArtistPopUp(String title) { // For Upload
+    public UploadArtistPopUp(String title, String nationality) { // For Upload
         this.title = new Label(title);
         this.fillNameArtist = new TextField();
         this.fillNameArtist2 = new TextField();
         this.fillDetailArtist = new TextField();
+        this.nationality = nationality;
         image = new Image("/image/defaultprofile.png");
         photo = new ImageView(image);
         runOnce();
@@ -81,6 +83,7 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
         this.fillNameArtist = new TextField(editArtist.getName1());
         this.fillNameArtist2 = new TextField(editArtist.getName2());
         this.fillDetailArtist = new TextField(editArtist.getInfomation());
+        this.nationality = editArtist.getNationality();
         image = editArtist.getPhoto();
         photo = new ImageView(image);
         this.editArtist = editArtist;
@@ -470,7 +473,7 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
     }
 
     private void saveArtist() {
-        artistArrayList.add(new Artist(fillNameArtist.getText(), fillNameArtist2.getText(), fillDetailArtist.getText(), image));
+        artistArrayList.add(new Artist(fillNameArtist.getText(), fillNameArtist2.getText(), fillDetailArtist.getText(), image, nationality));
         try {
             ReadWriteFile.writeFileArtist(artistFile, artistArrayList);
         } catch (IOException ex) {
