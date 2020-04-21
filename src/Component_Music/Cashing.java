@@ -58,7 +58,10 @@ public class Cashing {
         this.song = song;
 
         Label title = new Label("YOUR ORDER");
+        title.getStyleClass().add("titlePremium");
         Label noteText = new Label("Please check every detail before making purchase.");
+        noteText.getStyleClass().add("detailPremium");
+        noteText.setStyle("-fx-effect: dropshadow( gaussian , rgba(0,0,0,0.5) , 5,0,2,2);");
         VBox topPane = new VBox(20);
         topPane.getChildren().addAll(title, noteText);
         topPane.setAlignment(Pos.CENTER_LEFT);
@@ -68,19 +71,23 @@ public class Cashing {
 
         Label orderText = new Label(song.getNameSong() + " - " + song.getArtistSong());
         Label orderPrice = new Label("฿ " + song.getPriceSong());
+        orderText.getStyleClass().add("detailPremium");
+        orderPrice.getStyleClass().add("detailPremium");    
         BorderPane leftRow1 = new BorderPane();
         leftRow1.setLeft(orderText);
         leftRow1.setRight(orderPrice);
         leftRow1.setPadding(new Insets(20));
-        leftRow1.setStyle("-fx-background-color:#ebebeb;");
+        leftRow1.getStyleClass().add("subPane");
 
         Label describeText = new Label("All prices include VAT if applicable.");
+        describeText.getStyleClass().add("detailPremium");
         Label totalPrice = new Label("ORDER TOTAL: ฿ " + song.getPriceSong());
+        totalPrice.getStyleClass().add("detailPremium");
         BorderPane leftRow2 = new BorderPane();
         leftRow2.setLeft(describeText);
         leftRow2.setRight(totalPrice);
         leftRow2.setPadding(new Insets(20));
-        leftRow2.setStyle("-fx-background-color:#ebebeb;");
+        leftRow2.getStyleClass().add("subPane"); 
 
         VBox leftPane = new VBox(20);
         leftPane.getChildren().addAll(leftRow1, leftRow2);
@@ -88,14 +95,18 @@ public class Cashing {
 
         //=============================================================//
         Label title2 = new Label("YOUR PAYMENT");
+        title2.getStyleClass().add("detailPremium");
 
         RadioButton creditRadio = new RadioButton("CREDIT/DEBIT CARD");
         creditRadio.setSelected(true);
+        creditRadio.getStyleClass().add("detailPremiumChoice");
 
         TextField ccNumber = new TextField();
         ccNumber.setPromptText("Card Number");
+        ccNumber.getStyleClass().add("detailPremiumTextFill");  
         ComboBox<String> month = new ComboBox<>();
         month.setPromptText("Expiry date");
+        month.getStyleClass().add("detailPremiumChoice");
         for (int i = 1; i <= 12; i++) {
             String[] mth = {"January", "Febuary", "March", "April", "May",
                 "June", "July", "August", "September", "October", "November", "December"};
@@ -103,14 +114,17 @@ public class Cashing {
         }
         ComboBox<String> year = new ComboBox<>();
         year.setPromptText("Year");
+        year.getStyleClass().add("detailPremiumChoice");
         for (int i = 2020; i <= 2041; i++) {
             year.getItems().add(Integer.toString(i));
         }
 
         TextField ccvNumber = new TextField();
         ccvNumber.setPromptText("CVV");
+        ccvNumber.getStyleClass().add("detailPremiumTextFill");
         TextField ccName = new TextField();
         ccName.setPromptText("Name on the card");
+                ccName.getStyleClass().add("detailPremiumTextFill");
         HBox row1 = new HBox(20);
         row1.getChildren().addAll(month, year, ccvNumber);
 
@@ -120,14 +134,16 @@ public class Cashing {
 
         int price = Integer.parseInt(song.getPriceSong());
         Label confirmPrice = new Label("฿ " + price);
+        confirmPrice.getStyleClass().add("detailPremium");
 
         Button payButton = new Button("PAY NOW");
+        payButton.getStyleClass().add("savebtn");
         HBox row3 = new HBox(20);
         row3.getChildren().addAll(confirmPrice, payButton);
         row3.setAlignment(Pos.CENTER);
         VBox rightPane = new VBox(20);
         rightPane.getChildren().addAll(title2, creditRadio, inputField, row3);
-        rightPane.setStyle("-fx-background-color:#ebebeb;");
+        rightPane.getStyleClass().add("subPane");
 
         rightPane.setAlignment(Pos.TOP_LEFT);
         rightPane.setPadding(new Insets(10));
@@ -158,21 +174,34 @@ public class Cashing {
         borderPane.setCenter(leftPane);
         borderPane.setBottom(rightPane);
         borderPane.setTop(newTopPane);
-        Insets insets = new Insets(10);
+        borderPane.getStyleClass().add("allPanePremium");
+        Insets insets = new Insets(40);
         BorderPane.setMargin(leftPane, insets);
-        BorderPane.setMargin(rightPane, new Insets(10, 10, 20, 10)); //FYI : Insets(top,right,bottom,left)
+        BorderPane.setMargin(rightPane, new Insets(10, 40, 20, 40)); //FYI : Insets(top,right,bottom,left)
         BorderPane.setMargin(newTopPane, insets);
-        borderPane.setStyle("-fx-background-color:#bbbbbb;");
-
+        borderPane.getStyleClass().add("allPanePremium");
+        borderPane.setOnMousePressed(e -> {
+            mouse_x = e.getSceneX();
+            mouse_y = e.getSceneY();
+            //System.out.println(mouse_x + " " + mouse_y);
+        });
+        borderPane.setOnMouseDragged(e -> {
+            paymentStage.setX(e.getScreenX() - mouse_x);
+            paymentStage.setY(e.getScreenY() - mouse_y);
+        });
+        
         infoScene = new Scene(borderPane); //, 600, 525
+        String stylrSheet = getClass().getResource("/style_css/stylePopupDetail.css").toExternalForm(); // From PopUpdetail CSS
+        infoScene.getStylesheets().add(stylrSheet); // CSS
 
-        //infoScene.setFill(Color.TRANSPARENT);
-        //String stylrSheet = getClass().getResource("/style_css/stylePopupDetail.css").toExternalForm(); // From PopUpdetail CSS
-        //infoScene.getStylesheets().add(stylrSheet); // CSS
+        infoScene.setFill(Color.TRANSPARENT);
         paymentStage.setScene(infoScene);
+        
+        //DOESN"T NEED ANY MORE BACUS IT WiLL CAUSE SOME JAVA ERROR VVV (Sign up Premium too) 
+        
+        //paymentStage.initModality(Modality.APPLICATION_MODAL);
         //paymentStage.initStyle(StageStyle.TRANSPARENT);
-        //paymentStage.setTitle("PAYMENT");
-        paymentStage.showAndWait();
+        //paymentStage.showAndWait();
 
     }
 
@@ -265,7 +294,7 @@ public class Cashing {
         this.paymentStage = paymentStage;
         this.userAccount = userAccount;
 
-        Label title = new Label("YOUR ORDER");
+        Label title = new Label("SIGN UP PREMIUM");
         title.getStyleClass().add("titlePremium");
         Label noteText = new Label("Please check every detail before making purchase.");
         noteText.getStyleClass().add("detailPremium");
@@ -422,7 +451,6 @@ public class Cashing {
         BorderPane.setMargin(leftPane, insets);
         BorderPane.setMargin(rightPane, new Insets(10, 55, 20, 55)); //FYI : Insets(top,right,bottom,left)
         BorderPane.setMargin(newTopPane, insets);
-        //borderPane.setStyle("-fx-background-color:#bbbbbb;");
         borderPane.getStyleClass().add("allPanePremium");
         borderPane.setOnMousePressed(e -> {
             mouse_x = e.getSceneX();
@@ -439,10 +467,9 @@ public class Cashing {
         String stylrSheet = getClass().getResource("/style_css/stylePopupDetail.css").toExternalForm(); // From PopUpdetail CSS
         infoScene.getStylesheets().add(stylrSheet); // CSS
         paymentStage.setScene(infoScene);
-        paymentStage.initModality(Modality.APPLICATION_MODAL);
-        paymentStage.initStyle(StageStyle.TRANSPARENT);
-        //paymentStage.setTitle("PAYMENT");
-        paymentStage.showAndWait();
+//        paymentStage.initModality(Modality.APPLICATION_MODAL);
+//        paymentStage.initStyle(StageStyle.TRANSPARENT);
+//        paymentStage.showAndWait();
 
     }
 
