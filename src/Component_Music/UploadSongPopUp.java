@@ -85,6 +85,13 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
 
     String nationality;
 
+    ArrayList<ArrayList> list = new ArrayList<>();
+    ArrayList<String> listStyleSong = new ArrayList<String>();
+    TileTagBar tagBar;
+    ScrollPane tagScrollPane = new ScrollPane();
+
+    ArrayList<String> test = new ArrayList<>();
+
 //    private CheckBox pop = createCheckBox("Pop");
 //    private CheckBox jazz = createCheckBox("Jazz");
 //    private CheckBox rock = createCheckBox("Rock");
@@ -100,6 +107,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         image = new Image("/image/defaultmusic.png");
         photo = new ImageView(image);
         this.nationality = nationality;
+        tagBar = new TileTagBar();
         runOnce();
     }
 
@@ -114,25 +122,17 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         image = editSong.getPhoto();
         this.nationality = editSong.getNationality();
         photo = new ImageView(image);
+        tagBar = new TileTagBar();
         file = new File("src/MusicFile/" + checkExistFile + ".mp3");
-//        for(String styleString : editSong.getListStyleSong()){                    //COMMENT BY POP -> send to Gut or Rach
-//            System.out.println(styleString);
-//            if(styleString.equals("Pop")){
-//                pop.setSelected(true);
-//            }
-//            if(styleString.equals("Jazz")){
-//                jazz.setSelected(true);
-//            }
-//            if(styleString.equals("Rock")){
-//                rock.setSelected(true);
-//            }
-//            if(styleString.equals("R&B")){
-//                rnb.setSelected(true);
-//            }
-//            if(styleString.equals("Hip Hop")){
-//                hiphop.setSelected(true);
-//            }
+//        for (String list : editSong.getListStyleSong()) {
+//
+//            System.out.println(list);
+//            tagBar.getTags().add(list);
+//            listStyleSong.add(list);
+//
 //        }
+        test = editSong.getListStyleSong();
+
         changePhoto = true;
 
         songUploadEmply = false;
@@ -160,7 +160,6 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
     double mouse_x = 0, mouse_y = 0; // position mouse
 
     ArrayList<CheckBox> listCheckBox;
-    ArrayList<String> listStyleSong;
 
     private CheckBox createCheckBox(String name) {
         CheckBox chkbox = new CheckBox(name);
@@ -174,7 +173,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
 
         totalDetail = new HBox(40);
 
-        listStyleSong = new ArrayList<>();
+//        listStyleSong = new ArrayList<>();
         listCheckBox = new ArrayList<>();
 
         totalDetail.getStyleClass().add("allPane"); //CSS
@@ -193,8 +192,6 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
 //        ImageView imageSong = new ImageView(img);      //commend by gut
 //        imageSong.setFitWidth(250);
 //        imageSong.setFitHeight(300);
-
-        ArrayList<ArrayList> list = new ArrayList<>();
         ObjectInputStream file = null;
         try {
             file = new ObjectInputStream(new FileInputStream("src/data/stylemusiclist.dat"));
@@ -208,7 +205,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
             System.out.println("UploadSongPopUp : ERROR READ STYLE FILE");
         }
 
-        if (this.title.getText().equals("Upload Song")) {
+        if (this.title.getText().equals("Upload Song") || nationality.equals("international")) {
             setupInterPane(list.get(0));
         } else {
             setupThaiPane(list.get(1));
@@ -271,10 +268,8 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
 //            styleSelect.getChildren().add(checkbox);
 //        }
         //Style Tag !!!! By Pop  /////////////////////////////////////////////////////////////////////
-        tagBar = new TileTagBar(); // Own Class see in TileTagBar.java
-
-        ScrollPane tagScrollPane = new ScrollPane();
-
+//        tagBar = new TileTagBar(); // Own Class see in TileTagBar.java
+//        ScrollPane tagScrollPane = new ScrollPane();
         //setPrefSize(300, 400);
         //pannableProperty().set(true);
         tagScrollPane.fitToWidthProperty().set(true);
@@ -286,6 +281,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         tagScrollPane.getStyleClass().add("scroll-bar");
 
         tagScrollPane.setContent(tagBar);
+        this.setupStyleList();
 
         Button selectBtn = new Button("Select");
         selectBtn.getStyleClass().add("buybtn");
@@ -294,7 +290,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
             selectStage.initModality(Modality.APPLICATION_MODAL);
             selectStage.setResizable(false);
             selectStage.initStyle(StageStyle.TRANSPARENT);
-            
+
             listView = new ListView<>();
 
             list.forEach((string) -> {
@@ -409,12 +405,12 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         saveBtn.getStyleClass().add("savebtn"); // borrow...
         saveBtn.setOnMouseClicked(e -> {
 
-            for (CheckBox checkbox : listCheckBox) {
-                if (checkbox.isSelected()) {
-                    listStyleSong.add(checkbox.getText());
-                }
-            }
-
+//            for (CheckBox checkbox : listCheckBox) {
+//                if (checkbox.isSelected()) {
+//                    listStyleSong.add(checkbox.getText());
+//                }
+//            }
+            this.saveStyleList();
             if (!listStyleSong.isEmpty() && !fillDetailSong.getText().isEmpty() && !fillNameArtist.getText().isEmpty() && !fillDetailSong.getText().isEmpty() && !fillSongPrice.getText().isEmpty() && !songUploadEmply) {
                 if (!checkExistFile.equals("")) {
                     ArrayList<Song> oldSongList = new ArrayList<Song>();
@@ -524,8 +520,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
 
     Stage selectStage;
 
-    TileTagBar tagBar;
-
+//    TileTagBar tagBar;
     private void setupThaiPane(ArrayList<String> list) {
 
         VBox detail = new VBox(30);
@@ -584,8 +579,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         //Style Tag !!!! By Pop  /////////////////////////////////////////////////////////////////////
         tagBar = new TileTagBar(); // Own Class see in TileTagBar.java
 
-        ScrollPane tagScrollPane = new ScrollPane();
-
+//        ScrollPane tagScrollPane = new ScrollPane();
         //setPrefSize(300, 400);
         //pannableProperty().set(true);
         tagScrollPane.fitToWidthProperty().set(true);
@@ -597,6 +591,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         tagScrollPane.getStyleClass().add("scroll-bar");
 
         tagScrollPane.setContent(tagBar);
+        this.setupStyleList();
 
         Button selectBtn = new Button("เลือก");
         selectBtn.getStyleClass().add("buybtn");
@@ -720,12 +715,12 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         saveBtn.getStyleClass().add("savebtn"); // borrow...
         saveBtn.setOnMouseClicked(e -> {
 
-            for (CheckBox checkbox : listCheckBox) {
-                if (checkbox.isSelected()) {
-                    listStyleSong.add(checkbox.getText());
-                }
-            }
-
+//            for (CheckBox checkbox : listCheckBox) {
+//                if (checkbox.isSelected()) {
+//                    listStyleSong.add(checkbox.getText());
+//                }
+//            }
+            this.saveStyleList();
             if (!listStyleSong.isEmpty() && !fillDetailSong.getText().isEmpty() && !fillNameArtist.getText().isEmpty() && !fillDetailSong.getText().isEmpty() && !fillSongPrice.getText().isEmpty() && !songUploadEmply) {
                 if (!checkExistFile.equals("")) {
                     ArrayList<Song> oldSongList = new ArrayList<Song>();
@@ -981,4 +976,21 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         }
     }
 
+    public void setupStyleList() {
+        for (String list : test) {
+
+            System.out.println(list);
+            tagBar.getTags().add(list);
+
+        }
+    }
+
+    public void saveStyleList() {
+        for (String list : tagBar.getTags()) {
+            System.out.println("check");
+            System.out.println(list);
+            listStyleSong.add(list);
+        }
+
+    }
 }
