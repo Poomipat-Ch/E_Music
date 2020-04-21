@@ -7,6 +7,7 @@ package UI_music;
 
 import Component_Music.Account;
 import Component_Music.AlertBox;
+import static UI_music.User_UI.playerStatus;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -161,6 +162,17 @@ abstract public class UI {
                 Login.stage.show();
             }
         });
+        
+        Button playerMusic = CreaButton("Spookify Player");
+        playerMusic.setOnMouseClicked(e ->{
+             if (!"Ready".equals(playerStatus)) {
+                MusicPlayer musicPlayer = new MusicPlayer();
+                playerStatus = "Ready";
+            }else{
+                AlertBox.displayAlert(playerStatus, "Music Player is Open");
+            }
+        });
+        
         Button myAccount = CreaButton("My Account");
         myAccount.setOnMouseClicked(e -> {
             menuBtnClicked = 2;
@@ -182,7 +194,7 @@ abstract public class UI {
             Login.stage.show();
         });
 
-        VBox bottomVBox = new VBox(myAccount, logOut);
+        VBox bottomVBox = new VBox(playerMusic, myAccount, logOut);
         bottomVBox.setAlignment(Pos.BOTTOM_CENTER);
         VBox.setVgrow(bottomVBox, Priority.ALWAYS);
 
@@ -219,6 +231,16 @@ abstract public class UI {
             this.vbox.getChildren().remove(1);
             this.vbox.getChildren().add(secondPagePane());
         });
+        
+        Button playerMusic = CreaButton("Spookify Player");
+        playerMusic.setOnMouseClicked(e ->{
+             if (!"Ready".equals(playerStatus)) {
+                MusicPlayer musicPlayer = new MusicPlayer();
+                playerStatus = "Ready";
+            }else{
+                AlertBox.displayAlert(playerStatus, "Music Player is Open");
+            }
+        });
 
         Button myAccount = CreaButton("My Account");
         myAccount.setOnMouseClicked(e -> {
@@ -232,7 +254,7 @@ abstract public class UI {
             Login.stage.show();
         });
 
-        VBox bottomVBox = new VBox(myAccount, logOut);
+        VBox bottomVBox = new VBox(playerMusic, myAccount, logOut);
         bottomVBox.setAlignment(Pos.BOTTOM_CENTER);
         VBox.setVgrow(bottomVBox, Priority.ALWAYS);
 
