@@ -66,7 +66,7 @@ public class TopChartPane {
 
             topChartBtn.setOnAction(event -> {
                 System.out.println(string);
-                    new TopChartMusicPage(string);
+                    new ShowMusicPage(string, "");
             });
 
         }
@@ -104,7 +104,7 @@ public class TopChartPane {
         
         label.setOnMouseClicked(event -> {
                 System.out.println(string);
-                    new TopChartMusicPage(string);
+                    new ShowMusicPage(string, "");
             });
         
         return label;

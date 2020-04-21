@@ -7,7 +7,7 @@ package UI_music;
 
 import Component_Music.Artist;
 import Component_Music.ImageCircle;
-import Component_Music.TopChartMusicPage;
+import Component_Music.ShowMusicPage;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -249,7 +249,10 @@ public class BrowsePane {
         button.setPadding(new Insets(dis, 0, 0, 0));
 
         button.setOnMouseClicked(event -> {
-            new TopChartMusicPage(string);
+            if (dis == 160) 
+                new ShowMusicPage(string, ""); // song
+            else
+                new ShowMusicPage(string, "artist"); // artist
         });
 
         return button;

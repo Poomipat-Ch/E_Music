@@ -7,11 +7,12 @@ package UI_music;
 
 import Component_Music.Account;
 import Component_Music.AlertBox;
+import Component_Music.Artist;
 import Component_Music.DetailSongPopUp;
 import Component_Music.SearchPage;
 import Component_Music.SearchSystem;
 import Component_Music.Song;
-import Component_Music.TopChartMusicPage;
+import Component_Music.ShowMusicPage;
 import Component_Music.TopChartPane;
 import java.io.File;
 import java.io.IOException;
@@ -61,12 +62,30 @@ public class User_UI extends UI {
     private String nameSet;
     private Song songSelected;
     private String page;
+    
+    File musicfile = new File("src/data/music.dat");
+    File artistfile = new File("src/data/artist.dat");
+    
+    public static ArrayList<Song> SongArrayList = new ArrayList<>();
+    public static ArrayList<Artist> ArtistArrayList = new ArrayList<>();
 
     public User_UI() {
     }
 
     public User_UI(Stage stage, Account userAccount) {
         super(stage, userAccount);
+        
+        try {
+            SongArrayList = new ReadWriteFile().readFileSong(musicfile);
+        } catch (IOException | ClassNotFoundException ex) {
+            System.out.println("SearchPage: ERROR READ MUSIC.DAT");
+        }
+
+        try {
+            ArtistArrayList = new ReadWriteFile().readFileArtist(artistfile);
+        } catch (IOException | ClassNotFoundException ex) {
+            System.out.println("SearchPage: ERROR READ MUSIC.DAT");
+        }
 
         Scene scene = new Scene(allPane(), 1280, 960);
         String stylrSheet = getClass().getResource("/style_css/style.css").toExternalForm();

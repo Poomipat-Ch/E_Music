@@ -52,9 +52,7 @@ public class ShowingSearchPage {
         if(page.toLowerCase().equals("songs"))
             anchorpane.getChildren().addAll(CreateHead(page, foundtext), new ShowingSongs(foundtext).table);
         else if(page.toLowerCase().equals("artists"))
-            anchorpane.getChildren().addAll(CreateHead(page, foundtext));
-        else
-            anchorpane.getChildren().addAll(CreateHead(page, foundtext));          
+            anchorpane.getChildren().addAll(CreateHead(page, foundtext), new ShowingArtist(foundtext).getShowingartist());   
         
         UI.vbox.getChildren().remove(1);
         UI.vbox.getChildren().add(anchorpane);
