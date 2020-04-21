@@ -298,6 +298,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
             });
 //            listView.getItems().addAll("Gud", "I", "Find", "Naa", "Hee", "Len", "tae", "Game", "-3-"); //Pull DATA
             listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            listView.getStyleClass().add("detailTag");
 
             Button summitBtn = new Button("Submit");
             summitBtn.getStyleClass().add("savebtn");
@@ -608,6 +609,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
             });
 //            listView.getItems().addAll("Gud", "I", "Find", "Naa", "Hee", "Len", "tae", "Game", "-3-"); //Pull DATA
             listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            listView.getStyleClass().add("detailTag");
 
             Button summitBtn = new Button("ตกลง");
             summitBtn.getStyleClass().add("savebtn");
