@@ -147,7 +147,12 @@ public class Admin_UI extends UI {
         editSongBtn.setLayoutY(600);
         editSongBtn.setOnAction(e -> {
             if (songSelectedBoolean) {
-                new UploadSongPopUp("Edit Song", songSelected, "src/MusicFile/" + songSelectString + ".mp3");
+                if(songSelected.getNationality().equals("international")){
+                    new UploadSongPopUp("Edit Song", songSelected, "src/MusicFile/" + songSelectString + ".mp3");
+                }
+                else{
+                    new UploadSongPopUp("แก้ไขเพลง", songSelected, "src/MusicFile/" + songSelectString + ".mp3");
+                }    
             } else {
                 AlertBox.displayAlert("Opp!", "Please select your song.");
             }

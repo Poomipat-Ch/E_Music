@@ -34,6 +34,10 @@ import javafx.scene.text.Text;
 
 public class TileTagBar extends TilePane{
 
+    public static void getTag() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     private final ObservableList<String> observableTags;
                                        //private final TextField inputTextField;
 
