@@ -200,7 +200,7 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
         Label detailSong = new Label("Detail");
         fillDetailArtist.setPromptText("detail of Artist");
         fillDetailArtist.setPrefWidth(200);
-
+        
         fillNameArtist.getStyleClass().add("detailUploadTextFill"); //CSS
         fillNameArtist2.getStyleClass().add("detailUploadTextFill"); //CSS
         fillDetailArtist.getStyleClass().add("detailUploadTextFill"); //CSS
