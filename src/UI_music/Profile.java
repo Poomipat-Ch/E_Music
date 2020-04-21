@@ -8,6 +8,8 @@ package UI_music;
 import Component_Music.Account;
 import Component_Music.AlertBox;
 import Component_Music.Cashing;
+import java.io.IOException;
+import java.util.ArrayList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -29,9 +31,11 @@ public class Profile {
     Button cancelbt = new Button("Cancel");
     Button editbt = new Button("Edit");
     Button buyPremiumbtn = new Button("Upgrade Premium");
+    Button cancelPremiumbtn = new Button("Cancel Premium");
 
     BorderPane accountPane = new BorderPane();
-
+    
+    
     public Profile() {
 
         MyAccount myAccount = new MyAccount();
@@ -54,6 +58,9 @@ public class Profile {
                 if (!"admin".equals(UI.userAccount.getUserRole()) && !"premium".equals(UI.userAccount.getUserRole())) {
                     bottom.getChildren().addAll(buyPremiumbtn);
                 }
+                if ("premium".equals(UI.userAccount.getUserRole())) {
+                    bottom.getChildren().addAll(cancelPremiumbtn);
+                }   
                 bottom.getChildren().addAll(editbt);
             } else {
                 AlertBox.displayAlert("Edit Profile", "Failed.");
@@ -68,6 +75,9 @@ public class Profile {
             bottom.getChildren().clear();
             if (!"admin".equals(UI.userAccount.getUserRole()) && !"premium".equals(UI.userAccount.getUserRole())) {
                 bottom.getChildren().addAll(buyPremiumbtn);
+            }
+            if ("premium".equals(UI.userAccount.getUserRole())) {
+                bottom.getChildren().addAll(cancelPremiumbtn);
             }
             bottom.getChildren().addAll(editbt);
         });
@@ -86,12 +96,36 @@ public class Profile {
         buyPremiumbtn.getStyleClass().add("premiumbtn");
         buyPremiumbtn.setOnMouseClicked(e -> {
             // Font dono << ------------
+            System.out.println("NEW CASHING");
             Cashing cashPremium = new Cashing();
             cashPremium.buyPremium(new Stage(), UI.userAccount);
+           
+            if("premium".equals(UI.userAccount.getUserRole())){
+                bottom.getChildren().clear();
+                bottom.getChildren().addAll(cancelPremiumbtn,editbt);
+            }
+            
+
+        });
+        
+        cancelPremiumbtn.getStyleClass().add("cancelbtn");
+        cancelPremiumbtn.setOnMouseClicked(e -> {
+            Cashing cancelPremium = new Cashing();
+            cancelPremium.cancelPremium(UI.userAccount);
+            
+            
+            if (!"admin".equals(UI.userAccount.getUserRole()) && !"premium".equals(UI.userAccount.getUserRole())) {
+                bottom.getChildren().clear();
+                bottom.getChildren().addAll(buyPremiumbtn,editbt);
+            }
+            
         });
         
         if (!"admin".equals(UI.userAccount.getUserRole()) && !"premium".equals(UI.userAccount.getUserRole())) {
             bottom.getChildren().addAll(buyPremiumbtn);
+        }
+        if ("premium".equals(UI.userAccount.getUserRole())) {
+            bottom.getChildren().addAll(cancelPremiumbtn);
         }
         bottom.getChildren().addAll(editbt);
 
