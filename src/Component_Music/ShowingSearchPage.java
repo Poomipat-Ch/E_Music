@@ -23,8 +23,6 @@ public class ShowingSearchPage {
     public ShowingSearchPage(String page, String foundtext) {
         AnchorPane anchorpane = new AnchorPane();
         anchorpane.setMinSize(1030, 901);
-//        anchorpane.setLayoutX(-3);
-//        anchorpane.setLayoutY(-3);
         anchorpane.getStyleClass().add("mainBox");
         
 //        AnchorPane background = new AnchorPane();
@@ -52,7 +50,7 @@ public class ShowingSearchPage {
 //        hBox.getChildren().addAll(searchTextField);
         
         if(page.toLowerCase().equals("songs"))
-            anchorpane.getChildren().addAll(CreateHead(page, foundtext), new ShowingSongs().table);
+            anchorpane.getChildren().addAll(CreateHead(page, foundtext), new ShowingSongs(foundtext).table);
         else if(page.toLowerCase().equals("artists"))
             anchorpane.getChildren().addAll(CreateHead(page, foundtext));
         else
