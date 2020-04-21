@@ -17,9 +17,9 @@
 
 .mainBox{
     -fx-background-color: radial-gradient(center 30% 0%, radius 100%, rgba(132,206,235,1) 0%, rgba(90,185,234,1) 20%, rgba(71,108,203,1) 100%);
-      /*radial-gradient(center 30% 50%, radius 60%, rgba(76,190,235,1) 0%, rgba(86,128,233,1) 100%);*/  
-        /*radius 100%,rgba(86,128,233,1) 0%, rgba(163,100,196,1) 100%);*/
-/*#0c7b93*/
+    /*radial-gradient(center 30% 50%, radius 60%, rgba(76,190,235,1) 0%, rgba(86,128,233,1) 100%);*/  
+    /*radius 100%,rgba(86,128,233,1) 0%, rgba(163,100,196,1) 100%);*/
+    /*#0c7b93*/
 }
 
 .title{
@@ -254,7 +254,7 @@
 .labelhead{
     -fx-font-size: 30px;
     -fx-text-fill: white;
-    
+
 }
 
 .seealllabel {
@@ -406,7 +406,7 @@
 .topbox{
     -fx-border-style: hidden hidden solid hidden; 
     -fx-border-width: 0 0 1 0;
-    
+
     -fx-border-color: #bbbbbb;
 }
 
@@ -455,7 +455,28 @@
     -fx-font-size : 45px;
     -fx-bold : true;
     -fx-font-family: "Itim";
+
 }
+
+.bgsearchfield {
+    -fx-background-color: #222222;
+    -fx-opacity: .6;
+}
+
+.searchfield{
+    -fx-background-color: transparent;
+    -fx-text-fill: #cccccc;
+    -fx-font-size: 18px;
+}
+
+.searchfield:hover{
+    -fx-text-fill: #ffffff;
+}
+
+.searchfield:pressed{
+    -fx-text-fill: white;
+}
+
 
 
 /****************************************************************
@@ -464,7 +485,7 @@
  
 ****************************************************************/
 .outerPane{
-   -fx-background-color: transparent;
+    -fx-background-color: transparent;
 }
 
 .innerPane{
@@ -603,9 +624,9 @@
 }
 
 .tableTopChartMusic .table-row-cell,.tableTopChartMusic .table-row-cell Lable{
--fx-background-color: rgba(255,255,255,0.2);
--fx-table-cell-border-color: transparent;
--fx-font-size:15px;
+    -fx-background-color: rgba(255,255,255,0.2);
+    -fx-table-cell-border-color: transparent;
+    -fx-font-size:15px;
 }
 
 /****************************************************************
@@ -649,6 +670,6 @@
 }
 
 .tableMyLibrary .table-row-cell,.tableMyLibrary .table-row-cell Lable{
--fx-background-color: rgba(255,255,255,0.2);
--fx-table-cell-border-color: transparent;
+    -fx-background-color: rgba(255,255,255,0.2);
+    -fx-table-cell-border-color: transparent;
 }

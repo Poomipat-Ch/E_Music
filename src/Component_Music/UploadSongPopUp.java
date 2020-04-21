@@ -82,15 +82,14 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
     TextField fillSongPrice;
     TextField path;
     String checkExistFile = "";
-    
+
     String nationality;
-    
+
 //    private CheckBox pop = createCheckBox("Pop");
 //    private CheckBox jazz = createCheckBox("Jazz");
 //    private CheckBox rock = createCheckBox("Rock");
 //    private CheckBox rnb = createCheckBox("R&B");
 //    private CheckBox hiphop = createCheckBox("Hip Hop");
-
     public UploadSongPopUp(String title, String nationality) { // For Upload
         this.title = new Label(title);
         this.fillNameSong = new TextField();
@@ -105,7 +104,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
     }
 
     public UploadSongPopUp(String title, Song editSong, String path) { //For Edit //Gut you can change this
-        this.checkExistFile = (editSong.getNameSong() + editSong.getArtistSong().replaceAll("\\s",""));
+        this.checkExistFile = (editSong.getNameSong() + editSong.getArtistSong().replaceAll("\\s", ""));
         this.title = new Label(title);
         this.fillNameSong = new TextField(editSong.getNameSong());
         this.fillNameArtist = new TextField(editSong.getArtistSong());
@@ -135,7 +134,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
 //            }
 //        }
         changePhoto = true;
-        
+
         songUploadEmply = false;
         runOnce();
 
@@ -159,7 +158,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
     }
 
     double mouse_x = 0, mouse_y = 0; // position mouse
-    
+
     ArrayList<CheckBox> listCheckBox;
     ArrayList<String> listStyleSong;
 
@@ -194,17 +193,33 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
 //        ImageView imageSong = new ImageView(img);      //commend by gut
 //        imageSong.setFitWidth(250);
 //        imageSong.setFitHeight(300);
-        if(this.title.getText().equals("Upload Song"))
-            setupInterPane();
-        else
-            setupThaiPane();
+
+        ArrayList<ArrayList> list = new ArrayList<>();
+        ObjectInputStream file = null;
+        try {
+            file = new ObjectInputStream(new FileInputStream("src/data/stylemusiclist.dat"));
+        } catch (IOException ex) {
+            System.out.println("UploadSongPopUp : ERROR READ STYLE FILE");
+        }
+
+        try {
+            list = (ArrayList<ArrayList>) file.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+            System.out.println("UploadSongPopUp : ERROR READ STYLE FILE");
+        }
+
+        if (this.title.getText().equals("Upload Song")) {
+            setupInterPane(list.get(0));
+        } else {
+            setupThaiPane(list.get(1));
+        }
     }
-    
-    private void setupInterPane() {
-        
+
+    private void setupInterPane(ArrayList<String> list) {
+
         VBox detail = new VBox(30);
         VBox imageDetail = new VBox(5);
-        
+
         Button imageBtn = new Button("Upload Picture");
         imageBtn.setOnAction(e -> {
             Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
@@ -246,7 +261,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         photo.setFitWidth(200);
         photo.setPreserveRatio(true);
         imageBtn.getStyleClass().add("buybtn"); //CSS
-        
+
 //        listCheckBox.add(pop);
 //        listCheckBox.add(jazz);
 //        listCheckBox.add(rock);
@@ -255,13 +270,11 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
 //        for (CheckBox checkbox : listCheckBox) {
 //            styleSelect.getChildren().add(checkbox);
 //        }
-
-    //Style Tag !!!! By Pop  /////////////////////////////////////////////////////////////////////
-    
+        //Style Tag !!!! By Pop  /////////////////////////////////////////////////////////////////////
         tagBar = new TileTagBar(); // Own Class see in TileTagBar.java
-        
-        ScrollPane tagScrollPane= new ScrollPane();
-        
+
+        ScrollPane tagScrollPane = new ScrollPane();
+
         //setPrefSize(300, 400);
         //pannableProperty().set(true);
         tagScrollPane.fitToWidthProperty().set(true);
@@ -271,85 +284,80 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         tagScrollPane.setMinHeight(60);
         tagScrollPane.setMaxHeight(100);
         tagScrollPane.getStyleClass().add("scroll-bar");
-        
+
         tagScrollPane.setContent(tagBar);
-        
-        
 
         Button selectBtn = new Button("Select");
         selectBtn.getStyleClass().add("buybtn");
-        selectBtn.setOnAction(e -> { // Select and open new Stage(New Window)
-                selectStage = new Stage();
-                selectStage.initModality(Modality.APPLICATION_MODAL);
-                selectStage.setResizable(false);
-                selectStage.initStyle(StageStyle.TRANSPARENT);
+        selectBtn.setOnAction((ActionEvent e) -> { // Select and open new Stage(New Window)
+            selectStage = new Stage();
+            selectStage.initModality(Modality.APPLICATION_MODAL);
+            selectStage.setResizable(false);
+            selectStage.initStyle(StageStyle.TRANSPARENT);
+            
+            listView = new ListView<>();
 
-                listView = new ListView<>();
-                listView.getItems().addAll("Gud","I","Find","Naa","Hee","Len","tae","Game","-3-"); //Pull DATA
-                listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            list.forEach((string) -> {
+                listView.getItems().addAll(string);
+            });
+//            listView.getItems().addAll("Gud", "I", "Find", "Naa", "Hee", "Len", "tae", "Game", "-3-"); //Pull DATA
+            listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-                Button summitBtn = new Button("Summit");
-                summitBtn.getStyleClass().add("savebtn");
-                summitBtn.setOnAction(evt -> {
+            Button summitBtn = new Button("Submit");
+            summitBtn.getStyleClass().add("savebtn");
+            summitBtn.setOnAction(evt -> {
 
-                    summitClicked();
-                    //When Everything is Done! 
-                    selectStage.close();
-                });
+                summitClicked();
+                //When Everything is Done! 
+                selectStage.close();
+            });
 
-                Button cancelBtn = new Button("Cancel");
-                cancelBtn.getStyleClass().add("cancelbtn");
-                cancelBtn.setOnAction(evt -> selectStage.close()); // Force Close!
-                //HBox
-                HBox summitAndCancelBox = new HBox(30);
-                summitAndCancelBox.setAlignment(Pos.CENTER);
-                summitAndCancelBox.getChildren().addAll(summitBtn,cancelBtn); //Botton of Window
+            Button cancelBtn = new Button("Cancel");
+            cancelBtn.getStyleClass().add("cancelbtn");
+            cancelBtn.setOnAction(evt -> selectStage.close()); // Force Close!
+            //HBox
+            HBox summitAndCancelBox = new HBox(30);
+            summitAndCancelBox.setAlignment(Pos.CENTER);
+            summitAndCancelBox.getChildren().addAll(summitBtn, cancelBtn); //Botton of Window
 
-                Label selectStyleLabel = new Label("Select Song Style");
-                selectStyleLabel.getStyleClass().add("title");
-                
-                //VBox 
-                VBox totalVBox = new VBox(15);
-                totalVBox.getChildren().addAll(exitButtonForStyleSelection(),selectStyleLabel,listView,summitAndCancelBox);
-                totalVBox.getStyleClass().add("allPanePremium");
-                totalVBox.setAlignment(Pos.TOP_CENTER);
-                totalVBox.setPadding(new Insets(30));
-                totalVBox.setOnMousePressed(evt -> {
-                    mouse_x = evt.getSceneX();
-                    mouse_y = evt.getSceneY();
-                    //System.out.println(mouse_x + " " + mouse_y);
-                });
-                totalVBox.setOnMouseDragged(evt -> {
-                    selectStage.setX(evt.getScreenX() - mouse_x);
-                    selectStage.setY(evt.getScreenY() - mouse_y);
-                });
+            Label selectStyleLabel = new Label("Select Song Style");
+            selectStyleLabel.getStyleClass().add("title");
 
+            //VBox 
+            VBox totalVBox = new VBox(15);
+            totalVBox.getChildren().addAll(exitButtonForStyleSelection(), selectStyleLabel, listView, summitAndCancelBox);
+            totalVBox.getStyleClass().add("allPanePremium");
+            totalVBox.setAlignment(Pos.TOP_CENTER);
+            totalVBox.setPadding(new Insets(30));
+            totalVBox.setOnMousePressed(evt -> {
+                mouse_x = evt.getSceneX();
+                mouse_y = evt.getSceneY();
+                //System.out.println(mouse_x + " " + mouse_y);
+            });
+            totalVBox.setOnMouseDragged(evt -> {
+                selectStage.setX(evt.getScreenX() - mouse_x);
+                selectStage.setY(evt.getScreenY() - mouse_y);
+            });
 
-                Scene selectScene = new Scene(totalVBox);
-                String stylrSheet = getClass().getResource("/style_css/stylePopupDetail.css").toExternalForm(); // From PopUpdetail CSS
-                selectScene.getStylesheets().add(stylrSheet); // CSS
-                selectScene.setFill(Color.TRANSPARENT);
-                selectStage.setScene(selectScene);
-                selectStage.showAndWait();
+            Scene selectScene = new Scene(totalVBox);
+            String stylrSheet = getClass().getResource("/style_css/stylePopupDetail.css").toExternalForm(); // From PopUpdetail CSS
+            selectScene.getStylesheets().add(stylrSheet); // CSS
+            selectScene.setFill(Color.TRANSPARENT);
+            selectStage.setScene(selectScene);
+            selectStage.showAndWait();
         });
-        
+
         Button sortBtn = new Button("Sort");
         sortBtn.getStyleClass().add("buybtn");
         sortBtn.setOnAction(e -> {
             FXCollections.sort(tagBar.getTags()); //Sort from A-Z a->z
         });
 
-        
         HBox styleSelect = new HBox(10);
         styleSelect.setAlignment(Pos.CENTER_LEFT);
         styleSelect.getChildren().addAll(tagScrollPane, selectBtn, sortBtn);
 
-
-    /////////////////////////////////////////////////////////////////////
-
-
-
-
+        /////////////////////////////////////////////////////////////////////
         imageDetail.setAlignment(Pos.TOP_CENTER);
         imageDetail.setSpacing(20);
         imageDetail.getChildren().addAll(title, photo, imageBtn);
@@ -420,7 +428,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
                         System.out.println("UploadSongPopUp : ClassNotFoundExeption read file in DetailUpPopSong");
                     }
                     for (Song song : oldSongList) {
-                        if (checkExistFile.equals((song.getNameSong() + song.getArtistSong()).replaceAll("\\s",""))) {
+                        if (checkExistFile.equals((song.getNameSong() + song.getArtistSong()).replaceAll("\\s", ""))) {
 
                         } else {
                             newSongList.add(song);
@@ -442,10 +450,9 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
                     if (changePhoto) {
                         this.saveSong();
                     } else {
-                        if(changePhoto = AlertBox.display("missing photo?", "Are you sure to save without upload photo")){
+                        if (changePhoto = AlertBox.display("missing photo?", "Are you sure to save without upload photo")) {
                             this.saveSong();
-                        }
-                        else{
+                        } else {
                             System.out.println("save cancel");
                         }
                     }
@@ -512,18 +519,18 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         detail.getChildren().addAll(gridPane, hbox6);
         totalDetail.getChildren().addAll(imageDetail, detail, exitButton());
     }
-    
+
     ListView<String> listView;
-    
+
     Stage selectStage;
-    
+
     TileTagBar tagBar;
-    
-    private void setupThaiPane() {
-        
+
+    private void setupThaiPane(ArrayList<String> list) {
+
         VBox detail = new VBox(30);
         VBox imageDetail = new VBox(5);
-        
+
         Button imageBtn = new Button("เพิ่มรูปภาพ");
         imageBtn.setOnAction(e -> {
             Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
@@ -574,13 +581,11 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
 //        for (CheckBox checkbox : listCheckBox) {
 //            styleSelect.getChildren().add(checkbox);
 //        }
-    
-    //Style Tag !!!! By Pop  /////////////////////////////////////////////////////////////////////
-    
+        //Style Tag !!!! By Pop  /////////////////////////////////////////////////////////////////////
         tagBar = new TileTagBar(); // Own Class see in TileTagBar.java
-        
-        ScrollPane tagScrollPane= new ScrollPane();
-        
+
+        ScrollPane tagScrollPane = new ScrollPane();
+
         //setPrefSize(300, 400);
         //pannableProperty().set(true);
         tagScrollPane.fitToWidthProperty().set(true);
@@ -590,86 +595,80 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         tagScrollPane.setMinHeight(60);
         tagScrollPane.setMaxHeight(100);
         tagScrollPane.getStyleClass().add("scroll-bar");
-        
+
         tagScrollPane.setContent(tagBar);
-        
-        
 
         Button selectBtn = new Button("เลือก");
         selectBtn.getStyleClass().add("buybtn");
         selectBtn.setOnAction(e -> { // Select and open new Stage(New Window)
-                selectStage = new Stage();
-                selectStage.initModality(Modality.APPLICATION_MODAL);
-                selectStage.setResizable(false);
-                selectStage.initStyle(StageStyle.TRANSPARENT);
+            selectStage = new Stage();
+            selectStage.initModality(Modality.APPLICATION_MODAL);
+            selectStage.setResizable(false);
+            selectStage.initStyle(StageStyle.TRANSPARENT);
 
-                listView = new ListView<>();
-                listView.getItems().addAll("Gud","I","Find","Naa","Hee","Len","tae","Game","-3-"); //Pull DATA
-                listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            listView = new ListView<>();
 
-                Button summitBtn = new Button("ตกลง");
-                summitBtn.getStyleClass().add("savebtn");
-                summitBtn.setOnAction(evt -> {
+            list.forEach((string) -> {
+                listView.getItems().addAll(string);
+            });
+//            listView.getItems().addAll("Gud", "I", "Find", "Naa", "Hee", "Len", "tae", "Game", "-3-"); //Pull DATA
+            listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-                    summitClicked();
-                    //When Everything is Done! 
-                    selectStage.close();
-                });
+            Button summitBtn = new Button("ตกลง");
+            summitBtn.getStyleClass().add("savebtn");
+            summitBtn.setOnAction(evt -> {
 
-                Button cancelBtn = new Button("ยกเลิก");
-                cancelBtn.getStyleClass().add("cancelbtn");
-                cancelBtn.setOnAction(evt -> selectStage.close()); // Force Close!
-                //HBox
-                HBox summitAndCancelBox = new HBox(30);
-                summitAndCancelBox.setAlignment(Pos.CENTER);
-                summitAndCancelBox.getChildren().addAll(summitBtn,cancelBtn); //Botton of Window
+                summitClicked();
+                //When Everything is Done! 
+                selectStage.close();
+            });
 
-                Label selectStyleLabel = new Label("เลือกแนวเพลง");
-                selectStyleLabel.getStyleClass().add("title");
-                
-                //VBox 
-                VBox totalVBox = new VBox(15);
-                totalVBox.getChildren().addAll(exitButtonForStyleSelection(),selectStyleLabel,listView,summitAndCancelBox);
-                totalVBox.getStyleClass().add("allPanePremium");
-                totalVBox.setAlignment(Pos.TOP_CENTER);
-                totalVBox.setPadding(new Insets(30));
-                totalVBox.setOnMousePressed(evt -> {
-                    mouse_x = evt.getSceneX();
-                    mouse_y = evt.getSceneY();
-                    //System.out.println(mouse_x + " " + mouse_y);
-                });
-                totalVBox.setOnMouseDragged(evt -> {
-                    selectStage.setX(evt.getScreenX() - mouse_x);
-                    selectStage.setY(evt.getScreenY() - mouse_y);
-                });
+            Button cancelBtn = new Button("ยกเลิก");
+            cancelBtn.getStyleClass().add("cancelbtn");
+            cancelBtn.setOnAction(evt -> selectStage.close()); // Force Close!
+            //HBox
+            HBox summitAndCancelBox = new HBox(30);
+            summitAndCancelBox.setAlignment(Pos.CENTER);
+            summitAndCancelBox.getChildren().addAll(summitBtn, cancelBtn); //Botton of Window
 
+            Label selectStyleLabel = new Label("เลือกแนวเพลง");
+            selectStyleLabel.getStyleClass().add("title");
 
-                Scene selectScene = new Scene(totalVBox);
-                String stylrSheet = getClass().getResource("/style_css/stylePopupDetail.css").toExternalForm(); // From PopUpdetail CSS
-                selectScene.getStylesheets().add(stylrSheet); // CSS
-                selectScene.setFill(Color.TRANSPARENT);
-                selectStage.setScene(selectScene);
-                selectStage.showAndWait();
+            //VBox 
+            VBox totalVBox = new VBox(15);
+            totalVBox.getChildren().addAll(exitButtonForStyleSelection(), selectStyleLabel, listView, summitAndCancelBox);
+            totalVBox.getStyleClass().add("allPanePremium");
+            totalVBox.setAlignment(Pos.TOP_CENTER);
+            totalVBox.setPadding(new Insets(30));
+            totalVBox.setOnMousePressed(evt -> {
+                mouse_x = evt.getSceneX();
+                mouse_y = evt.getSceneY();
+                //System.out.println(mouse_x + " " + mouse_y);
+            });
+            totalVBox.setOnMouseDragged(evt -> {
+                selectStage.setX(evt.getScreenX() - mouse_x);
+                selectStage.setY(evt.getScreenY() - mouse_y);
+            });
+
+            Scene selectScene = new Scene(totalVBox);
+            String stylrSheet = getClass().getResource("/style_css/stylePopupDetail.css").toExternalForm(); // From PopUpdetail CSS
+            selectScene.getStylesheets().add(stylrSheet); // CSS
+            selectScene.setFill(Color.TRANSPARENT);
+            selectStage.setScene(selectScene);
+            selectStage.showAndWait();
         });
-        
+
         Button sortBtn = new Button("Sort");
         sortBtn.getStyleClass().add("buybtn");
         sortBtn.setOnAction(e -> {
             FXCollections.sort(tagBar.getTags()); //Sort from A-Z a->z
         });
 
-        
         HBox styleSelect = new HBox(10);
         styleSelect.setAlignment(Pos.CENTER_LEFT);
         styleSelect.getChildren().addAll(tagScrollPane, selectBtn, sortBtn);
 
-
-    /////////////////////////////////////////////////////////////////////
-
-
-
-
-
+        /////////////////////////////////////////////////////////////////////
         imageDetail.setAlignment(Pos.TOP_CENTER);
         imageDetail.setSpacing(20);
         imageDetail.getChildren().addAll(title, photo, imageBtn);
@@ -740,7 +739,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
                         System.out.println("UploadSongPopUp : ClassNotFoundExeption read file in DetailUpPopSong");
                     }
                     for (Song song : oldSongList) {
-                        if (checkExistFile.equals((song.getNameSong() + song.getArtistSong()).replaceAll("\\s",""))) {
+                        if (checkExistFile.equals((song.getNameSong() + song.getArtistSong()).replaceAll("\\s", ""))) {
 
                         } else {
                             newSongList.add(song);
@@ -762,10 +761,9 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
                     if (changePhoto) {
                         this.saveSong();
                     } else {
-                        if(changePhoto = AlertBox.display("ไม่มีรูปภาพ?", "คุณแน่ใจหรือไม่? ที่จะทำการ\nบันทึกโดยการไม่มีรูปภาพ")){
+                        if (changePhoto = AlertBox.display("ไม่มีรูปภาพ?", "คุณแน่ใจหรือไม่? ที่จะทำการ\nบันทึกโดยการไม่มีรูปภาพ")) {
                             this.saveSong();
-                        }
-                        else{
+                        } else {
                             System.out.println("save cancel");
                         }
                     }
@@ -831,27 +829,25 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
 
         detail.getChildren().addAll(gridPane, hbox6);
         totalDetail.getChildren().addAll(imageDetail, detail, exitButton());
-        
+
     }
-    
+
     private void summitClicked() { // For Tag Style
         String testMessage = "";
         ObservableList<String> styleList;
         styleList = listView.getSelectionModel().getSelectedItems();
-        
+
         for (String list : styleList) {
-            
+
             if (!tagBar.getTags().contains(list)) {
                 tagBar.getTags().add(list);
             }
-            
+
             testMessage += list + ", ";
         }
-        
-        
-        
+
         System.out.println("You have been selected style(s) :\n" + testMessage);
-        
+
     }
 
     private Button exitButton() {
@@ -883,7 +879,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
 
         return exit;
     }
-    
+
     private Button exitButtonForStyleSelection() {
 
         //Exit with Decoration
@@ -951,41 +947,38 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
             System.out.println(e);
             priceCorrectBoolean = false;
         }
-        if(priceCorrect >= 0 && priceCorrectBoolean){
-        songArrayList.add(new Song(fillNameSong.getText(), fillDetailSong.getText(), fillNameArtist.getText(), fillSongPrice.getText(), listStyleSong, image, nationality));
-        try {
-            ReadWriteFile.writeFileSong(musicFile, songArrayList);
-        } catch (IOException ex) {
-            System.out.println("UploadSongPopUp : IOExeption write file in DetailUpPopSong");
-        }
-        //Upload file .mp3
+        if (priceCorrect >= 0 && priceCorrectBoolean) {
+            songArrayList.add(new Song(fillNameSong.getText(), fillDetailSong.getText(), fillNameArtist.getText(), fillSongPrice.getText(), listStyleSong, image, nationality));
+            try {
+                ReadWriteFile.writeFileSong(musicFile, songArrayList);
+            } catch (IOException ex) {
+                System.out.println("UploadSongPopUp : IOExeption write file in DetailUpPopSong");
+            }
+            //Upload file .mp3
 //                file = new File(nameForUpload);
-        nameForUpload = (fillNameSong.getText() + fillNameArtist.getText()).replaceAll("\\s","");
-        File newSong = new File("src/MusicFile/" + nameForUpload + ".mp3");
-        System.out.println(newSong.getName());
-        try {
-            Files.copy(file.toPath(), newSong.toPath());
-        } catch (IOException ex) {
-            System.out.println("UploadSongPopUp : IOExeption upload file song in DetailUpPopSong");
-        }
-        if (!checkExistFile.equals("")) {
-            selectFileDelete.delete();
-        }
-        Admin_UI.totalPane.getChildren().clear();
-        Admin_UI.totalPane.getChildren().add(Admin_UI.updateScrollPane(""));
-        
-        if(this.title.getText().equals("Upload Song"))
-            AlertBox.displayAlert("Upload Success!", "Upload Success!");
-        else
-            AlertBox.displayAlert("เพิ่มเพลงสำเร็จ!", "เพิ่มเพลงสำเร็จ!");
-        stage.close();
-        }
-        else{
+            nameForUpload = (fillNameSong.getText() + fillNameArtist.getText()).replaceAll("\\s", "");
+            File newSong = new File("src/MusicFile/" + nameForUpload + ".mp3");
+            System.out.println(newSong.getName());
+            try {
+                Files.copy(file.toPath(), newSong.toPath());
+            } catch (IOException ex) {
+                System.out.println("UploadSongPopUp : IOExeption upload file song in DetailUpPopSong");
+            }
+            if (!checkExistFile.equals("")) {
+                selectFileDelete.delete();
+            }
+            Admin_UI.totalPane.getChildren().clear();
+            Admin_UI.totalPane.getChildren().add(Admin_UI.updateScrollPane(""));
+
+            if (this.title.getText().equals("Upload Song")) {
+                AlertBox.displayAlert("Upload Success!", "Upload Success!");
+            } else {
+                AlertBox.displayAlert("เพิ่มเพลงสำเร็จ!", "เพิ่มเพลงสำเร็จ!");
+            }
+            stage.close();
+        } else {
             AlertBox.displayAlert("Fail!", "Please check your price.");
         }
     }
-    
 
-   
-    
 }

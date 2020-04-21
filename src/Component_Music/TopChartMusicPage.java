@@ -15,6 +15,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -122,7 +123,7 @@ public class TopChartMusicPage {
         SortedList<Song> sortedList = new SortedList<>(searchSystemMyLibrary.getFilterData());
         sortedList.comparatorProperty().bind(table.comparatorProperty());
         table.setItems(sortedList);
-        
+
         table.setLayoutX(30);
         table.setLayoutY(380);
 
@@ -161,10 +162,17 @@ public class TopChartMusicPage {
         hBox.setLayoutX(30);
         hBox.setLayoutY(320);
 
+        AnchorPane anchorpane = new AnchorPane();
+        anchorpane.setPrefSize(1030 - 200, 10);
+        anchorpane.getStyleClass().add("bgsearchfield");
+
         TextField searchTextField = new TextField();
         searchTextField.setPromptText("Filter");
-        searchTextField.setStyle("-fx-font-size: 18px;");
         searchTextField.setPrefSize(1030 - 200, 10);
+        searchTextField.getStyleClass().add("searchfield");
+
+//        searchTextField.set
+        
 
         Button searchButton = CreaButton("Refresh");
         searchButton.setStyle("-fx-font-size : 15px;");
@@ -172,7 +180,9 @@ public class TopChartMusicPage {
 
         searchTextField.textProperty().addListener(searchSystemMyLibrary);
 
-        hBox.getChildren().addAll(searchTextField, searchButton);
+        anchorpane.getChildren().add(searchTextField);
+
+        hBox.getChildren().addAll(anchorpane, searchButton);
 
         return hBox;
     }
