@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -24,6 +25,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -53,15 +56,50 @@ public class Cashing {
 
     double mouse_x = 0, mouse_y = 0; // position mouse
 
+    private double lowPrice, medPrice, largePrice, price, promotion, total; //<--
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    public double getPromotion() {
+        return promotion;
+    }
+
+    public void setPromotion(double promotion) {
+        this.promotion = promotion;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     public void Info(Stage paymentStage, Song song) {
         this.paymentStage = paymentStage;
         this.song = song;
 
+        //double lowPrice, medPrice, largePrice; // <-------------- Song Price ------------------------
+        setLowPrice(29.0); //<--
+        setMedPrice(69.0); //<--
+        setLargePrice(119.0); //<--
+
+        setPromotion(20);
+
+        /*Integer.parseInt(song.getPriceSong()) <- Old one | New one ->*/
+        setPrice(getLowPrice()); // <-------------------- Total Price will be calculate below --------------------------
+        if(UI.userAccount.getUserRole().equals("premium")) setTotal(getPrice()*(100-getPromotion())/100);
+        else setTotal(price);
+
         Label title = new Label("YOUR ORDER");
-        title.getStyleClass().add("titlePremium");
         Label noteText = new Label("Please check every detail before making purchase.");
-        noteText.getStyleClass().add("detailPremium");
-        noteText.setStyle("-fx-effect: dropshadow( gaussian , rgba(0,0,0,0.5) , 5,0,2,2);");
         VBox topPane = new VBox(20);
         topPane.getChildren().addAll(title, noteText);
         topPane.setAlignment(Pos.CENTER_LEFT);
@@ -70,43 +108,51 @@ public class Cashing {
         newTopPane.setRight(exitButton());
 
         Label orderText = new Label(song.getNameSong() + " - " + song.getArtistSong());
-        Label orderPrice = new Label("฿ " + song.getPriceSong());
-        orderText.getStyleClass().add("detailPremium");
-        orderPrice.getStyleClass().add("detailPremium");    
+        Label orderPrice = new Label("฿ " + getPrice());
+        Label toggleText = new Label("Number of download: ");
+        ToggleGroup songPackage = new ToggleGroup();
+        RadioButton lowPack = new RadioButton("1 time");
+        RadioButton medPack = new RadioButton("3 times");
+        RadioButton largePack = new RadioButton("5 times");
+        lowPack.setToggleGroup(songPackage);
+        songPackage.selectToggle(lowPack);
+        medPack.setToggleGroup(songPackage);
+        largePack.setToggleGroup(songPackage);
+
+        HBox priceRow = new HBox(20);
+        priceRow.getChildren().addAll(toggleText, lowPack, medPack, largePack);
         BorderPane leftRow1 = new BorderPane();
-        leftRow1.setLeft(orderText);
+        leftRow1.setTop(orderText);
+        BorderPane.setMargin(orderText, new Insets(0, 0, 20, 0));
+        leftRow1.setLeft(priceRow);
         leftRow1.setRight(orderPrice);
         leftRow1.setPadding(new Insets(20));
-        leftRow1.getStyleClass().add("subPane");
+        leftRow1.setStyle("-fx-background-color:#ebebeb;");
 
         Label describeText = new Label("All prices include VAT if applicable.");
-        describeText.getStyleClass().add("detailPremium");
-        Label totalPrice = new Label("ORDER TOTAL: ฿ " + song.getPriceSong());
-        totalPrice.getStyleClass().add("detailPremium");
+        setTotal(getPrice()); //<-
+        Label totalPrice = new Label("ORDER TOTAL: ฿ " + getTotal()); //<--
         BorderPane leftRow2 = new BorderPane();
         leftRow2.setLeft(describeText);
         leftRow2.setRight(totalPrice);
         leftRow2.setPadding(new Insets(20));
-        leftRow2.getStyleClass().add("subPane"); 
+        leftRow2.setStyle("-fx-background-color:#ebebeb;");
 
         VBox leftPane = new VBox(20);
         leftPane.getChildren().addAll(leftRow1, leftRow2);
         leftPane.setAlignment(Pos.TOP_LEFT);
 
+        
         //=============================================================//
         Label title2 = new Label("YOUR PAYMENT");
-        title2.getStyleClass().add("detailPremium");
 
         RadioButton creditRadio = new RadioButton("CREDIT/DEBIT CARD");
         creditRadio.setSelected(true);
-        creditRadio.getStyleClass().add("detailPremiumChoice");
 
         TextField ccNumber = new TextField();
         ccNumber.setPromptText("Card Number");
-        ccNumber.getStyleClass().add("detailPremiumTextFill");  
         ComboBox<String> month = new ComboBox<>();
         month.setPromptText("Expiry date");
-        month.getStyleClass().add("detailPremiumChoice");
         for (int i = 1; i <= 12; i++) {
             String[] mth = {"January", "Febuary", "March", "April", "May",
                 "June", "July", "August", "September", "October", "November", "December"};
@@ -114,17 +160,14 @@ public class Cashing {
         }
         ComboBox<String> year = new ComboBox<>();
         year.setPromptText("Year");
-        year.getStyleClass().add("detailPremiumChoice");
         for (int i = 2020; i <= 2041; i++) {
             year.getItems().add(Integer.toString(i));
         }
 
         TextField ccvNumber = new TextField();
         ccvNumber.setPromptText("CVV");
-        ccvNumber.getStyleClass().add("detailPremiumTextFill");
         TextField ccName = new TextField();
         ccName.setPromptText("Name on the card");
-                ccName.getStyleClass().add("detailPremiumTextFill");
         HBox row1 = new HBox(20);
         row1.getChildren().addAll(month, year, ccvNumber);
 
@@ -132,18 +175,40 @@ public class Cashing {
         inputField.getChildren().addAll(ccNumber, row1, ccName);
         inputField.setAlignment(Pos.CENTER_LEFT);
 
-        int price = Integer.parseInt(song.getPriceSong());
-        Label confirmPrice = new Label("฿ " + price);
-        confirmPrice.getStyleClass().add("detailPremium");
+        Label confirmPrice = new Label("฿ " + getTotal());
+        
+        //Gu so sleepy deposit here pap by Font
+        songPackage.selectedToggleProperty().addListener( //Change text after select by using listener
+                (ObservableValue<? extends Toggle> ov, Toggle old_toggle,
+                        Toggle new_toggle) -> {
+                    if (songPackage.getSelectedToggle() != null) {
+                        if (lowPack.isSelected()) {
+                            orderPrice.setText("฿ " + getLowPrice());
+                            setPrice(getLowPrice()); //<--
+                        } else if (medPack.isSelected()) {
+                            orderPrice.setText("฿ " + getMedPrice());
+                            setPrice(getMedPrice()); //<--
+                        } else {
+                            orderPrice.setText("฿ " + getLargePrice());
+                            setPrice(getLargePrice()); //<--
+                        }
+                        setTotal(price);
+                        if (UI.userAccount.getUserRole().equals("premium")) {
+                            describeText.setText("Discounts " + getPromotion() + "% for Premium users");
+                            setTotal(getTotal() * (100 - getPromotion()) / 100); //<- promotion price price = price * ( 100 - discount ) / 100
+                        }
+                        totalPrice.setText("ORDER TOTAL: ฿ " + getTotal());
+                        confirmPrice.setText("฿ " + getTotal());
+                    }
+                });
 
         Button payButton = new Button("PAY NOW");
-        payButton.getStyleClass().add("savebtn");
         HBox row3 = new HBox(20);
         row3.getChildren().addAll(confirmPrice, payButton);
         row3.setAlignment(Pos.CENTER);
         VBox rightPane = new VBox(20);
         rightPane.getChildren().addAll(title2, creditRadio, inputField, row3);
-        rightPane.getStyleClass().add("subPane");
+        rightPane.setStyle("-fx-background-color:#ebebeb;");
 
         rightPane.setAlignment(Pos.TOP_LEFT);
         rightPane.setPadding(new Insets(10));
@@ -158,9 +223,9 @@ public class Cashing {
             } else if (hasNumber(ccName.getText())) {
                 AlertBox.displayAlert("Something went wrong!", "Some of infomation are Incorrect.\n Please check your name again.");
             } else {
-                if (AlertBox.confirmAlert("Confirmation", "\"" + song.getNameSong() + " - " + song.getArtistSong() + "\" will cost " + song.getPriceSong() + "฿\n"
+                if (AlertBox.confirmAlert("Are you sure", "You are going to buy \"" + song.getNameSong() + " - " + song.getArtistSong() + "\"."
                         + "Please confirm to make a purchase.")) {
-                    AlertBox.displayAlert("Purchase Success", "\"" + song.getNameSong() + " - " + song.getArtistSong() + "\" will add to your playlist soon.");
+                    AlertBox.displayAlert("Purchase Success", "\"" + song.getNameSong() + " - " + song.getArtistSong() + "\" was added to your playlist.");
                     System.out.println("Purchase complete");
                     this.paymentStage.close();
                     UI.userAccount.addSong(song);
@@ -174,35 +239,46 @@ public class Cashing {
         borderPane.setCenter(leftPane);
         borderPane.setBottom(rightPane);
         borderPane.setTop(newTopPane);
-        borderPane.getStyleClass().add("allPanePremium");
-        Insets insets = new Insets(40);
+        Insets insets = new Insets(10);
         BorderPane.setMargin(leftPane, insets);
-        BorderPane.setMargin(rightPane, new Insets(10, 40, 20, 40)); //FYI : Insets(top,right,bottom,left)
+        BorderPane.setMargin(rightPane, new Insets(10, 10, 20, 10)); //FYI : Insets(top,right,bottom,left)
         BorderPane.setMargin(newTopPane, insets);
-        borderPane.getStyleClass().add("allPanePremium");
-        borderPane.setOnMousePressed(e -> {
-            mouse_x = e.getSceneX();
-            mouse_y = e.getSceneY();
-            //System.out.println(mouse_x + " " + mouse_y);
-        });
-        borderPane.setOnMouseDragged(e -> {
-            paymentStage.setX(e.getScreenX() - mouse_x);
-            paymentStage.setY(e.getScreenY() - mouse_y);
-        });
-        
-        infoScene = new Scene(borderPane); //, 600, 525
-        String stylrSheet = getClass().getResource("/style_css/stylePopupDetail.css").toExternalForm(); // From PopUpdetail CSS
-        infoScene.getStylesheets().add(stylrSheet); // CSS
+        borderPane.setStyle("-fx-background-color:#bbbbbb;");
 
-        infoScene.setFill(Color.TRANSPARENT);
+        infoScene = new Scene(borderPane); //, 600, 525
+
+        //infoScene.setFill(Color.TRANSPARENT);
+        //String stylrSheet = getClass().getResource("/style_css/stylePopupDetail.css").toExternalForm(); // From PopUpdetail CSS
+        //infoScene.getStylesheets().add(stylrSheet); // CSS
         paymentStage.setScene(infoScene);
-        
-        //DOESN"T NEED ANY MORE BACUS IT WiLL CAUSE SOME JAVA ERROR VVV (Sign up Premium too) 
-        
-        paymentStage.initModality(Modality.APPLICATION_MODAL);
-        paymentStage.initStyle(StageStyle.TRANSPARENT);
+        //paymentStage.initStyle(StageStyle.TRANSPARENT);
+        //paymentStage.setTitle("PAYMENT");
         paymentStage.showAndWait();
 
+    }
+
+    public double getLowPrice() {
+        return lowPrice;
+    }
+
+    public void setLowPrice(double lowPrice) {
+        this.lowPrice = lowPrice;
+    }
+
+    public double getMedPrice() {
+        return medPrice;
+    }
+
+    public void setMedPrice(double medPrice) {
+        this.medPrice = medPrice;
+    }
+
+    public double getLargePrice() {
+        return largePrice;
+    }
+
+    public void setLargePrice(double largePrice) {
+        this.largePrice = largePrice;
     }
 
     public static boolean isInteger(String s) {
@@ -294,7 +370,7 @@ public class Cashing {
         this.paymentStage = paymentStage;
         this.userAccount = userAccount;
 
-        Label title = new Label("SIGN UP PREMIUM");
+        Label title = new Label("YOUR ORDER");
         title.getStyleClass().add("titlePremium");
         Label noteText = new Label("Please check every detail before making purchase.");
         noteText.getStyleClass().add("detailPremium");
@@ -369,9 +445,10 @@ public class Cashing {
         inputField.getChildren().addAll(ccNumber, row1, ccName);
         inputField.setAlignment(Pos.CENTER_LEFT);
 
-        double promotion = 0; //<-----------------
-        double price = 99; //<-----------------
-        double total = price * (100 - promotion) / 100;
+        setPromotion(0); //<-
+        setPrice(99.0);  //<-
+        double total = getPrice(); //<-
+        total = total * (100 - getPromotion()) / 100; //<- promotion price price = price * ( 100 - discount ) / 100
         Label confirmPrice = new Label("฿ " + total);
         confirmPrice.getStyleClass().add("detailPremium");
 
@@ -397,7 +474,7 @@ public class Cashing {
             } else if (hasNumber(ccName.getText())) {
                 AlertBox.displayAlert("Something went wrong!", "Some of infomation are Incorrect.\n Please check your name again.");
             } else { //<--------------------------------------------------------------------
-                if (AlertBox.confirmAlert("Confirmation", "\"Premium account\" will cost " + total + "฿\n"
+                if (AlertBox.confirmAlert("Are you sure", "You are going to buy \"Premium account\""
                         + "Please confirm to make a purchase.")) {
                     //Change status (drag from admin ui edit status)
 
@@ -451,6 +528,7 @@ public class Cashing {
         BorderPane.setMargin(leftPane, insets);
         BorderPane.setMargin(rightPane, new Insets(10, 55, 20, 55)); //FYI : Insets(top,right,bottom,left)
         BorderPane.setMargin(newTopPane, insets);
+        //borderPane.setStyle("-fx-background-color:#bbbbbb;");
         borderPane.getStyleClass().add("allPanePremium");
         borderPane.setOnMousePressed(e -> {
             mouse_x = e.getSceneX();
@@ -469,6 +547,7 @@ public class Cashing {
         paymentStage.setScene(infoScene);
         paymentStage.initModality(Modality.APPLICATION_MODAL);
         paymentStage.initStyle(StageStyle.TRANSPARENT);
+        //paymentStage.setTitle("PAYMENT");
         paymentStage.showAndWait();
 
     }
