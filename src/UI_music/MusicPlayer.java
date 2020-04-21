@@ -5,10 +5,9 @@
  */
 package UI_music;
 
-import Component_Music.Song;
+import Component_Music.AlertBox;
+import static UI_music.Login.stage;
 import java.io.File;
-import javafx.concurrent.Service;
-import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -22,7 +21,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 /**
@@ -30,81 +31,108 @@ import javafx.util.Duration;
  * @author poomi
  */
 public class MusicPlayer {
-    static Song song;
-    static MediaPlayer playerSong;
-    Slider musicSlider;
-    Slider volumeMusic;
-    Boolean interrupt;
+    private MediaPlayer playerSong;
+    private String status;
+    private Slider musicSlider;
+    private Slider volumeMusic;
+    private Boolean interrupt;
+    private File selectMusicFile;
+    private Stage primaryStage;
+    private FileChooser fileChooser;
+    private Label songDetail;
+    private double mouse_x,mouse_y;
 
-    public MusicPlayer() {
-    }
     
-    public MusicPlayer(Song song) {
-        this.song = song;
-        this.playerSong = new MediaPlayer(new Media(new File("src/MusicFile/"+song.getNameSong()+song.getArtistSong()+".mp3").toURI().toString()));
+    public MusicPlayer() {
         this.musicSlider = new Slider();
         this.volumeMusic = new Slider();
         this.interrupt = false;
+        this.status = "Stop";
         this.musicSlider.setPrefSize(350, 30);
         this.volumeMusic.setPrefSize(110, 30);
-        this.volumeMusic.setValue(playerSong.getVolume()*100);
+        this.mouse_x = 0;
+        this.mouse_y = 0;
+        fileChooser = new FileChooser();
+        this.volumeMusic.setValue(100);
+        selectFile(fileChooser);
         
-        playerSong.play();
-        Stage primaryStage = new Stage();
+        primaryStage = new Stage();
         BorderPane root = new BorderPane();
+        root.setTop(exitButton());
         
         HBox hbox = new HBox(20);
         hbox.setAlignment(Pos.CENTER);
         
         Button playPauseButton = new Button();
+        playPauseButton.getStyleClass().add("playControl");
         ImageView play = new ImageView(new Image("/icon/play-button.png"));
         ImageView pause = new ImageView(new Image("/icon/pause.png"));
         play.setFitWidth(30);
         play.setFitHeight(30);
         pause.setFitWidth(30);
         pause.setFitHeight(30);
-        playPauseButton.setGraphic(pause);
+        playPauseButton.setGraphic(play);
         
         Button stopButton = new Button();
+        stopButton.getStyleClass().add("stopControl");
         ImageView stop = new ImageView(new Image("/icon/stop.png"));
         stop.setFitWidth(30);
         stop.setFitHeight(30);
         stopButton.setGraphic(stop);
-       
-        playPauseButton.setOnAction(e -> {
-            if(playerSong.getStatus() == MediaPlayer.Status.PLAYING){
-                playerSong.pause();
-                playPauseButton.setGraphic(play);
-            }else{
-                playerSong.play();
-                interrupt = false;
-                playPauseButton.setGraphic(pause);
-            }
-        });
-        stopButton.setOnAction(e -> {
-            playerSong.stop();
-        });
         
-        Label songDetail = new Label(this.song.getNameSong() + " - "+this.song.getArtistSong());
         
-        ImageView songImg = new ImageView(song.getPhoto());
-        songImg.setFitWidth(200);
-        songImg.setFitHeight(200);
-
-        hbox.getChildren().addAll(playPauseButton, stopButton);
-        VBox vbox = new VBox(30);
-        vbox.setAlignment(Pos.CENTER);
-        vbox.getChildren().addAll(songDetail,songImg,hbox);
-        root.setCenter(vbox);
+        Button selectFile = new Button();
+        selectFile.getStyleClass().add("selectFileControl");
+        ImageView select = new ImageView(new Image("/icon/file.png"));
+        select.setFitWidth(30);
+        select.setFitHeight(30);
+        selectFile.setGraphic(select);
         
         Button muteButton = new Button();
-        ImageView mute = new ImageView(new Image("/icon/mute.png"));
+        muteButton.getStyleClass().add("muteControl");
+        ImageView mute = new ImageView(new Image("/icon/mute_0.png"));
         mute.setFitWidth(20);
         mute.setFitHeight(20);
-        ImageView unMute = new ImageView(new Image("/icon/volume.png"));
+        ImageView unMute = new ImageView(new Image("/icon/speaker.png"));
         unMute.setFitWidth(20);
         unMute.setFitHeight(20);
         muteButton.setGraphic(unMute);
+        
+        songDetail = new Label("No Music File To Play");
+        songDetail.getStyleClass().add("DetailLabel");
+       
+        playPauseButton.setOnAction(e -> {
+            if (!"Stop".equals(status)) {
+                if(playerSong.getStatus() == MediaPlayer.Status.PLAYING){
+                    playerSong.pause();
+                    playPauseButton.setGraphic(play);
+                    playPauseButton.getStyleClass().clear();
+                    playPauseButton.getStyleClass().add("playControl");
+                }else{
+                    playerSong.play();
+                    interrupt = false;
+                    playPauseButton.getStyleClass().clear();
+                    playPauseButton.getStyleClass().add("pauseControl");
+                    playPauseButton.setGraphic(pause);
+                }
+            }else{
+                selectMusic();
+                if ("Playing".equals(status)) {
+                    playPauseButton.getStyleClass().clear();
+                    playPauseButton.getStyleClass().add("pauseControl");
+                    playPauseButton.setGraphic(pause);
+                }
+            }
+        });
+        
+        stopButton.setOnAction(e -> {
+            playerSong.stop();
+            playPauseButton.setGraphic(play);
+            playPauseButton.getStyleClass().clear();
+            playPauseButton.getStyleClass().add("playControl");
+        });
+        
+        
         
         muteButton.setOnMouseClicked(e ->{
             playerSong.setMute(!playerSong.isMute());
@@ -115,9 +143,42 @@ public class MusicPlayer {
             }
         });
         
-        HBox Slidebar = new HBox(5);
-        Slidebar.getChildren().addAll(musicSlider,muteButton,volumeMusic);
-        root.setBottom(Slidebar);
+        
+       
+        
+        ImageView songImg = new ImageView("/image/defaultmusic.png");
+        songImg.setFitWidth(200);
+        songImg.setFitHeight(200);
+        
+        songImg.setOnMouseClicked(e ->{
+            selectMusic();
+            if ("Playing".equals(status)) {
+                playPauseButton.getStyleClass().clear();
+                playPauseButton.getStyleClass().add("pauseControl");
+                playPauseButton.setGraphic(pause);
+            }
+
+        });
+        
+        selectFile.setOnMouseClicked(e ->{
+           selectMusic();
+            if ("Playing".equals(status)) {
+                playPauseButton.getStyleClass().clear();
+                playPauseButton.getStyleClass().add("pauseControl");
+                playPauseButton.setGraphic(pause);
+            }
+        });
+
+        hbox.getChildren().addAll(selectFile,playPauseButton, stopButton);
+        VBox vbox = new VBox(30);
+        vbox.setAlignment(Pos.CENTER);
+        vbox.getChildren().addAll(songDetail,songImg,hbox);
+        root.setCenter(vbox);
+        
+        HBox slidebar = new HBox(5);
+        slidebar.setAlignment(Pos.CENTER);
+        slidebar.getChildren().addAll(musicSlider,muteButton,volumeMusic);
+        root.setBottom(slidebar);
         root.setPadding(new Insets(20));
         
         volumeMusic.valueProperty().addListener((ov, t, t1) -> {
@@ -129,55 +190,121 @@ public class MusicPlayer {
             }
         });
         
-        
-        musicSlider.valueProperty().addListener((ov, t, t1) -> {
-            musicSlider.valueChangingProperty().addListener((o) -> {
-                playerSong.seek(Duration.seconds((t1.doubleValue()/100)*playerSong.getStopTime().toSeconds()));
-                }); 
-            musicSlider.setOnMouseClicked(e ->{
-                interrupt = true;
-                playerSong.seek(Duration.seconds((musicSlider.getValue()/100)*playerSong.getStopTime().toSeconds()));
-            });
+        root.setOnMousePressed(e -> {
+            mouse_x = e.getSceneX();
+            mouse_y = e.getSceneY();
+            //System.out.println(mouse_x + " " + mouse_y);
         });
-
-        
-        Task<Void> task = new Task<Void>() {
-            @Override
-            public Void call() throws Exception {
-                playerSong.currentTimeProperty().addListener((ov, t, t1) -> {
-                if (!interrupt) {
-                    musicSlider.setValue((t1.toSeconds()/playerSong.getStopTime().toSeconds())*100);
-                }
-                  });
-                return null ;
-            }
-        };
-
-         new Thread(task).run();
+        root.setOnMouseDragged(e -> {
+            primaryStage.setX(e.getScreenX() - mouse_x);
+            primaryStage.setY(e.getScreenY() - mouse_y);
+        });
         
         
         Scene scene = new Scene(root, 500, 450);
         scene.getStylesheets().add(getClass().getResource("/style_css/musicPlayerStyle.css").toExternalForm());
 
         primaryStage.setScene(scene);
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setTitle("Spookify Media Player");
         primaryStage.show();
-        
-        
+       
         
         
        primaryStage.setOnCloseRequest(e ->{
-           playerSong.stop();
-           this.song = null;
+           if ("Playing".equals(status)) {
+               playerSong.stop();
+           }
+           User_UI.playerStatus = "NotReady";
        });
 
     }
     
     
-    
-    public static String getStatus(){
-        if(song == null)
-            return "";
-      return playerSong.getStatus().name();
+     private void selectFile(FileChooser fileChooser) {
+      fileChooser.setTitle("Select MusicFile");
+ 
+      fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+ 
+      fileChooser.getExtensionFilters().addAll(//
+              new FileChooser.ExtensionFilter("Music Files", "*.mp3","*.wav","*.m4a"), //
+              new FileChooser.ExtensionFilter("MP3", "*.mp3"), //
+              new FileChooser.ExtensionFilter("WAV", "*.wav"),
+              new FileChooser.ExtensionFilter("M4A", "*.m4a"));
+  }
+     
+     private  void selectMusic(){
+         selectMusicFile = fileChooser.showOpenDialog(primaryStage);
+            if (selectMusicFile != null) {
+                openFile(selectMusicFile);
+                songDetail.setText(selectMusicFile.getName().substring(0, selectMusicFile.getName().length()-4));
+            }
+            interrupt = false;
+     }
+     
+     
+     private void openFile(File file) {
+        interrupt = true;
+        if ("Playing".equals(status)) { 
+             playerSong.stop();
+        }
+        playerSong = new MediaPlayer(new Media(file.toURI().toString()));
+        playerSong.play();
+        status = "Playing";
+        playMusic();
+    }
+     
+     
+     private Button exitButton() {
+
+        ImageView exit_icon = new ImageView(new Image("/icon/close-512-detail.png"));
+        ImageView exit_hover_icon = new ImageView(new Image("/icon/close-512_hover.png"));
+        exit_icon.setFitWidth(15);
+        exit_icon.setFitHeight(15);
+        exit_hover_icon.setFitWidth(15);
+        exit_hover_icon.setFitHeight(15);
+        
+        Button exit = new Button("", exit_icon);
+        exit.setOnMouseEntered(e -> {
+            exit.setGraphic(exit_hover_icon);
+        });
+        exit.setOnMouseExited(e -> {
+            exit.setGraphic(exit_icon);
+        });
+        exit.setOnMouseClicked(e -> {
+            primaryStage.close();
+            if ("Playing".equals(status)) {
+               playerSong.stop();
+           }
+            
+           User_UI.playerStatus = "NotReady";
+        });
+        exit.setStyle("-fx-background-color : transparent;");
+        exit.setPadding(Insets.EMPTY);
+        exit.setTranslateX(450);
+        exit.setTranslateY(-10);
+
+        return exit;
+    }
+
+
+    private void playMusic() {
+            musicSlider.valueProperty().addListener((ov, t, t1) -> {
+                musicSlider.valueChangingProperty().addListener((o) -> {
+                    playerSong.seek(Duration.seconds((t1.doubleValue()/100)*playerSong.getStopTime().toSeconds()));
+                }); 
+                musicSlider.setOnMousePressed(e ->{
+                    interrupt = true;
+                    playerSong.seek(Duration.seconds((musicSlider.getValue()/100)*playerSong.getStopTime().toSeconds()));
+                });
+                musicSlider.setOnMouseReleased(e ->{
+                    interrupt = false;
+                });
+            });
+            playerSong.currentTimeProperty().addListener((ov, t, t1) -> {
+                if (!interrupt) {
+                    musicSlider.setValue((t1.toSeconds()/playerSong.getStopTime().toSeconds())*100);
+                }
+            });
     }
 }

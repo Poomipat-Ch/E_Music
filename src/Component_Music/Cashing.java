@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -24,6 +25,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -53,9 +56,47 @@ public class Cashing {
 
     double mouse_x = 0, mouse_y = 0; // position mouse
 
+    private double lowPrice, medPrice, largePrice, price, promotion, total; //<--
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    public double getPromotion() {
+        return promotion;
+    }
+
+    public void setPromotion(double promotion) {
+        this.promotion = promotion;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     public void Info(Stage paymentStage, Song song) {
         this.paymentStage = paymentStage;
         this.song = song;
+
+        //double lowPrice, medPrice, largePrice; // <-------------- Song Price ------------------------
+        setLowPrice(29.0); //<--
+        setMedPrice(69.0); //<--
+        setLargePrice(119.0); //<--
+
+        setPromotion(20);
+
+        /*Integer.parseInt(song.getPriceSong()) <- Old one | New one ->*/
+        setPrice(getLowPrice()); // <-------------------- Total Price will be calculate below --------------------------
+        if(UI.userAccount.getUserRole().equals("premium")) setTotal(getPrice()*(100-getPromotion())/100);
+        else setTotal(price);
 
         Label title = new Label("YOUR ORDER");
         Label noteText = new Label("Please check every detail before making purchase.");
@@ -67,15 +108,30 @@ public class Cashing {
         newTopPane.setRight(exitButton());
 
         Label orderText = new Label(song.getNameSong() + " - " + song.getArtistSong());
-        Label orderPrice = new Label("฿ " + song.getPriceSong());
+        Label orderPrice = new Label("฿ " + getPrice());
+        Label toggleText = new Label("Number of download: ");
+        ToggleGroup songPackage = new ToggleGroup();
+        RadioButton lowPack = new RadioButton("1 time");
+        RadioButton medPack = new RadioButton("3 times");
+        RadioButton largePack = new RadioButton("5 times");
+        lowPack.setToggleGroup(songPackage);
+        songPackage.selectToggle(lowPack);
+        medPack.setToggleGroup(songPackage);
+        largePack.setToggleGroup(songPackage);
+
+        HBox priceRow = new HBox(20);
+        priceRow.getChildren().addAll(toggleText, lowPack, medPack, largePack);
         BorderPane leftRow1 = new BorderPane();
-        leftRow1.setLeft(orderText);
+        leftRow1.setTop(orderText);
+        BorderPane.setMargin(orderText, new Insets(0, 0, 20, 0));
+        leftRow1.setLeft(priceRow);
         leftRow1.setRight(orderPrice);
         leftRow1.setPadding(new Insets(20));
         leftRow1.setStyle("-fx-background-color:#ebebeb;");
 
         Label describeText = new Label("All prices include VAT if applicable.");
-        Label totalPrice = new Label("ORDER TOTAL: ฿ " + song.getPriceSong());
+        setTotal(getPrice()); //<-
+        Label totalPrice = new Label("ORDER TOTAL: ฿ " + getTotal()); //<--
         BorderPane leftRow2 = new BorderPane();
         leftRow2.setLeft(describeText);
         leftRow2.setRight(totalPrice);
@@ -86,6 +142,7 @@ public class Cashing {
         leftPane.getChildren().addAll(leftRow1, leftRow2);
         leftPane.setAlignment(Pos.TOP_LEFT);
 
+        
         //=============================================================//
         Label title2 = new Label("YOUR PAYMENT");
 
@@ -118,8 +175,32 @@ public class Cashing {
         inputField.getChildren().addAll(ccNumber, row1, ccName);
         inputField.setAlignment(Pos.CENTER_LEFT);
 
-        int price = Integer.parseInt(song.getPriceSong());
-        Label confirmPrice = new Label("฿ " + price);
+        Label confirmPrice = new Label("฿ " + getTotal());
+        
+        //Gu so sleepy deposit here pap by Font
+        songPackage.selectedToggleProperty().addListener( //Change text after select by using listener
+                (ObservableValue<? extends Toggle> ov, Toggle old_toggle,
+                        Toggle new_toggle) -> {
+                    if (songPackage.getSelectedToggle() != null) {
+                        if (lowPack.isSelected()) {
+                            orderPrice.setText("฿ " + getLowPrice());
+                            setPrice(getLowPrice()); //<--
+                        } else if (medPack.isSelected()) {
+                            orderPrice.setText("฿ " + getMedPrice());
+                            setPrice(getMedPrice()); //<--
+                        } else {
+                            orderPrice.setText("฿ " + getLargePrice());
+                            setPrice(getLargePrice()); //<--
+                        }
+                        setTotal(price);
+                        if (UI.userAccount.getUserRole().equals("premium")) {
+                            describeText.setText("Discounts " + getPromotion() + "% for Premium users");
+                            setTotal(getTotal() * (100 - getPromotion()) / 100); //<- promotion price price = price * ( 100 - discount ) / 100
+                        }
+                        totalPrice.setText("ORDER TOTAL: ฿ " + getTotal());
+                        confirmPrice.setText("฿ " + getTotal());
+                    }
+                });
 
         Button payButton = new Button("PAY NOW");
         HBox row3 = new HBox(20);
@@ -142,9 +223,9 @@ public class Cashing {
             } else if (hasNumber(ccName.getText())) {
                 AlertBox.displayAlert("Something went wrong!", "Some of infomation are Incorrect.\n Please check your name again.");
             } else {
-                if (AlertBox.confirmAlert("Are you sure", "\"" + song.getNameSong() + " - " + song.getArtistSong() + "\" will cost " + song.getPriceSong() + "฿\n"
+                if (AlertBox.confirmAlert("Are you sure", "You are going to buy \"" + song.getNameSong() + " - " + song.getArtistSong() + "\"."
                         + "Please confirm to make a purchase.")) {
-                    AlertBox.displayAlert("Purchase Success", "\"" + song.getNameSong() + " - " + song.getArtistSong() + "\" will add to your playlist soon.");
+                    AlertBox.displayAlert("Purchase Success", "\"" + song.getNameSong() + " - " + song.getArtistSong() + "\" was added to your playlist.");
                     System.out.println("Purchase complete");
                     this.paymentStage.close();
                     UI.userAccount.addSong(song);
@@ -174,6 +255,30 @@ public class Cashing {
         //paymentStage.setTitle("PAYMENT");
         paymentStage.showAndWait();
 
+    }
+
+    public double getLowPrice() {
+        return lowPrice;
+    }
+
+    public void setLowPrice(double lowPrice) {
+        this.lowPrice = lowPrice;
+    }
+
+    public double getMedPrice() {
+        return medPrice;
+    }
+
+    public void setMedPrice(double medPrice) {
+        this.medPrice = medPrice;
+    }
+
+    public double getLargePrice() {
+        return largePrice;
+    }
+
+    public void setLargePrice(double largePrice) {
+        this.largePrice = largePrice;
     }
 
     public static boolean isInteger(String s) {
@@ -340,9 +445,10 @@ public class Cashing {
         inputField.getChildren().addAll(ccNumber, row1, ccName);
         inputField.setAlignment(Pos.CENTER_LEFT);
 
-        double promotion = 0; //<-----------------
-        double price = 99; //<-----------------
-        double total = price * (100 - promotion) / 100;
+        setPromotion(0); //<-
+        setPrice(99.0);  //<-
+        double total = getPrice(); //<-
+        total = total * (100 - getPromotion()) / 100; //<- promotion price price = price * ( 100 - discount ) / 100
         Label confirmPrice = new Label("฿ " + total);
         confirmPrice.getStyleClass().add("detailPremium");
 
@@ -368,7 +474,7 @@ public class Cashing {
             } else if (hasNumber(ccName.getText())) {
                 AlertBox.displayAlert("Something went wrong!", "Some of infomation are Incorrect.\n Please check your name again.");
             } else { //<--------------------------------------------------------------------
-                if (AlertBox.confirmAlert("Are you sure", "\"Premium account\" will cost " + total + "฿\n"
+                if (AlertBox.confirmAlert("Are you sure", "You are going to buy \"Premium account\""
                         + "Please confirm to make a purchase.")) {
                     //Change status (drag from admin ui edit status)
 
@@ -444,6 +550,51 @@ public class Cashing {
         //paymentStage.setTitle("PAYMENT");
         paymentStage.showAndWait();
 
+    }
+    
+    
+    public void cancelPremium(Account userAccount){
+        
+         if (AlertBox.confirmAlert("Confirmation","    Are you sure you want to\n cancel your Premium Account?")) {
+                    //Change status (drag from admin ui edit status)
+
+                    oldAccounts = new ArrayList<>();
+                    presentAccounts = new ArrayList<>();
+                    updateAccount2 = new Account();
+
+                    try {
+                        oldAccounts = file.readFile(user);
+                    } catch (IOException ex) {
+                        System.out.println("buyPremium : IOExeption readfile in updateAccountClick");
+                    } catch (ClassNotFoundException ex) {
+                        System.out.println("buyPremium : ClassNotFoundExeption readfile in upDateAccountClick");
+                    }
+
+                    for (Account account : oldAccounts) {
+                        String chkUser = account.getUsername();
+                        String chkEmail = account.getEmail();
+
+                        if (userAccount.getUsername().equals(chkUser) && userAccount.getEmail().equals(chkEmail)) {
+                            updateAccount2 = account;
+                            //SKIP TO ADD AFTER
+                        } else {
+                            presentAccounts.add(account);
+                        }
+                    }
+                    updateAccount2.setUserRole("member");
+
+                    presentAccounts.add(updateAccount2);
+
+                    try {
+                        file.writeFile(user, presentAccounts);
+                    } catch (IOException ex) {
+                        System.out.println("buyPremium : IOExeption writefile in updateAccountClicked");
+                    }
+
+                    System.out.println("Cancel Premium");
+                   
+                    UI.userAccount = updateAccount2; // Update
+                }
     }
 
 }

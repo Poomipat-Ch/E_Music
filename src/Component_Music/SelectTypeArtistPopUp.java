@@ -25,7 +25,6 @@ public class SelectTypeArtistPopUp extends SelectTypePopUp {
     @Override
     AnchorPane CreateButton() {
         AnchorPane anchorpane = new AnchorPane();
-        anchorpane.setStyle("-fx-background-color: transparent;");
         anchorpane.setPrefSize(400, 380);
         anchorpane.setLayoutX(50);
         anchorpane.setLayoutY(60);

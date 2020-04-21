@@ -3,8 +3,53 @@
     src: url("/font/Itim-Regular.ttf");
 }
 
+.root{
+    -fx-background-color:#282828;
+}
 
-Label{
+.DetailLabel{
     -fx-font-size:30px;
     -fx-font-family:"Itim";
+    -fx-text-fill:white;
+}
+
+.playControl{
+    -fx-background-color:transparent;
+    -fx-padding:0;
+}
+
+.playControl:hover{
+    -fx-graphic:url("/icon/play-button-white.png");
+}
+
+.pauseControl{
+    -fx-background-color:transparent;
+    -fx-padding:0;
+}
+
+.pauseControl:hover{
+    -fx-graphic:url("/icon/pause-white.png");
+}
+
+.stopControl{
+    -fx-background-color:transparent;
+    -fx-padding:0;
+}
+
+.stopControl:hover{
+    -fx-graphic:url("/icon/stop-white.png");
+}
+
+.selectFileControl{
+    -fx-background-color:transparent;
+    -fx-padding:0;
+}
+
+.selectFileControl:hover{
+    -fx-graphic:url("/icon/file-hover.png");
+}
+
+.muteControl{
+    -fx-background-color:transparent;
+    -fx-padding:0;
 }

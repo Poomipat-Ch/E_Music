@@ -100,7 +100,7 @@ public class DetailSongPopUp {
                         
             }else{
                 Cashing cashing = new Cashing();
-                cashing.Info(stage, song);
+                cashing.Info(new Stage(), song);
             }
             
             System.out.println("Calling Info");

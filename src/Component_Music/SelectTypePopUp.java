@@ -48,8 +48,6 @@ abstract public class SelectTypePopUp {
         anchorpane.getStyleClass().add("mainBox");
         
         AnchorPane backgroundpane = new AnchorPane();
-        backgroundpane.setStyle("-fx-background-color: tranparent");
-        //backgroundpane.getStyleClass().add("backgroundSelect");
         backgroundpane.setPrefSize(500, 500);
         
         
