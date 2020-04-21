@@ -36,16 +36,11 @@ public class SearchPage {
     private int songCount = 0;
     private int artistCount = 0;
 
-    File musicfile = new File("src/data/music.dat");
-    File artistfile = new File("src/data/artist.dat");
-    ArrayList<Song> Song = null;
-    ArrayList<Artist> Artist = null;
+    
 
     public SearchPage(String text) {
         anchorPane = new AnchorPane();
         anchorPane.setMinSize(990, 900);
-//        anchorPane.setLayoutX(-3);
-//        anchorPane.setLayoutY(-3);
         anchorPane.getStyleClass().add("mainBox");
 
         AnchorPane background = new AnchorPane();
@@ -62,24 +57,16 @@ public class SearchPage {
         borderpane.setLayoutX(30);
         borderpane.setLayoutY(60);
 
-        try {
-            Song = new ReadWriteFile().readFileSong(musicfile);
-        } catch (IOException | ClassNotFoundException ex) {
-            System.out.println("SearchPage: ERROR READ MUSIC.DAT");
-        }
-
-        try {
-            Artist = new ReadWriteFile().readFileArtist(artistfile);
-        } catch (IOException | ClassNotFoundException ex) {
-            System.out.println("SearchPage: ERROR READ MUSIC.DAT");
-        }
-
         searchTextField.textProperty().addListener((ov, t, t1) -> {
             anchorPane.getChildren().remove(1);
             if (searchTextField.getText().equals("")) {
                 anchorPane.getChildren().addAll(BlankPane());
             } else {
                 anchorPane.getChildren().addAll(FoundListPane(searchTextField.getText()));
+                if (this.songCount == 0 && this.artistCount == 0) {
+                    anchorPane.getChildren().remove(1);
+                    anchorPane.getChildren().addAll(CantFoundPane(searchTextField.getText()));
+                }
             }
 
         });
@@ -90,33 +77,6 @@ public class SearchPage {
 
     public AnchorPane getSearchPane() {
         return anchorPane;
-    }
-
-    private AnchorPane BlankPane() {
-        AnchorPane anchorpane = new AnchorPane();
-        anchorpane.setMinWidth(1030);
-        ImageView image = new ImageView(new Image("/icon/search.png"));
-        image.setFitWidth(60);
-        image.setPreserveRatio(true);
-        image.setLayoutX(485);
-        image.setLayoutY(350);
-        image.setStyle("-fx-opacity: .7;");
-
-        Label searchlabel = new Label("Search Spookify");
-        searchlabel.getStyleClass().add("searchlabel");
-        searchlabel.setLayoutY(430);
-        searchlabel.setMinWidth(1030);
-        searchlabel.setAlignment(Pos.CENTER);
-
-        Label detaillabel = new Label("Find your favorite songs and artists.");
-        detaillabel.getStyleClass().add("detaillabel");
-        detaillabel.setLayoutY(480);
-        detaillabel.setMinWidth(1030);
-        detaillabel.setAlignment(Pos.CENTER);
-
-        anchorpane.getChildren().addAll(image, searchlabel, detaillabel);
-
-        return anchorpane;
     }
 
 //    private AnchorPane //empty page
@@ -130,31 +90,30 @@ public class SearchPage {
         borderpane.setLayoutX(30);
         borderpane.setLayoutY(60);
 
-        borderpane.setLeft(PlaylistPane("Songs", "music.dat", foundtext));
-//        borderpane.setLeft(PlaylistPane("Genres & Moods", "stylemusiclist.txt", foundtext));
-//        borderpane.setRight(PlaylistPane("Artists", "artist.dat", foundtext));
-        if (this.songCount == 0) {
-            borderpane.setLeft(PlaylistPane("Artists", "artist.dat", foundtext));
-        } else {
-            borderpane.setRight(PlaylistPane("Artists", "artist.dat", foundtext));
-        }
+        BorderPane songpane = PlaylistPane("Songs", "music.dat", foundtext, 2, 400);
+        BorderPane artistpane = PlaylistPane("Artists", "artist.dat", foundtext, 2, 400);
 
-        if (this.songCount == 0 && this.artistCount == 0) {
-            borderpane.setLeft(PlaylistPane("Artists", "artist.dat", foundtext));
+        if (this.songCount == 0) {
+            borderpane.setLeft(PlaylistPane("Artists", "artist.dat", foundtext, 4, 880));
+        } else if (this.artistCount == 0) {
+            borderpane.setLeft(PlaylistPane("Songs", "music.dat", foundtext, 4, 880));
+        } else {
+            borderpane.setLeft(songpane);
+            borderpane.setRight(artistpane);
         }
 
         return borderpane;
     }
 
-    private BorderPane PlaylistPane(String string, String filename, String foundtext) {
+    private BorderPane PlaylistPane(String string, String filename, String foundtext, int column, double seeall) {
         BorderPane borderpane = new BorderPane();
         borderpane.setPadding(new Insets(20, 0, 20, 0));
 
-        borderpane.setPrefWidth(455);
+        borderpane.setPrefWidth(445);
         borderpane.setPrefHeight(341);
 
-        borderpane.setTop(HeadPane(string, foundtext, 400));
-        borderpane.setCenter(Playlist(foundtext, filename, 4, 12));
+        borderpane.setTop(HeadPane(string, foundtext, seeall));
+        borderpane.setCenter(Playlist(foundtext, filename, column, 12));
 
         return borderpane;
     }
@@ -196,21 +155,19 @@ public class SearchPage {
         AnchorPane anchorpane = new AnchorPane();
 //        borderpane.set
 
-        File file = new File("src/data/" + filename);
-
         if (filename.equals("music.dat")) {
             songCount = 0;
-            for (Song song : Song) {
+            for (Song song : User_UI.SongArrayList) {
                 if (song.getNameSong().toLowerCase().contains(foundtext.toLowerCase())) {
-                    anchorpane.getChildren().add(CreateList((230 * (songCount % column)) + dis, (80 * (songCount / column)) + 50, song.getNameSong()));
+                    anchorpane.getChildren().add(CreateSongList((230 * (songCount % column)) + dis, (150 * (songCount / column) ) + 50, song));
                     songCount++;
                 }
             }
         } else {
             artistCount = 0;
-            for (Artist artist : Artist) {
+            for (Artist artist : User_UI.ArtistArrayList) {
                 if (artist.getName1().toLowerCase().contains(foundtext.toLowerCase()) || artist.getName2().toLowerCase().contains(foundtext.toLowerCase())) {
-                    anchorpane.getChildren().add(CreateList((230 * (artistCount % column)) + dis, (80 * (artistCount / column)) + 50, artist.getName1()));
+                    anchorpane.getChildren().add(CreateArtistList((230 * (artistCount % column)) + dis, (150 * (artistCount / column)) + 50, artist));
                     artistCount++;
                 }
             }
@@ -219,7 +176,7 @@ public class SearchPage {
         return anchorpane;
     }
 
-    private AnchorPane CreateList(double x, double y, String namesong) {
+    private AnchorPane CreateSongList(double x, double y, Song song) {
         AnchorPane anchorpane = new AnchorPane();
         //anchorpane.getStyleClass().add("borderplaylist");
         anchorpane.setMaxWidth(215);
@@ -227,11 +184,13 @@ public class SearchPage {
         anchorpane.setLayoutX(x);
         anchorpane.setLayoutY(y);
 
-        Button button = new Button(namesong);
-        button.setPrefSize(215, 60);
-        button.getStyleClass().add("borderplaylist");
-        button.setLayoutX(0);
-        button.setLayoutY(0);
+        Label nameLabel = new Label(song.getNameSong());
+        nameLabel.setPadding(new Insets(0, 0, 0, 80));
+        nameLabel.setPrefSize(215, 60);
+        nameLabel.setMaxWidth(215);
+        nameLabel.getStyleClass().add("borderplaylist");
+        nameLabel.setLayoutX(0);
+        nameLabel.setLayoutY(0);
 
         ImageView imageview = new ImageView(new Image("/UI_music/defaultprofile.png"));
         imageview.setFitHeight(60);
@@ -239,7 +198,96 @@ public class SearchPage {
         imageview.setLayoutX(0);
         imageview.setLayoutY(0);
 
-        anchorpane.getChildren().addAll(button, imageview);
+        nameLabel.setPadding(new Insets(8, 0, 0, 80));
+        nameLabel.setAlignment(Pos.TOP_LEFT);
+
+        Label label = new Label(song.getArtistSong());
+        label.getStyleClass().add("labelNameArtistInSongButton");
+        label.setLayoutX(80);
+        label.setLayoutY(30);
+
+        anchorpane.getChildren().addAll(nameLabel, imageview, label);
+
+        return anchorpane;
+    }
+
+    private AnchorPane CreateArtistList(double x, double y, Artist artist) {
+        AnchorPane anchorpane = new AnchorPane();
+        //anchorpane.getStyleClass().add("borderplaylist");
+        anchorpane.setMaxWidth(215);
+        anchorpane.setPrefSize(215, 60);
+        anchorpane.setLayoutX(x);
+        anchorpane.setLayoutY(y);
+
+        Label nameLabel = new Label(artist.getName1());
+        nameLabel.setPadding(new Insets(0, 0, 0, 50));
+        nameLabel.setPrefSize(185, 60);
+        nameLabel.setMaxWidth(185);
+        nameLabel.getStyleClass().add("borderplaylist");
+        nameLabel.setLayoutX(30);
+        nameLabel.setLayoutY(0);
+        
+        AnchorPane profilePicture = new AnchorPane();
+         profilePicture.getChildren().add(new ImageCircle(30, 30, 30, artist.getPhoto()).getMyCircle());
+
+        nameLabel.setAlignment(Pos.CENTER_LEFT);
+        anchorpane.getChildren().addAll(nameLabel,profilePicture);
+
+        return anchorpane;
+    }
+
+    private AnchorPane BlankPane() {
+        AnchorPane anchorpane = new AnchorPane();
+        anchorpane.setMinWidth(1030);
+        ImageView image = new ImageView(new Image("/icon/search.png"));
+        image.setFitWidth(60);
+        image.setPreserveRatio(true);
+        image.setLayoutX(485);
+        image.setLayoutY(350);
+        image.setStyle("-fx-opacity: .7;");
+
+        Label searchlabel = new Label("Search Spookify");
+        searchlabel.getStyleClass().add("searchlabel");
+        searchlabel.setLayoutY(430);
+        searchlabel.setMinWidth(1030);
+        searchlabel.setAlignment(Pos.CENTER);
+
+        Label detaillabel = new Label("Find your favorite songs and artists.");
+        detaillabel.getStyleClass().add("detaillabel");
+        detaillabel.setLayoutY(480);
+        detaillabel.setMinWidth(1030);
+        detaillabel.setAlignment(Pos.CENTER);
+
+        anchorpane.getChildren().addAll(image, searchlabel, detaillabel);
+
+        return anchorpane;
+    }
+
+    private AnchorPane CantFoundPane(String foundtext) {
+        AnchorPane anchorpane = new AnchorPane();
+        anchorpane.setMinWidth(1030);
+        ImageView image = new ImageView(new Image("/icon/flag.png"));
+        image.setFitWidth(60);
+        image.setPreserveRatio(true);
+        image.setLayoutX(485);
+        image.setLayoutY(350);
+        image.setStyle("-fx-opacity: .7;");
+
+        Label searchlabel = new Label("Not results found for \"" + foundtext + "\"");
+        searchlabel.getStyleClass().add("searchlabel");
+        searchlabel.setLayoutY(430);
+        searchlabel.setMinWidth(1030);
+        searchlabel.setAlignment(Pos.CENTER);
+
+        Label detaillabel = new Label("Please make sure your words are spelled correctly or use less or different keywords.");
+        detaillabel.getStyleClass().add("detaillabel");
+        detaillabel.setLayoutY(480);
+        detaillabel.setLayoutX(20);
+        detaillabel.setMinWidth(990);
+        detaillabel.setMaxWidth(990);
+        detaillabel.setAlignment(Pos.CENTER);
+
+        anchorpane.getChildren().addAll(image, searchlabel, detaillabel);
 
         return anchorpane;
     }

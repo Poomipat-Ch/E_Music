@@ -419,20 +419,19 @@
     -fx-background-radius: 0em;
     -fx-background-color : transparent;
     -fx-text-fill: white;
-    -fx-font-size: 14px;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
 }
 
 .borderplaylist:hover {
     -fx-background-color : #111111;
-    -fx-opacity: 0.5;
-    -fx-underline: true;
 }
 
 .searchlabel {
     -fx-text-fill: white;
     -fx-font-size: 30;
     -fx-font-family: "Itim";
-    -fx-font-weight:bold;
+    -fx-font-weight: 700;
 }
 
 .detaillabel {
@@ -440,6 +439,13 @@
     -fx-font-size: 18;
     -fx-font-family: "Itim";
     -fx-opacity: .7;
+}
+
+.labelNameArtistInSongButton {
+    -fx-background-radius: 0em;
+    -fx-background-color : transparent;
+    -fx-text-fill: #bbbbbb;
+    -fx-font-size: 15px;
 }
 
 /****************************************************************

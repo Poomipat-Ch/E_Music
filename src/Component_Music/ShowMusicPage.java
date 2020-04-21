@@ -34,7 +34,7 @@ import javafx.scene.layout.HBox;
  *
  * @author HCARACH
  */
-public class TopChartMusicPage {
+public class ShowMusicPage {
 
     SearchSystem searchSystemMyLibrary = new SearchSystem();
 
@@ -49,7 +49,7 @@ public class TopChartMusicPage {
     TableView<Song> table;
     ObservableList<Song> list = null;
 
-    public TopChartMusicPage(String string) {
+    public ShowMusicPage(String name, String content) {
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.setMinSize(990, 901);
         anchorPane.setLayoutX(-3);
@@ -108,12 +108,12 @@ public class TopChartMusicPage {
         // Set Sort type for userName column
         NameCol.setSortType(TableColumn.SortType.DESCENDING);
         detailCol.setSortable(false);
-        
+
         list = FXCollections.observableArrayList();
-        
+
         // Display row data
-        if (string.toLowerCase().contains("top 50")) {
-            if (string.toLowerCase().contains("thailand")) {
+        if (name.toLowerCase().contains("top 50")) {
+            if (name.toLowerCase().contains("thailand")) {
                 try {
                     Song.getMyMusicList().forEach(song -> {
                         if (song.getNationality().equals("thai")) {
@@ -135,11 +135,23 @@ public class TopChartMusicPage {
 
                 }
             }
+        } else if (content.equals("artist")) {
+            System.out.println("yes");
+            try {
+                Song.getMyMusicList().forEach(song -> {
+                    System.out.println(song.getArtistSong());
+                    if (song.getArtistSong().toLowerCase().contains(name.toLowerCase())) {
+                        list.add(song);
+                    }
+                });
+            } catch (ClassNotFoundException | IOException ex) {
+                Logger.getLogger(ShowMusicPage.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else {
             try {
-                Song.getMyMusicList().forEach(song ->{
+                Song.getMyMusicList().forEach(song -> {
                     song.getListStyleSong().forEach(style -> {
-                        if (style.equals(string)) {
+                        if (style.equals(name)) {
                             list.add(song);
                         }
                     });
@@ -170,7 +182,7 @@ public class TopChartMusicPage {
         scrollpane.setLayoutY(-4);
         scrollpane.setPrefSize(1030, 901);
 
-        anchorPane.getChildren().addAll(table, CreateLabel(string), imageview, searchBoxMy());
+        anchorPane.getChildren().addAll(table, CreateLabel(name), imageview, searchBoxMy());
 
         scrollpane.setContent(anchorPane);
 
