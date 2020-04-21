@@ -979,9 +979,10 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
     public void setupStyleList() {
         for (String list : test) {
 
+            if (!tagBar.getTags().contains(list)) {
             System.out.println(list);
             tagBar.getTags().add(list);
-
+            }
         }
     }
 

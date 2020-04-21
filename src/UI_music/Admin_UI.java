@@ -1008,6 +1008,7 @@ public class Admin_UI extends UI {
         ReadWriteFile.writeFileSong(musicFile, newSongList);
         Admin_UI.totalPane.getChildren().remove(0);
         Admin_UI.totalPane.getChildren().add(updateScrollPane(""));
+        songSelectedBoolean = false;
 
         return 1;
     }
@@ -1039,6 +1040,7 @@ public class Admin_UI extends UI {
         ReadWriteFile.writeFileArtist(artistFile, newArtistList);
         Admin_UI.totalArtistPane.getChildren().remove(0);
         Admin_UI.totalArtistPane.getChildren().add(updateScrollArtistPane(""));
+        artistSelectedBoolean = false;
 
         return 1;
     }
