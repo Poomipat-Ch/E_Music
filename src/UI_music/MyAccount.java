@@ -7,6 +7,7 @@ package UI_music;
 
 import Component_Music.Account;
 import Component_Music.AlertBox;
+import Component_Music.ImageCircle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,6 +34,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -84,6 +86,8 @@ public class MyAccount {
     private File filePath;
     private ImageView photo;
     private Image image;
+    
+    private AnchorPane profilePicture = new AnchorPane();
 
     public MyAccount() {
         this.showAccount();
@@ -156,12 +160,15 @@ public class MyAccount {
         photo.setFitHeight(200);
         photo.setFitWidth(200);
         photo.setPreserveRatio(true);
+        
+        profilePicture.getChildren().add(new ImageCircle(100, 100, 100, image).getMyCircle());
+
 
         VBox profilePictureBox = new VBox(10);
-        //profilePictureBox.setPadding(new Insets(30));
-        profilePictureBox.getChildren().addAll(photo);
-        profilePictureBox.setAlignment(Pos.CENTER_RIGHT);
-        profilePictureBox.setMinWidth(300);
+        profilePictureBox.setPadding(new Insets(100));
+        profilePictureBox.getChildren().addAll(profilePicture);
+        profilePictureBox.setAlignment(Pos.CENTER);
+//        profilePictureBox.setMinWidth(300);
         
         editBox.setAlignment(Pos.CENTER);
         editBox.getChildren().addAll(titleHead, hboxNameSurname, gridPane);
@@ -370,17 +377,20 @@ public class MyAccount {
                 Image image = SwingFXUtils.toFXImage(bufferedImage, null);
                 this.photo.setImage(image);
                 this.image = image;
+                
+                profilePicture.getChildren().remove(0);
+                profilePicture.getChildren().addAll(new ImageCircle(100, 100, 100, image).getMyCircle());
             } catch (IOException e) {
                 System.out.println("MyAccount : IOExeption upload picture in editAccount");
             }
         });
         //
         
-        VBox profilePictureBox = new VBox(10);
-        profilePictureBox.setPadding(new Insets(40));
-        profilePictureBox.getChildren().addAll(photo, uploadBtn);
+        VBox profilePictureBox = new VBox(30);
+        profilePictureBox.setPadding(new Insets(80));
+        profilePictureBox.getChildren().addAll(profilePicture, uploadBtn);
         profilePictureBox.setAlignment(Pos.TOP_CENTER);
-        profilePictureBox.setMinWidth(300);
+//        profilePictureBox.setMinWidth(300);
 
         profilePane.getStyleClass().add("innerPane");
         profilePane.setLeft(profilePictureBox);

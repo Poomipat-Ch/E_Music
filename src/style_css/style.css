@@ -373,6 +373,11 @@
     -fx-background-radius: 0em;
 }
 
+.artistbuttonlist{
+    -fx-background-color: transparent;
+    -fx-background-radius: 0em;
+}
+
 /****************************************************************
  
   Search page Skin  
@@ -672,4 +677,14 @@
 .tableMyLibrary .table-row-cell,.tableMyLibrary .table-row-cell Lable{
     -fx-background-color: rgba(255,255,255,0.2);
     -fx-table-cell-border-color: transparent;
+}
+
+/****************************************************************
+ 
+  Table My Library
+ 
+****************************************************************/
+
+.imageCircle{
+    
 }
