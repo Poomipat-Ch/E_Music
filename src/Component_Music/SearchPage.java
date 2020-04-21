@@ -153,16 +153,16 @@ public class SearchPage {
         borderpane.setPrefWidth(455);
         borderpane.setPrefHeight(341);
 
-        borderpane.setTop(HeadPane(string, filename, foundtext, 400));
+        borderpane.setTop(HeadPane(string, foundtext, 400));
         borderpane.setCenter(Playlist(foundtext, filename, 4, 12));
 
         return borderpane;
     }
 
-    private AnchorPane HeadPane(String string, String filename, String foundtext, double x) {
+    private AnchorPane HeadPane(String string, String foundtext, double x) {
         AnchorPane pane = new AnchorPane();
         pane.getStyleClass().add("hbox");
-        Label seeall = CreateSeeAll(string, filename, foundtext, x);
+        Label seeall = CreateSeeAll(string, foundtext, x);
 
         pane.getChildren().addAll(CreateLabel(string), seeall);
 
@@ -177,7 +177,7 @@ public class SearchPage {
         return label;
     }
 
-    private Label CreateSeeAll(String string, String filename, String foundtext, double x) {
+    private Label CreateSeeAll(String string, String foundtext, double x) {
         Label label = new Label("SEE ALL");
         label.setAlignment(Pos.CENTER_RIGHT);
         label.getStyleClass().add("seealllabel");

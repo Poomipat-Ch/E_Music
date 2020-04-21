@@ -8,6 +8,7 @@ package Component_Music;
 import UI_music.User_UI;
 import java.io.File;
 import java.io.IOException;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -15,21 +16,24 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
+
 /**
  *
  * @author HCARACH
  */
 public class ShowingSongs {
-    
+
     SearchSystem searchSystemMyLibrary = new SearchSystem();
-    
+
     private File fileForDownload;
     private Song songSelected;
     private String songNameSelected;
     private String nameSet;
     TableView<Song> table;
 
-    public ShowingSongs() {
+    ObservableList<Song> list;
+
+    public ShowingSongs(String foundtext) {
         table = new TableView<>();
         table.setEditable(true);
 
@@ -77,22 +81,25 @@ public class ShowingSongs {
         detailCol.setSortable(false);
 
         // Display row data
-        ObservableList<Song> list = null;
+        list = FXCollections.observableArrayList();
 
         try {
-            list = Song.getMyMusicList();
-        } catch (IOException ex) {
+            Song.getMyMusicList().forEach(song -> {
+                if (song.getNameSong().toLowerCase().contains(foundtext.toLowerCase())) {
+                    list.add(song);
+                }
+            });
+        } catch (IOException | ClassNotFoundException ex) {
             System.out.println("TopChartMusicPage : IOException get my music list from class song");
-        } catch (ClassNotFoundException ex) {
-            System.out.println("TopChartMusicPage : ClassNotFoundException get my music list from class song");
         }
+
         FilteredList<Song> filterData = new FilteredList<>(list, b -> true);
         searchSystemMyLibrary.setFilterData(filterData);
 
         SortedList<Song> sortedList = new SortedList<>(searchSystemMyLibrary.getFilterData());
         sortedList.comparatorProperty().bind(table.comparatorProperty());
         table.setItems(sortedList);
-        
+
         table.setLayoutX(30);
         table.setLayoutY(380);
 
@@ -102,8 +109,5 @@ public class ShowingSongs {
     public TableView<Song> getTable() {
         return table;
     }
-    
-    
-    
-    
+
 }
