@@ -17,8 +17,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -27,8 +25,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -41,8 +37,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -61,12 +55,14 @@ public class User_UI extends UI {
     private String nameSet;
     private Song songSelected;
     private String page;
+    public static String playerStatus;
 
     public User_UI() {
     }
 
     public User_UI(Stage stage, Account userAccount) {
         super(stage, userAccount);
+        this.playerStatus = "NotReady";
 
         Scene scene = new Scene(allPane(), 1280, 960);
         String stylrSheet = getClass().getResource("/style_css/style.css").toExternalForm();
@@ -122,22 +118,8 @@ public class User_UI extends UI {
                 this.downloader();
             }
         });
-        
-        Button songPlayer = CreaButton("Play");
-        songPlayer.setLayoutX(1030-250-20);
-        songPlayer.setLayoutY(820);
 
-        songPlayer.setOnMouseClicked(e -> {
-            if (songSelected != null && "".equals(MusicPlayer.getStatus())) {
-                MusicPlayer musicPlayer = new MusicPlayer(songSelected);
-            }else if(songSelected == null){
-                AlertBox.displayAlert("Alert!!!", "Please Select the song");
-            }else{
-                AlertBox.displayAlert(MusicPlayer.getStatus(), "Music Player is Open");
-            }
-        });
-
-        pane.getChildren().addAll(img, downloadBtn, songPlayer, detailDownload, tableMyMusic(), searchBoxMy());
+        pane.getChildren().addAll(img, downloadBtn, detailDownload, tableMyMusic(), searchBoxMy());
         return pane;
     }
 
