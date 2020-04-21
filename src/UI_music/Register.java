@@ -8,6 +8,7 @@ package UI_music;
 import Component_Music.Account;
 import Component_Music.AlertBox;
 import Component_Music.Cashing;
+import Component_Music.ImageCircle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -29,6 +30,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -65,6 +67,8 @@ public class Register {
     Stage regisStage;
     
     double mouse_x = 0, mouse_y = 0;
+    
+    private AnchorPane profilePicture = new AnchorPane();
 
     public Register(String userRole) {
 
@@ -276,6 +280,7 @@ public class Register {
             }
 
         });
+        
         Button cancelBtn = new Button("Cancel");
         cancelBtn.getStyleClass().add("cancelbtn");
         cancelBtn.setOnAction(e -> {
@@ -327,8 +332,9 @@ public class Register {
             try {
                 BufferedImage bufferedImage = ImageIO.read(filePath);
                 image = SwingFXUtils.toFXImage(bufferedImage, null);
-                this.photo.setImage(image);
-
+//                this.photo.setImage(image);
+                profilePicture.getChildren().remove(0);
+                profilePicture.getChildren().addAll(new ImageCircle(100, 100, 100, image).getMyCircle());
             } catch (IOException e) {
                 System.out.println("Register : IOExeption uplode file picture in Register consturtor");
             }
@@ -349,6 +355,8 @@ public class Register {
             column1.getChildren().addAll(row1, usernameIn, mailIn, row3, title2, date, sexText, sexRow, qText, question, answer, premiumBox);
         }
         column1.setAlignment(Pos.CENTER);
+        
+        profilePicture.getChildren().add(new ImageCircle(100, 100, 100, new Image("/image/defaultprofile.png")).getMyCircle());
 
         photo = new ImageView(new Image("/image/defaultprofile.png"));
         photo.setFitHeight(200);
@@ -371,7 +379,7 @@ public class Register {
 
         VBox column2 = new VBox(10);
         column2.setPadding(new Insets(40));
-        column2.getChildren().addAll(photo, changeImage);
+        column2.getChildren().addAll(profilePicture, changeImage);
         column2.setAlignment(Pos.CENTER);
 
         BorderPane pane = new BorderPane();
