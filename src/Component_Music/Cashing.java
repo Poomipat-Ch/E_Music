@@ -158,7 +158,7 @@ public class Cashing {
             } else if (hasNumber(ccName.getText())) {
                 AlertBox.displayAlert("Something went wrong!", "Some of infomation are Incorrect.\n Please check your name again.");
             } else {
-                if (AlertBox.confirmAlert("Are you sure", "\"" + song.getNameSong() + " - " + song.getArtistSong() + "\" will cost " + song.getPriceSong() + "฿\n"
+                if (AlertBox.confirmAlert("Confirmation", "\"" + song.getNameSong() + " - " + song.getArtistSong() + "\" will cost " + song.getPriceSong() + "฿\n"
                         + "Please confirm to make a purchase.")) {
                     AlertBox.displayAlert("Purchase Success", "\"" + song.getNameSong() + " - " + song.getArtistSong() + "\" will add to your playlist soon.");
                     System.out.println("Purchase complete");
@@ -199,9 +199,9 @@ public class Cashing {
         
         //DOESN"T NEED ANY MORE BACUS IT WiLL CAUSE SOME JAVA ERROR VVV (Sign up Premium too) 
         
-        //paymentStage.initModality(Modality.APPLICATION_MODAL);
-        //paymentStage.initStyle(StageStyle.TRANSPARENT);
-        //paymentStage.showAndWait();
+        paymentStage.initModality(Modality.APPLICATION_MODAL);
+        paymentStage.initStyle(StageStyle.TRANSPARENT);
+        paymentStage.showAndWait();
 
     }
 
@@ -397,7 +397,7 @@ public class Cashing {
             } else if (hasNumber(ccName.getText())) {
                 AlertBox.displayAlert("Something went wrong!", "Some of infomation are Incorrect.\n Please check your name again.");
             } else { //<--------------------------------------------------------------------
-                if (AlertBox.confirmAlert("Are you sure", "\"Premium account\" will cost " + total + "฿\n"
+                if (AlertBox.confirmAlert("Confirmation", "\"Premium account\" will cost " + total + "฿\n"
                         + "Please confirm to make a purchase.")) {
                     //Change status (drag from admin ui edit status)
 
@@ -467,10 +467,55 @@ public class Cashing {
         String stylrSheet = getClass().getResource("/style_css/stylePopupDetail.css").toExternalForm(); // From PopUpdetail CSS
         infoScene.getStylesheets().add(stylrSheet); // CSS
         paymentStage.setScene(infoScene);
-//        paymentStage.initModality(Modality.APPLICATION_MODAL);
-//        paymentStage.initStyle(StageStyle.TRANSPARENT);
-//        paymentStage.showAndWait();
+        paymentStage.initModality(Modality.APPLICATION_MODAL);
+        paymentStage.initStyle(StageStyle.TRANSPARENT);
+        paymentStage.showAndWait();
 
+    }
+    
+    
+    public void cancelPremium(Account userAccount){
+        
+         if (AlertBox.confirmAlert("Confirmation","    Are you sure you want to\n cancel your Premium Account?")) {
+                    //Change status (drag from admin ui edit status)
+
+                    oldAccounts = new ArrayList<>();
+                    presentAccounts = new ArrayList<>();
+                    updateAccount2 = new Account();
+
+                    try {
+                        oldAccounts = file.readFile(user);
+                    } catch (IOException ex) {
+                        System.out.println("buyPremium : IOExeption readfile in updateAccountClick");
+                    } catch (ClassNotFoundException ex) {
+                        System.out.println("buyPremium : ClassNotFoundExeption readfile in upDateAccountClick");
+                    }
+
+                    for (Account account : oldAccounts) {
+                        String chkUser = account.getUsername();
+                        String chkEmail = account.getEmail();
+
+                        if (userAccount.getUsername().equals(chkUser) && userAccount.getEmail().equals(chkEmail)) {
+                            updateAccount2 = account;
+                            //SKIP TO ADD AFTER
+                        } else {
+                            presentAccounts.add(account);
+                        }
+                    }
+                    updateAccount2.setUserRole("member");
+
+                    presentAccounts.add(updateAccount2);
+
+                    try {
+                        file.writeFile(user, presentAccounts);
+                    } catch (IOException ex) {
+                        System.out.println("buyPremium : IOExeption writefile in updateAccountClicked");
+                    }
+
+                    System.out.println("Cancel Premium");
+                   
+                    UI.userAccount = updateAccount2; // Update
+                }
     }
 
 }
