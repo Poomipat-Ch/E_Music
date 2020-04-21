@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -46,6 +47,7 @@ public class TopChartMusicPage {
     private ImageView imageview;
 
     TableView<Song> table;
+    ObservableList<Song> list = null;
 
     public TopChartMusicPage(String string) {
         AnchorPane anchorPane = new AnchorPane();
@@ -106,16 +108,45 @@ public class TopChartMusicPage {
         // Set Sort type for userName column
         NameCol.setSortType(TableColumn.SortType.DESCENDING);
         detailCol.setSortable(false);
-
+        
+        list = FXCollections.observableArrayList();
+        
         // Display row data
-        ObservableList<Song> list = null;
+        if (string.toLowerCase().contains("top 50")) {
+            if (string.toLowerCase().contains("thailand")) {
+                try {
+                    Song.getMyMusicList().forEach(song -> {
+                        if (song.getNationality().equals("thai")) {
+                            list.add(song);
+                        }
+                    });
+                } catch (IOException | ClassNotFoundException ex) {
+                    System.out.println("TopChartMusicPage : IOException get my music list from class song");
+                }
+            } else {
+                try {
+                    Song.getMyMusicList().forEach(song -> {
+                        if (song.getNationality().equals("international")) {
+                            list.add(song);
+                        }
+                    });
+                } catch (IOException | ClassNotFoundException ex) {
+                    System.out.println("TopChartMusicPage : IOException get my music list from class song");
 
-        try {
-            list = Song.getMyMusicList();
-        } catch (IOException ex) {
-            System.out.println("TopChartMusicPage : IOException get my music list from class song");
-        } catch (ClassNotFoundException ex) {
-            System.out.println("TopChartMusicPage : ClassNotFoundException get my music list from class song");
+                }
+            }
+        } else {
+            try {
+                Song.getMyMusicList().forEach(song ->{
+                    song.getListStyleSong().forEach(style -> {
+                        if (style.equals(string)) {
+                            list.add(song);
+                        }
+                    });
+                });
+            } catch (IOException | ClassNotFoundException ex) {
+                System.out.println("TopChartMusicPage : IOException get my music list from class song");
+            }
         }
         FilteredList<Song> filterData = new FilteredList<>(list, b -> true);
         searchSystemMyLibrary.setFilterData(filterData);
@@ -172,8 +203,6 @@ public class TopChartMusicPage {
         searchTextField.getStyleClass().add("searchfield");
 
 //        searchTextField.set
-        
-
         Button searchButton = CreaButton("Refresh");
         searchButton.setStyle("-fx-font-size : 15px;");
         HBox.setMargin(searchButton, new Insets(0, 0, 0, 10));
