@@ -44,8 +44,8 @@ abstract public class UI {
 
     public static VBox vbox;
 
-    public AnchorPane allPane() {
-        AnchorPane anchorpane = new AnchorPane();
+    public BorderPane allPane() {
+//        AnchorPane anchorpane = new AnchorPane();
 
         BorderPane borderPane = new BorderPane();
         borderPane.getStyleClass().add("bg-border");
@@ -53,26 +53,28 @@ abstract public class UI {
         borderPane.setLeft(menu());
         borderPane.setCenter(mainBox());
 
-        anchorpane.getChildren().add(borderPane);
+//        anchorpane.getChildren().add(borderPane);
 
-        if (userAccount.getUserRole().equals("member")) {
+//        if (userAccount.getUserRole().equals("member")) {
+//
+//            Button button = new Button("X");
+//            button.getStyleClass().add("xpremiumbutton");
+//            button.setLayoutX(1060);
+//            button.setLayoutY(290);
+//            button.setOnAction(event -> {
+//                anchorpane.getChildren().remove(1);
+//            });
+//            
+//            Button upgrade = new Button("UPGRADE PREMIUM");
+//
+//            AnchorPane adpane = new AnchorPane();
+//            adpane.setStyle("-fx-background-color : transparent");
+//            adpane.getChildren().addAll(AdPane(), button);
+//
+//            anchorpane.getChildren().addAll(adpane);
+//        }
 
-            Button button = new Button("X");
-            button.getStyleClass().add("xpremiumbutton");
-            button.setLayoutX(630);
-            button.setLayoutY(640);
-            button.setOnAction(event -> {
-                anchorpane.getChildren().remove(1);
-            });
-
-            AnchorPane adpane = new AnchorPane();
-            adpane.setStyle("-fx-background-color : transparent");
-            adpane.getChildren().addAll(AdPane(), button);
-
-            anchorpane.getChildren().addAll(adpane);
-        }
-
-        return anchorpane;
+        return borderPane;
     }
 
     public BorderPane allPane2() {
