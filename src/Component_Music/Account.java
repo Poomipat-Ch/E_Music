@@ -198,7 +198,12 @@ public class Account implements Serializable {
         for (AddSong addsong : listSong) {
             if(addsong.getSong().getNameSong().equals(song.getNameSong())){
                 System.out.println("It's in the bag");
-                addsong.setNumberOfDownload(downloader);
+                if (addsong.getNumberOfDownload() > 1 || firstSong) {
+                    addsong.setNumberOfDownload(downloader);
+                }else{
+                    listSong.remove(addsong);
+                }
+                
                 isCheckAHA = true;
                 break;
             }

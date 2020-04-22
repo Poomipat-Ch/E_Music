@@ -16,7 +16,10 @@ import Component_Music.TopChartPane;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -56,13 +59,15 @@ public class User_UI extends UI {
     private AddSong songSelected;
     private String page;
     private ReadWriteFile writeFile = new ReadWriteFile();
+    private ObservableList<AddSong> list;
+    private Stage stage;
     
     File musicfile = new File("src/data/music.dat");
     File artistfile = new File("src/data/artist.dat");
     
     public static ArrayList<Song> SongArrayList = new ArrayList<>();
     public static ArrayList<Artist> ArtistArrayList = new ArrayList<>();
-    public static ArrayList<Account> addAccount = new ArrayList<>();
+    public static ObservableList<Account> addAccount;
     public static String playerStatus;
 
     public User_UI() {
@@ -70,7 +75,7 @@ public class User_UI extends UI {
 
     public User_UI(Stage stage, Account userAccount) {
         super(stage, userAccount);
-        
+        this.stage = stage;
         try {
             SongArrayList = ReadWriteFile.readFileSong(musicfile);
         } catch (IOException | ClassNotFoundException ex) {
@@ -194,9 +199,9 @@ public class User_UI extends UI {
                      updateDetailDownload();  
                 }
                
-                songNameSelected = table.getSelectionModel().getSelectedItem().getSong().getNameSong() + table.getSelectionModel().getSelectedItem().getSong().getArtistSong();
+                songNameSelected = (table.getSelectionModel().getSelectedItem().getSong().getNameSong() + table.getSelectionModel().getSelectedItem().getSong().getArtistSong()).replaceAll("\\s", "");
                 nameSet = table.getSelectionModel().getSelectedItem().getSong().getNameSong();
-                System.out.println(songNameSelected);
+                System.out.println(songNameSelected+".mp3");
                 fileForDownload = new File("src/MusicFile/" + songNameSelected + ".mp3");
 
                 // System.out.println(NameCol.getWidth() + " "+artistCol.getWidth()+ " "+detailCol.getWidth()+ " "+Downloadable.getWidth());
@@ -231,7 +236,7 @@ public class User_UI extends UI {
         detailCol.setSortable(false);
 
         // Display row data
-        ObservableList<AddSong> list = UI.userAccount.getMyListSong();
+        list = UI.userAccount.getMyListSong();
         FilteredList<AddSong> filterData = new FilteredList<>(list, b -> true);
         searchSystemMyLibrary.setFilterData(filterData);
 
@@ -394,16 +399,38 @@ public class User_UI extends UI {
         return new Profile().getMainPane();
     }
 
+        
     public void downloader() {
-
+        ArrayList<Account> accountUpdate = new ArrayList<>();
+        
+        try {
+            addAccount = Account.getAccountList();
+        } catch (IOException | ClassNotFoundException ex) {
+            Logger.getLogger(User_UI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         System.out.println("Download");
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("MP3 Files", "*.mp3"));
         fileChooser.setInitialFileName(nameSet);
-        File downloadFile = fileChooser.showSaveDialog(null);
+        File downloadFile = fileChooser.showSaveDialog(stage);
         if (downloadFile != null) {
             try {
-                Files.copy(fileForDownload.toPath(), downloadFile.toPath());
+                Files.copy(fileForDownload.toPath(), downloadFile.toPath(),StandardCopyOption.REPLACE_EXISTING);
+                System.out.println("asdasdsd");
+
+                    UI.userAccount.addSong(songSelected.getSong(), -1);
+                
+                for (Account account : addAccount) {
+                    if (account.getUsername().equals(UI.userAccount.getUsername())) {
+                        account = UI.userAccount;
+                    }
+                      accountUpdate.add(account);
+                    
+                }
+                writeFile.writeFile(user, accountUpdate);
+                    UI.vbox.getChildren().remove(1);
+                    UI.vbox.getChildren().add(secondPagePane());
+                    updateDetailDownload();
             } catch (IOException ex) {
                 System.out.println("User_UI : IOExeption download file from class Song in downloader");
             }
