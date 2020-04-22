@@ -6,6 +6,7 @@
 package UI_music;
 
 import Component_Music.Account;
+import Component_Music.AddSong;
 import Component_Music.AlertBox;
 import Component_Music.DetailSongPopUp;
 import Component_Music.SearchSystem;
@@ -208,7 +209,7 @@ public class Guest_UI extends UI {
             if ((song.getNameSong().toLowerCase().contains(lowerCase) || song.getArtistSong().toLowerCase().contains(lowerCase))) {
 
                 boolean inMyList = false;
-                for (Song song1 : userAccount.getMyListSong()) {
+                for (AddSong song1 : userAccount.getMyListSong()) {
                     System.out.println("1");
                     if (!userAccount.isFirstSong()) {
                         if ((song.getNameSong().toLowerCase().contains(song1.getNameSong().toLowerCase()) && song.getArtistSong().toLowerCase().contains(song1.getArtistSong().toLowerCase()))) {
