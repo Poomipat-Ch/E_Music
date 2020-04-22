@@ -59,11 +59,11 @@ public class BrowsePane {
         //backgroundpane.setPadding(new Insets(0, 0 ,50,0));
 
         Label browse = CreateHead("Browse", 50, 70);
-        Button thaigenresbtn = CreateButton("หมวดหมู่ และ อารมณ์", 40, 190, 260, 1);
+        Button thaigenresbtn = CreateButton("เพลงไทย", 40, 190, 260, 1);
         Button thaigenresbg = CreateBackgroundButton(40, 190, 260);
         Button thaiartistbtn = CreateButton("ศิลปิน", 320, 190, 180, 2);
         Button thaiartistbg = CreateBackgroundButton(320, 190, 180);
-        Button intergenresbtn = CreateButton("GENRES & MOODS", 520, 190, 260, 0);
+        Button intergenresbtn = CreateButton("GLOBAL SONGS", 520, 190, 260, 0);
         Button intergenresbg = CreateBackgroundButton(520, 190, 260);
         Button interartistbtn = CreateButton("ARTIST", 800, 190, 180, 2);
         Button interartistbg = CreateBackgroundButton(800, 190, 180);
@@ -211,7 +211,7 @@ public class BrowsePane {
         anchorpane.setPrefSize(225, 225);
         anchorpane.setLayoutX(x);
         anchorpane.setLayoutY(y);
-        anchorpane.getChildren().addAll(new ImageCircle(112.5, 92, 90, artist.getPhoto()).getMyCircle(), CreateLabel(artist.getName1(), 190));
+        anchorpane.getChildren().addAll(new ImageCircle(112.5, 92, 90, artist.getPhoto()).getMyCircle(), CreateLabel(artist.getName1(), 190, artist.getPhoto()));
 
         return anchorpane;
     }
@@ -222,7 +222,7 @@ public class BrowsePane {
         anchorpane.setPrefSize(225, 225);
         anchorpane.setLayoutX(x);
         anchorpane.setLayoutY(y);
-        anchorpane.getChildren().addAll(CreateIcon(string), CreateLabel(string, 160));
+        anchorpane.getChildren().addAll(CreateIcon(string), CreateLabel(string, 160,new Image("/UI_music/defaultprofile.png")));
 
         return anchorpane;
     }
@@ -240,7 +240,7 @@ public class BrowsePane {
         return image;
     }
 
-    private Button CreateLabel(String string, int dis) {
+    private Button CreateLabel(String string, int dis, Image image) {
         Button button = new Button(string);
         button.setPrefSize(225, 225);
 //        button.setLayoutY(180);
@@ -250,9 +250,9 @@ public class BrowsePane {
 
         button.setOnMouseClicked(event -> {
             if (dis == 160) 
-                new ShowMusicPage(string, ""); // song
+                new ShowMusicPage(string, "", image); // song
             else
-                new ShowMusicPage(string, "artist"); // artist
+                new ShowMusicPage(string, "artist", image); // artist
         });
 
         return button;

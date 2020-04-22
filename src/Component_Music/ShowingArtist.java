@@ -57,13 +57,13 @@ public class ShowingArtist {
         anchorpane.setPrefSize(225, 225);
         anchorpane.setLayoutX(x);
         anchorpane.setLayoutY(y);
-        anchorpane.getChildren().addAll(new ImageCircle(112.5, 92, 90, artist.getPhoto()).getMyCircle(), CreateLabel(artist.getName1(), 190));
+        anchorpane.getChildren().addAll(new ImageCircle(112.5, 92, 90, artist.getPhoto()).getMyCircle(), CreateLabel(artist, 190));
 
         return anchorpane;
     }
 
-    private Button CreateLabel(String string, int dis) {
-        Button button = new Button(string);
+    private Button CreateLabel(Artist artist, int dis) {
+        Button button = new Button(artist.getName1());
         button.setPrefSize(225, 225);
 //        button.setLayoutY(180);
         button.setAlignment(Pos.CENTER);
@@ -71,7 +71,7 @@ public class ShowingArtist {
         button.setPadding(new Insets(dis, 0, 0, 0));
 
         button.setOnMouseClicked(event -> {
-            new ShowMusicPage(string, "artist");
+            new ShowMusicPage(artist.getName1(), "artist", artist.getPhoto());
         });
 
         return button;

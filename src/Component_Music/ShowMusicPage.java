@@ -35,39 +35,42 @@ import javafx.scene.layout.HBox;
  * @author HCARACH
  */
 public class ShowMusicPage {
-    
+
     SearchSystem searchSystemMyLibrary = new SearchSystem();
-    
+
     private File fileForDownload;
     private String songNameSelected;
     private String nameSet;
     private Song songSelected;
     private String page;
-    
+
     private ImageView imageview;
-    
+
     TableView<Song> table;
     ObservableList<Song> list = null;
-    
-    public ShowMusicPage(String name, String content) {
+
+    public ShowMusicPage(String name, String content, Image image) {
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.setMinSize(990, 901);
         anchorPane.setLayoutX(-3);
         anchorPane.setLayoutY(-3);
         anchorPane.getStyleClass().add("mainBox");
-        
+
         imageview = new ImageView(new Image("/UI_music/defaultprofile.png"));
         imageview.setFitHeight(250);
         imageview.setFitWidth(250);
         imageview.setLayoutX(30);
         imageview.setLayoutY(50);
-        
+
+        AnchorPane profilePicture = new AnchorPane();
+        profilePicture.getChildren().add(new ImageRectangle(30, 50, 250, 250, image).getMyRectangle());
+
         table = new TableView<>();
         table.setEditable(true);
         table.getStyleClass().add("tableTopChartMusic");
-        
+
         table.setPrefWidth(anchorPane.getMinWidth() - 40);
-        
+
         table.setOnMouseClicked((event) -> {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
                 songSelected = table.getSelectionModel().getSelectedItem();
@@ -76,13 +79,13 @@ public class ShowMusicPage {
                 nameSet = table.getSelectionModel().getSelectedItem().getNameSong();
                 System.out.println(songNameSelected);
                 fileForDownload = new File("src/MusicFile/" + songNameSelected + ".mp3");
-                
+
                 try {
                     new DetailSongPopUp(table.getSelectionModel().getSelectedItem().getSong());
                 } catch (InterruptedException ex) {
                     System.out.println("TopChartMusicPane : InterrruoteddExeption DetailSongPopUp in updateScrollPane");
                 }
-                
+
             }
         });
 
@@ -97,7 +100,7 @@ public class ShowMusicPage {
         // Create column Detail (Data type of String).
         TableColumn<Song, String> detailCol = new TableColumn<>("DETAIL");
         detailCol.setMinWidth(100);
-        
+
         TableColumn<Song, String> downloadCol = new TableColumn<>("TOTAL DOWNLOAD");
         downloadCol.setMinWidth(200);
 
@@ -113,16 +116,16 @@ public class ShowMusicPage {
         downloadCol.setSortType(TableColumn.SortType.DESCENDING);
         downloadCol.setSortable(true);
         detailCol.setSortable(false);
-        
+
         list = FXCollections.observableArrayList();
-        
+
         FilteredList<Song> filterData = new FilteredList<>(list, b -> true);
         searchSystemMyLibrary.setFilterData(filterData);
-        
+
         SortedList<Song> sortedList = new SortedList<>(searchSystemMyLibrary.getFilterData());
         sortedList.comparatorProperty().bind(table.comparatorProperty());
         table.setItems(sortedList);
-        
+
         table.getColumns().addAll(NameCol, artistCol, detailCol, downloadCol);
 
         // Display row data
@@ -146,7 +149,7 @@ public class ShowMusicPage {
                     });
                 } catch (IOException | ClassNotFoundException ex) {
                     System.out.println("TopChartMusicPage : IOException get my music list from class song");
-                    
+
                 }
             }
         } else if (content.equals("artist")) {
@@ -174,14 +177,14 @@ public class ShowMusicPage {
                 System.out.println("TopChartMusicPage : IOException get my music list from class song");
             }
         }
-        
+
         table.setItems(sortedList);
-        
+
         table.setLayoutX(30);
         table.setLayoutY(380);
-        
+
         ScrollPane scrollpane = new ScrollPane();
-        
+
         scrollpane.setPadding(Insets.EMPTY);
         scrollpane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollpane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
@@ -189,16 +192,16 @@ public class ShowMusicPage {
         scrollpane.setLayoutX(-4);
         scrollpane.setLayoutY(-4);
         scrollpane.setPrefSize(1030, 901);
-        
-        anchorPane.getChildren().addAll(table, CreateLabel(name), imageview, searchBoxMy());
-        
+
+        anchorPane.getChildren().addAll(table, CreateLabel(name), profilePicture, searchBoxMy());
+
         scrollpane.setContent(anchorPane);
-        
+
         UI.vbox.getChildren().remove(1);
         UI.vbox.getChildren().add(scrollpane);
-        
+
     }
-    
+
     private Label CreateLabel(String string) {
         Label label = new Label(string);
         label.getStyleClass().add("labelhead");
@@ -206,17 +209,17 @@ public class ShowMusicPage {
         label.setLayoutY(180);
         return label;
     }
-    
+
     public HBox searchBoxMy() {
         HBox hBox = new HBox();
         hBox.setPrefSize(1030 - 100, 30);
         hBox.setLayoutX(30);
         hBox.setLayoutY(320);
-        
+
         AnchorPane anchorpane = new AnchorPane();
         anchorpane.setPrefSize(1030 - 200, 10);
         anchorpane.getStyleClass().add("bgsearchfield");
-        
+
         TextField searchTextField = new TextField();
         searchTextField.setPromptText("Filter");
         searchTextField.setPrefSize(1030 - 200, 10);
@@ -226,22 +229,22 @@ public class ShowMusicPage {
         Button searchButton = CreaButton("Refresh");
         searchButton.setStyle("-fx-font-size : 15px;");
         HBox.setMargin(searchButton, new Insets(0, 0, 0, 10));
-        
+
         searchTextField.textProperty().addListener(searchSystemMyLibrary);
-        
+
         anchorpane.getChildren().add(searchTextField);
-        
+
         hBox.getChildren().addAll(anchorpane, searchButton);
-        
+
         return hBox;
     }
-    
+
     private Button CreaButton(String text) {
         Button downLoadButton = new Button(text);
         downLoadButton.getStyleClass().add("detailbtn");
         downLoadButton.setPrefSize(80, 40);
         return downLoadButton;
-        
+
     }
-    
+
 }
