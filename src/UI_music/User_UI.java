@@ -7,14 +7,11 @@ package UI_music;
 
 import Component_Music.Account;
 import Component_Music.AddSong;
-import Component_Music.AlertBox;
 import Component_Music.Artist;
 import Component_Music.DetailSongPopUp;
 import Component_Music.SearchPage;
-import Component_Music.SearchSystem;
 import Component_Music.SearchSystemAddSong;
 import Component_Music.Song;
-import Component_Music.ShowMusicPage;
 import Component_Music.TopChartPane;
 import java.io.File;
 import java.io.IOException;
@@ -58,12 +55,14 @@ public class User_UI extends UI {
     private String nameSet;
     private AddSong songSelected;
     private String page;
+    private ReadWriteFile writeFile = new ReadWriteFile();
     
     File musicfile = new File("src/data/music.dat");
     File artistfile = new File("src/data/artist.dat");
     
     public static ArrayList<Song> SongArrayList = new ArrayList<>();
     public static ArrayList<Artist> ArtistArrayList = new ArrayList<>();
+    public static ArrayList<Account> addAccount = new ArrayList<>();
     public static String playerStatus;
 
     public User_UI() {
@@ -150,14 +149,18 @@ public class User_UI extends UI {
         ((Label) detailDownload.getChildren().get(1)).setText("Artist : " + songSelected.getArtistSong());
         ((Label) detailDownload.getChildren().get(2)).setText("Downloadable(Time) : " + songSelected.getNumberOfDownload()); // <---------------------------------------------------------------------- wait
 
-        AnchorPane img = new AnchorPane();
+        VBox img = new VBox(50);
+        
+        img.setMinSize(300, 400);
         img.setMaxSize(300, 400);
         img.setLayoutX(1030 - 300 - 20);
         img.setLayoutY(20);
+        img.setAlignment(Pos.CENTER);
 
         Image imageMy = songSelected.getSong().getPhoto();
         ImageView imgMy = new ImageView(imageMy);
-        imgMy.setFitHeight(400);
+        imgMy.setFitHeight(200);
+        imgMy.setFitWidth(200);
         img.getChildren().add(imgMy);
 
         pane.getChildren().add(0, img);
@@ -191,7 +194,7 @@ public class User_UI extends UI {
                      updateDetailDownload();  
                 }
                
-                songNameSelected = table.getSelectionModel().getSelectedItem().getSong().getNameSong() + table.getSelectionModel().getSelectedItem().getSong().getArtistSong() + table.getSelectionModel().getSelectedItem().getSong().getDetailSong();
+                songNameSelected = table.getSelectionModel().getSelectedItem().getSong().getNameSong() + table.getSelectionModel().getSelectedItem().getSong().getArtistSong();
                 nameSet = table.getSelectionModel().getSelectedItem().getSong().getNameSong();
                 System.out.println(songNameSelected);
                 fileForDownload = new File("src/MusicFile/" + songNameSelected + ".mp3");
@@ -206,21 +209,22 @@ public class User_UI extends UI {
 
         // Create column NameArtist (Data type of String).
         TableColumn<AddSong, String> artistCol = new TableColumn<>("Artist");
-        artistCol.setMinWidth(150);
+        artistCol.setMinWidth(140);
 
         // Create column Detail (Data type of String).
         TableColumn<AddSong, String> detailCol = new TableColumn<>("Detail");
-        detailCol.setMinWidth(220);
+        detailCol.setMinWidth(190);
 
-//        // Create column Downloadable (Data type of String).
-//        TableColumn<Song, String> Downloadable = new TableColumn<>("Downloadable");
-//        detailCol.setMinWidth(100);
+        // Create column Downloadable (Data type of String).
+        TableColumn<AddSong, Integer> Downloadable = new TableColumn<>("Downloadable");
+        Downloadable.setMinWidth(138);
+        
         // Defines how to fill data for each cell.
         // Get value from property of UserAccount. .
         NameCol.setCellValueFactory(new PropertyValueFactory<>("nameSong"));
         artistCol.setCellValueFactory(new PropertyValueFactory<>("artistSong"));
         detailCol.setCellValueFactory(new PropertyValueFactory<>("detailSong"));
-        //Downloadable.setCellValueFactory(new PropertyValueFactory<>("downloadable")); // wait nichida add dowloadable in account
+        Downloadable.setCellValueFactory(new PropertyValueFactory<>("numberOfDownload"));
 
         // Set Sort type for userName column
         NameCol.setSortType(TableColumn.SortType.DESCENDING);
@@ -235,7 +239,7 @@ public class User_UI extends UI {
         sortedList.comparatorProperty().bind(table.comparatorProperty());
         table.setItems(sortedList);
 
-        table.getColumns().addAll(NameCol, artistCol, detailCol);
+        table.getColumns().addAll(NameCol, artistCol, detailCol,Downloadable);
 
         anchorPane.getChildren().addAll(table);
 
@@ -397,7 +401,6 @@ public class User_UI extends UI {
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("MP3 Files", "*.mp3"));
         fileChooser.setInitialFileName(nameSet);
         File downloadFile = fileChooser.showSaveDialog(null);
-
         if (downloadFile != null) {
             try {
                 Files.copy(fileForDownload.toPath(), downloadFile.toPath());
@@ -405,7 +408,6 @@ public class User_UI extends UI {
                 System.out.println("User_UI : IOExeption download file from class Song in downloader");
             }
         }
-
     }
 
     ArrayList<Account> updateAccount = new ArrayList<>();
@@ -438,7 +440,6 @@ public class User_UI extends UI {
         } catch (IOException ex) {
             System.out.println("User_UI : IOExeption write file in userLogin");
         }
-
     }
 
 }
