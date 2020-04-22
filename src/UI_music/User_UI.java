@@ -309,7 +309,7 @@ public class User_UI extends UI {
     private BorderPane AllSong() {
 
         BorderPane scrollPane = new BorderPane();
-        scrollPane.setPrefSize(1030, 905);
+        scrollPane.setPrefSize(1030, 900);
         scrollPane.setPadding(new Insets(10));
         scrollPane.getStyleClass().add("scroll-bar");
         totalPane = new AnchorPane();
