@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -21,7 +22,8 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 
 public class Account implements Serializable {
-
+    
+    private static final long serialVersionUID = 6529685098267757690L;
     private String name;
     private String surname;
     private String email;
@@ -203,3 +205,4 @@ public class Account implements Serializable {
     
 
 }
+

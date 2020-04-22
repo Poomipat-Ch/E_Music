@@ -25,7 +25,9 @@ import javafx.scene.image.WritableImage;
  * @author 62010710
  */
 public class Artist implements Serializable{
-
+    
+    
+    private static final long serialVersionUID = 6529685098267757692L;
     private String name1, name2, infomation, nationality;
     private Image image;
     private ImageView imageView;
