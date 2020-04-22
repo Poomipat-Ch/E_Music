@@ -248,7 +248,7 @@ public class Admin_UI extends UI {
     }
 
     @Override
-    public AnchorPane secondPagePane() {    //Accounts Page 3
+    public AnchorPane thirdPagePane() {    //Accounts Page 3
         AnchorPane pane = new AnchorPane();
         pane.setMinHeight(760);
         pane.setMaxHeight(Double.MAX_VALUE);
@@ -558,9 +558,7 @@ public class Admin_UI extends UI {
                     contentButton.setOnAction(e -> {
                         //SELECTION 
 
-                        for (int i = 0; i < 3; ++i) {
-                            Admin_UI.updateVBox.getChildren().remove(0);
-                        }
+                        Admin_UI.updateVBox.getChildren().clear();
 
                         selectNameSong = new Label(song.getNameSong());
                         selectNameSong.setPrefWidth(230);
@@ -648,9 +646,7 @@ public class Admin_UI extends UI {
                 contentButton.setOnAction(e -> {
                     //SELECTION 
                     
-                    for (int i = 0; i < 3; ++i) {
-                            Admin_UI.updateVBox.getChildren().remove(0);
-                        }
+                    Admin_UI.updateArtistVBox.getChildren().clear();
                     
                     artistSelected = artist;
                     selectArtist2 = new Label(artist.getName1());
@@ -664,7 +660,7 @@ public class Admin_UI extends UI {
                     selectDetail2.setAlignment(Pos.CENTER);
 
                     AnchorPane profilePictureArtist = new AnchorPane();
-                    profilePictureArtist.getChildren().remove(0);
+                    //profilePictureArtist.getChildren().remove(0);     // <<-BUG!!
                     profilePictureArtist.setPadding(new Insets(0, 0, 20, 0));
                     profilePictureArtist.getChildren().add(new ImageRectangle(230, 230, artist.getPhoto()).getMyRectangle());
 
