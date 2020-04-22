@@ -45,6 +45,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Modality;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
@@ -228,7 +229,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
 
             fileChooser = new FileChooser();
             fileChooser.setTitle("Open Image");
-            fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG Files", "*.png"), new FileChooser.ExtensionFilter("JPEG", "*.jpeg"));
+            fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
 
             //Set to user's directory or go to the default C drvie if cannot access
             String userDirectoryString = System.getProperty("user.home") + "\\Pictures";
