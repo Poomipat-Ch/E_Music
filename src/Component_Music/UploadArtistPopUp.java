@@ -133,18 +133,22 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
 //        imageSong.setFitWidth(250);
 //        imageSong.setFitHeight(300);
         //Upload Picture
-        if(this.title.getText().equals("New Artist"))
+        if (this.title.getText().equals("New Artist")) {
             setupInterPane();
-        else
+        } else {
             setupThaiPane();
+        }
 
     }
-    
+
     private void setupInterPane() {
-        
+
         VBox detail = new VBox(30);
         detail.setAlignment(Pos.CENTER);
-        
+
+        AnchorPane profilePicture = new AnchorPane();
+        profilePicture.getChildren().add(new ImageRectangle(115, 30, 200, 200, image).getMyRectangle());
+
         Button imageBtn = new Button("Upload Picture");
         imageBtn.getStyleClass().add("buybtn"); //CSS
         imageBtn.setOnAction(e -> {
@@ -152,7 +156,7 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
 
             fileChooser = new FileChooser();
             fileChooser.setTitle("Open Image");
-            fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG Files", "*.png"), new FileChooser.ExtensionFilter("JPEG", "*.jpeg"));
+            fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
 
             //Set to user's directory or go to the default C drvie if cannot access
             String userDirectoryString = System.getProperty("user.home") + "\\Pictures";
@@ -171,6 +175,8 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
                     BufferedImage bufferedImage = ImageIO.read(filePath);
                     image = SwingFXUtils.toFXImage(bufferedImage, null);
                     this.photo.setImage(image);
+                    profilePicture.getChildren().remove(0);
+                    profilePicture.getChildren().add(new ImageRectangle(140, 30, 200, 200, image).getMyRectangle());
 
                 } catch (IOException ex) {
                     System.out.println("UploadSongPopUp : IOExeption upload picture in DetailUpPopSong");
@@ -200,7 +206,7 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
         Label detailSong = new Label("Detail");
         fillDetailArtist.setPromptText("detail of Artist");
         fillDetailArtist.setPrefWidth(200);
-        
+
         fillNameArtist.getStyleClass().add("detailUploadTextFill"); //CSS
         fillNameArtist2.getStyleClass().add("detailUploadTextFill"); //CSS
         fillDetailArtist.getStyleClass().add("detailUploadTextFill"); //CSS
@@ -232,41 +238,39 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
         Button saveBtn = new Button("Save");
         saveBtn.getStyleClass().add("savebtn"); // borrow...
         saveBtn.setOnMouseClicked(e -> {
-            if(!fillNameArtist.getText().isEmpty() && !fillDetailArtist.getText().isEmpty())
-            {
-            try {
-                artistArrayList = ReadWriteFile.readFileArtist(artistFile);
-            } catch (IOException | ClassNotFoundException ex) {
-                System.out.println("UploadArtistPopUp : IOExeption read file in DetailUpPopArtist");
-            }
-            if (!checkArtistExist(artistArrayList, fillNameArtist.getText())) {
-                if (editArtist != null) {
-                    ArrayList<Artist> oldArrayList = new ArrayList<>();
-                    ArrayList<Artist> newArrayList = new ArrayList<>();
-                    oldArrayList = artistArrayList;
-                    for (Artist artist : oldArrayList) {
-                        if (artist.getName1().equals(editArtist.getName1()) && artist.getName2().equals(editArtist.getName2()) && artist.getInfomation().equals(editArtist.getInfomation())) {
-                            System.out.println("delete old edit");
-                        } else {
-                            newArrayList.add(artist);
-                        }
-                    }
-                    artistArrayList = newArrayList;
+            if (!fillNameArtist.getText().isEmpty() && !fillDetailArtist.getText().isEmpty()) {
+                try {
+                    artistArrayList = ReadWriteFile.readFileArtist(artistFile);
+                } catch (IOException | ClassNotFoundException ex) {
+                    System.out.println("UploadArtistPopUp : IOExeption read file in DetailUpPopArtist");
                 }
-                if (changePhoto) {
-                    this.saveArtist();
-                } else {
-                    if (changePhoto = AlertBox.display("missing photo?", "Saving without upload photo?")) {
+                if (!checkArtistExist(artistArrayList, fillNameArtist.getText())) {
+                    if (editArtist != null) {
+                        ArrayList<Artist> oldArrayList = new ArrayList<>();
+                        ArrayList<Artist> newArrayList = new ArrayList<>();
+                        oldArrayList = artistArrayList;
+                        for (Artist artist : oldArrayList) {
+                            if (artist.getName1().equals(editArtist.getName1()) && artist.getName2().equals(editArtist.getName2()) && artist.getInfomation().equals(editArtist.getInfomation())) {
+                                System.out.println("delete old edit");
+                            } else {
+                                newArrayList.add(artist);
+                            }
+                        }
+                        artistArrayList = newArrayList;
+                    }
+                    if (changePhoto) {
                         this.saveArtist();
                     } else {
-                        System.out.println("save cancel");
+                        if (changePhoto = AlertBox.display("missing photo?", "Saving without upload photo?")) {
+                            this.saveArtist();
+                        } else {
+                            System.out.println("save cancel");
+                        }
                     }
+                } else {
+                    AlertBox.displayAlert("Upload Fail!", "This artist already exist");
                 }
             } else {
-                AlertBox.displayAlert("Upload Fail!", "This artist already exist");
-            }
-            }
-            else {
                 AlertBox.displayAlert("Upload Fail!", "Plese complete the form.");
             }
         });
@@ -281,15 +285,18 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
         hboxSaveCancel.setAlignment(Pos.BOTTOM_RIGHT);
         hboxSaveCancel.getChildren().addAll(saveBtn, cancelBtn);
 
-        detail.getChildren().addAll(title, photo, imageBtn, gridPane, hboxSaveCancel);
+        detail.getChildren().addAll(title, profilePicture, imageBtn, gridPane, hboxSaveCancel);
         totalDetail.getChildren().addAll(detail, exitButton());
     }
-    
+
     private void setupThaiPane() {
-        
+
         VBox detail = new VBox(30);
         detail.setAlignment(Pos.CENTER);
-        
+
+        AnchorPane profilePicture = new AnchorPane();
+        profilePicture.getChildren().add(new ImageRectangle(140, 30, 200, 200, image).getMyRectangle());
+
         Button imageBtn = new Button("เพิ่มรูปภาพ");
         imageBtn.getStyleClass().add("buybtn"); //CSS
         imageBtn.setOnAction(e -> {
@@ -297,8 +304,8 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
 
             fileChooser = new FileChooser();
             fileChooser.setTitle("Open Image");
-            fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG Files", "*.png"), new FileChooser.ExtensionFilter("JPEG", "*.jpeg"));
-
+            fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
+            
             //Set to user's directory or go to the default C drvie if cannot access
             String userDirectoryString = System.getProperty("user.home") + "\\Pictures";
             File userDirectory = new File(userDirectoryString);
@@ -316,6 +323,8 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
                     BufferedImage bufferedImage = ImageIO.read(filePath);
                     image = SwingFXUtils.toFXImage(bufferedImage, null);
                     this.photo.setImage(image);
+                    profilePicture.getChildren().remove(0);
+                    profilePicture.getChildren().add(new ImageRectangle(140, 30, 200, 200, image).getMyRectangle());
 
                 } catch (IOException ex) {
                     System.out.println("UploadArtistPopUp : IOExeption upload picture in DetailUpPopSong");
@@ -377,41 +386,39 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
         Button saveBtn = new Button("บันทึก");
         saveBtn.getStyleClass().add("savebtn"); // borrow...
         saveBtn.setOnMouseClicked(e -> {
-            if(!fillNameArtist.getText().isEmpty() && !fillDetailArtist.getText().isEmpty())
-            {
-            try {
-                artistArrayList = ReadWriteFile.readFileArtist(artistFile);
-            } catch (IOException | ClassNotFoundException ex) {
-                System.out.println("UploadArtistPopUp : IOExeption read file in DetailUpPopArtist");
-            }
-            if (!checkArtistExist(artistArrayList, fillNameArtist.getText())) {
-                if (editArtist != null) {
-                    ArrayList<Artist> oldArrayList = new ArrayList<>();
-                    ArrayList<Artist> newArrayList = new ArrayList<>();
-                    oldArrayList = artistArrayList;
-                    for (Artist artist : oldArrayList) {
-                        if (artist.getName1().equals(editArtist.getName1()) && artist.getName2().equals(editArtist.getName2()) && artist.getInfomation().equals(editArtist.getInfomation())) {
-                            System.out.println("delete old edit");
-                        } else {
-                            newArrayList.add(artist);
-                        }
-                    }
-                    artistArrayList = newArrayList;
+            if (!fillNameArtist.getText().isEmpty() && !fillDetailArtist.getText().isEmpty()) {
+                try {
+                    artistArrayList = ReadWriteFile.readFileArtist(artistFile);
+                } catch (IOException | ClassNotFoundException ex) {
+                    System.out.println("UploadArtistPopUp : IOExeption read file in DetailUpPopArtist");
                 }
-                if (changePhoto) {
-                    this.saveArtist();
-                } else {
-                    if (changePhoto = AlertBox.display("missing photo?", "Saving without upload photo?")) {
+                if (!checkArtistExist(artistArrayList, fillNameArtist.getText())) {
+                    if (editArtist != null) {
+                        ArrayList<Artist> oldArrayList = new ArrayList<>();
+                        ArrayList<Artist> newArrayList = new ArrayList<>();
+                        oldArrayList = artistArrayList;
+                        for (Artist artist : oldArrayList) {
+                            if (artist.getName1().equals(editArtist.getName1()) && artist.getName2().equals(editArtist.getName2()) && artist.getInfomation().equals(editArtist.getInfomation())) {
+                                System.out.println("delete old edit");
+                            } else {
+                                newArrayList.add(artist);
+                            }
+                        }
+                        artistArrayList = newArrayList;
+                    }
+                    if (changePhoto) {
                         this.saveArtist();
                     } else {
-                        System.out.println("save cancel");
+                        if (changePhoto = AlertBox.display("missing photo?", "Saving without upload photo?")) {
+                            this.saveArtist();
+                        } else {
+                            System.out.println("save cancel");
+                        }
                     }
+                } else {
+                    AlertBox.displayAlert("Upload Fail!", "This artist already exist");
                 }
             } else {
-                AlertBox.displayAlert("Upload Fail!", "This artist already exist");
-            }
-            }
-            else {
                 AlertBox.displayAlert("Upload Fail!", "Plese complete the form.");
             }
         });
@@ -426,7 +433,7 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
         hboxSaveCancel.setAlignment(Pos.BOTTOM_RIGHT);
         hboxSaveCancel.getChildren().addAll(saveBtn, cancelBtn);
 
-        detail.getChildren().addAll(title, photo, imageBtn, gridPane, hboxSaveCancel);
+        detail.getChildren().addAll(title, profilePicture, imageBtn, gridPane, hboxSaveCancel);
         totalDetail.getChildren().addAll(detail, exitButton());
     }
 

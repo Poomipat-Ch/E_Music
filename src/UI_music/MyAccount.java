@@ -358,6 +358,8 @@ public class MyAccount {
 
             fileChooser = new FileChooser();
             fileChooser.setTitle("Open Image");
+            fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
+
 
             //Set to user's directory or go to the default C drvie if cannot access
             String userDirectoryString = System.getProperty("user.home") + "\\Pictures";

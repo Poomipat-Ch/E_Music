@@ -38,6 +38,22 @@ public class ImageRectangle {
         }
     }
     
+    public ImageRectangle(double y, double width, double height, Image image) {
+
+        myRectangle = new Rectangle(width, height);
+        myRectangle.setFill(Color.SNOW);
+        myRectangle.setLayoutY(y);
+        myRectangle.setEffect(new DropShadow(+2d, 0d, +2d, Color.BLACK));
+
+        Image newimage = null;
+        try {
+            newimage = this.setImage(image);
+            myRectangle.setFill(new ImagePattern(newimage));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
     public ImageRectangle(double x, double y, double width, double height, Image image) {
 
         myRectangle = new Rectangle(width, height);
