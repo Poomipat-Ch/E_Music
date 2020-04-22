@@ -11,6 +11,7 @@ import Component_Music.AlertBox;
 import Component_Music.DetailSongPopUp;
 import Component_Music.SearchSystem;
 import Component_Music.Song;
+import Component_Music.TopChartPane;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -160,25 +161,20 @@ public class Guest_UI extends UI {
         return hBox;
     }
 
-    public static VBox totalPane;
+    public static AnchorPane totalPane;
 
-    private ScrollPane AllSong() {
+    private BorderPane AllSong() {
 
-        ScrollPane scrollPane = new ScrollPane();
+        BorderPane scrollPane = new BorderPane();
         scrollPane.setPrefSize(1030, 900);
-        scrollPane.pannableProperty().set(true);
-        scrollPane.fitToWidthProperty().set(true);
-        scrollPane.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
-        scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPane.setPadding(new Insets(10));
         scrollPane.getStyleClass().add("scroll-bar");
-        totalPane = new VBox();
-        totalPane.setAlignment(Pos.CENTER);
+        totalPane = new AnchorPane();
         totalPane.getStyleClass().add("allSong");
 
-        totalPane.getChildren().addAll(searchBoxAll(), updateScrollPane(""));
+        totalPane.getChildren().addAll(new TopChartPane().getTopchartpane());
 
-        scrollPane.setContent(totalPane);
+        scrollPane.setCenter(totalPane);
 
         return scrollPane;
     }

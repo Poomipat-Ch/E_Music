@@ -10,6 +10,7 @@ import UI_music.UI;
 import UI_music.User_UI;
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -58,6 +59,7 @@ public class Cashing {
 
     private double lowPrice, medPrice, largePrice, price, promotion, total; //<--
 
+        
     public double getTotal() {
         return total;
     }
@@ -81,21 +83,42 @@ public class Cashing {
     public void setPrice(double price) {
         this.price = price;
     }
+    
+    ///// Format From String -> TwoDecimal
+    private double twoDF(double num){    // Double Num -> Double Num 
+        DecimalFormat twoDF = new DecimalFormat("#.00");
+        Double doubleNum = stringToDouble(twoDF.format(num));
+        return doubleNum;
+    }
+    
+    private double stringToDouble(String string){  // String -> Double 
+        return Double.parseDouble(string);
+    }
+    
+    private double stringToTwoDecimal(String string){
+        return twoDF(stringToDouble(string));
+    }
+    ///// End 
+    
+    //Promotion Function
+    private double totalPercentPromotion(){
+        return (100.0-getPromotion())/100.0;
+    }
 
     public void Info(Stage paymentStage, Song song) {
         this.paymentStage = paymentStage;
         this.song = song;
 
         //double lowPrice, medPrice, largePrice; // <-------------- Song Price ------------------------
-        setLowPrice(29.0); //<--
-        setMedPrice(69.0); //<--
-        setLargePrice(119.0); //<--
+        setLowPrice(stringToTwoDecimal(song.getPriceSong())); //<-- //May Error if it get REAL String !!!
+        setMedPrice(twoDF(twoDF(getLowPrice()*0.90)*3)); //<--
+        setLargePrice(twoDF(twoDF(getLowPrice()*0.80)*5)); //<--
 
-        setPromotion(20);
+        setPromotion(25.0);
 
         /*Integer.parseInt(song.getPriceSong()) <- Old one | New one ->*/
         setPrice(getLowPrice()); // <-------------------- Total Price will be calculate below --------------------------
-        if(UI.userAccount.getUserRole().equals("premium")) setTotal(getPrice()*(100-getPromotion())/100);
+        if(UI.userAccount.getUserRole().equals("premium")) setTotal(twoDF(getPrice()*totalPercentPromotion()));
         else setTotal(price);
 
         Label title = new Label("YOUR ORDER");
@@ -109,7 +132,7 @@ public class Cashing {
 
         Label orderText = new Label(song.getNameSong() + " - " + song.getArtistSong());
         Label orderPrice = new Label("฿ " + getPrice());
-        Label toggleText = new Label("Number of download: ");
+        Label toggleText = new Label("Number of download");
         ToggleGroup songPackage = new ToggleGroup();
         RadioButton lowPack = new RadioButton("1 time");
         RadioButton medPack = new RadioButton("3 times");
@@ -118,25 +141,54 @@ public class Cashing {
         songPackage.selectToggle(lowPack);
         medPack.setToggleGroup(songPackage);
         largePack.setToggleGroup(songPackage);
-
+     
+        Label colon1 = new Label(": ");
+        
         HBox priceRow = new HBox(10);
-        priceRow.getChildren().addAll(toggleText, lowPack, medPack, largePack);
+        priceRow.setAlignment(Pos.CENTER);
+        priceRow.getChildren().addAll(toggleText, lowPack, medPack, largePack, colon1);
+        
+        Label save10 = new Label("Save 10 %");
+        Label save20 = new Label("Save 20 %");
+        save10.getStyleClass().add("detailPremiumYellow");
+        save20.getStyleClass().add("detailPremiumYellow");
+        HBox saveHBox = new HBox(15);
+        saveHBox.getChildren().addAll(save10,save20);
+        saveHBox.setTranslateX(280);
+        
         BorderPane leftRow1 = new BorderPane();
         leftRow1.setTop(orderText);
         BorderPane.setMargin(orderText, new Insets(0, 0, 20, 0));
         leftRow1.setLeft(priceRow);
         leftRow1.setRight(orderPrice);
+        leftRow1.setBottom(saveHBox);
         leftRow1.setPadding(new Insets(20));
-        leftRow1.setStyle("-fx-background-color:#ebebeb;");
-
+        
         Label describeText = new Label("All prices include VAT if applicable.");
-        setTotal(getPrice()); //<-
-        Label totalPrice = new Label("ORDER TOTAL: ฿ " + getTotal()); //<--
+        Label totalPrice = new Label("ORDER TOTAL : ฿ " + getTotal()); //<--
         BorderPane leftRow2 = new BorderPane();
+        if(UI.userAccount.getUserRole().equals("premium")) {
+            describeText.setText("Discounts " + getPromotion() + "% for Premium users");
+        }
         leftRow2.setLeft(describeText);
         leftRow2.setRight(totalPrice);
         leftRow2.setPadding(new Insets(20));
-        leftRow2.setStyle("-fx-background-color:#ebebeb;");
+        
+        toggleText.getStyleClass().add("detailPremium");
+        lowPack.getStyleClass().add("detailPremiumChoice");
+        medPack.getStyleClass().add("detailPremiumChoice");
+        largePack.getStyleClass().add("detailPremiumChoice");
+        colon1.getStyleClass().add("detailPremium");
+        
+        title.getStyleClass().add("titlePremium");
+        noteText.getStyleClass().add("detailPremium");
+        noteText.setStyle("-fx-effect: dropshadow( gaussian , rgba(0,0,0,0.5) , 5,0,2,2);");
+        orderText.getStyleClass().add("detailPremium");
+        orderPrice.getStyleClass().add("detailPremiumSmall");
+        leftRow1.getStyleClass().add("subPane");
+        describeText.getStyleClass().add("detailPremiumSmall");
+        totalPrice.getStyleClass().add("detailPremiumSmall");
+        leftRow2.getStyleClass().add("subPane");
 
         VBox leftPane = new VBox(20);
         leftPane.getChildren().addAll(leftRow1, leftRow2);
@@ -195,9 +247,9 @@ public class Cashing {
                         setTotal(price);
                         if (UI.userAccount.getUserRole().equals("premium")) {
                             describeText.setText("Discounts " + getPromotion() + "% for Premium users");
-                            setTotal(getTotal() * (100 - getPromotion()) / 100); //<- promotion price price = price * ( 100 - discount ) / 100
+                            setTotal(twoDF(getTotal()*totalPercentPromotion())); //<- promotion price price = price * ( 100 - discount ) / 100
                         }
-                        totalPrice.setText("ORDER TOTAL: ฿ " + getTotal());
+                        totalPrice.setText("ORDER TOTAL : ฿ " + getTotal());
                         confirmPrice.setText("฿ " + getTotal());
                     }
                 });
@@ -206,19 +258,33 @@ public class Cashing {
         HBox row3 = new HBox(20);
         row3.getChildren().addAll(confirmPrice, payButton);
         row3.setAlignment(Pos.CENTER);
+                       
+        title2.getStyleClass().add("detailPremium");
+        creditRadio.getStyleClass().add("detailPremiumChoice");
+        ccNumber.getStyleClass().add("detailPremiumTextFill");
+        month.getStyleClass().add("detailPremiumChoice");
+        year.getStyleClass().add("detailPremiumChoice");
+        ccvNumber.getStyleClass().add("detailPremiumTextFill");
+        ccName.getStyleClass().add("detailPremiumTextFill");
+        confirmPrice.getStyleClass().add("detailPremiumSmall");
+        payButton.getStyleClass().add("savebtn");
+                       
         VBox rightPane = new VBox(20);
+        rightPane.getStyleClass().add("subPane");
         rightPane.getChildren().addAll(title2, creditRadio, inputField, row3);
-        rightPane.setStyle("-fx-background-color:#ebebeb;");
 
         rightPane.setAlignment(Pos.TOP_LEFT);
         rightPane.setPadding(new Insets(10));
 
         payButton.setOnAction(e -> {
-            //Check Blank vong clash
+            
+            //Downtime New Feature
             int downloadTime;
+            
             if(lowPack.isSelected())downloadTime = 1;
             else if(medPack.isSelected())downloadTime = 3;
             else downloadTime = 5;
+            
             if (ccNumber.getText().isBlank() || ccvNumber.getText().isBlank()
                     || ccName.getText().isBlank() || month.getValue() == null || year.getValue() == null) {
                 AlertBox.displayAlert("Something went wrong!", "Some of infomation are missing.\n Please check again.");
@@ -228,7 +294,7 @@ public class Cashing {
                 AlertBox.displayAlert("Something went wrong!", "Some of infomation are Incorrect.\n Please check your name again.");
             } else {
                 if (AlertBox.confirmAlert("Are you sure", "You are going to buy \"" + song.getNameSong() + " - " + song.getArtistSong() + "\"."
-                        + "Please confirm to make a purchase.")) {
+                        + "\nPlease confirm to make a purchase.")) {
                     AlertBox.displayAlert("Purchase Success", "\"" + song.getNameSong() + " - " + song.getArtistSong() + "\" was added to your playlist.");
                     System.out.println("Purchase complete");
                     this.paymentStage.close();
@@ -241,22 +307,32 @@ public class Cashing {
         });
 
         BorderPane borderPane = new BorderPane();
+        borderPane.getStyleClass().add("allPanePremium");
         borderPane.setCenter(leftPane);
         borderPane.setBottom(rightPane);
         borderPane.setTop(newTopPane);
-        Insets insets = new Insets(10);
+        borderPane.setOnMousePressed(e -> {
+            mouse_x = e.getSceneX();
+            mouse_y = e.getSceneY();
+            //System.out.println(mouse_x + " " + mouse_y);
+        });
+        borderPane.setOnMouseDragged(e -> {
+            paymentStage.setX(e.getScreenX() - mouse_x);
+            paymentStage.setY(e.getScreenY() - mouse_y);
+        });
+        
+        Insets insets = new Insets(45);
         BorderPane.setMargin(leftPane, insets);
-        BorderPane.setMargin(rightPane, new Insets(10, 10, 20, 10)); //FYI : Insets(top,right,bottom,left)
+        BorderPane.setMargin(rightPane, new Insets(10, 45, 20, 45)); //FYI : Insets(top,right,bottom,left)
         BorderPane.setMargin(newTopPane, insets);
-        borderPane.setStyle("-fx-background-color:#bbbbbb;");
 
         infoScene = new Scene(borderPane); //, 600, 525
 
-        //infoScene.setFill(Color.TRANSPARENT);
-        //String stylrSheet = getClass().getResource("/style_css/stylePopupDetail.css").toExternalForm(); // From PopUpdetail CSS
-        //infoScene.getStylesheets().add(stylrSheet); // CSS
+        infoScene.setFill(Color.TRANSPARENT);
+        String stylrSheet = getClass().getResource("/style_css/stylePopupDetail.css").toExternalForm(); // From PopUpdetail CSS
+        infoScene.getStylesheets().add(stylrSheet); // CSS
         paymentStage.setScene(infoScene);
-        //paymentStage.initStyle(StageStyle.TRANSPARENT);
+        paymentStage.initStyle(StageStyle.TRANSPARENT);
         //paymentStage.setTitle("PAYMENT");
         paymentStage.showAndWait();
 
@@ -375,7 +451,7 @@ public class Cashing {
         this.paymentStage = paymentStage;
         this.userAccount = userAccount;
 
-        Label title = new Label("YOUR ORDER");
+        Label title = new Label("SIGN UP PREMIUM");
         title.getStyleClass().add("titlePremium");
         Label noteText = new Label("Please check every detail before making purchase.");
         noteText.getStyleClass().add("detailPremium");
@@ -389,8 +465,8 @@ public class Cashing {
 
         Label orderText = new Label("Premium Account");
         orderText.getStyleClass().add("detailPremium");
-        Label orderPrice = new Label("฿ 99"); //<--------------------
-        orderPrice.getStyleClass().add("detailPremium");
+        Label orderPrice = new Label(": ฿ 199"); //<--------------------
+        orderPrice.getStyleClass().add("detailPremiumSmall");
         BorderPane leftRow1 = new BorderPane();
         leftRow1.setLeft(orderText);
         leftRow1.setRight(orderPrice);
@@ -398,9 +474,9 @@ public class Cashing {
         leftRow1.getStyleClass().add("subPane");
 
         Label describeText = new Label("All prices include VAT if applicable. ");
-        Label totalPrice = new Label("ORDER TOTAL : ฿ 99"); //<-----------
-        describeText.getStyleClass().add("detailPremium");
-        totalPrice.getStyleClass().add("detailPremium");
+        Label totalPrice = new Label("      ORDER TOTAL : ฿ 199"); //<-----------
+        describeText.getStyleClass().add("detailPremiumSmall");
+        totalPrice.getStyleClass().add("detailPremiumSmall");
         BorderPane leftRow2 = new BorderPane();
         leftRow2.setLeft(describeText);
         leftRow2.setRight(totalPrice);
@@ -451,11 +527,11 @@ public class Cashing {
         inputField.setAlignment(Pos.CENTER_LEFT);
 
         setPromotion(0); //<-
-        setPrice(99.0);  //<-
+        setPrice(199.00);  //<-
         double total = getPrice(); //<-
-        total = total * (100 - getPromotion()) / 100; //<- promotion price price = price * ( 100 - discount ) / 100
+        total = total * (100.0 - getPromotion()) / 100.0; //<- promotion price price = price * ( 100 - discount ) / 100
         Label confirmPrice = new Label("฿ " + total);
-        confirmPrice.getStyleClass().add("detailPremium");
+        confirmPrice.getStyleClass().add("detailPremiumSmall");
 
         Button payButton = new Button("PAY NOW");
         payButton.getStyleClass().add("savebtn");
@@ -479,7 +555,7 @@ public class Cashing {
             } else if (hasNumber(ccName.getText())) {
                 AlertBox.displayAlert("Something went wrong!", "Some of infomation are Incorrect.\n Please check your name again.");
             } else { //<--------------------------------------------------------------------
-                if (AlertBox.confirmAlert("Are you sure", "You are going to buy \"Premium account\""
+                if (AlertBox.confirmAlert("Confirmation", "You are going to buy \"Premium account\" for ฿199\n"
                         + "Please confirm to make a purchase.")) {
                     //Change status (drag from admin ui edit status)
 

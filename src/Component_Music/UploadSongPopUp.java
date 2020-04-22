@@ -395,7 +395,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
 
         //Price
         Label songPrice = new Label("Price");
-        fillSongPrice.setPromptText("e.g. 100 Bahts");
+        fillSongPrice.setPromptText("e.g. 59 Bahts");
         fillSongPrice.setPrefWidth(306);
 
         fillNameSong.getStyleClass().add("detailUploadTextFill"); //CSS
@@ -711,7 +711,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
 
         //Price
         Label songPrice = new Label("ราคา");
-        fillSongPrice.setPromptText("ตัวอย่าง 100 บาท");
+        fillSongPrice.setPromptText("ตัวอย่าง 59 บาท");
         fillSongPrice.setPrefWidth(306);
 
         fillNameSong.getStyleClass().add("detailUploadTextFill"); //CSS
