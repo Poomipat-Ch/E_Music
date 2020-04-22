@@ -92,7 +92,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
 
     ArrayList<String> test = new ArrayList<>();
     
-    int downloadable = 0;
+    int totalDownload = 0;
 
 //    private CheckBox pop = createCheckBox("Pop");
 //    private CheckBox jazz = createCheckBox("Jazz");
@@ -127,7 +127,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         tagBar = new TileTagBar();
         file = new File("src/MusicFile/" + checkExistFile + ".mp3");
         
-        this.downloadable = editSong.getDownloadable();
+        this.totalDownload = editSong.getTotalDownload();
         
 //        for (String list : editSong.getListStyleSong()) {
 //
@@ -950,7 +950,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
             priceCorrectBoolean = false;
         }
         if (priceCorrect >= 0 && priceCorrectBoolean) {
-            songArrayList.add(new Song(fillNameSong.getText(), fillDetailSong.getText(), fillNameArtist.getText(), fillSongPrice.getText(), listStyleSong, image, nationality, downloadable));
+            songArrayList.add(new Song(fillNameSong.getText(), fillDetailSong.getText(), fillNameArtist.getText(), fillSongPrice.getText(), listStyleSong, image, nationality, totalDownload));
             try {
                 ReadWriteFile.writeFileSong(musicFile, songArrayList);
             } catch (IOException ex) {
