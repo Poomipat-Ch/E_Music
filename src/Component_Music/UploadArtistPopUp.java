@@ -44,7 +44,6 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
     private ImageView photo;
     private Image image;
     private HBox totalDetail;
-    //private BorderPane totalDetail;
     private Stage stage;
 
     private Label title;
@@ -121,9 +120,6 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
             stage.setY(e.getScreenY() - mouse_y);
         });
 
-//        ImageView imageSong = new ImageView(img);      //commend by gut
-//        imageSong.setFitWidth(250);
-//        imageSong.setFitHeight(300);
         //Upload Picture
         if (this.title.getText().equals("New Artist")) {
             setupInterPane();
