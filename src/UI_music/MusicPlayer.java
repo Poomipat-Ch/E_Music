@@ -10,6 +10,7 @@ import static UI_music.Login.stage;
 import java.io.File;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -38,6 +39,7 @@ public class MusicPlayer {
     private Boolean interrupt;
     private File selectMusicFile;
     private Stage primaryStage;
+    private Scene scene; 
     private FileChooser fileChooser;
     private Label songDetail;
     private double mouse_x,mouse_y;
@@ -160,6 +162,13 @@ public class MusicPlayer {
 
         });
         
+        songImg.setOnMouseEntered(e ->{
+           scene.setCursor(Cursor.HAND);
+        });
+        songImg.setOnMouseDragExited(e ->{
+            scene.setCursor(Cursor.DEFAULT);
+        });
+        
         selectFile.setOnMouseClicked(e ->{
            selectMusic();
             if ("Playing".equals(status)) {
@@ -201,7 +210,7 @@ public class MusicPlayer {
         });
         
         
-        Scene scene = new Scene(root, 500, 450);
+        scene = new Scene(root, 500, 450);
         scene.getStylesheets().add(getClass().getResource("/style_css/musicPlayerStyle.css").toExternalForm());
 
         primaryStage.setScene(scene);
