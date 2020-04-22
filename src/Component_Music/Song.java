@@ -33,22 +33,31 @@ public class Song implements Serializable {
     private int width, height;
     private int[][] data;
 
+    private int downloadable;
+
     private static File musicFile = new File("src/data/music.dat");
-    
+
     private ArrayList<String> listStyleSong = new ArrayList<>();
 
     public Song() {
     }
 
-    public Song(String nameSong, String detailSong, String artistSong, String priceSong, ArrayList<String> listStyleSong, Image image, String nationality) {
+    public Song(String nameSong, String detailSong, String artistSong, String priceSong, ArrayList<String> listStyleSong, Image image, String nationality, int downloader) {
         this.nameSong = nameSong;
         this.detailSong = detailSong;
         this.artistSong = artistSong;
         this.priceSong = priceSong;
         this.setPhoto(image);
         this.nationality = nationality;
-        
+
         this.listStyleSong = listStyleSong;
+
+        if (downloader == 0) {
+            this.downloadable = (int) (Math.random() * 15000) + 5000;
+        } else {
+            this.downloadable = downloader;
+        }
+
     }
 
     public Song(Song song) {
@@ -94,7 +103,15 @@ public class Song implements Serializable {
     public void setNationality(String nationality) {
         this.nationality = nationality;
     }
- 
+
+    public int getDownloader() {
+        return downloadable;
+    }
+
+    public void downloading() {
+        this.downloadable++;
+    }
+
     @Override
     public String toString() {
         return "name : " + nameSong + " artist : " + artistSong + " detail : " + detailSong + "\n";
@@ -159,9 +176,9 @@ public class Song implements Serializable {
     public ArrayList<String> getListStyleSong() {
         return listStyleSong;
     }
-    
+
     public Song getSong() {
         return this;
     }
-    
+
 }

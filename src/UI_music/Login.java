@@ -89,7 +89,7 @@ public class Login {
         loginBtn.setOnAction(e -> {
 
             try {
-                listUserAccount = readFile(user);
+                listUserAccount = new ReadWriteFile().readFile(user);
             } catch (IOException ex) {
                 System.out.println("Login : IOExeption readfile in login constructor");
             } catch (ClassNotFoundException ex) {

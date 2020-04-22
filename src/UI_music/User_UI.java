@@ -71,7 +71,7 @@ public class User_UI extends UI {
         super(stage, userAccount);
         
         try {
-            SongArrayList = new ReadWriteFile().readFileSong(musicfile);
+            SongArrayList = ReadWriteFile.readFileSong(musicfile);
         } catch (IOException | ClassNotFoundException ex) {
             System.out.println("SearchPage: ERROR READ MUSIC.DAT");
         }
