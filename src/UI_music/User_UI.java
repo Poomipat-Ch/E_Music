@@ -113,7 +113,7 @@ public class User_UI extends UI {
     private VBox detailDownload = new VBox(10);
 
     @Override
-    public AnchorPane secondPagePane() {
+    public AnchorPane thirdPagePane() {
         AnchorPane pane = this.pane;
         pane.getChildren().clear();
         detailDownload.getChildren().clear();
@@ -432,7 +432,7 @@ public class User_UI extends UI {
                 }
                 writeFile.writeFile(user, accountUpdate);
                     UI.vbox.getChildren().remove(1);
-                    UI.vbox.getChildren().add(secondPagePane());
+                    UI.vbox.getChildren().add(thirdPagePane());
                     updateDetailDownload();
             } catch (IOException ex) {
                 System.out.println("User_UI : IOExeption download file from class Song in downloader");

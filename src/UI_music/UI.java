@@ -38,7 +38,7 @@ abstract public class UI {
     
     //Abstract Class For User_UI & Admin_UI
     abstract public AnchorPane firstPagePane(String page);
-    abstract public AnchorPane secondPagePane();
+    abstract public AnchorPane thirdPagePane();
 
     abstract public HBox searchBoxAll();
     abstract public HBox searchBoxMy();
@@ -171,7 +171,7 @@ abstract public class UI {
             if (!"guest".equals(UI.userAccount.getUserRole())) {
 
                 this.vbox.getChildren().remove(1);
-                this.vbox.getChildren().add(secondPagePane());
+                this.vbox.getChildren().add(thirdPagePane());
 
             } else {
                 AlertBox registerFirst = new AlertBox();
@@ -248,7 +248,7 @@ abstract public class UI {
         Button accountManage = CreaButtonAdmin("Account Management");
         accountManage.setOnMouseClicked(e -> {
             this.vbox.getChildren().remove(1);
-            this.vbox.getChildren().add(secondPagePane());
+            this.vbox.getChildren().add(thirdPagePane());
         });
 
         Button playerMusic = CreaButton("Spookify Player");

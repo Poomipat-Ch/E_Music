@@ -78,7 +78,7 @@ public class Guest_UI extends UI {
     private VBox detailDownload = new VBox(10);
     
     @Override
-    public AnchorPane secondPagePane() {
+    public AnchorPane thirdPagePane() {
         return null;
     }
     
