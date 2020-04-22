@@ -130,16 +130,9 @@ abstract public class UI {
 
         Button browse = CreaButton("Browse");
         browse.setOnMouseClicked(e -> {
-            if (!"guest".equals(UI.userAccount.getUserRole())) {
+           
                 this.vbox.getChildren().remove(1);
                 this.vbox.getChildren().add(new BrowsePane().getBrowsePane());
-            } else {
-                AlertBox registerFirst = new AlertBox();
-                registerFirst.displayAlert("Register First", "Register Free Account First");
-                new Register("member");
-                this.stage.close();
-                Login.stage.show();
-            }
 
         });
 
