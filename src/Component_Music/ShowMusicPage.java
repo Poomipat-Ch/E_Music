@@ -33,6 +33,8 @@ import javafx.scene.layout.HBox;
 /**
  *
  * @author HCARACH
+ * 
+ * 
  */
 public class ShowMusicPage {
 
@@ -44,23 +46,13 @@ public class ShowMusicPage {
     private Song songSelected;
     private String page;
 
-    private ImageView imageview;
-
     TableView<Song> table;
     ObservableList<Song> list = null;
 
     public ShowMusicPage(String name, String content, Image image) {
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.setMinSize(990, 901);
-        anchorPane.setLayoutX(-3);
-        anchorPane.setLayoutY(-3);
         anchorPane.getStyleClass().add("mainBox");
-
-        imageview = new ImageView(new Image("/UI_music/defaultprofile.png"));
-        imageview.setFitHeight(250);
-        imageview.setFitWidth(250);
-        imageview.setLayoutX(30);
-        imageview.setLayoutY(50);
 
         AnchorPane profilePicture = new AnchorPane();
         profilePicture.getChildren().add(new ImageRectangle(30, 50, 250, 250, image).getMyRectangle());
@@ -202,12 +194,24 @@ public class ShowMusicPage {
 
     }
 
-    private Label CreateLabel(String string) {
+    private AnchorPane CreateLabel(String string) {
+        AnchorPane anchorpane = new AnchorPane();
+        anchorpane.setPrefSize(500, 200);
+        anchorpane.setLayoutX(350);
+        anchorpane.setLayoutY(75);
+
+        AnchorPane background = new AnchorPane();
+        background.getStyleClass().add("backgroundpane");
+        background.setPrefSize(500, 200);
+
         Label label = new Label(string);
-        label.getStyleClass().add("labelhead");
-        label.setLayoutX(350);
-        label.setLayoutY(180);
-        return label;
+        label.getStyleClass().add("labelheadinshowpage");
+        label.setPrefSize(500, 200);
+        label.setAlignment(Pos.CENTER);
+
+        anchorpane.getChildren().addAll(background, label);
+
+        return anchorpane;
     }
 
     public HBox searchBoxMy() {
@@ -216,9 +220,9 @@ public class ShowMusicPage {
         hBox.setLayoutX(30);
         hBox.setLayoutY(320);
 
-        AnchorPane anchorpane = new AnchorPane();
-        anchorpane.setPrefSize(1030 - 200, 10);
-        anchorpane.getStyleClass().add("bgsearchfield");
+//        AnchorPane anchorpane = new AnchorPane();
+//        anchorpane.setPrefSize(1030 - 200, 10);
+//        anchorpane.getStyleClass().add("bgsearchfield");
 
         TextField searchTextField = new TextField();
         searchTextField.setPromptText("Filter");
@@ -232,9 +236,9 @@ public class ShowMusicPage {
 
         searchTextField.textProperty().addListener(searchSystemMyLibrary);
 
-        anchorpane.getChildren().add(searchTextField);
+//        anchorpane.getChildren().add(searchTextField);
 
-        hBox.getChildren().addAll(anchorpane, searchButton);
+        hBox.getChildren().addAll(searchTextField, searchButton);
 
         return hBox;
     }

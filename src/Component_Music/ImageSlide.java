@@ -23,7 +23,7 @@ public class ImageSlide {
     private final double IMG_WIDTH = 1030;
     private final double IMG_HEIGHT = 300 * 1300 / 900;
  
-    private final int NUM_OF_IMGS = 4;
+    private final int NUM_OF_IMGS = 5;
     private final int SLIDE_FREQ = 4; // in secs
     
     private AnchorPane anchorpane;

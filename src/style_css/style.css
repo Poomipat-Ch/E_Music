@@ -260,7 +260,13 @@
 .labelhead{
     -fx-font-size: 30px;
     -fx-text-fill: white;
+    -fx-font-family: "Itim";
+}
 
+.labelheadinshowpage{
+    -fx-font-size: 45px;
+    -fx-text-fill: white;
+    -fx-font-family: "Itim";
 }
 
 .seealllabel {
@@ -482,8 +488,6 @@
 }
 
 .searchfield{
-    -fx-background-color: transparent;
-    -fx-text-fill: #cccccc;
     -fx-font-size: 18px;
 }
 
@@ -711,10 +715,17 @@
 
 /****************************************************************
  
-  Table My Library
+  Ad premium
  
 ****************************************************************/
 
-.imageCircle{
-    
+.xpremiumbutton{
+    -fx-background-color: transparennt;
+    -fx-text-fill: #bbbbbb;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.xpremiumbutton:hover{
+    -fx-text-fill: #ffffff;
 }

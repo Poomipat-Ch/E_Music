@@ -10,6 +10,7 @@ import Component_Music.AlertBox;
 import static UI_music.User_UI.playerStatus;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -20,6 +21,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  *
@@ -43,11 +45,34 @@ abstract public class UI {
     public static VBox vbox;
 
     public BorderPane allPane() {
+//        AnchorPane anchorpane = new AnchorPane();
+
         BorderPane borderPane = new BorderPane();
         borderPane.getStyleClass().add("bg-border");
 
         borderPane.setLeft(menu());
         borderPane.setCenter(mainBox());
+
+//        anchorpane.getChildren().add(borderPane);
+
+//        if (userAccount.getUserRole().equals("member")) {
+//
+//            Button button = new Button("X");
+//            button.getStyleClass().add("xpremiumbutton");
+//            button.setLayoutX(1060);
+//            button.setLayoutY(290);
+//            button.setOnAction(event -> {
+//                anchorpane.getChildren().remove(1);
+//            });
+//            
+//            Button upgrade = new Button("UPGRADE PREMIUM");
+//
+//            AnchorPane adpane = new AnchorPane();
+//            adpane.setStyle("-fx-background-color : transparent");
+//            adpane.getChildren().addAll(AdPane(), button);
+//
+//            anchorpane.getChildren().addAll(adpane);
+//        }
 
         return borderPane;
     }
@@ -88,7 +113,7 @@ abstract public class UI {
 
         return btn;
     }
-    
+
     private Button CreaButtonAdmin(String text) {
         Button btn = new Button(text);
         btn.setPadding(new Insets(0, 0, 0, 50));
@@ -130,9 +155,19 @@ abstract public class UI {
 
         Button browse = CreaButton("Browse");
         browse.setOnMouseClicked(e -> {
-           
+            
+            if (!"guest".equals(UI.userAccount.getUserRole())) {
+
                 this.vbox.getChildren().remove(1);
                 this.vbox.getChildren().add(new BrowsePane().getBrowsePane());
+
+            } else {
+                AlertBox registerFirst = new AlertBox();
+                registerFirst.displayAlert("Register First", "Register Free Account First");
+                new Register("member");
+                this.stage.close();
+                Login.stage.show();
+            }
 
         });
 
@@ -155,17 +190,17 @@ abstract public class UI {
                 Login.stage.show();
             }
         });
-        
+
         Button playerMusic = CreaButton("Spookify Player");
-        playerMusic.setOnMouseClicked(e ->{
-             if (!"Ready".equals(playerStatus)) {
+        playerMusic.setOnMouseClicked(e -> {
+            if (!"Ready".equals(playerStatus)) {
                 MusicPlayer musicPlayer = new MusicPlayer();
                 playerStatus = "Ready";
-            }else{
+            } else {
                 AlertBox.displayAlert(playerStatus, "Music Player is Open");
             }
         });
-        
+
         Button myAccount = CreaButton("My Account");
         myAccount.setOnMouseClicked(e -> {
             menuBtnClicked = 2;
@@ -212,7 +247,7 @@ abstract public class UI {
             this.vbox.getChildren().remove(1);
             this.vbox.getChildren().add(firstPagePane(""));
         });
-        
+
         Button artistManage = CreaButtonAdmin("Artist Management");
         artistManage.setOnMouseClicked(e -> {
             this.vbox.getChildren().remove(1);
@@ -224,13 +259,13 @@ abstract public class UI {
             this.vbox.getChildren().remove(1);
             this.vbox.getChildren().add(secondPagePane());
         });
-        
+
         Button playerMusic = CreaButton("Spookify Player");
-        playerMusic.setOnMouseClicked(e ->{
-             if (!"Ready".equals(playerStatus)) {
+        playerMusic.setOnMouseClicked(e -> {
+            if (!"Ready".equals(playerStatus)) {
                 MusicPlayer musicPlayer = new MusicPlayer();
                 playerStatus = "Ready";
-            }else{
+            } else {
                 AlertBox.displayAlert(playerStatus, "Music Player is Open");
             }
         });
@@ -340,6 +375,24 @@ abstract public class UI {
         });
 
         return minimize;
+    }
+
+    private AnchorPane AdPane() {
+        AnchorPane anchorpane = new AnchorPane();
+        anchorpane.setStyle("-fx-background-color : transparent");
+
+        ImageView imageview = new ImageView(new Image("/image/banner5.png"));
+        imageview.setLayoutX(190);
+        imageview.setLayoutY(330);
+
+        AnchorPane background = new AnchorPane();
+        background.setStyle("-fx-background-color: #222222;\n"
+                + "-fx-opacity: .6;");
+        background.setMinSize(1280, 960);
+
+        anchorpane.getChildren().addAll(background, imageview);
+
+        return anchorpane;
     }
 
     abstract public AnchorPane firstPagePane(String page);
