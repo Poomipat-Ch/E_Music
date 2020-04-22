@@ -58,10 +58,8 @@ public class TopChartPane {
         for (String string : topchartlist) {
             topChartBtn = new Button();
             topChartBtn.getStyleClass().add("topchartbtn");
-            topChartBtn.setPrefSize(600, 160);
+            topChartBtn.setPrefSize(600, 160);         
             
-            
-
             topChartList.getChildren().addAll(CreateLabel("\n", 2), CreateLabel(string, 2), topChartBtn);
 
             topChartBtn.setOnAction(event -> {
