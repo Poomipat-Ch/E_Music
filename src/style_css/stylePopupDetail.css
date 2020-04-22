@@ -206,6 +206,18 @@
     -fx-text-fill: white;
     -fx-font-family: "Itim";
 }
+.detailPremiumSmall{
+    -fx-font-size: 18px;
+    -fx-font-weight:600;
+    -fx-text-fill: white;
+    -fx-font-family: "Itim";
+}
+.detailPremiumYellow{
+    -fx-font-size: 18px;
+    -fx-font-weight:600;
+    -fx-text-fill: yellow;
+    -fx-font-family: "Itim";
+}
 .detailPremiumChoice{
     -fx-font-size: 15px;
     -fx-font-weight:600;
@@ -221,7 +233,7 @@
     -fx-text-fill: black;
     -fx-font-family: "Itim";
 }
-
+/*Premium End*/
 /****************************************************************
  
   Select Type Pop Up
@@ -292,7 +304,7 @@
 .closebutton:hover {
     -fx-text-fill: #dc143c;
 }
-/*Premium End*/
+
 
 
 /****************************************************************
