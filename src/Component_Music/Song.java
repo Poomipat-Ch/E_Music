@@ -34,7 +34,7 @@ public class Song implements Serializable {
     private int width, height;
     private int[][] data;
 
-    private int downloadable;
+    private int totalDownload;
 
     private static File musicFile = new File("src/data/music.dat");
 
@@ -54,9 +54,9 @@ public class Song implements Serializable {
         this.listStyleSong = listStyleSong;
 
         if (downloader == 0) {
-            this.downloadable = (int) (Math.random() * 15000) + 5000;
+            this.totalDownload = (int) (Math.random() * 15000) + 5000;
         } else {
-            this.downloadable = downloader;
+            this.totalDownload = downloader;
         }
 
     }
@@ -105,12 +105,12 @@ public class Song implements Serializable {
         this.nationality = nationality;
     }
 
-    public int getDownloadable() {
-        return downloadable;
+    public int getTotalDownload() {
+        return totalDownload;
     }
 
-    public void downloadable() {
-        this.downloadable++;
+    public void isDownload() {
+        this.totalDownload++;
     }
 
     @Override

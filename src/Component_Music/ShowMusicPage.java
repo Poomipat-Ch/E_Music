@@ -92,25 +92,25 @@ public class ShowMusicPage {
 
         // Create column NameArtist (Data type of String).
         TableColumn<Song, String> artistCol = new TableColumn<>("ARTIST");
-        artistCol.setMinWidth(260);
+        artistCol.setMinWidth(240);
 
         // Create column Detail (Data type of String).
         TableColumn<Song, String> detailCol = new TableColumn<>("DETAIL");
         detailCol.setMinWidth(100);
         
-        TableColumn<Song, String> downloadCol = new TableColumn<>("DOWNLOADABLE");
-        downloadCol.setMinWidth(180);
+        TableColumn<Song, String> downloadCol = new TableColumn<>("TOTAL DOWNLOAD");
+        downloadCol.setMinWidth(200);
 
         // Defines how to fill data for each cell.
         // Get value from property of UserAccount. .
         NameCol.setCellValueFactory(new PropertyValueFactory<>("nameSong"));
         artistCol.setCellValueFactory(new PropertyValueFactory<>("artistSong"));
         detailCol.setCellValueFactory(new PropertyValueFactory<>("detailSong"));
-        downloadCol.setCellValueFactory(new PropertyValueFactory<>("downloadable"));
+        downloadCol.setCellValueFactory(new PropertyValueFactory<>("totalDownload"));
         //Downloadable.setCellValueFactory(new PropertyValueFactory<>("downloadable")); // wait nichida add dowloadable in account
 
         // Set Sort type for userName column
-        downloadCol.setSortType(TableColumn.SortType.ASCENDING);
+        downloadCol.setSortType(TableColumn.SortType.DESCENDING);
         downloadCol.setSortable(true);
         detailCol.setSortable(false);
         
