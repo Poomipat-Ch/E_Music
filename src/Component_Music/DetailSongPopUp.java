@@ -52,7 +52,7 @@ public class DetailSongPopUp {
     double mouse_x = 0,mouse_y = 0; // position mouse
     
     private void DetailSong() {
-        this.detail = new VBox();
+        this.detail = new VBox(10);
         detail.getStyleClass().add("allPane");
         detail.setAlignment(Pos.TOP_CENTER);
         detail.setPadding(new Insets(50));
@@ -67,10 +67,9 @@ public class DetailSongPopUp {
        });
         
         //Image Song
-        Image imgSong = new Image("/image/1.jpg");
-        ImageView imageSong = new ImageView(imgSong);
-        imageSong.setFitWidth(250);
+        ImageView imageSong = new ImageView(this.song.getPhoto());
         imageSong.setFitHeight(300);
+        imageSong.setPreserveRatio(true);
         
         //detail song
         Label nameSong = new Label("Song : "+this.song.getNameSong());

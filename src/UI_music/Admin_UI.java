@@ -244,14 +244,14 @@ public class Admin_UI extends UI {
                 AlertBox.displayAlert("Opp!", "Please select an artist.");
             }
         });
-        
+
         AnchorPane backgroundpane = new AnchorPane();
         backgroundpane.setMinSize(270, 770);
         backgroundpane.setLayoutX(745);
         backgroundpane.setLayoutY(80);
         backgroundpane.getStyleClass().add("backgroundpane");
 
-        pane.getChildren().addAll(searchArtistBox(), AllArtist(),backgroundpane, UpdateClikedArtistPane(), title2, editArtistBtn, newArtistBtn, deleteArtistBtn); // editArtistBtn, newArtistBtn, 
+        pane.getChildren().addAll(searchArtistBox(), AllArtist(), backgroundpane, UpdateClikedArtistPane(), title2, editArtistBtn, newArtistBtn, deleteArtistBtn); // editArtistBtn, newArtistBtn, 
 
         return pane;
     }
@@ -530,8 +530,6 @@ public class Admin_UI extends UI {
     static Label selectArtist = new Label("");
     static ImageView selectImage;
 
-    static AnchorPane profilePicture = new AnchorPane();
-
     public static TilePane updateScrollPane(String text) {
 
         VBox paneContent;
@@ -561,7 +559,9 @@ public class Admin_UI extends UI {
                     contentButton.setOnAction(e -> {
                         //SELECTION 
 
-                        Admin_UI.updateVBox.getChildren().removeAll(profilePicture, selectNameSong, selectArtist);
+                        for (int i = 0; i < 3; ++i) {
+                            Admin_UI.updateVBox.getChildren().remove(0);
+                        }
 
                         selectNameSong = new Label(song.getNameSong());
                         selectNameSong.setPrefWidth(230);
@@ -575,7 +575,7 @@ public class Admin_UI extends UI {
 //                        selectImage.setFitHeight(250);
 //                        selectImage.setFitWidth(250);
 
-                        profilePicture.getChildren().remove(0);
+                        AnchorPane profilePicture = new AnchorPane();
                         profilePicture.setPadding(new Insets(0, 0, 20, 0));
                         profilePicture.getChildren().add(new ImageRectangle(230, 230, song.getPhoto()).getMyRectangle());
 
@@ -620,8 +620,6 @@ public class Admin_UI extends UI {
     static Label selectArtist2 = new Label("");
     static Label selectDetail2 = new Label("");
     static ImageView selectImageArtist2;
-    
-    static AnchorPane profilePictureArtist = new AnchorPane();
 
     public static TilePane updateScrollArtistPane(String text) {
 
@@ -650,8 +648,11 @@ public class Admin_UI extends UI {
                 contentButton.getStyleClass().add("contentDetailbtn"); //CSS           
                 contentButton.setOnAction(e -> {
                     //SELECTION 
-                    Admin_UI.updateArtistVBox.getChildren().removeAll(profilePictureArtist, selectArtist2, selectDetail2);
-
+                    
+                    for (int i = 0; i < 3; ++i) {
+                            Admin_UI.updateVBox.getChildren().remove(0);
+                        }
+                    
                     artistSelected = artist;
                     selectArtist2 = new Label(artist.getName1());
                     selectArtist2.setPrefWidth(230);
@@ -663,6 +664,7 @@ public class Admin_UI extends UI {
                     selectDetail2.setMaxWidth(230);
                     selectDetail2.setAlignment(Pos.CENTER);
 
+                    AnchorPane profilePictureArtist = new AnchorPane();
                     profilePictureArtist.getChildren().remove(0);
                     profilePictureArtist.setPadding(new Insets(0, 0, 20, 0));
                     profilePictureArtist.getChildren().add(new ImageRectangle(230, 230, artist.getPhoto()).getMyRectangle());
@@ -708,6 +710,7 @@ public class Admin_UI extends UI {
 
         updateVBox = new VBox(10);
 
+        AnchorPane profilePicture = new AnchorPane();
         profilePicture.getChildren().add(new ImageRectangle(230, 230, new Image("/image/defaultmusic.png")).getMyRectangle());
 
         selectNameSong = new Label("Please select song");
@@ -748,6 +751,7 @@ public class Admin_UI extends UI {
 
         updateArtistVBox = new VBox(10);
 
+        AnchorPane profilePictureArtist = new AnchorPane();
         profilePictureArtist.getChildren().add(new ImageRectangle(230, 230, new Image("/image/defaultprofile.png")).getMyRectangle());
 
         selectArtist2 = new Label("Please select artist");
@@ -858,7 +862,7 @@ public class Admin_UI extends UI {
                 presentAccounts.add(account);
             }
         }
-        
+
         photo.getChildren().add(new ImageCircle(300, 120, 100, updateAccount.getPhoto()).getMyCircle());
         photo.setPadding(new Insets(10));
 

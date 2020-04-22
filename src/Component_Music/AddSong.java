@@ -18,6 +18,7 @@ public class AddSong implements Serializable{
     private String nameSong;
     private String detailSong;
     private String artistSong;
+    
     public AddSong(){
         
     }
