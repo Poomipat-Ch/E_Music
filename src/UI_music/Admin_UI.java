@@ -266,6 +266,14 @@ public class Admin_UI extends UI {
         title2.getStyleClass().add("titleAdmin");
         title2.setLayoutX(50);
         title2.setLayoutY(5);
+        
+        Button premiumDiscountBtn = CreaButton("Premium Discount");
+        premiumDiscountBtn.getStyleClass().add("premiumpricebtn");
+        premiumDiscountBtn.setLayoutX(60);
+        premiumDiscountBtn.setLayoutY(675);
+        premiumDiscountBtn.setOnAction(e -> {
+            new SetupPricePremium();
+        });   
 
         Button addAccountBtn = CreaButton("Add Account");
         addAccountBtn.setLayoutX(290);
@@ -305,7 +313,7 @@ public class Admin_UI extends UI {
             }
         });
 
-        pane.getChildren().addAll(addAccountBtn, updateAccountBtn, deleteAccountBtn, tableAccount(), searchBoxMy(), title2);
+        pane.getChildren().addAll(premiumDiscountBtn, addAccountBtn, updateAccountBtn, deleteAccountBtn, tableAccount(), searchBoxMy(), title2);
 
         return pane;
     }

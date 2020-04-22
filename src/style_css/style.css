@@ -105,7 +105,7 @@
 }
 
 .detailbtn{
-    -fx-background-color : rgba(55,85,163,0.7) 100%; /*#00a8cc*/
+    -fx-background-color : rgba(55,85,163,0.5) ; /*#00a8cc*/
     -fx-text-fill : white;
     -fx-background-radius :  10;
     -fx-font-size : 20px;
@@ -114,11 +114,11 @@
 }
 
 .detailbtn:hover{
-    -fx-background-color: rgba(55,85,163,0.9) 100%; /*#27496d*/
+    -fx-background-color: rgba(55,85,163,1) ; /*#27496d*/
 }
 
 .detailbtn:pressed{
-    -fx-background-color: rgba(55,85,163,0.5) 100%; /*#0c7b93*/
+    -fx-background-color: rgba(55,85,163,0.5) ; /*#0c7b93*/
 }
 
 .allSong{
@@ -598,6 +598,23 @@
 }
 
 .premiumbtn:pressed{
+    -fx-background-color : radial-gradient(center 50% 50%, radius 300%, rgba(255,183,0,0.5) 0%, rgba(87,49,0,0.5) 100%);
+}
+
+.premiumpricebtn{
+    -fx-background-color : radial-gradient(center 50% 50%, radius 300%, rgba(255,183,0,0.8) 0%, rgba(87,49,0,0.8) 100%);
+    -fx-text-fill : white;
+    -fx-background-radius :  10;
+    -fx-font-size : 20px;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.5) , 5,0,2,2);
+    -fx-font-family: "Itim";
+}
+
+.premiumpricebtn:hover{
+    -fx-background-color : radial-gradient(center 50% 50%, radius 300%, rgba(255,183,0,0.95) 0%, rgba(87,49,0,0.95) 100%);
+}
+
+.premiumpricebtn:pressed{
     -fx-background-color : radial-gradient(center 50% 50%, radius 300%, rgba(255,183,0,0.5) 0%, rgba(87,49,0,0.5) 100%);
 }
 
