@@ -185,18 +185,23 @@ public class SearchPage {
         anchorpane.setLayoutY(y);
 
         Label nameLabel = new Label(song.getNameSong());
-        nameLabel.setPadding(new Insets(0, 0, 0, 80));
-        nameLabel.setPrefSize(215, 60);
-        nameLabel.setMaxWidth(215);
+        nameLabel.setPadding(new Insets(0, 0, 0, 50));
+        nameLabel.setPrefSize(185, 60);
+        nameLabel.setMaxWidth(185);
         nameLabel.getStyleClass().add("borderplaylist");
         nameLabel.setLayoutX(0);
         nameLabel.setLayoutY(0);
+        
+        nameLabel.setOnMouseClicked(event -> {
+            try {
+                new DetailSongPopUp(song);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(SearchPage.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
 
-        ImageView imageview = new ImageView(new Image("/UI_music/defaultprofile.png"));
-        imageview.setFitHeight(60);
-        imageview.setFitWidth(60);
-        imageview.setLayoutX(0);
-        imageview.setLayoutY(0);
+        AnchorPane profilePicture = new AnchorPane();
+         profilePicture.getChildren().add(new ImageRectangle(0, 0, 60, 60, song.getPhoto()).getMyRectangle());
 
         nameLabel.setPadding(new Insets(8, 0, 0, 80));
         nameLabel.setAlignment(Pos.TOP_LEFT);
@@ -206,7 +211,7 @@ public class SearchPage {
         label.setLayoutX(80);
         label.setLayoutY(30);
 
-        anchorpane.getChildren().addAll(nameLabel, imageview, label);
+        anchorpane.getChildren().addAll(nameLabel, profilePicture, label);
 
         return anchorpane;
     }
@@ -220,12 +225,16 @@ public class SearchPage {
         anchorpane.setLayoutY(y);
 
         Label nameLabel = new Label(artist.getName1());
-        nameLabel.setPadding(new Insets(0, 0, 0, 50));
+        nameLabel.setPadding(new Insets(0, 0, 0, 80));
         nameLabel.setPrefSize(185, 60);
         nameLabel.setMaxWidth(185);
         nameLabel.getStyleClass().add("borderplaylist");
-        nameLabel.setLayoutX(30);
+        nameLabel.setLayoutX(0);
         nameLabel.setLayoutY(0);
+        
+        nameLabel.setOnMouseClicked(event -> {
+            new ShowMusicPage(artist.getName1(), "artist", artist.getPhoto());
+        });
         
         AnchorPane profilePicture = new AnchorPane();
          profilePicture.getChildren().add(new ImageCircle(30, 30, 30, artist.getPhoto()).getMyCircle());

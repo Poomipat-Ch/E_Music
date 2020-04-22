@@ -421,6 +421,7 @@
     -fx-text-fill: white;
     -fx-font-size: 15px;
     -fx-font-weight: bold;
+    -fx-background-radius: 10em;
 }
 
 .borderplaylist:hover {

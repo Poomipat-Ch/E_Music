@@ -64,13 +64,13 @@ public class TopChartPane {
 
             topChartBtn.setOnAction(event -> {
                 System.out.println(string);
-                    new ShowMusicPage(string, "");
+                    new ShowMusicPage(string, "", new Image("/UI_music/defaultprofile.png"));
             });
 
         }
         
         AnchorPane centerTopChart = new AnchorPane();
-        centerTopChart.getChildren().addAll(topChartList,CreateSeeAll(topchartlist.get(0),640,210),CreateSeeAll(topchartlist.get(1),640,430));
+        centerTopChart.getChildren().addAll(topChartList,CreateSeeAll(topchartlist.get(0),640,210, new Image("/UI_music/defaultprofile.png")),CreateSeeAll(topchartlist.get(1),640,430, new Image("/UI_music/defaultprofile.png")));
 
         topchartpane.setCenter(centerTopChart);
         
@@ -94,7 +94,7 @@ public class TopChartPane {
         return label;
     }
     
-    private Label CreateSeeAll(String string, double x, double y) {
+    private Label CreateSeeAll(String string, double x, double y, Image image) {
         Label label = new Label("SEE ALL");
         label.setLayoutX(x);
         label.setLayoutY(y);
@@ -102,7 +102,7 @@ public class TopChartPane {
         
         label.setOnMouseClicked(event -> {
                 System.out.println(string);
-                    new ShowMusicPage(string, "");
+                    new ShowMusicPage(string, "", image);
             });
         
         return label;

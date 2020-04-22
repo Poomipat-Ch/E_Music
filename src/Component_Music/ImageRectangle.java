@@ -5,65 +5,58 @@
  */
 package Component_Music;
 
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
+import javafx.scene.shape.Rectangle;
 
 /**
  *
  * @author HCARACH
  */
-public class ImageCircle {
+public class ImageRectangle {
 
-    Circle myCircle;
+    Rectangle myRectangle;
 
-    public ImageCircle(double radius, Image image) {
-        myCircle = new Circle(radius);
-        myCircle.setFill(Color.SNOW);
-        myCircle.setEffect(new DropShadow(+2d, 0d, +2d, Color.BLACK));
+    public ImageRectangle(double width, double height, Image image) {
+
+        myRectangle = new Rectangle(width, height);
+        myRectangle.setFill(Color.SNOW);
+        myRectangle.setEffect(new DropShadow(+2d, 0d, +2d, Color.BLACK));
 
         Image newimage = null;
         try {
             newimage = this.setImage(image);
-            myCircle.setFill(new ImagePattern(newimage));
+            myRectangle.setFill(new ImagePattern(newimage));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
     }
+    
+    public ImageRectangle(double x, double y, double width, double height, Image image) {
 
-    public ImageCircle(double centerx, double centery, double radius, Image image) {
-        myCircle = new Circle(centerx, centery, radius);
-        myCircle.setFill(Color.SNOW);
-        myCircle.setEffect(new DropShadow(+25d, 0d, +2d, Color.BLACK));
+        myRectangle = new Rectangle(width, height);
+        myRectangle.setLayoutX(x);
+        myRectangle.setLayoutY(y);
+        myRectangle.setFill(Color.SNOW);
+        myRectangle.setEffect(new DropShadow(+25d, 0d, +2d, Color.BLACK));
 
-//        if(image.getHeight() > image.getWidth())
-//            image.
         Image newimage = null;
         try {
             newimage = this.setImage(image);
-            myCircle.setFill(new ImagePattern(newimage));
+            myRectangle.setFill(new ImagePattern(newimage));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
     }
 
-    public Circle getMyCircle() {
-        return myCircle;
+    public Rectangle getMyRectangle() {
+        return myRectangle;
     }
 
     public Image setImage(Image image) {
