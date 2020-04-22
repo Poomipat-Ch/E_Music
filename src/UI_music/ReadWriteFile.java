@@ -7,6 +7,7 @@ package UI_music;
 
 import Component_Music.Account;
 import Component_Music.Artist;
+import Component_Music.PricePremium;
 import Component_Music.Song;
 import java.io.File;
 import java.io.FileInputStream;
@@ -58,6 +59,17 @@ public class ReadWriteFile {
     public static void writeFileArtist(File file, ArrayList<Artist> listArtist) throws FileNotFoundException, IOException {
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
         out.writeObject(listArtist);
+        out.close();
+    }
+    
+    public static PricePremium readPricePremium(File file) throws FileNotFoundException, IOException, ClassNotFoundException {
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+        return (PricePremium) in.readObject();
+    }
+
+    public static void writePricePremium(File file, PricePremium price) throws FileNotFoundException, IOException {
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+        out.writeObject(price);
         out.close();
     }
     

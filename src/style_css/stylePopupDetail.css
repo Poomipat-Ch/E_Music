@@ -206,6 +206,12 @@
     -fx-text-fill: white;
     -fx-font-family: "Itim";
 }
+.detailPremiumPrice{
+    -fx-font-size: 25px;
+    -fx-font-weight:600;
+    -fx-text-fill: white;
+    -fx-font-family: "Itim";
+}
 .detailPremiumSmall{
     -fx-font-size: 18px;
     -fx-font-weight:600;
