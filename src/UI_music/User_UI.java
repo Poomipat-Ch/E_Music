@@ -6,11 +6,13 @@
 package UI_music;
 
 import Component_Music.Account;
+import Component_Music.AddSong;
 import Component_Music.AlertBox;
 import Component_Music.Artist;
 import Component_Music.DetailSongPopUp;
 import Component_Music.SearchPage;
 import Component_Music.SearchSystem;
+import Component_Music.SearchSystemAddSong;
 import Component_Music.Song;
 import Component_Music.ShowMusicPage;
 import Component_Music.TopChartPane;
@@ -48,13 +50,13 @@ import javafx.stage.StageStyle;
  */
 public class User_UI extends UI {
 
-    SearchSystem searchSystemMyLibrary = new SearchSystem();
+    SearchSystemAddSong searchSystemMyLibrary = new SearchSystemAddSong();
 
     // Create File for downloader
     private File fileForDownload;
     private String songNameSelected;
     private String nameSet;
-    private Song songSelected;
+    private AddSong songSelected;
     private String page;
     
     File musicfile = new File("src/data/music.dat");
@@ -146,14 +148,14 @@ public class User_UI extends UI {
         pane.getChildren().remove(0);
         ((Label) detailDownload.getChildren().get(0)).setText("Song : " + songSelected.getNameSong());
         ((Label) detailDownload.getChildren().get(1)).setText("Artist : " + songSelected.getArtistSong());
-        ((Label) detailDownload.getChildren().get(2)).setText("Downloadable(Time) : " + "3"); // wait
+        ((Label) detailDownload.getChildren().get(2)).setText("Downloadable(Time) : " + songSelected.getNumberOfDownload()); // <---------------------------------------------------------------------- wait
 
         AnchorPane img = new AnchorPane();
         img.setMaxSize(300, 400);
         img.setLayoutX(1030 - 300 - 20);
         img.setLayoutY(20);
 
-        Image imageMy = songSelected.getPhoto();
+        Image imageMy = songSelected.getSong().getPhoto();
         ImageView imgMy = new ImageView(imageMy);
         imgMy.setFitHeight(400);
         img.getChildren().add(imgMy);
@@ -175,7 +177,7 @@ public class User_UI extends UI {
         anchorPane.setLayoutX(20);
         anchorPane.setLayoutY(100);
 
-        TableView<Song> table = new TableView<>();
+        TableView<AddSong> table = new TableView<>();
         table.setEditable(true);
         table.getStyleClass().add("tableMyLibrary");
 
@@ -189,8 +191,8 @@ public class User_UI extends UI {
                      updateDetailDownload();  
                 }
                
-                songNameSelected = table.getSelectionModel().getSelectedItem().getNameSong() + table.getSelectionModel().getSelectedItem().getArtistSong() + table.getSelectionModel().getSelectedItem().getDetailSong();
-                nameSet = table.getSelectionModel().getSelectedItem().getNameSong();
+                songNameSelected = table.getSelectionModel().getSelectedItem().getSong().getNameSong() + table.getSelectionModel().getSelectedItem().getSong().getArtistSong() + table.getSelectionModel().getSelectedItem().getSong().getDetailSong();
+                nameSet = table.getSelectionModel().getSelectedItem().getSong().getNameSong();
                 System.out.println(songNameSelected);
                 fileForDownload = new File("src/MusicFile/" + songNameSelected + ".mp3");
 
@@ -199,15 +201,15 @@ public class User_UI extends UI {
         });
 
         // Create column NameSong (Data type of String).
-        TableColumn<Song, String> NameCol = new TableColumn<>("Name Song");
+        TableColumn<AddSong, String> NameCol = new TableColumn<>("Name Song");
         NameCol.setMinWidth(200);
 
         // Create column NameArtist (Data type of String).
-        TableColumn<Song, String> artistCol = new TableColumn<>("Artist");
+        TableColumn<AddSong, String> artistCol = new TableColumn<>("Artist");
         artistCol.setMinWidth(150);
 
         // Create column Detail (Data type of String).
-        TableColumn<Song, String> detailCol = new TableColumn<>("Detail");
+        TableColumn<AddSong, String> detailCol = new TableColumn<>("Detail");
         detailCol.setMinWidth(220);
 
 //        // Create column Downloadable (Data type of String).
@@ -225,11 +227,11 @@ public class User_UI extends UI {
         detailCol.setSortable(false);
 
         // Display row data
-        ObservableList<Song> list = UI.userAccount.getMyListSong();
-        FilteredList<Song> filterData = new FilteredList<>(list, b -> true);
+        ObservableList<AddSong> list = UI.userAccount.getMyListSong();
+        FilteredList<AddSong> filterData = new FilteredList<>(list, b -> true);
         searchSystemMyLibrary.setFilterData(filterData);
 
-        SortedList<Song> sortedList = new SortedList<>(searchSystemMyLibrary.getFilterData());
+        SortedList<AddSong> sortedList = new SortedList<>(searchSystemMyLibrary.getFilterData());
         sortedList.comparatorProperty().bind(table.comparatorProperty());
         table.setItems(sortedList);
 
@@ -336,9 +338,9 @@ public class User_UI extends UI {
                 if ((song.getNameSong().toLowerCase().contains(lowerCase) || song.getArtistSong().toLowerCase().contains(lowerCase)) && styleSong.contains(page)) {
 
                     boolean inMyList = false;
-                    for (Song song1 : UI.userAccount.getMyListSong()) {
+                    for (AddSong song1 : UI.userAccount.getMyListSong()) {
                         if (!UI.userAccount.isFirstSong()) {
-                            if ((song.getNameSong().toLowerCase().contains(song1.getNameSong().toLowerCase()) && song.getArtistSong().toLowerCase().contains(song1.getArtistSong().toLowerCase()))) {
+                            if ((song.getNameSong().toLowerCase().contains(song1.getSong().getNameSong().toLowerCase()) && song.getArtistSong().toLowerCase().contains(song1.getSong().getArtistSong().toLowerCase()))) {
                                 inMyList = true;
                                 break;
                             }

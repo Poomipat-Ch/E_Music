@@ -119,7 +119,7 @@ public class Cashing {
         medPack.setToggleGroup(songPackage);
         largePack.setToggleGroup(songPackage);
 
-        HBox priceRow = new HBox(20);
+        HBox priceRow = new HBox(10);
         priceRow.getChildren().addAll(toggleText, lowPack, medPack, largePack);
         BorderPane leftRow1 = new BorderPane();
         leftRow1.setTop(orderText);
@@ -215,6 +215,10 @@ public class Cashing {
 
         payButton.setOnAction(e -> {
             //Check Blank vong clash
+            int downloadTime;
+            if(lowPack.isSelected())downloadTime = 1;
+            else if(medPack.isSelected())downloadTime = 3;
+            else downloadTime = 5;
             if (ccNumber.getText().isBlank() || ccvNumber.getText().isBlank()
                     || ccName.getText().isBlank() || month.getValue() == null || year.getValue() == null) {
                 AlertBox.displayAlert("Something went wrong!", "Some of infomation are missing.\n Please check again.");
@@ -228,7 +232,8 @@ public class Cashing {
                     AlertBox.displayAlert("Purchase Success", "\"" + song.getNameSong() + " - " + song.getArtistSong() + "\" was added to your playlist.");
                     System.out.println("Purchase complete");
                     this.paymentStage.close();
-                    UI.userAccount.addSong(song);
+                    song.isDownload();
+                    UI.userAccount.addSong(song,downloadTime);
                     this.userSaveSong();
                     //<------------------------------------------------------------ EVERYTHING CHECK PURCHASE COMPLETE Set song EVERYTHINGto the playlist pls thank you by font
                 }

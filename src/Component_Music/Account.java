@@ -40,14 +40,15 @@ public class Account implements Serializable {
 
     private static File user = new File("src/data/user.dat");
     
-    private ArrayList<Song> listSong = new ArrayList<>();
+    private ArrayList<AddSong> listSong = new ArrayList<>();
     
     private boolean firstSong = true;
 
     public Account() {
     }
 
-    public Account(String name, String surname, String username, String email, String password, String gender, LocalDate dateOfBirth, String question, String answer, String userRole, Image image) {
+    public Account(String name, String surname, String username, String email, String password, String gender, LocalDate dateOfBirth,
+            String question, String answer, String userRole, Image image) {
         this.name = name;
         this.surname = surname;
         this.username = username;
@@ -61,7 +62,7 @@ public class Account implements Serializable {
         this.userRole = userRole;
         this.setPhoto(image);
         
-        listSong.add(new Song());
+        listSong.add(new AddSong());
     }
 
     
@@ -180,20 +181,29 @@ public class Account implements Serializable {
         return list;
     }
     
-    public ObservableList<Song> getMyListSong() {
+    public ObservableList<AddSong> getMyListSong() {
         ObservableList list = FXCollections.observableArrayList();
 
-        for (Song song : listSong) {
+        for (AddSong song : listSong) {
             list.add(song);
         }
 
         return list;
     }
     
-    public void addSong(Song song) {
+    public void addSong(Song song, int downloader) {
         if(firstSong)
             listSong.remove(0);
-        listSong.add(song);
+        boolean isCheckAHA = false;
+        for (AddSong addsong : listSong) {
+            if(addsong.getSong().getNameSong().equals(song.getNameSong())){
+                System.out.println("It's in the bag");
+                addsong.setNumberOfDownload(downloader);
+                isCheckAHA = true;
+                break;
+            }
+        }
+        if(!isCheckAHA) listSong.add(new AddSong(song, downloader));
         
         firstSong = false;
     }
