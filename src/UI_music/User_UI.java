@@ -58,10 +58,10 @@ public class User_UI extends UI {
     private String nameSet;
     private AddSong songSelected;
     private String page;
-    
+
     File musicfile = new File("src/data/music.dat");
     File artistfile = new File("src/data/artist.dat");
-    
+
     public static ArrayList<Song> SongArrayList = new ArrayList<>();
     public static ArrayList<Artist> ArtistArrayList = new ArrayList<>();
     public static String playerStatus;
@@ -71,7 +71,7 @@ public class User_UI extends UI {
 
     public User_UI(Stage stage, Account userAccount) {
         super(stage, userAccount);
-        
+
         try {
             SongArrayList = ReadWriteFile.readFileSong(musicfile);
         } catch (IOException | ClassNotFoundException ex) {
@@ -91,6 +91,7 @@ public class User_UI extends UI {
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
         stage.show();
+
     }
 
     @Override
@@ -188,9 +189,9 @@ public class User_UI extends UI {
                 //System.out.println(table.getSelectionModel().getSelectedItem().getNameSong());
                 songSelected = table.getSelectionModel().getSelectedItem();
                 if (table.getSelectionModel().getSelectedItem() != null) {
-                     updateDetailDownload();  
+                    updateDetailDownload();
                 }
-               
+
                 songNameSelected = table.getSelectionModel().getSelectedItem().getSong().getNameSong() + table.getSelectionModel().getSelectedItem().getSong().getArtistSong() + table.getSelectionModel().getSelectedItem().getSong().getDetailSong();
                 nameSet = table.getSelectionModel().getSelectedItem().getSong().getNameSong();
                 System.out.println(songNameSelected);
@@ -241,7 +242,7 @@ public class User_UI extends UI {
 
         return anchorPane;
     }
-    
+
     public static TextField searchTextField;
 
     @Override
@@ -263,7 +264,6 @@ public class User_UI extends UI {
         });
 
         /// 1030-300-60-70
-        
         hBox.getChildren().addAll(searchTextField);
 
         return hBox;
@@ -297,7 +297,7 @@ public class User_UI extends UI {
     private BorderPane AllSong() {
 
         BorderPane scrollPane = new BorderPane();
-        scrollPane.setPrefSize(1030, 900);
+        scrollPane.setPrefSize(1030, 905);
         scrollPane.setPadding(new Insets(10));
         scrollPane.getStyleClass().add("scroll-bar");
         totalPane = new AnchorPane();
