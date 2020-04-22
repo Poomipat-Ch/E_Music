@@ -29,10 +29,24 @@ import javafx.stage.StageStyle;
  */
 abstract public class UI {
 
+    //Stage Window Program
     private Stage stage;
     private int menuBtnClicked = 0;
     public static Account userAccount;
 
+    public static VBox vbox;
+    
+    //Abstract Class For User_UI & Admin_UI
+    abstract public AnchorPane firstPagePane(String page);
+    abstract public AnchorPane secondPagePane();
+
+    abstract public HBox searchBoxAll();
+    abstract public HBox searchBoxMy();
+
+    abstract public BorderPane myAccount();
+    abstract public void userLogout();
+    
+    //Constuctor
     public UI() {
     }
 
@@ -42,47 +56,24 @@ abstract public class UI {
         vbox = new VBox();
     }
 
-    public static VBox vbox;
-
+    
+    //Totally ALLpane On Scene
     public BorderPane allPane() {
-//        AnchorPane anchorpane = new AnchorPane();
-
         BorderPane borderPane = new BorderPane();
         borderPane.getStyleClass().add("bg-border");
 
         borderPane.setLeft(menu());
         borderPane.setCenter(mainBox());
 
-//        anchorpane.getChildren().add(borderPane);
-
-//        if (userAccount.getUserRole().equals("member")) {
-//
-//            Button button = new Button("X");
-//            button.getStyleClass().add("xpremiumbutton");
-//            button.setLayoutX(1060);
-//            button.setLayoutY(290);
-//            button.setOnAction(event -> {
-//                anchorpane.getChildren().remove(1);
-//            });
-//            
-//            Button upgrade = new Button("UPGRADE PREMIUM");
-//
-//            AnchorPane adpane = new AnchorPane();
-//            adpane.setStyle("-fx-background-color : transparent");
-//            adpane.getChildren().addAll(AdPane(), button);
-//
-//            anchorpane.getChildren().addAll(adpane);
-//        }
-
         return borderPane;
     }
 
-    public BorderPane allPane2() {
+    public BorderPane allPane_Admin() {
         BorderPane borderPane = new BorderPane();
         borderPane.getStyleClass().add("bg-border");
 
-        borderPane.setLeft(menu2());
-        borderPane.setCenter(mainBox2());
+        borderPane.setLeft(menu_Admin());
+        borderPane.setCenter(mainBox_Admin());
 
         return borderPane;
     }
@@ -95,10 +86,10 @@ abstract public class UI {
         return vbox;
     }
 
-    private VBox mainBox2() {
+    private VBox mainBox_Admin() {
 
         vbox.getStyleClass().add("mainBox");
-        vbox.getChildren().addAll(tilePane2(), firstPagePane(""));
+        vbox.getChildren().addAll(tilePane_Admin(), firstPagePane(""));
 
         return vbox;
     }
@@ -231,7 +222,7 @@ abstract public class UI {
         return vBox;
     }
 
-    private VBox menu2() {
+    private VBox menu_Admin() {
         VBox vBox = new VBox();
         vBox.getStyleClass().add("menu");
         vBox.setMaxWidth(200);
@@ -312,7 +303,7 @@ abstract public class UI {
         return anchorPane;
     }
 
-    public AnchorPane tilePane2() {
+    public AnchorPane tilePane_Admin() {
 
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.getStyleClass().add("title");
@@ -394,17 +385,5 @@ abstract public class UI {
 
         return anchorpane;
     }
-
-    abstract public AnchorPane firstPagePane(String page);
-
-    abstract public AnchorPane secondPagePane();
-
-    abstract public HBox searchBoxAll();
-
-    abstract public HBox searchBoxMy();
-
-    abstract public BorderPane myAccount();
-
-    abstract public void userLogout();
 
 }

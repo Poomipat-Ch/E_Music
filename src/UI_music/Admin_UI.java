@@ -18,16 +18,10 @@ import Component_Music.SelectTypeSongPopUp;
 import Component_Music.UploadArtistPopUp;
 import Component_Music.UploadSongPopUp;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -54,8 +48,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -74,7 +66,6 @@ public class Admin_UI extends UI {
 
     //Gut add
     static String songSelectString;
-//    static ObservableList<Song> songArrayList;
     static ArrayList<Song> songArrayList = new ArrayList<>();
     static ArrayList<Artist> artistArrayList = new ArrayList<>();
     static File musicFile = new File("src/data/music.dat");
@@ -103,18 +94,18 @@ public class Admin_UI extends UI {
         super(stage, userAccount);
 
         try {
-            songArrayList = ReadWriteFile.readFileSong(musicFile);
+            songArrayList = ReadWriteFile.readFileSong(musicFile);  //Song Read
         } catch (Exception e) {
-            System.out.println("readFile Song in Admin_UI constuctor ERROR!!!!!");
+            System.out.println(e);
         }
 
         try {
-            artistArrayList = ReadWriteFile.readFileArtist(artistFile);
+            artistArrayList = ReadWriteFile.readFileArtist(artistFile); //Artist Read
         } catch (Exception e) {
-            System.out.println("readFile Artist in Admin_UI constuctor ERROR!!!!!");
+            System.out.println(e);
         }
 
-        Scene scene = new Scene(allPane2(), 1280, 960);
+        Scene scene = new Scene(allPane_Admin(), 1280, 960);
         String stylrSheet = getClass().getResource("/style_css/style.css").toExternalForm();
         String stylrSheet2 = getClass().getResource("/style_css/styleAdmin.css").toExternalForm();
         scene.getStylesheets().add(stylrSheet);

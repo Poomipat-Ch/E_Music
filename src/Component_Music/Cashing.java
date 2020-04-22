@@ -49,6 +49,7 @@ public class Cashing {
     private Song song;
 
     File user = new File("src/data/user.dat");
+    File priceFile = new File("src/data/price.dat");
 
     ArrayList<Account> listAccount = new ArrayList<>();
     ArrayList<Account> addAccount = new ArrayList<>();
@@ -109,12 +110,20 @@ public class Cashing {
         this.paymentStage = paymentStage;
         this.song = song;
 
+        PricePremium pricePremium = new PricePremium();
+        try {
+            pricePremium = ReadWriteFile.readPricePremium(priceFile);
+        } catch (IOException | ClassNotFoundException ex) {
+            System.out.println(ex);
+        }
+        
+        
         //double lowPrice, medPrice, largePrice; // <-------------- Song Price ------------------------
         setLowPrice(stringToTwoDecimal(song.getPriceSong())); //<-- //May Error if it get REAL String !!!
         setMedPrice(twoDF(twoDF(getLowPrice()*0.90)*3)); //<--
         setLargePrice(twoDF(twoDF(getLowPrice()*0.80)*5)); //<--
 
-        setPromotion(25.0);
+        setPromotion(pricePremium.getDiscountPercentInt());
 
         /*Integer.parseInt(song.getPriceSong()) <- Old one | New one ->*/
         setPrice(getLowPrice()); // <-------------------- Total Price will be calculate below --------------------------
