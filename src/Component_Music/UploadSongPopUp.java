@@ -40,6 +40,7 @@ import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -92,7 +93,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
     ScrollPane tagScrollPane = new ScrollPane();
 
     ArrayList<String> test = new ArrayList<>();
-    
+
     int totalDownload = 0;
 
 //    private CheckBox pop = createCheckBox("Pop");
@@ -127,9 +128,9 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         photo = new ImageView(image);
         tagBar = new TileTagBar();
         file = new File("src/MusicFile/" + checkExistFile + ".mp3");
-        
+
         this.totalDownload = editSong.getTotalDownload();
-        
+
 //        for (String list : editSong.getListStyleSong()) {
 //
 //            System.out.println(list);
@@ -223,6 +224,9 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         VBox detail = new VBox(30);
         VBox imageDetail = new VBox(5);
 
+        AnchorPane profilePicture = new AnchorPane();
+        profilePicture.getChildren().add(new ImageRectangle(30, 200, 200, image).getMyRectangle());
+
         Button imageBtn = new Button("Upload Picture");
         imageBtn.setOnAction(e -> {
             Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
@@ -249,6 +253,8 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
                     BufferedImage bufferedImage = ImageIO.read(filePath);
                     image = SwingFXUtils.toFXImage(bufferedImage, null);
                     this.photo.setImage(image);
+                    profilePicture.getChildren().remove(0);
+                    profilePicture.getChildren().add(new ImageRectangle(30, 200, 200, image).getMyRectangle());
 
                 } catch (IOException ex) {
                     System.out.println("UploadSongPopUp : IOExeption upload picture in DetailUpPopSong");
@@ -363,7 +369,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         /////////////////////////////////////////////////////////////////////
         imageDetail.setAlignment(Pos.TOP_CENTER);
         imageDetail.setSpacing(20);
-        imageDetail.getChildren().addAll(title, photo, imageBtn);
+        imageDetail.getChildren().addAll(title, profilePicture, imageBtn);
         imageDetail.setMinHeight(280);
 
         //Detail Song
@@ -533,14 +539,17 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         VBox detail = new VBox(30);
         VBox imageDetail = new VBox(5);
 
+        AnchorPane profilePicture = new AnchorPane();
+        profilePicture.getChildren().add(new ImageRectangle(30,200, 200, image).getMyRectangle());
+
         Button imageBtn = new Button("เพิ่มรูปภาพ");
         imageBtn.setOnAction(e -> {
             Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
 
             fileChooser = new FileChooser();
             fileChooser.setTitle("Open Image");
-            fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG Files", "*.png"), new FileChooser.ExtensionFilter("JPEG", "*.jpeg"));
-
+            fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
+            
             //Set to user's directory or go to the default C drvie if cannot access
             String userDirectoryString = System.getProperty("user.home") + "\\Pictures";
             File userDirectory = new File(userDirectoryString);
@@ -559,6 +568,8 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
                     BufferedImage bufferedImage = ImageIO.read(filePath);
                     image = SwingFXUtils.toFXImage(bufferedImage, null);
                     this.photo.setImage(image);
+                    profilePicture.getChildren().remove(0);
+                    profilePicture.getChildren().add(new ImageRectangle(30, 200, 200, image).getMyRectangle());
 
                 } catch (IOException ex) {
                     System.out.println("UploadSongPopUp : IOExeption upload picture in DetailUpPopSong");
@@ -674,7 +685,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         /////////////////////////////////////////////////////////////////////
         imageDetail.setAlignment(Pos.TOP_CENTER);
         imageDetail.setSpacing(20);
-        imageDetail.getChildren().addAll(title, photo, imageBtn);
+        imageDetail.getChildren().addAll(title, profilePicture, imageBtn);
         imageDetail.setMinHeight(280);
 
         //Detail Song
@@ -988,8 +999,8 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         for (String list : test) {
 
             if (!tagBar.getTags().contains(list)) {
-            System.out.println(list);
-            tagBar.getTags().add(list);
+                System.out.println(list);
+                tagBar.getTags().add(list);
             }
         }
     }
