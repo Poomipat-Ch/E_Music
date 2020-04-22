@@ -59,19 +59,21 @@ import javafx.stage.StageStyle;
 public class Admin_UI extends UI {
 
     LocalDate dOB;
-    File user = new File("src/data/user.dat");
     boolean dateSet = false;
-    ArrayList<Account> listAccount = new ArrayList<>();
-    ArrayList<Account> addAccount = new ArrayList<>();
-
-    //Gut add
-    static String songSelectString;
-    static ArrayList<Song> songArrayList = new ArrayList<>();
-    static ArrayList<Artist> artistArrayList = new ArrayList<>();
+    private ReadWriteFile file = new ReadWriteFile();
+    static File user = new File("src/data/user.dat"); //Add Static By Pop
     static File musicFile = new File("src/data/music.dat");
     static File artistFile = new File("src/data/artist.dat");
-    static Artist artistSelected = new Artist();
+   
+    static ArrayList<Account> listAccount = new ArrayList<>(); //Add Static By Pop
+    static ArrayList<Account> addAccount = new ArrayList<>(); //Add Static By Pop
+    static ArrayList<Song> songArrayList = new ArrayList<>();
+    static ArrayList<Artist> artistArrayList = new ArrayList<>();
+   
+    static String songSelectString;
     static Song songSelected = new Song();
+    static Artist artistSelected = new Artist();
+    
     static Boolean songSelectedBoolean = false;
     static Boolean artistSelectedBoolean = false;
     static Boolean accountSelectedBoolean = false;
@@ -81,10 +83,8 @@ public class Admin_UI extends UI {
     SearchSystem searchSystemMain = new SearchSystem();
     SearchSystemAccount searchAccount = new SearchSystemAccount();
 
-    private TableView<Account> table;
-
-    private ReadWriteFile file = new ReadWriteFile();
-
+    private TableView<Account> tableAccount;
+    
     public Admin_UI() {
 
     }
@@ -315,47 +315,33 @@ public class Admin_UI extends UI {
         anchorPane.setLayoutX(20);
         anchorPane.setLayoutY(150);
 
-        table = new TableView<>();
+        tableAccount = new TableView<>();
 
-        table.setEditable(true);
-        table.setPrefSize(anchorPane.getMinWidth(), anchorPane.getMinHeight());
+        tableAccount.setEditable(true);
+        tableAccount.setPrefSize(anchorPane.getMinWidth(), anchorPane.getMinHeight());
 
-        table.setOnMouseClicked((event) -> {
+        tableAccount.setOnMouseClicked((event) -> {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
-                System.out.println(table.getSelectionModel().getSelectedItem().getName()); //.getNameSong()
+                System.out.println(tableAccount.getSelectionModel().getSelectedItem().getName()); //.getNameSong()
                 accountSelectedBoolean = true;
             }
         });
 
-        // Create column Name (Data type of String).
         TableColumn<Account, String> nameCol = new TableColumn<>("Name");
         nameCol.setMinWidth(120);
-
-        // Create column Surname (Data type of String).
         TableColumn<Account, String> surnameCol = new TableColumn<>("Surname");
         surnameCol.setMinWidth(120);
-
-        // Create column Username (Data type of String).
         TableColumn<Account, String> usernameCol = new TableColumn<>("Username");
         usernameCol.setMinWidth(120);
-
-        // Create column Email (Data type of String).
         TableColumn<Account, String> emailCol = new TableColumn<>("Email");
         emailCol.setMinWidth(250);
-
-        // Create column Gender (Data type of String).
-        TableColumn<Account, String> genderCol = new TableColumn<>("Gender");
+          TableColumn<Account, String> genderCol = new TableColumn<>("Gender");
         genderCol.setMinWidth(90);
-
-        // Create column DoB (Data type of LocalDate).
-        TableColumn<Account, LocalDate> dobCol = new TableColumn<>("Date of Birth");
+           TableColumn<Account, LocalDate> dobCol = new TableColumn<>("Date of Birth");
         dobCol.setMinWidth(130);
-
-        // Create column Role (Data type of String).
         TableColumn<Account, String> adminCol = new TableColumn<>("Role");
         adminCol.setMinWidth(101);
 
-        // Defines how to fill data for each cell.
         // Get value from property of UserAccount. .
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         surnameCol.setCellValueFactory(new PropertyValueFactory<>("surname"));
@@ -371,8 +357,8 @@ public class Admin_UI extends UI {
         // Display row data       
         refreshTable(); // get.list account-> sorted ** see function below
 
-        table.getColumns().addAll(nameCol, surnameCol, usernameCol, emailCol, genderCol, dobCol, adminCol);
-        anchorPane.getChildren().addAll(table);
+        tableAccount.getColumns().addAll(nameCol, surnameCol, usernameCol, emailCol, genderCol, dobCol, adminCol);
+        anchorPane.getChildren().addAll(tableAccount);
 
         return anchorPane;
     }
@@ -525,9 +511,9 @@ public class Admin_UI extends UI {
         return scrollArtistPane;
     }
 
-    static Label selectNameSong = new Label("");
-    static Label selectArtist = new Label("");
-    static ImageView selectImage;
+    static Label selectNameSong1 = new Label("");
+    static Label selectArtistSong1 = new Label("");
+    static ImageView selectImageSong1;
 
     public static TilePane updateScrollPane(String text) {
 
@@ -560,17 +546,14 @@ public class Admin_UI extends UI {
 
                         Admin_UI.updateVBox.getChildren().clear();
 
-                        selectNameSong = new Label(song.getNameSong());
-                        selectNameSong.setPrefWidth(230);
-                        selectNameSong.setMaxWidth(230);
-                        selectNameSong.setAlignment(Pos.CENTER);
-                        selectArtist = new Label(/*"ARTIST : " + */song.getArtistSong());
-                        selectArtist.setPrefWidth(230);
-                        selectArtist.setMaxWidth(230);
-                        selectArtist.setAlignment(Pos.CENTER);
-//                        selectImage = new ImageView(song.getPhoto());   //DATA...Collection from database..
-//                        selectImage.setFitHeight(250);
-//                        selectImage.setFitWidth(250);
+                        selectNameSong1 = new Label(song.getNameSong());
+                        selectNameSong1.setPrefWidth(230);
+                        selectNameSong1.setMaxWidth(230);
+                        selectNameSong1.setAlignment(Pos.CENTER);
+                        selectArtistSong1 = new Label(/*"ARTIST : " + */song.getArtistSong());
+                        selectArtistSong1.setPrefWidth(230);
+                        selectArtistSong1.setMaxWidth(230);
+                        selectArtistSong1.setAlignment(Pos.CENTER);
 
                         AnchorPane profilePicture = new AnchorPane();
                         profilePicture.setPadding(new Insets(0, 0, 20, 0));
@@ -583,10 +566,10 @@ public class Admin_UI extends UI {
                         songSelectedBoolean = true;
 
                         profilePicture.getStyleClass().add("pictureAppear");
-                        selectNameSong.getStyleClass().add("nameSong");
-                        selectArtist.getStyleClass().add("nameArtist");
+                        selectNameSong1.getStyleClass().add("nameSong");
+                        selectArtistSong1.getStyleClass().add("nameArtist");
 
-                        Admin_UI.updateVBox.getChildren().addAll(profilePicture, selectNameSong, selectArtist);
+                        Admin_UI.updateVBox.getChildren().addAll(profilePicture, selectNameSong1, selectArtistSong1);
                     });
                     paneContent = new VBox();
                     paneContent.setAlignment(Pos.CENTER);
@@ -708,26 +691,26 @@ public class Admin_UI extends UI {
         AnchorPane profilePicture = new AnchorPane();
         profilePicture.getChildren().add(new ImageRectangle(230, 230, new Image("/image/defaultmusic.png")).getMyRectangle());
 
-        selectNameSong = new Label("Please select song");
-        selectArtist = new Label("");
+        selectNameSong1 = new Label("Please select song");
+        selectArtistSong1 = new Label("");
 //
-//        selectImage.getStyleClass().add("pictureAppear");
+//        selectImageSong1.getStyleClass().add("pictureAppear");
         profilePicture.getStyleClass().add("pictureAppear");
-        selectNameSong.getStyleClass().add("nameSong");
-        selectArtist.getStyleClass().add("nameArtist");
+        selectNameSong1.getStyleClass().add("nameSong");
+        selectArtistSong1.getStyleClass().add("nameArtist");
 
-        selectNameSong.setAlignment(Pos.CENTER);
-        selectArtist.setAlignment(Pos.CENTER_LEFT);
+        selectNameSong1.setAlignment(Pos.CENTER);
+        selectArtistSong1.setAlignment(Pos.CENTER_LEFT);
 
-        if (selectArtist.getText().equals("")) {
-            selectNameSong.setTranslateY(20);
+        if (selectArtistSong1.getText().equals("")) {
+            selectNameSong1.setTranslateY(20);
         } // Ship Y axis 
         else {
-            selectNameSong.setTranslateY(0);
+            selectNameSong1.setTranslateY(0);
         }
 
         updateVBox.setAlignment(Pos.CENTER);
-        updateVBox.getChildren().addAll(profilePicture, selectNameSong, selectArtist);
+        updateVBox.getChildren().addAll(profilePicture, selectNameSong1, selectArtistSong1);
         updatePane.getChildren().add(updateVBox);
 
         return updatePane;
@@ -788,8 +771,8 @@ public class Admin_UI extends UI {
         searchAccount.setFilterData(filterData);
 
         SortedList<Account> sortedList = new SortedList<>(searchAccount.getFilterData());
-        sortedList.comparatorProperty().bind(table.comparatorProperty());
-        table.setItems(filterData);
+        sortedList.comparatorProperty().bind(tableAccount.comparatorProperty());
+        tableAccount.setItems(filterData);
     }
 
     private void addAccountClicked() {
@@ -813,8 +796,8 @@ public class Admin_UI extends UI {
         presentAccounts = new ArrayList<>();
         updateAccount = new Account();
 
-        String selectUsername = table.getSelectionModel().getSelectedItem().getUsername();
-        String selectEmail = table.getSelectionModel().getSelectedItem().getEmail();
+        String selectUsername = tableAccount.getSelectionModel().getSelectedItem().getUsername();
+        String selectEmail = tableAccount.getSelectionModel().getSelectedItem().getEmail();
 
         try {
             oldAccounts = file.readFile(user);
@@ -968,8 +951,8 @@ public class Admin_UI extends UI {
 
     private int deleteAccountClicked() throws IOException, FileNotFoundException, ClassNotFoundException {
 
-        String selectUsername = table.getSelectionModel().getSelectedItem().getUsername();
-        String selectEmail = table.getSelectionModel().getSelectedItem().getEmail();
+        String selectUsername = tableAccount.getSelectionModel().getSelectedItem().getUsername();
+        String selectEmail = tableAccount.getSelectionModel().getSelectedItem().getEmail();
 
         ArrayList<Account> oldAccounts = new ArrayList<>();
         ArrayList<Account> presentAccounts = new ArrayList<>();

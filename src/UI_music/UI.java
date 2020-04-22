@@ -116,14 +116,14 @@ abstract public class UI {
         return btn;
     }
 
-    private Button CreateStyleButton(String text) {
-        Button btn = new Button(text);
-        btn.getStyleClass().add("stylebtn");
-        btn.setMinWidth(250);
-        btn.setMinHeight(45);
-
-        return btn;
-    }
+//    private Button CreateStyleButton(String text) {
+//        Button btn = new Button(text);
+//        btn.getStyleClass().add("stylebtn");
+//        btn.setMinWidth(250);
+//        btn.setMinHeight(45);
+//
+//        return btn;
+//    }
 
     private VBox menu() {
         VBox vBox = new VBox();
@@ -368,22 +368,22 @@ abstract public class UI {
         return minimize;
     }
 
-    private AnchorPane AdPane() {
-        AnchorPane anchorpane = new AnchorPane();
-        anchorpane.setStyle("-fx-background-color : transparent");
-
-        ImageView imageview = new ImageView(new Image("/image/banner5.png"));
-        imageview.setLayoutX(190);
-        imageview.setLayoutY(330);
-
-        AnchorPane background = new AnchorPane();
-        background.setStyle("-fx-background-color: #222222;\n"
-                + "-fx-opacity: .6;");
-        background.setMinSize(1280, 960);
-
-        anchorpane.getChildren().addAll(background, imageview);
-
-        return anchorpane;
-    }
+//    private AnchorPane AdPane() {
+//        AnchorPane anchorpane = new AnchorPane();
+//        anchorpane.setStyle("-fx-background-color : transparent");
+//
+//        ImageView imageview = new ImageView(new Image("/image/banner5.png"));
+//        imageview.setLayoutX(190);
+//        imageview.setLayoutY(330);
+//
+//        AnchorPane background = new AnchorPane();
+//        background.setStyle("-fx-background-color: #222222;\n"
+//                + "-fx-opacity: .6;");
+//        background.setMinSize(1280, 960);
+//
+//        anchorpane.getChildren().addAll(background, imageview);
+//
+//        return anchorpane;
+//    }
 
 }
