@@ -105,11 +105,11 @@ public class Song implements Serializable {
         this.nationality = nationality;
     }
 
-    public int getDownloader() {
+    public int getDownloadable() {
         return downloadable;
     }
 
-    public void downloading() {
+    public void downloadable() {
         this.downloadable++;
     }
 

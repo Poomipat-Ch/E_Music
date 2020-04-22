@@ -530,11 +530,11 @@ public class Admin_UI extends UI {
         tilePane.setAlignment(Pos.CENTER);
 
         String lowerCase = text.toLowerCase();
-//        try {
-//            songArrayList = ReadWriteFile.readFileSong(musicFile);
-//        } catch (Exception e) {
-//            System.out.println("Admin_UI : Exeption in updateScrollPane");
-//        }
+        try {
+            songArrayList = ReadWriteFile.readFileSong(musicFile);
+        } catch (Exception e) {
+            System.out.println("Admin_UI : Exeption in updateScrollPane");
+        }
 
         for (Song song : songArrayList) {
 

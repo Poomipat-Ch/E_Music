@@ -127,7 +127,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         tagBar = new TileTagBar();
         file = new File("src/MusicFile/" + checkExistFile + ".mp3");
         
-        this.downloadable = editSong.getDownloader();
+        this.downloadable = editSong.getDownloadable();
         
 //        for (String list : editSong.getListStyleSong()) {
 //

@@ -92,14 +92,14 @@ public class ShowMusicPage {
 
         // Create column NameArtist (Data type of String).
         TableColumn<Song, String> artistCol = new TableColumn<>("ARTIST");
-        artistCol.setMinWidth(280);
+        artistCol.setMinWidth(260);
 
         // Create column Detail (Data type of String).
         TableColumn<Song, String> detailCol = new TableColumn<>("DETAIL");
         detailCol.setMinWidth(100);
         
         TableColumn<Song, String> downloadCol = new TableColumn<>("DOWNLOADABLE");
-        downloadCol.setMinWidth(160);
+        downloadCol.setMinWidth(180);
 
         // Defines how to fill data for each cell.
         // Get value from property of UserAccount. .
