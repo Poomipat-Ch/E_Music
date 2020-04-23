@@ -84,21 +84,21 @@ public class ShowMusicPage {
 
         // Create column NameSong (Data type of String).
         TableColumn<Song, String> sequenceCol = new TableColumn<>("#");
-        sequenceCol.setMinWidth(20);
+        sequenceCol.setMinWidth(30);
         
         TableColumn<Song, String> NameCol = new TableColumn<>("TITLE");
-        NameCol.setMinWidth(388);
+        
 
         // Create column NameArtist (Data type of String).
         TableColumn<Song, String> artistCol = new TableColumn<>("ARTIST");
-        artistCol.setMinWidth(240);
+        artistCol.setMinWidth(283);
 
         // Create column Detail (Data type of String).
         TableColumn<Song, String> detailCol = new TableColumn<>("DETAIL");
         detailCol.setMinWidth(92);
 
-        TableColumn<Song, String> downloadCol = new TableColumn<>("TOTAL DOWNLOAD");
-        downloadCol.setMinWidth(200);
+        TableColumn<Song, String> downloadCol = new TableColumn<>("DOWNLOAD");
+        downloadCol.setMinWidth(155);
 
         // Defines how to fill data for each cell.
         // Get value from property of UserAccount. .
@@ -126,12 +126,12 @@ public class ShowMusicPage {
         sortedList.comparatorProperty().bind(table.comparatorProperty());
         table.setItems(sortedList);
 
-        table.getColumns().addAll(sequenceCol, NameCol, artistCol, detailCol, downloadCol);
-
         top = 0;
 
         // Display row data
         if (name.toLowerCase().contains("top 50")) {
+            NameCol.setMinWidth(388);
+            table.getColumns().addAll(sequenceCol);
             if (name.toLowerCase().contains("thailand")) {
                 try {
 
@@ -169,6 +169,7 @@ public class ShowMusicPage {
             anchorPane.getChildren().addAll(imageview, table, searchBoxMy());
 
         } else if (content.equals("artist")) {
+            NameCol.setMinWidth(418);
             System.out.println("yes");
             try {
                 Song.getMyMusicList().forEach(song -> {
@@ -188,6 +189,7 @@ public class ShowMusicPage {
             anchorPane.getChildren().addAll(imageview, table, CreateLabel(name), profilePicture, searchBoxMy());
             
         } else {
+            NameCol.setMinWidth(418);
             try {
                 Song.getMyMusicList().forEach(song -> {
                     song.getListStyleSong().forEach(style -> {
@@ -206,6 +208,8 @@ public class ShowMusicPage {
 
             anchorPane.getChildren().addAll(imageview, table, CreateLabel(name), profilePicture, searchBoxMy());
         }
+        
+        table.getColumns().addAll(NameCol, artistCol, detailCol, downloadCol);
 
         table.setItems(sortedList);
 

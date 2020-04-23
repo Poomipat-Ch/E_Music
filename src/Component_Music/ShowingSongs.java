@@ -36,8 +36,9 @@ public class ShowingSongs {
     public ShowingSongs(String foundtext) {
         table = new TableView<>();
         table.setEditable(true);
+        table.getStyleClass().add("tableTopChartMusic");
 
-        table.setPrefWidth(950);
+        table.setPrefWidth(900);
 
         table.setOnMouseClicked((event) -> {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
@@ -59,26 +60,33 @@ public class ShowingSongs {
 
         // Create column NameSong (Data type of String).
         TableColumn<Song, String> NameCol = new TableColumn<>("TITLE");
-        NameCol.setMinWidth(488);
+        NameCol.setMinWidth(378);
 
         // Create column NameArtist (Data type of String).
         TableColumn<Song, String> artistCol = new TableColumn<>("ARTIST");
-        artistCol.setMinWidth(340);
+        artistCol.setMinWidth(270);
 
         // Create column Detail (Data type of String).
         TableColumn<Song, String> detailCol = new TableColumn<>("DETAIL");
-        detailCol.setMinWidth(120);
+        detailCol.setMinWidth(90);
+        
+        TableColumn<Song, String> downloadCol = new TableColumn<>("DOWNLOAD");
+        downloadCol.setMinWidth(160);
 
         // Defines how to fill data for each cell.
         // Get value from property of UserAccount. .
         NameCol.setCellValueFactory(new PropertyValueFactory<>("nameSong"));
         artistCol.setCellValueFactory(new PropertyValueFactory<>("artistSong"));
         detailCol.setCellValueFactory(new PropertyValueFactory<>("detailSong"));
+        downloadCol.setCellValueFactory(new PropertyValueFactory<>("totalDownload"));
         //Downloadable.setCellValueFactory(new PropertyValueFactory<>("downloadable")); // wait nichida add dowloadable in account
 
         // Set Sort type for userName column
         NameCol.setSortType(TableColumn.SortType.DESCENDING);
+        downloadCol.setSortable(false);
         detailCol.setSortable(false);
+        NameCol.setSortable(false);
+        artistCol.setSortable(false);
 
         // Display row data
         list = FXCollections.observableArrayList();
@@ -100,10 +108,10 @@ public class ShowingSongs {
         sortedList.comparatorProperty().bind(table.comparatorProperty());
         table.setItems(sortedList);
 
-        table.setLayoutX(30);
-        table.setLayoutY(380);
+        table.setLayoutX(65);
+        table.setLayoutY(200);
 
-        table.getColumns().addAll(NameCol, artistCol, detailCol);
+        table.getColumns().addAll(NameCol, artistCol, detailCol, downloadCol);
     }
 
     public TableView<Song> getTable() {
