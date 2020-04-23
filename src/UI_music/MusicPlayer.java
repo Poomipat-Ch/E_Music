@@ -165,7 +165,7 @@ public class MusicPlayer {
         songImg.setOnMouseEntered(e ->{
            scene.setCursor(Cursor.HAND);
         });
-        songImg.setOnMouseDragExited(e ->{
+        songImg.setOnMouseExited(e ->{
             scene.setCursor(Cursor.DEFAULT);
         });
         

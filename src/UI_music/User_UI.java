@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -125,16 +126,16 @@ public class User_UI extends UI {
         img.setLayoutX(1030 - 300 - 20);
         img.setLayoutY(20);
 
-        Image imageMy = new Image("/image/Music_pic.jpg");
+        Image imageMy = null;
         ImageView imgMy = new ImageView(imageMy);
         img.getChildren().add(imgMy);
 
         detailDownload.getStyleClass().add("downloadSelected");
         detailDownload.setLayoutX(1030 - 300 - 20);
         detailDownload.setLayoutY(450);
-        Label nameSong = new Label("Song : ");
-        Label nameArtist = new Label("Artist : ");
-        Label DownloadAble = new Label("Downloadable(Time) : ");
+        Label nameSong = new Label();
+        Label nameArtist = new Label();
+        Label DownloadAble = new Label();
         detailDownload.getChildren().addAll(nameSong, nameArtist, DownloadAble);
 
         Button downloadBtn = CreaButton("Download");
@@ -156,7 +157,7 @@ public class User_UI extends UI {
         pane.getChildren().remove(0);
         ((Label) detailDownload.getChildren().get(0)).setText("Song : " + songSelected.getNameSong());
         ((Label) detailDownload.getChildren().get(1)).setText("Artist : " + songSelected.getArtistSong());
-        ((Label) detailDownload.getChildren().get(2)).setText("Downloadable(Time) : " + songSelected.getNumberOfDownload()); // <---------------------------------------------------------------------- wait
+        ((Label) detailDownload.getChildren().get(2)).setText("Downloadable(Time) : " + songSelected.getNumberOfDownload());
 
         VBox img = new VBox(50);
         
@@ -255,7 +256,7 @@ public class User_UI extends UI {
         return anchorPane;
     }
 
-    public static TextField searchTextField;
+    
 
     @Override
     public HBox searchBoxAll() {

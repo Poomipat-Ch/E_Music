@@ -13,6 +13,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -33,7 +34,7 @@ abstract public class UI {
     private Stage stage;
     private int menuBtnClicked = 0;
     public static Account userAccount;
-
+    public static TextField searchTextField;
     public static VBox vbox;
 
     //Abstract Class For User_UI & Admin_UI
@@ -149,18 +150,13 @@ abstract public class UI {
         browse.setOnMouseClicked(e -> {
 
             if (!"guest".equals(UI.userAccount.getUserRole())) {
-
                 this.vbox.getChildren().remove(1);
                 this.vbox.getChildren().add(new BrowsePane().getBrowsePane());
-
             } else {
                 AlertBox registerFirst = new AlertBox();
                 registerFirst.displayAlert("Register First", "Register Free Account First");
                 new Register("member");
-                this.stage.close();
-                Login.stage.show();
             }
-
         });
 
         VBox mysong = new VBox();
@@ -178,8 +174,6 @@ abstract public class UI {
                 AlertBox registerFirst = new AlertBox();
                 registerFirst.displayAlert("Register First", "Register Free Account First");
                 new Register("member");
-                this.stage.close();
-                Login.stage.show();
             }
         });
 
