@@ -59,6 +59,8 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
     private String nationality;
     private int mode = 0; // 0 is Upload ,1 is Edit 
 
+    private boolean isEdit;
+
     public UploadArtistPopUp(String title, String nationality) { // For Upload
         this.title = new Label(title);
         this.fillNameArtist = new TextField();
@@ -235,20 +237,21 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
                 } catch (IOException | ClassNotFoundException ex) {
                     System.out.println("UploadArtistPopUp : IOExeption read file in DetailUpPopArtist");
                 }
-                if (!checkArtistExist(artistArrayList, fillNameArtist.getText())) {
-                    if (editArtist != null) {
-                        ArrayList<Artist> oldArrayList = new ArrayList<>();
-                        ArrayList<Artist> newArrayList = new ArrayList<>();
-                        oldArrayList = artistArrayList;
-                        for (Artist artist : oldArrayList) {
-                            if (artist.getName1().equals(editArtist.getName1()) && artist.getName2().equals(editArtist.getName2()) && artist.getInfomation().equals(editArtist.getInfomation())) {
-                                System.out.println("delete old edit");
-                            } else {
-                                newArrayList.add(artist);
-                            }
+                if (mode == 1) {
+                    ArrayList<Artist> oldArrayList = new ArrayList<>();
+                    ArrayList<Artist> newArrayList = new ArrayList<>();
+                    oldArrayList = artistArrayList;
+                    for (Artist artist : oldArrayList) {
+                        if (artist.getName1().equals(editArtist.getName1()) && artist.getName2().equals(editArtist.getName2()) && artist.getInfomation().equals(editArtist.getInfomation())) {
+                            System.out.println("delete old edit");
+                        } else {
+                            newArrayList.add(artist);
                         }
-                        artistArrayList = newArrayList;
                     }
+                    artistArrayList = newArrayList;
+                }
+                if (!checkArtistExist(artistArrayList, fillNameArtist.getText())) {
+
                     if (changePhoto) {
                         this.saveArtist();
                     } else {
@@ -296,7 +299,7 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
             fileChooser = new FileChooser();
             fileChooser.setTitle("Open Image");
             fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
-            
+
             //Set to user's directory or go to the default C drvie if cannot access
             String userDirectoryString = System.getProperty("user.home") + "\\Pictures";
             File userDirectory = new File(userDirectoryString);
@@ -383,20 +386,20 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
                 } catch (IOException | ClassNotFoundException ex) {
                     System.out.println("UploadArtistPopUp : IOExeption read file in DetailUpPopArtist");
                 }
-                if (!checkArtistExist(artistArrayList, fillNameArtist.getText())) {
-                    if (editArtist != null) {
-                        ArrayList<Artist> oldArrayList = new ArrayList<>();
-                        ArrayList<Artist> newArrayList = new ArrayList<>();
-                        oldArrayList = artistArrayList;
-                        for (Artist artist : oldArrayList) {
-                            if (artist.getName1().equals(editArtist.getName1()) && artist.getName2().equals(editArtist.getName2()) && artist.getInfomation().equals(editArtist.getInfomation())) {
-                                System.out.println("delete old edit");
-                            } else {
-                                newArrayList.add(artist);
-                            }
+                if (mode == 1) {
+                    ArrayList<Artist> oldArrayList = new ArrayList<>();
+                    ArrayList<Artist> newArrayList = new ArrayList<>();
+                    oldArrayList = artistArrayList;
+                    for (Artist artist : oldArrayList) {
+                        if (artist.getName1().equals(editArtist.getName1()) && artist.getName2().equals(editArtist.getName2()) && artist.getInfomation().equals(editArtist.getInfomation())) {
+                            System.out.println("delete old edit");
+                        } else {
+                            newArrayList.add(artist);
                         }
-                        artistArrayList = newArrayList;
                     }
+                    artistArrayList = newArrayList;
+                }
+                if (!checkArtistExist(artistArrayList, fillNameArtist.getText())) {
                     if (changePhoto) {
                         this.saveArtist();
                     } else {
@@ -407,7 +410,7 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
                         }
                     }
                 } else {
-                    AlertBox.displayAlert("มีข้อผิดพลาด!", "มีศิลปินนี้อยู่แล้ว"); 
+                    AlertBox.displayAlert("มีข้อผิดพลาด!", "มีศิลปินนี้อยู่แล้ว");
                 }
             } else {
                 AlertBox.displayAlert("มีข้อผิดพลาด!", "กรุณากรอกข้อมูลให้ครบ");
@@ -467,25 +470,30 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
                 i = false;
             }
         }
+
         return i;
     }
 
     private void saveArtist() {
-        
+
         System.out.println(this.title.getText());
         System.out.println(mode);
-        
-            if (this.title.getText().equals("New Artist") || this.title.getText().equals("Edit Artist")) {
-                
-                if(mode == 0){ AlertBox.displayAlert("Save Success!", "Upload Success!"); }
-                else if(mode == 1){ AlertBox.displayAlert("Save Success!", "Edit Success!");}
-            } else {
-                if(mode == 0){ AlertBox.displayAlert("บันทึกสำเร็จ!", "เพิ่มศิลปินสำเร็จ!"); }
-                else if(mode == 1){ AlertBox.displayAlert("บันทึกสำเร็จ!", "แก้ไขศิลปินสำเร็จ!"); }
+
+        if (this.title.getText().equals("New Artist") || this.title.getText().equals("Edit Artist")) {
+
+            if (mode == 0) {
+                AlertBox.displayAlert("Save Success!", "Upload Success!");
+            } else if (mode == 1) {
+                AlertBox.displayAlert("Save Success!", "Edit Success!");
             }
-        
-        
-        
+        } else {
+            if (mode == 0) {
+                AlertBox.displayAlert("บันทึกสำเร็จ!", "เพิ่มศิลปินสำเร็จ!");
+            } else if (mode == 1) {
+                AlertBox.displayAlert("บันทึกสำเร็จ!", "แก้ไขศิลปินสำเร็จ!");
+            }
+        }
+
         artistArrayList.add(new Artist(fillNameArtist.getText(), fillNameArtist2.getText(), fillDetailArtist.getText(), image, nationality));
         try {
             ReadWriteFile.writeFileArtist(artistFile, artistArrayList);

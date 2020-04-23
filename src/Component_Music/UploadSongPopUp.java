@@ -389,35 +389,30 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
 
             this.saveStyleList();
             if (!listStyleSong.isEmpty() && !fillDetailSong.getText().isEmpty() && !fillNameArtist.getText().isEmpty() && !fillDetailSong.getText().isEmpty() && !fillSongPrice.getText().isEmpty() && !songUploadEmply) {
+
+                try {
+                    songArrayList = ReadWriteFile.readFileSong(musicFile);
+                } catch (IOException ex) {
+                    Logger.getLogger(UploadSongPopUp.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(UploadSongPopUp.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
                 if (!checkExistFile.equals("")) {
+                    System.out.println("edit"+checkExistFile);
                     ArrayList<Song> oldSongList = new ArrayList<Song>();
                     ArrayList<Song> newSongList = new ArrayList<Song>();
                     selectFileDelete = new File("src/MusicFile/" + checkExistFile + ".mp3");
-                    try {
-                        oldSongList = ReadWriteFile.readFileSong(musicFile);
-                    } catch (IOException ex) {
-                        System.out.println("UploadSongPopUp : IOExeption read file in DetailUpPopSong");
-                    } catch (ClassNotFoundException ex) {
-                        System.out.println("UploadSongPopUp : ClassNotFoundExeption read file in DetailUpPopSong");
-                    }
+                    oldSongList = songArrayList;
                     for (Song song : oldSongList) {
                         if (checkExistFile.equals((song.getNameSong() + song.getArtistSong()).replaceAll("\\s", ""))) {
-
+                            System.out.println("edit inter song :" + checkExistFile);
                         } else {
                             newSongList.add(song);
                         }
                     }
-                    try {
-                        ReadWriteFile.writeFileSong(musicFile, newSongList);
-                    } catch (IOException ex) {
-                        Logger.getLogger(UploadSongPopUp.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    songArrayList = newSongList;
                     changePhoto = true;
-                }
-                try {
-                    songArrayList = ReadWriteFile.readFileSong(musicFile);
-                } catch (IOException | ClassNotFoundException ex) {
-                    System.out.println("UploadSongPopUp : IOExeption read file in DetailUpPopSong");
                 }
                 if (checkSong(songArrayList, fillNameSong.getText(), fillNameArtist.getText()) == 0) {
                     if (changePhoto) {
@@ -688,35 +683,27 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
 
             this.saveStyleList();
             if (!listStyleSong.isEmpty() && !fillDetailSong.getText().isEmpty() && !fillNameArtist.getText().isEmpty() && !fillDetailSong.getText().isEmpty() && !fillSongPrice.getText().isEmpty() && !songUploadEmply) {
+                try {
+                    songArrayList = ReadWriteFile.readFileSong(musicFile);
+                } catch (IOException ex) {
+                    Logger.getLogger(UploadSongPopUp.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(UploadSongPopUp.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 if (!checkExistFile.equals("")) {
                     ArrayList<Song> oldSongList = new ArrayList<Song>();
                     ArrayList<Song> newSongList = new ArrayList<Song>();
                     selectFileDelete = new File("src/MusicFile/" + checkExistFile + ".mp3");
-                    try {
-                        oldSongList = ReadWriteFile.readFileSong(musicFile);
-                    } catch (IOException ex) {
-                        System.out.println("UploadSongPopUp : IOExeption read file in DetailUpPopSong");
-                    } catch (ClassNotFoundException ex) {
-                        System.out.println("UploadSongPopUp : ClassNotFoundExeption read file in DetailUpPopSong");
-                    }
+                    oldSongList = songArrayList;
                     for (Song song : oldSongList) {
                         if (checkExistFile.equals((song.getNameSong() + song.getArtistSong()).replaceAll("\\s", ""))) {
-
+                            System.out.println("edit thai song :" + checkExistFile);
                         } else {
                             newSongList.add(song);
                         }
                     }
-                    try {
-                        ReadWriteFile.writeFileSong(musicFile, newSongList);
-                    } catch (IOException ex) {
-                        Logger.getLogger(UploadSongPopUp.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    songArrayList = newSongList;
                     changePhoto = true;
-                }
-                try {
-                    songArrayList = ReadWriteFile.readFileSong(musicFile);
-                } catch (IOException | ClassNotFoundException ex) {
-                    System.out.println("UploadSongPopUp : IOExeption read file in DetailUpPopSong");
                 }
                 if (checkSong(songArrayList, fillNameSong.getText(), fillNameArtist.getText()) == 0) {
                     if (changePhoto) {
@@ -923,7 +910,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
             } catch (IOException ex) {
                 System.out.println("UploadSongPopUp : IOExeption upload file song in DetailUpPopSong");
             }
-            if (!checkExistFile.equals("")) {
+            if ((!checkExistFile.equals("")) && (!checkExistFile.equals(nameForUpload))) {
                 selectFileDelete.delete();
             }
             Admin_UI.totalPane.getChildren().clear();
@@ -955,7 +942,6 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
 
     public void saveStyleList() {
         for (String list : tagBar.getTags()) {
-            System.out.println("check");
             System.out.println(list);
             listStyleSong.add(list);
         }
