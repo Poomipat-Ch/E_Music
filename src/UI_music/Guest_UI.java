@@ -9,9 +9,11 @@ import Component_Music.Account;
 import Component_Music.AddSong;
 import Component_Music.AlertBox;
 import Component_Music.DetailSongPopUp;
+import Component_Music.SearchPage;
 import Component_Music.SearchSystem;
 import Component_Music.Song;
 import Component_Music.TopChartPane;
+import static UI_music.User_UI.searchTextField;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -112,28 +114,23 @@ public class Guest_UI extends UI {
     @Override
     public HBox searchBoxAll() {
         HBox hBox = new HBox();
-        hBox.setMinSize(1030 - 300 - 60, 30);
-        hBox.setAlignment(Pos.CENTER);
-        TextField searchTextField = new TextField();
-        searchTextField.setPromptText("Search Music");
-        searchTextField.setMinSize(1030 - 300 - 60 - 70, 30);
+        hBox.setPrefSize(1030 - 300 - 60 - 70, 30);
+        //hBox.setAlignment(Pos.CENTER);
+        hBox.setLayoutX(20);
+        hBox.setLayoutY(15);
 
-        Button searchButton = CreaButton("Search");
-        searchButton.setOnMouseClicked(e -> {
-            Guest_UI.totalPane.getChildren().remove(1);
-            Guest_UI.totalPane.getChildren().add(updateScrollPane(searchTextField.getText()));
+        searchTextField = new TextField();
+        searchTextField.setPromptText("Search");
+        searchTextField.setStyle("-fx-font-size: 12px;");
+        searchTextField.setPrefSize(250, 30);
+
+        searchTextField.setOnMouseClicked(event -> {
+            UI.vbox.getChildren().remove(1);
+            UI.vbox.getChildren().addAll(new SearchPage("").getSearchPane());
         });
 
-        searchButton.setStyle("-fx-font-size : 15px;");
-        searchButton.setMinSize(50, 30);
-        HBox.setMargin(searchButton, new Insets(0, 0, 0, 10));
-
-        searchTextField.textProperty().addListener((ov, t, t1) -> {
-            Guest_UI.totalPane.getChildren().remove(1);
-            Guest_UI.totalPane.getChildren().add(updateScrollPane(searchTextField.getText()));
-        });
-
-        hBox.getChildren().addAll(searchTextField, searchButton);
+        /// 1030-300-60-70
+        hBox.getChildren().addAll(searchTextField);
 
         return hBox;
     }
