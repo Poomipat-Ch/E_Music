@@ -7,10 +7,14 @@ package UI_music;
 
 import Component_Music.Artist;
 import Component_Music.ImageCircle;
+import Component_Music.ImageRectangle;
 import Component_Music.ShowMusicPage;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,6 +27,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -113,16 +120,6 @@ public class BrowsePane {
         return button;
     }
 
-    private ImageView CreateImageView(double x, double y) {
-        ImageView image = new ImageView(new Image("/UI_music/defaultprofile.png"));
-        image.setFitHeight(80);
-        image.setFitWidth(80);
-        image.setLayoutX(x);
-        image.setLayoutY(y);
-
-        return image;
-    }
-
     private Label CreateHead(String string, double x, double y) {
         Label label = new Label(string);
         label.getStyleClass().add("browseheadlabel");
@@ -172,10 +169,10 @@ public class BrowsePane {
         } else {
             int i = 0;
 
-            ArrayList<String> list = ReadFile().get((int) index);
+            ArrayList<StyleMusicList> list = ReadFile().get((int) index);
 
-            for (String string : list) {
-                AnchorPane listAlbums = CreateAlbumsList(string, (235 * (i % 4)) + 50, (235 * (i / 4)) + 75);
+            for (StyleMusicList object : list) {
+                AnchorPane listAlbums = CreateAlbumsList(object, (235 * (i % 4)) + 50, (235 * (i / 4)) + 75);
                 i++;
 
                 listAlbums.setOnMouseClicked(e -> {
@@ -213,13 +210,19 @@ public class BrowsePane {
         return anchorpane;
     }
 
-    private AnchorPane CreateAlbumsList(String string, double x, double y) {
+    private AnchorPane CreateAlbumsList(StyleMusicList object, double x, double y) {
+        System.out.println(object.getName());
         AnchorPane anchorpane = new AnchorPane();
         anchorpane.getStyleClass().add("buttonlist");
         anchorpane.setPrefSize(225, 225);
         anchorpane.setLayoutX(x);
         anchorpane.setLayoutY(y);
-        anchorpane.getChildren().addAll(CreateIcon(string), CreateLabel(string, 160,new Image("/UI_music/defaultprofile.png")));
+        
+        AnchorPane background = new AnchorPane();
+        background.setPrefSize(225, 225);
+        background.getStyleClass().add("backgroundlist");
+        
+        anchorpane.getChildren().addAll(new ImageRectangle(0, 0, 225, 225, object.getPhoto()).getMyRectangle(), background, CreateIcon(object.getName()), CreateLabel(object.getName(), 160, object.getPhoto()));
 
         return anchorpane;
     }
@@ -261,7 +264,7 @@ public class BrowsePane {
 
 //        ObjectOutputStream outfile = null;
 //        try {
-//            outfile = new ObjectOutputStream(new FileOutputStream("src/data/stylemusiclist.dat"));
+//            outfile = new ObjectOutputStream(new FileOutputStream("src/data/genreslist.dat"));
 //        } catch (IOException ex) {
 //            Logger.getLogger(BrowsePane.class.getName()).log(Level.SEVERE, null, ex);
 //        }
@@ -288,6 +291,13 @@ public class BrowsePane {
 //        interList.add("Indie");
 //        interList.add("Soul");
 //        
+//        ArrayList<StyleMusicList> interNewList = new ArrayList<>();
+//        
+//        for (String string : interList) {
+//            interNewList.add(new StyleMusicList(string, new Image("/image/" + string + "Background.jpg") ));
+//        }
+//    
+//        
 //        ArrayList<String> thaiList = new ArrayList<>();
 //
 //        thaiList.add("คลาสสิก");
@@ -304,10 +314,15 @@ public class BrowsePane {
 //        thaiList.add("ร็อค");
 //        thaiList.add("อาร์แอนด์บี");
 //        thaiList.add("ฮิป-ฮอป");
-//        thaiList.add("ลูกทุ่ง");
 //        
-//        list.add(interList);
-//        list.add(thaiList);
+//        ArrayList<StyleMusicList> thaiNewList = new ArrayList<>();
+//        
+//        for (String string : thaiList) {
+//            thaiNewList.add(new StyleMusicList(string, new Image("/image/" + string + "Background.jpg") ));
+//        }
+//        
+//        list.add(interNewList);
+//        list.add(thaiNewList);
 //
 //
 //        try {
@@ -323,11 +338,11 @@ public class BrowsePane {
 //        
         ObjectInputStream file = null;
         try {
-            file = new ObjectInputStream(new FileInputStream("src/data/stylemusiclist.dat"));
+            file = new ObjectInputStream(new FileInputStream("src/data/genreslist.dat"));
         } catch (IOException ex) {
             Logger.getLogger(BrowsePane.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+              
         try {
             try {
                 list = (ArrayList<ArrayList>) file.readObject();
@@ -341,4 +356,53 @@ public class BrowsePane {
         return list;
     }
 
+}
+
+class StyleMusicList implements Serializable{
+    
+    private int width, height;
+    private int[][] data;
+    
+    private String name;
+
+    public StyleMusicList(String name, Image image) {
+        this.name = name;
+        
+        this.setPhoto(image);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+     public void setPhoto(Image image) {
+        width = ((int) image.getWidth());
+        height = ((int) image.getHeight());
+        data = new int[width][height];
+
+        PixelReader r = image.getPixelReader();
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                data[i][j] = r.getArgb(i, j);
+            }
+        }
+    }
+
+    public Image getPhoto() {
+        WritableImage img = new WritableImage(width, height);
+
+        PixelWriter w = img.getPixelWriter();
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                w.setArgb(i, j, data[i][j]);
+            }
+        }
+
+        return img;
+    }
+    
 }
