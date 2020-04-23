@@ -123,8 +123,27 @@ public class Song implements Serializable {
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(musicFile));
 
         ObservableList list = FXCollections.observableArrayList();
+        
+        ArrayList<Song> getSong = (ArrayList<Song>) in.readObject();
+        ArrayList<Song> sortSong = new ArrayList<>();
 
-        for (Song song : (ArrayList<Song>) in.readObject()) {
+        sortSong.add(getSong.get(0));
+
+        for (int i = 1; i < getSong.size(); ++i) {
+            for (int k = 0; k < sortSong.size(); ++k) {
+                
+                if (getSong.get(i).getTotalDownload() > sortSong.get(k).getTotalDownload()) {
+                    sortSong.add(k, getSong.get(i));
+                    break;
+                } else if (k == sortSong.size() - 1) {
+                    sortSong.add(getSong.get(i));
+                    break;
+                }
+                
+            }
+        }
+        
+        for (Song song : sortSong) {
             list.add(song);
         }
 

@@ -139,7 +139,7 @@ public class BrowsePane {
         AnchorPane anchorpane = new AnchorPane();
         anchorpane.getStyleClass().add("borderlist");
         anchorpane.setPrefWidth(1030);
-        anchorpane.setMinHeight(614);
+        anchorpane.setMinHeight(664);
         anchorpane.setLayoutY(240);
         anchorpane.setPadding(new Insets(0, 0, 50, 0));
 

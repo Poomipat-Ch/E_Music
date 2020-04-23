@@ -9,6 +9,7 @@ import UI_music.UI;
 import UI_music.User_UI;
 import java.io.File;
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -33,8 +34,8 @@ import javafx.scene.layout.HBox;
 /**
  *
  * @author HCARACH
- * 
- * 
+ *
+ *
  */
 public class ShowMusicPage {
 
@@ -48,6 +49,10 @@ public class ShowMusicPage {
 
     TableView<Song> table;
     ObservableList<Song> list = null;
+
+    int top = 0;
+
+    ;
 
     public ShowMusicPage(String name, String content, Image image) {
         AnchorPane anchorPane = new AnchorPane();
@@ -75,7 +80,7 @@ public class ShowMusicPage {
                 try {
                     new DetailSongPopUp(table.getSelectionModel().getSelectedItem().getSong());
                 } catch (InterruptedException ex) {
-                    System.out.println("TopChartMusicPane : InterrruoteddExeption DetailSongPopUp in updateScrollPane");
+                    System.out.println("79 ShowMusicPage : InterrruoteddExeption DetailSongPopUp in updateScrollPane");
                 }
 
             }
@@ -106,8 +111,10 @@ public class ShowMusicPage {
 
         // Set Sort type for userName column
         downloadCol.setSortType(TableColumn.SortType.DESCENDING);
-        downloadCol.setSortable(true);
+        downloadCol.setSortable(false);
         detailCol.setSortable(false);
+        NameCol.setSortable(false);
+        artistCol.setSortable(false);
 
         list = FXCollections.observableArrayList();
 
@@ -120,27 +127,36 @@ public class ShowMusicPage {
 
         table.getColumns().addAll(NameCol, artistCol, detailCol, downloadCol);
 
+        top = 0;
+
         // Display row data
         if (name.toLowerCase().contains("top 50")) {
             if (name.toLowerCase().contains("thailand")) {
                 try {
+
                     Song.getMyMusicList().forEach(song -> {
                         if (song.getNationality().equals("thai")) {
-                            list.add(song);
+                            if (top < 50) {
+                                list.add(song);
+                            }
+                            top++;
                         }
                     });
                 } catch (IOException | ClassNotFoundException ex) {
-                    System.out.println("TopChartMusicPage : IOException get my music list from class song");
+                    System.out.println("137 ShowMusicPage : IOException get my music list from class song");
                 }
             } else {
                 try {
                     Song.getMyMusicList().forEach(song -> {
                         if (song.getNationality().equals("international")) {
-                            list.add(song);
+                            if (top < 50) {
+                                list.add(song);
+                            }
+                            top++;
                         }
                     });
                 } catch (IOException | ClassNotFoundException ex) {
-                    System.out.println("TopChartMusicPage : IOException get my music list from class song");
+                    System.out.println("147 ShowMusicPage : IOException get my music list from class song");
 
                 }
             }
@@ -166,7 +182,7 @@ public class ShowMusicPage {
                     });
                 });
             } catch (IOException | ClassNotFoundException ex) {
-                System.out.println("TopChartMusicPage : IOException get my music list from class song");
+                System.out.println("173 ShowMusicPage : IOException get my music list from class song");
             }
         }
 
@@ -223,7 +239,6 @@ public class ShowMusicPage {
 //        AnchorPane anchorpane = new AnchorPane();
 //        anchorpane.setPrefSize(1030 - 200, 10);
 //        anchorpane.getStyleClass().add("bgsearchfield");
-
         TextField searchTextField = new TextField();
         searchTextField.setPromptText("Filter");
         searchTextField.setPrefSize(1030 - 200, 10);
@@ -237,7 +252,6 @@ public class ShowMusicPage {
         searchTextField.textProperty().addListener(searchSystemMyLibrary);
 
 //        anchorpane.getChildren().add(searchTextField);
-
         hBox.getChildren().addAll(searchTextField, searchButton);
 
         return hBox;
