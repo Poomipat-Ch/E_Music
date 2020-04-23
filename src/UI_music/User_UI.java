@@ -153,11 +153,21 @@ public class User_UI extends UI {
         return pane;
     }
 
-    public void updateDetailDownload() {
+    public void updateDetailDownload(AddSong songSelected) {
         pane.getChildren().remove(0);
-        ((Label) detailDownload.getChildren().get(0)).setText("Song : " + songSelected.getNameSong());
-        ((Label) detailDownload.getChildren().get(1)).setText("Artist : " + songSelected.getArtistSong());
-        ((Label) detailDownload.getChildren().get(2)).setText("Downloadable(Time) : " + songSelected.getNumberOfDownload());
+        Image imageMy;
+        if (songSelected != null) {
+            ((Label) detailDownload.getChildren().get(0)).setText("Song : " + songSelected.getNameSong());
+            ((Label) detailDownload.getChildren().get(1)).setText("Artist : " + songSelected.getArtistSong());
+            ((Label) detailDownload.getChildren().get(2)).setText("Downloadable(Time) : " + songSelected.getNumberOfDownload());
+            imageMy = songSelected.getSong().getPhoto();
+        }else{
+            ((Label) detailDownload.getChildren().get(0)).setText("");
+            ((Label) detailDownload.getChildren().get(1)).setText("");
+            ((Label) detailDownload.getChildren().get(2)).setText("");
+            imageMy = null;
+        }
+
 
         VBox img = new VBox(50);
         
@@ -166,8 +176,9 @@ public class User_UI extends UI {
         img.setLayoutX(1030 - 300 - 20);
         img.setLayoutY(20);
         img.setAlignment(Pos.CENTER);
+        
+        
 
-        Image imageMy = songSelected.getSong().getPhoto();
         ImageView imgMy = new ImageView(imageMy);
         imgMy.setFitHeight(200);
         imgMy.setFitWidth(200);
@@ -201,7 +212,7 @@ public class User_UI extends UI {
                 //System.out.println(table.getSelectionModel().getSelectedItem().getNameSong());
                 songSelected = table.getSelectionModel().getSelectedItem();
                 if (table.getSelectionModel().getSelectedItem() != null) {
-                    updateDetailDownload();
+                    updateDetailDownload(this.songSelected);
                 }
                
                 songNameSelected = (table.getSelectionModel().getSelectedItem().getSong().getNameSong() + table.getSelectionModel().getSelectedItem().getSong().getArtistSong()).replaceAll("\\s", "");
@@ -434,7 +445,7 @@ public class User_UI extends UI {
                 writeFile.writeFile(user, accountUpdate);
                     UI.vbox.getChildren().remove(1);
                     UI.vbox.getChildren().add(thirdPagePane());
-                    updateDetailDownload();
+                    updateDetailDownload(null);
             } catch (IOException ex) {
                 System.out.println("User_UI : IOExeption download file from class Song in downloader");
             }

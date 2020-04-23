@@ -1,0 +1,1421 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="E_Music_git">
+  <ClassDiagramComponents>
+    <Class name="Account" package="Component_Music" visibility="public" xPosition="20.0" yPosition="20.0">
+      <Fields>
+        <Field name="serialVersionUID" type="long" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="name" type="String" visibility="private"/>
+        <Field name="surname" type="String" visibility="private"/>
+        <Field name="email" type="String" visibility="private"/>
+        <Field name="username" type="String" visibility="private"/>
+        <Field name="password" type="String" visibility="private"/>
+        <Field name="gender" type="String" visibility="private"/>
+        <Field name="question" type="String" visibility="private"/>
+        <Field name="answer" type="String" visibility="private"/>
+        <Field name="dateOfBirth" type="LocalDate" visibility="private"/>
+        <Field name="userRole" type="String" visibility="private"/>
+        <Field name="width" type="int" visibility="private"/>
+        <Field name="data" type="int[][]" visibility="private"/>
+        <Field name="user" type="File" visibility="private" isStatic="true"/>
+        <Field name="listSong" type="ArrayList&lt;AddSong&gt;" visibility="private"/>
+        <Field name="firstSong" type="boolean" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="String" name="name"/>
+          <Argument type="String" name="surname"/>
+          <Argument type="String" name="username"/>
+          <Argument type="String" name="email"/>
+          <Argument type="String" name="password"/>
+          <Argument type="String" name="gender"/>
+          <Argument type="LocalDate" name="dateOfBirth"/>
+          <Argument type="String" name="question"/>
+          <Argument type="String" name="answer"/>
+          <Argument type="String" name="userRole"/>
+          <Argument type="Image" name="image"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="setUserRole" returnType="void" visibility="public">
+          <Argument type="String" name="userRole"/>
+        </Method>
+        <Method name="setPassword" returnType="void" visibility="public">
+          <Argument type="String" name="password"/>
+        </Method>
+        <Method name="getUserRole" returnType="String" visibility="public"/>
+        <Method name="getDateOfBirth" returnType="LocalDate" visibility="public"/>
+        <Method name="name" returnType="String" visibility="public"/>
+        <Method name="getPassword" returnType="String" visibility="public"/>
+        <Method name="getQuestion" returnType="String" visibility="public"/>
+        <Method name="getAnswer" returnType="String" visibility="public"/>
+        <Method name="toString" returnType="String" visibility="public"/>
+        <Method name="getName" returnType="String" visibility="public"/>
+        <Method name="getSurname" returnType="String" visibility="public"/>
+        <Method name="getEmail" returnType="String" visibility="public"/>
+        <Method name="getUsername" returnType="String" visibility="public"/>
+        <Method name="getGender" returnType="String" visibility="public"/>
+        <Method name="reset" returnType="void" visibility="public">
+          <Argument type="String" name="name"/>
+          <Argument type="String" name="surname"/>
+          <Argument type="String" name="email"/>
+          <Argument type="String" name="username"/>
+          <Argument type="String" name="password"/>
+          <Argument type="String" name="gender"/>
+          <Argument type="LocalDate" name="dateOfBirth"/>
+        </Method>
+        <Method name="setPhoto" returnType="void" visibility="public">
+          <Argument type="Image" name="image"/>
+        </Method>
+        <Method name="getPhoto" returnType="Image" visibility="public"/>
+        <Method name="getAccountList" returnType="ObservableList&lt;Account&gt;" visibility="public" isStatic="true"/>
+        <Method name="getMyListSong" returnType="ObservableList&lt;AddSong&gt;" visibility="public"/>
+        <Method name="addSong" returnType="void" visibility="public">
+          <Argument type="Song" name="song"/>
+          <Argument type="int" name="downloader"/>
+        </Method>
+        <Method name="isFirstSong" returnType="boolean" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="AddSong" package="Component_Music" visibility="public" xPosition="320.0" yPosition="20.0">
+      <Fields>
+        <Field name="serialVersionUID" type="long" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="song" type="Song" visibility="private"/>
+        <Field name="numberOfDownload" type="int" visibility="private"/>
+        <Field name="nameSong" type="String" visibility="private"/>
+        <Field name="detailSong" type="String" visibility="private"/>
+        <Field name="artistSong" type="String" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="Song" name="song"/>
+          <Argument type="int" name="numberOfDownload"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getSong" returnType="Song" visibility="public"/>
+        <Method name="setSong" returnType="void" visibility="public">
+          <Argument type="Song" name="song"/>
+        </Method>
+        <Method name="getNumberOfDownload" returnType="int" visibility="public"/>
+        <Method name="setNumberOfDownload" returnType="void" visibility="public">
+          <Argument type="int" name="numberOfDownload"/>
+        </Method>
+        <Method name="getNameSong" returnType="String" visibility="public"/>
+        <Method name="setNameSong" returnType="void" visibility="public">
+          <Argument type="String" name="nameSong"/>
+        </Method>
+        <Method name="getDetailSong" returnType="String" visibility="public"/>
+        <Method name="setDetailSong" returnType="void" visibility="public">
+          <Argument type="String" name="detailSong"/>
+        </Method>
+        <Method name="getArtistSong" returnType="String" visibility="public"/>
+        <Method name="setArtistSong" returnType="void" visibility="public">
+          <Argument type="String" name="artistSong"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="AlertBox" package="Component_Music" visibility="public" xPosition="620.0" yPosition="20.0">
+      <Fields>
+        <Field name="ans" type="boolean" visibility="package" isStatic="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="display" returnType="boolean" visibility="public" isStatic="true">
+          <Argument type="String" name="title"/>
+          <Argument type="String" name="message"/>
+        </Method>
+        <Method name="displayAlert" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="title"/>
+          <Argument type="String" name="message"/>
+        </Method>
+        <Method name="confirmAlert" returnType="boolean" visibility="public" isStatic="true">
+          <Argument type="String" name="title"/>
+          <Argument type="String" name="message"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Artist" package="Component_Music" visibility="public" xPosition="920.0" yPosition="20.0">
+      <Fields>
+        <Field name="serialVersionUID" type="long" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="name1" type="String" visibility="private"/>
+        <Field name="image" type="Image" visibility="private"/>
+        <Field name="imageView" type="ImageView" visibility="private"/>
+        <Field name="width" type="int" visibility="private"/>
+        <Field name="data" type="int[][]" visibility="private"/>
+        <Field name="artist" type="File" visibility="private" isStatic="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="String" name="name1"/>
+          <Argument type="String" name="name2"/>
+          <Argument type="String" name="infomation"/>
+          <Argument type="Image" name="image"/>
+          <Argument type="String" name="nationality"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getName1" returnType="String" visibility="public"/>
+        <Method name="setName1" returnType="void" visibility="public">
+          <Argument type="String" name="name1"/>
+        </Method>
+        <Method name="getName2" returnType="String" visibility="public"/>
+        <Method name="setName2" returnType="void" visibility="public">
+          <Argument type="String" name="name2"/>
+        </Method>
+        <Method name="getInfomation" returnType="String" visibility="public"/>
+        <Method name="setInfomation" returnType="void" visibility="public">
+          <Argument type="String" name="infomation"/>
+        </Method>
+        <Method name="getNationality" returnType="String" visibility="public"/>
+        <Method name="setNationality" returnType="void" visibility="public">
+          <Argument type="String" name="nationality"/>
+        </Method>
+        <Method name="setPhoto" returnType="void" visibility="public">
+          <Argument type="Image" name="image"/>
+        </Method>
+        <Method name="getPhoto" returnType="Image" visibility="public"/>
+        <Method name="getArtistList" returnType="ObservableList&lt;Artist&gt;" visibility="public" isStatic="true"/>
+      </Methods>
+    </Class>
+    <Class name="Cashing" package="Component_Music" visibility="public" xPosition="1220.0" yPosition="20.0">
+      <Fields>
+        <Field name="paymentStage" type="Stage" visibility="private"/>
+        <Field name="infoScene" type="Scene" visibility="private"/>
+        <Field name="song" type="Song" visibility="private"/>
+        <Field name="user" type="File" visibility="package"/>
+        <Field name="priceFile" type="File" visibility="package"/>
+        <Field name="listAccount" type="ArrayList&lt;Account&gt;" visibility="package"/>
+        <Field name="addAccount" type="ArrayList&lt;Account&gt;" visibility="package"/>
+        <Field name="file" type="ReadWriteFile" visibility="private"/>
+        <Field name="mouse_x" type="double" visibility="package"/>
+        <Field name="lowPrice" type="double" visibility="private"/>
+        <Field name="updateAccount" type="ArrayList&lt;Account&gt;" visibility="package"/>
+        <Field name="photo" type="ImageView" visibility="package"/>
+        <Field name="oldAccounts" type="ArrayList&lt;Account&gt;" visibility="package"/>
+        <Field name="presentAccounts" type="ArrayList&lt;Account&gt;" visibility="package"/>
+        <Field name="updateAccount2" type="Account" visibility="package"/>
+        <Field name="userAccount" type="Account" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="getTotal" returnType="double" visibility="public"/>
+        <Method name="setTotal" returnType="void" visibility="public">
+          <Argument type="double" name="total"/>
+        </Method>
+        <Method name="getPromotion" returnType="double" visibility="public"/>
+        <Method name="setPromotion" returnType="void" visibility="public">
+          <Argument type="double" name="promotion"/>
+        </Method>
+        <Method name="getPrice" returnType="double" visibility="public"/>
+        <Method name="setPrice" returnType="void" visibility="public">
+          <Argument type="double" name="price"/>
+        </Method>
+        <Method name="twoDF" returnType="double" visibility="private">
+          <Argument type="double" name="num"/>
+        </Method>
+        <Method name="stringToDouble" returnType="double" visibility="private">
+          <Argument type="String" name="string"/>
+        </Method>
+        <Method name="stringToTwoDecimal" returnType="double" visibility="private">
+          <Argument type="String" name="string"/>
+        </Method>
+        <Method name="totalPercentPromotion" returnType="double" visibility="private"/>
+        <Method name="Info" returnType="void" visibility="public">
+          <Argument type="Stage" name="paymentStage"/>
+          <Argument type="Song" name="song"/>
+        </Method>
+        <Method name="getLowPrice" returnType="double" visibility="public"/>
+        <Method name="setLowPrice" returnType="void" visibility="public">
+          <Argument type="double" name="lowPrice"/>
+        </Method>
+        <Method name="getMedPrice" returnType="double" visibility="public"/>
+        <Method name="setMedPrice" returnType="void" visibility="public">
+          <Argument type="double" name="medPrice"/>
+        </Method>
+        <Method name="getLargePrice" returnType="double" visibility="public"/>
+        <Method name="setLargePrice" returnType="void" visibility="public">
+          <Argument type="double" name="largePrice"/>
+        </Method>
+        <Method name="isInteger" returnType="boolean" visibility="public" isStatic="true">
+          <Argument type="String" name="s"/>
+        </Method>
+        <Method name="hasNumber" returnType="boolean" visibility="public" isStatic="true">
+          <Argument type="String" name="s"/>
+        </Method>
+        <Method name="exitButton" returnType="Button" visibility="private"/>
+        <Method name="userSaveSong" returnType="void" visibility="public"/>
+        <Method name="buyPremium" returnType="void" visibility="public">
+          <Argument type="Stage" name="paymentStage"/>
+          <Argument type="Account" name="userAccount"/>
+        </Method>
+        <Method name="cancelPremium" returnType="void" visibility="public">
+          <Argument type="Account" name="userAccount"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="DetailSongPopUp" package="Component_Music" visibility="public" xPosition="1520.0" yPosition="20.0">
+      <Fields>
+        <Field name="song" type="Song" visibility="private"/>
+        <Field name="detail" type="VBox" visibility="private"/>
+        <Field name="stage" type="Stage" visibility="private"/>
+        <Field name="mouse_x" type="double" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Song" name="song"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="DetailSong" returnType="void" visibility="private"/>
+        <Method name="exitButton" returnType="Button" visibility="private"/>
+      </Methods>
+    </Class>
+    <Class name="ImageCircle" package="Component_Music" visibility="public" xPosition="1820.0" yPosition="20.0">
+      <Fields>
+        <Field name="myCircle" type="Circle" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="double" name="radius"/>
+          <Argument type="Image" name="image"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="double" name="centerx"/>
+          <Argument type="double" name="centery"/>
+          <Argument type="double" name="radius"/>
+          <Argument type="Image" name="image"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getMyCircle" returnType="Circle" visibility="public"/>
+        <Method name="setImage" returnType="Image" visibility="public">
+          <Argument type="Image" name="image"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ImageRectangle" package="Component_Music" visibility="public" xPosition="2120.0" yPosition="20.0">
+      <Fields>
+        <Field name="myRectangle" type="Rectangle" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="double" name="width"/>
+          <Argument type="double" name="height"/>
+          <Argument type="Image" name="image"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="double" name="y"/>
+          <Argument type="double" name="width"/>
+          <Argument type="double" name="height"/>
+          <Argument type="Image" name="image"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="double" name="x"/>
+          <Argument type="double" name="y"/>
+          <Argument type="double" name="width"/>
+          <Argument type="double" name="height"/>
+          <Argument type="Image" name="image"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getMyRectangle" returnType="Rectangle" visibility="public"/>
+        <Method name="setImage" returnType="Image" visibility="public">
+          <Argument type="Image" name="image"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ImageSlide" package="Component_Music" visibility="public" xPosition="20.0" yPosition="420.0">
+      <Fields>
+        <Field name="IMG_WIDTH" type="double" visibility="private" isFinal="true"/>
+        <Field name="IMG_HEIGHT" type="double" visibility="private" isFinal="true"/>
+        <Field name="NUM_OF_IMGS" type="int" visibility="private" isFinal="true"/>
+        <Field name="SLIDE_FREQ" type="int" visibility="private" isFinal="true"/>
+        <Field name="anchorpane" type="AnchorPane" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getAnchorpane" returnType="AnchorPane" visibility="public"/>
+        <Method name="addPicture" returnType="HBox" visibility="private"/>
+        <Method name="startAnimation" returnType="void" visibility="private">
+          <Argument type="HBox" name="hbox"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="PricePremium" package="Component_Music" visibility="public" xPosition="320.0" yPosition="420.0">
+      <Fields>
+        <Field name="discountPercent" type="int" visibility="private"/>
+        <Field name="price" type="File" visibility="private" isStatic="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="int" name="discountPercent"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getDiscountPercentInt" returnType="int" visibility="public"/>
+        <Method name="setDiscountPercentInt" returnType="void" visibility="public">
+          <Argument type="int" name="discountPercent"/>
+        </Method>
+        <Method name="getPriceList" returnType="ObservableList&lt;PricePremium&gt;" visibility="public" isStatic="true"/>
+      </Methods>
+    </Class>
+    <Class name="SearchPage" package="Component_Music" visibility="public" xPosition="620.0" yPosition="420.0">
+      <Fields>
+        <Field name="anchorPane" type="AnchorPane" visibility="private"/>
+        <Field name="songCount" type="int" visibility="private"/>
+        <Field name="artistCount" type="int" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="text"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getSearchPane" returnType="AnchorPane" visibility="public"/>
+        <Method name="FoundListPane" returnType="BorderPane" visibility="private">
+          <Argument type="String" name="foundtext"/>
+        </Method>
+        <Method name="PlaylistPane" returnType="BorderPane" visibility="private">
+          <Argument type="String" name="string"/>
+          <Argument type="String" name="filename"/>
+          <Argument type="String" name="foundtext"/>
+          <Argument type="int" name="column"/>
+          <Argument type="double" name="seeall"/>
+        </Method>
+        <Method name="HeadPane" returnType="AnchorPane" visibility="private">
+          <Argument type="String" name="string"/>
+          <Argument type="String" name="foundtext"/>
+          <Argument type="double" name="x"/>
+        </Method>
+        <Method name="CreateLabel" returnType="Label" visibility="private">
+          <Argument type="String" name="string"/>
+        </Method>
+        <Method name="CreateSeeAll" returnType="Label" visibility="private">
+          <Argument type="String" name="string"/>
+          <Argument type="String" name="foundtext"/>
+          <Argument type="double" name="x"/>
+        </Method>
+        <Method name="Playlist" returnType="AnchorPane" visibility="private">
+          <Argument type="String" name="foundtext"/>
+          <Argument type="String" name="filename"/>
+          <Argument type="int" name="column"/>
+          <Argument type="int" name="dis"/>
+        </Method>
+        <Method name="CreateSongList" returnType="AnchorPane" visibility="private">
+          <Argument type="double" name="x"/>
+          <Argument type="double" name="y"/>
+          <Argument type="Song" name="song"/>
+        </Method>
+        <Method name="CreateArtistList" returnType="AnchorPane" visibility="private">
+          <Argument type="double" name="x"/>
+          <Argument type="double" name="y"/>
+          <Argument type="Artist" name="artist"/>
+        </Method>
+        <Method name="BlankPane" returnType="AnchorPane" visibility="private"/>
+        <Method name="CantFoundPane" returnType="AnchorPane" visibility="private">
+          <Argument type="String" name="foundtext"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="SearchSystem" package="Component_Music" visibility="public" xPosition="920.0" yPosition="420.0">
+      <Fields>
+        <Field name="filterData" type="FilteredList&lt;Song&gt;" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="FilteredList&lt;Song&gt;" name="filterData"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getFilterData" returnType="FilteredList&lt;Song&gt;" visibility="public"/>
+        <Method name="setFilterData" returnType="void" visibility="public">
+          <Argument type="FilteredList&lt;Song&gt;" name="filterData"/>
+        </Method>
+        <Method name="changed" returnType="void" visibility="public">
+          <Argument type="ObservableValue&lt;? extends String&gt;" name="ObservableValue"/>
+          <Argument type="String" name="oldValue"/>
+          <Argument type="String" name="newValue"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="SearchSystemAccount" package="Component_Music" visibility="public" xPosition="1220.0" yPosition="420.0">
+      <Fields>
+        <Field name="filterData" type="FilteredList&lt;Account&gt;" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="FilteredList&lt;Account&gt;" name="filterData"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getFilterData" returnType="FilteredList&lt;Account&gt;" visibility="public"/>
+        <Method name="setFilterData" returnType="void" visibility="public">
+          <Argument type="FilteredList&lt;Account&gt;" name="filterData"/>
+        </Method>
+        <Method name="changed" returnType="void" visibility="public">
+          <Argument type="ObservableValue&lt;? extends String&gt;" name="ObservableValue"/>
+          <Argument type="String" name="oldValue"/>
+          <Argument type="String" name="newValue"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="SearchSystemAddSong" package="Component_Music" visibility="public" xPosition="1520.0" yPosition="420.0">
+      <Fields>
+        <Field name="filterData" type="FilteredList&lt;AddSong&gt;" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="FilteredList&lt;AddSong&gt;" name="filterData"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getFilterData" returnType="FilteredList&lt;AddSong&gt;" visibility="public"/>
+        <Method name="setFilterData" returnType="void" visibility="public">
+          <Argument type="FilteredList&lt;AddSong&gt;" name="filterData"/>
+        </Method>
+        <Method name="changed" returnType="void" visibility="public">
+          <Argument type="ObservableValue&lt;? extends String&gt;" name="ObservableValue"/>
+          <Argument type="String" name="oldValue"/>
+          <Argument type="String" name="newValue"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="SelectTypeArtistPopUp" package="Component_Music" visibility="public" xPosition="1820.0" yPosition="420.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="CreateButton" returnType="AnchorPane" visibility="package"/>
+        <Method name="CreateHeadLabel" returnType="AnchorPane" visibility="package"/>
+      </Methods>
+    </Class>
+    <Class name="SelectTypePopUp" package="Component_Music" visibility="public" isAbstract="true" xPosition="2120.0" yPosition="420.0">
+      <Fields>
+        <Field name="stage" type="Stage" visibility="package" isStatic="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="ShowPane" returnType="AnchorPane" visibility="private"/>
+        <Method name="CreateCloseButton" returnType="Label" visibility="private"/>
+        <Method name="CreateButton" returnType="AnchorPane" visibility="package" isAbstract="true"/>
+        <Method name="CreateHeadLabel" returnType="AnchorPane" visibility="package" isAbstract="true"/>
+      </Methods>
+    </Class>
+    <Class name="SelectTypeSongPopUp" package="Component_Music" visibility="public" xPosition="20.0" yPosition="820.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="CreateHeadLabel" returnType="AnchorPane" visibility="package"/>
+        <Method name="CreateButton" returnType="AnchorPane" visibility="package"/>
+      </Methods>
+    </Class>
+    <Class name="ShowingArtist" package="Component_Music" visibility="public" xPosition="320.0" yPosition="820.0">
+      <Fields>
+        <Field name="showingartist" type="AnchorPane" visibility="private"/>
+        <Field name="artistList" type="ObservableList&lt;Artist&gt;" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="foundtext"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getShowingartist" returnType="AnchorPane" visibility="public"/>
+        <Method name="CreateArtistList" returnType="AnchorPane" visibility="private">
+          <Argument type="Artist" name="artist"/>
+          <Argument type="double" name="x"/>
+          <Argument type="double" name="y"/>
+        </Method>
+        <Method name="CreateLabel" returnType="Button" visibility="private">
+          <Argument type="Artist" name="artist"/>
+          <Argument type="int" name="dis"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ShowingSearchPage" package="Component_Music" visibility="public" xPosition="620.0" yPosition="820.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="page"/>
+          <Argument type="String" name="foundtext"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="CreateHead" returnType="HBox" visibility="private">
+          <Argument type="String" name="page"/>
+          <Argument type="String" name="foundtext"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ShowingSongs" package="Component_Music" visibility="public" xPosition="920.0" yPosition="820.0">
+      <Fields>
+        <Field name="searchSystemMyLibrary" type="SearchSystem" visibility="package"/>
+        <Field name="fileForDownload" type="File" visibility="private"/>
+        <Field name="songSelected" type="Song" visibility="private"/>
+        <Field name="songNameSelected" type="String" visibility="private"/>
+        <Field name="nameSet" type="String" visibility="private"/>
+        <Field name="table" type="TableView&lt;Song&gt;" visibility="package"/>
+        <Field name="list" type="ObservableList&lt;Song&gt;" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="foundtext"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getTable" returnType="TableView&lt;Song&gt;" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="ShowMusicPage" package="Component_Music" visibility="public" xPosition="1220.0" yPosition="820.0">
+      <Fields>
+        <Field name="searchSystemMyLibrary" type="SearchSystem" visibility="package"/>
+        <Field name="fileForDownload" type="File" visibility="private"/>
+        <Field name="songNameSelected" type="String" visibility="private"/>
+        <Field name="nameSet" type="String" visibility="private"/>
+        <Field name="songSelected" type="Song" visibility="private"/>
+        <Field name="page" type="String" visibility="private"/>
+        <Field name="table" type="TableView&lt;Song&gt;" visibility="package"/>
+        <Field name="list" type="ObservableList&lt;Song&gt;" visibility="package"/>
+        <Field name="top" type="int" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="name"/>
+          <Argument type="String" name="content"/>
+          <Argument type="Image" name="image"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="CreateLabel" returnType="AnchorPane" visibility="private">
+          <Argument type="String" name="string"/>
+        </Method>
+        <Method name="searchBoxMy" returnType="HBox" visibility="public"/>
+        <Method name="CreaButton" returnType="Button" visibility="private">
+          <Argument type="String" name="text"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Song" package="Component_Music" visibility="public" xPosition="1520.0" yPosition="820.0">
+      <Fields>
+        <Field name="serialVersionUID" type="long" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="nameSong" type="String" visibility="private"/>
+        <Field name="detailSong" type="String" visibility="private"/>
+        <Field name="artistSong" type="String" visibility="private"/>
+        <Field name="priceSong" type="String" visibility="private"/>
+        <Field name="nationality" type="String" visibility="private"/>
+        <Field name="width" type="int" visibility="private"/>
+        <Field name="data" type="int[][]" visibility="private"/>
+        <Field name="totalDownload" type="int" visibility="private"/>
+        <Field name="musicFile" type="File" visibility="private" isStatic="true"/>
+        <Field name="listStyleSong" type="ArrayList&lt;String&gt;" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="String" name="nameSong"/>
+          <Argument type="String" name="detailSong"/>
+          <Argument type="String" name="artistSong"/>
+          <Argument type="String" name="priceSong"/>
+          <Argument type="ArrayList&lt;String&gt;" name="listStyleSong"/>
+          <Argument type="Image" name="image"/>
+          <Argument type="String" name="nationality"/>
+          <Argument type="int" name="downloader"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="Song" name="song"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getNameSong" returnType="String" visibility="public"/>
+        <Method name="getDetailSong" returnType="String" visibility="public"/>
+        <Method name="getArtistSong" returnType="String" visibility="public"/>
+        <Method name="getPriceSong" returnType="String" visibility="public"/>
+        <Method name="setNameSong" returnType="void" visibility="public">
+          <Argument type="String" name="nameSong"/>
+        </Method>
+        <Method name="setDetailSong" returnType="void" visibility="public">
+          <Argument type="String" name="detailSong"/>
+        </Method>
+        <Method name="setArtistSong" returnType="void" visibility="public">
+          <Argument type="String" name="artistSong"/>
+        </Method>
+        <Method name="setPriceSong" returnType="void" visibility="public">
+          <Argument type="String" name="priceSong"/>
+        </Method>
+        <Method name="getNationality" returnType="String" visibility="public"/>
+        <Method name="setNationality" returnType="void" visibility="public">
+          <Argument type="String" name="nationality"/>
+        </Method>
+        <Method name="getTotalDownload" returnType="int" visibility="public"/>
+        <Method name="isDownload" returnType="void" visibility="public"/>
+        <Method name="toString" returnType="String" visibility="public"/>
+        <Method name="getMyMusicList" returnType="ObservableList&lt;Song&gt;" visibility="public" isStatic="true"/>
+        <Method name="getMusicList" returnType="ObservableList&lt;Song&gt;" visibility="public" isStatic="true"/>
+        <Method name="setPhoto" returnType="void" visibility="public">
+          <Argument type="Image" name="image"/>
+        </Method>
+        <Method name="getPhoto" returnType="Image" visibility="public"/>
+        <Method name="getListStyleSong" returnType="ArrayList&lt;String&gt;" visibility="public"/>
+        <Method name="getSong" returnType="Song" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="TopChartPane" package="Component_Music" visibility="public" xPosition="1820.0" yPosition="820.0">
+      <Fields>
+        <Field name="topchartpane" type="BorderPane" visibility="private"/>
+        <Field name="pane" type="AnchorPane" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getTopchartpane" returnType="AnchorPane" visibility="public"/>
+        <Method name="CreateLabel" returnType="Label" visibility="private">
+          <Argument type="String" name="alphabet"/>
+          <Argument type="int" name="style"/>
+        </Method>
+        <Method name="CreateSeeAll" returnType="Label" visibility="private">
+          <Argument type="String" name="string"/>
+          <Argument type="double" name="x"/>
+          <Argument type="double" name="y"/>
+          <Argument type="Image" name="image"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="UploadArtistPopUp" package="Component_Music" visibility="public" xPosition="2120.0" yPosition="820.0">
+      <Fields>
+        <Field name="fileChooser" type="FileChooser" visibility="private"/>
+        <Field name="filePath" type="File" visibility="private"/>
+        <Field name="photo" type="ImageView" visibility="private"/>
+        <Field name="image" type="Image" visibility="private"/>
+        <Field name="totalDetail" type="HBox" visibility="private"/>
+        <Field name="stage" type="Stage" visibility="private"/>
+        <Field name="title" type="Label" visibility="private"/>
+        <Field name="fillNameArtist" type="TextField" visibility="package"/>
+        <Field name="fillNameArtist2" type="TextField" visibility="package"/>
+        <Field name="fillDetailArtist" type="TextField" visibility="package"/>
+        <Field name="artistFile" type="File" visibility="package"/>
+        <Field name="artistArrayList" type="ArrayList&lt;Artist&gt;" visibility="package"/>
+        <Field name="editArtist" type="Artist" visibility="package"/>
+        <Field name="changePhoto" type="Boolean" visibility="package"/>
+        <Field name="nationality" type="String" visibility="private"/>
+        <Field name="mode" type="int" visibility="private"/>
+        <Field name="mouse_x" type="double" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="title"/>
+          <Argument type="String" name="nationality"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="String" name="title"/>
+          <Argument type="Artist" name="editArtist"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="runOnce" returnType="void" visibility="private"/>
+        <Method name="DetailUploadArtist" returnType="void" visibility="private"/>
+        <Method name="setupInterPane" returnType="void" visibility="private"/>
+        <Method name="setupThaiPane" returnType="void" visibility="private"/>
+        <Method name="exitButton" returnType="Button" visibility="private"/>
+        <Method name="checkArtistExist" returnType="boolean" visibility="private">
+          <Argument type="ArrayList&lt;Artist&gt;" name="arrayList"/>
+          <Argument type="String" name="name1"/>
+        </Method>
+        <Method name="saveArtist" returnType="void" visibility="private"/>
+      </Methods>
+    </Class>
+    <Class name="UploadSongPopUp" package="Component_Music" visibility="public" xPosition="20.0" yPosition="1220.0">
+      <Fields>
+        <Field name="fileChooser" type="FileChooser" visibility="private"/>
+        <Field name="filePath" type="File" visibility="private"/>
+        <Field name="photo" type="ImageView" visibility="private"/>
+        <Field name="image" type="Image" visibility="private"/>
+        <Field name="totalDetail" type="HBox" visibility="private"/>
+        <Field name="stage" type="Stage" visibility="private"/>
+        <Field name="title" type="Label" visibility="private"/>
+        <Field name="nameForUpload" type="String" visibility="package"/>
+        <Field name="file" type="File" visibility="package"/>
+        <Field name="songArrayList" type="ArrayList&lt;Song&gt;" visibility="package"/>
+        <Field name="musicFile" type="File" visibility="package"/>
+        <Field name="selectFileDelete" type="File" visibility="package"/>
+        <Field name="changePhoto" type="boolean" visibility="package"/>
+        <Field name="songUploadEmply" type="boolean" visibility="package"/>
+        <Field name="fillNameSong" type="TextField" visibility="package"/>
+        <Field name="fillNameArtist" type="TextField" visibility="package"/>
+        <Field name="fillDetailSong" type="TextField" visibility="package"/>
+        <Field name="fillSongPrice" type="TextField" visibility="package"/>
+        <Field name="path" type="TextField" visibility="package"/>
+        <Field name="checkExistFile" type="String" visibility="package"/>
+        <Field name="nationality" type="String" visibility="package"/>
+        <Field name="list" type="ArrayList&lt;ArrayList&gt;" visibility="package"/>
+        <Field name="listStyleSong" type="ArrayList&lt;String&gt;" visibility="package"/>
+        <Field name="tagBar" type="TileTagBar" visibility="package"/>
+        <Field name="tagScrollPane" type="ScrollPane" visibility="package"/>
+        <Field name="test" type="ArrayList&lt;String&gt;" visibility="package"/>
+        <Field name="totalDownload" type="int" visibility="package"/>
+        <Field name="mode" type="int" visibility="private"/>
+        <Field name="mouse_x" type="double" visibility="package"/>
+        <Field name="listCheckBox" type="ArrayList&lt;CheckBox&gt;" visibility="package"/>
+        <Field name="listView" type="ListView&lt;String&gt;" visibility="package"/>
+        <Field name="selectStage" type="Stage" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="title"/>
+          <Argument type="String" name="nationality"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="String" name="title"/>
+          <Argument type="Song" name="editSong"/>
+          <Argument type="String" name="path"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="runOnce" returnType="void" visibility="private"/>
+        <Method name="createCheckBox" returnType="CheckBox" visibility="private">
+          <Argument type="String" name="name"/>
+        </Method>
+        <Method name="DetailUploadSong" returnType="void" visibility="private"/>
+        <Method name="setupInterPane" returnType="void" visibility="private">
+          <Argument type="ArrayList&lt;String&gt;" name="list"/>
+        </Method>
+        <Method name="setupThaiPane" returnType="void" visibility="private">
+          <Argument type="ArrayList&lt;String&gt;" name="list"/>
+        </Method>
+        <Method name="summitClicked" returnType="void" visibility="private"/>
+        <Method name="exitButton" returnType="Button" visibility="private"/>
+        <Method name="exitButtonForStyleSelection" returnType="Button" visibility="private"/>
+        <Method name="uploadSong" returnType="void" visibility="public"/>
+        <Method name="checkSong" returnType="int" visibility="private">
+          <Argument type="ArrayList&lt;Song&gt;" name="arrayList"/>
+          <Argument type="String" name="name"/>
+          <Argument type="String" name="artist"/>
+        </Method>
+        <Method name="saveSong" returnType="void" visibility="private"/>
+        <Method name="setupStyleList" returnType="void" visibility="public"/>
+        <Method name="saveStyleList" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="E_Music" package="Main_music" visibility="public" xPosition="320.0" yPosition="1220.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="start" returnType="void" visibility="public">
+          <Argument type="Stage" name="stage"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String[]" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Admin_UI" package="UI_music" visibility="public" xPosition="620.0" yPosition="1220.0">
+      <Fields>
+        <Field name="dOB" type="LocalDate" visibility="package"/>
+        <Field name="dateSet" type="boolean" visibility="package"/>
+        <Field name="file" type="ReadWriteFile" visibility="private"/>
+        <Field name="user" type="File" visibility="package" isStatic="true"/>
+        <Field name="musicFile" type="File" visibility="package" isStatic="true"/>
+        <Field name="artistFile" type="File" visibility="package" isStatic="true"/>
+        <Field name="listAccount" type="ArrayList&lt;Account&gt;" visibility="package" isStatic="true"/>
+        <Field name="addAccount" type="ArrayList&lt;Account&gt;" visibility="package" isStatic="true"/>
+        <Field name="songArrayList" type="ArrayList&lt;Song&gt;" visibility="package" isStatic="true"/>
+        <Field name="artistArrayList" type="ArrayList&lt;Artist&gt;" visibility="package" isStatic="true"/>
+        <Field name="songSelectString" type="String" visibility="package" isStatic="true"/>
+        <Field name="songSelected" type="Song" visibility="package" isStatic="true"/>
+        <Field name="artistSelected" type="Artist" visibility="package" isStatic="true"/>
+        <Field name="songSelectedBoolean" type="Boolean" visibility="package" isStatic="true"/>
+        <Field name="artistSelectedBoolean" type="Boolean" visibility="package" isStatic="true"/>
+        <Field name="accountSelectedBoolean" type="Boolean" visibility="package" isStatic="true"/>
+        <Field name="list" type="ObservableList&lt;Account&gt;" visibility="package"/>
+        <Field name="searchSystemMain" type="SearchSystem" visibility="package"/>
+        <Field name="searchAccount" type="SearchSystemAccount" visibility="package"/>
+        <Field name="tableAccount" type="TableView&lt;Account&gt;" visibility="private"/>
+        <Field name="page" type="String" visibility="package"/>
+        <Field name="totalPane" type="VBox" visibility="public" isStatic="true"/>
+        <Field name="totalArtistPane" type="VBox" visibility="public" isStatic="true"/>
+        <Field name="selectNameSong1" type="Label" visibility="package" isStatic="true"/>
+        <Field name="selectArtistSong1" type="Label" visibility="package" isStatic="true"/>
+        <Field name="selectImageSong1" type="ImageView" visibility="package" isStatic="true"/>
+        <Field name="selectArtist2" type="Label" visibility="package" isStatic="true"/>
+        <Field name="selectDetail2" type="Label" visibility="package" isStatic="true"/>
+        <Field name="selectImageArtist2" type="ImageView" visibility="package" isStatic="true"/>
+        <Field name="updateVBox" type="VBox" visibility="private" isStatic="true"/>
+        <Field name="updateArtistVBox" type="VBox" visibility="private" isStatic="true"/>
+        <Field name="photo" type="AnchorPane" visibility="private"/>
+        <Field name="oldAccounts" type="ArrayList&lt;Account&gt;" visibility="package"/>
+        <Field name="presentAccounts" type="ArrayList&lt;Account&gt;" visibility="package"/>
+        <Field name="updateAccount" type="Account" visibility="package"/>
+        <Field name="stageUpdateAccount" type="Stage" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="Stage" name="stage"/>
+          <Argument type="Account" name="userAccount"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="CreaButton" returnType="Button" visibility="private">
+          <Argument type="String" name="text"/>
+        </Method>
+        <Method name="firstPagePane" returnType="AnchorPane" visibility="public">
+          <Argument type="String" name="page"/>
+        </Method>
+        <Method name="ArtistPane" returnType="AnchorPane" visibility="public">
+          <Argument type="String" name="page"/>
+        </Method>
+        <Method name="thirdPagePane" returnType="AnchorPane" visibility="public"/>
+        <Method name="tableAccount" returnType="AnchorPane" visibility="private"/>
+        <Method name="searchBoxAll" returnType="HBox" visibility="public"/>
+        <Method name="searchArtistBox" returnType="HBox" visibility="public"/>
+        <Method name="searchBoxMy" returnType="HBox" visibility="public"/>
+        <Method name="myAccount" returnType="BorderPane" visibility="public"/>
+        <Method name="AllSong" returnType="ScrollPane" visibility="private"/>
+        <Method name="AllArtist" returnType="ScrollPane" visibility="private"/>
+        <Method name="updateScrollPane" returnType="TilePane" visibility="public" isStatic="true">
+          <Argument type="String" name="text"/>
+        </Method>
+        <Method name="updateScrollArtistPane" returnType="TilePane" visibility="public" isStatic="true">
+          <Argument type="String" name="text"/>
+        </Method>
+        <Method name="UpdateClikedPane" returnType="AnchorPane" visibility="private"/>
+        <Method name="UpdateClikedArtistPane" returnType="AnchorPane" visibility="private"/>
+        <Method name="refreshTable" returnType="void" visibility="private"/>
+        <Method name="addAccountClicked" returnType="void" visibility="private"/>
+        <Method name="updateAccountClicked" returnType="int" visibility="private"/>
+        <Method name="deleteAccountClicked" returnType="int" visibility="private"/>
+        <Method name="deleteSongClicked" returnType="int" visibility="private"/>
+        <Method name="deleteArtistClicked" returnType="int" visibility="private"/>
+        <Method name="userLogout" returnType="void" visibility="public"/>
+        <Method name="exitButton" returnType="Button" visibility="private"/>
+      </Methods>
+    </Class>
+    <Class name="BrowsePane" package="UI_music" visibility="public" xPosition="920.0" yPosition="1220.0">
+      <Fields>
+        <Field name="scrollpane" type="ScrollPane" visibility="package"/>
+        <Field name="backgroundpane" type="AnchorPane" visibility="package"/>
+        <Field name="artistList" type="ObservableList&lt;Artist&gt;" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getBrowsePane" returnType="ScrollPane" visibility="public"/>
+        <Method name="CreateButton" returnType="Button" visibility="private">
+          <Argument type="String" name="name"/>
+          <Argument type="double" name="x"/>
+          <Argument type="double" name="y"/>
+          <Argument type="double" name="width"/>
+          <Argument type="int" name="index"/>
+        </Method>
+        <Method name="CreateBackgroundButton" returnType="Button" visibility="private">
+          <Argument type="double" name="x"/>
+          <Argument type="double" name="y"/>
+          <Argument type="double" name="width"/>
+        </Method>
+        <Method name="CreateImageView" returnType="ImageView" visibility="private">
+          <Argument type="double" name="x"/>
+          <Argument type="double" name="y"/>
+        </Method>
+        <Method name="CreateHead" returnType="Label" visibility="private">
+          <Argument type="String" name="string"/>
+          <Argument type="double" name="x"/>
+          <Argument type="double" name="y"/>
+        </Method>
+        <Method name="BorderList" returnType="AnchorPane" visibility="private">
+          <Argument type="String" name="name"/>
+          <Argument type="double" name="index"/>
+        </Method>
+        <Method name="CreateLabel" returnType="Label" visibility="private">
+          <Argument type="String" name="string"/>
+          <Argument type="double" name="x"/>
+          <Argument type="double" name="y"/>
+        </Method>
+        <Method name="CreateArtistList" returnType="AnchorPane" visibility="private">
+          <Argument type="Artist" name="artist"/>
+          <Argument type="double" name="x"/>
+          <Argument type="double" name="y"/>
+        </Method>
+        <Method name="CreateAlbumsList" returnType="AnchorPane" visibility="private">
+          <Argument type="String" name="string"/>
+          <Argument type="double" name="x"/>
+          <Argument type="double" name="y"/>
+        </Method>
+        <Method name="CreateIcon" returnType="ImageView" visibility="private">
+          <Argument type="String" name="name"/>
+        </Method>
+        <Method name="CreateLabel" returnType="Button" visibility="private">
+          <Argument type="String" name="string"/>
+          <Argument type="int" name="dis"/>
+          <Argument type="Image" name="image"/>
+        </Method>
+        <Method name="ReadFile" returnType="ArrayList&lt;ArrayList&gt;" visibility="private"/>
+      </Methods>
+    </Class>
+    <Class name="Guest_UI" package="UI_music" visibility="public" xPosition="1220.0" yPosition="1220.0">
+      <Fields>
+        <Field name="searchSystemMyLibrary" type="SearchSystem" visibility="package"/>
+        <Field name="fileForDownload" type="File" visibility="private"/>
+        <Field name="nameSet" type="String" visibility="private"/>
+        <Field name="songSelected" type="Song" visibility="private"/>
+        <Field name="userAccount" type="Account" visibility="private"/>
+        <Field name="page" type="String" visibility="private"/>
+        <Field name="pane" type="AnchorPane" visibility="private"/>
+        <Field name="detailDownload" type="VBox" visibility="private"/>
+        <Field name="totalPane" type="AnchorPane" visibility="public" isStatic="true"/>
+        <Field name="updateAccount" type="ArrayList&lt;Account&gt;" visibility="package"/>
+        <Field name="user" type="File" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Stage" name="stage"/>
+          <Argument type="Account" name="userAccount"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="firstPagePane" returnType="AnchorPane" visibility="public">
+          <Argument type="String" name="page"/>
+        </Method>
+        <Method name="thirdPagePane" returnType="AnchorPane" visibility="public"/>
+        <Method name="updateDetailDownload" returnType="void" visibility="public"/>
+        <Method name="CreaButton" returnType="Button" visibility="private">
+          <Argument type="String" name="text"/>
+        </Method>
+        <Method name="searchBoxAll" returnType="HBox" visibility="public"/>
+        <Method name="searchBoxMy" returnType="HBox" visibility="public"/>
+        <Method name="AllSong" returnType="BorderPane" visibility="private"/>
+        <Method name="updateScrollPane" returnType="TilePane" visibility="public">
+          <Argument type="String" name="text"/>
+        </Method>
+        <Method name="myAccount" returnType="BorderPane" visibility="public"/>
+        <Method name="downloader" returnType="void" visibility="public"/>
+        <Method name="userLogout" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Login" package="UI_music" visibility="public" xPosition="1520.0" yPosition="1220.0">
+      <Fields>
+        <Field name="scene1" type="Scene" visibility="package"/>
+        <Field name="stage" type="Stage" visibility="package" isStatic="true"/>
+        <Field name="mouse_x" type="double" visibility="package"/>
+        <Field name="user" type="File" visibility="package"/>
+        <Field name="tempId" type="File" visibility="package"/>
+        <Field name="listUserAccount" type="ArrayList&lt;Account&gt;" visibility="package"/>
+        <Field name="userAccount" type="Account" visibility="package"/>
+        <Field name="guestAccount" type="Account" visibility="package"/>
+        <Field name="addAccount" type="ArrayList&lt;Account&gt;" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Stage" name="stage"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="exitButton" returnType="Button" visibility="private"/>
+        <Method name="register" returnType="void" visibility="public"/>
+        <Method name="forgetPassword" returnType="void" visibility="public"/>
+        <Method name="readFile" returnType="ArrayList&lt;Account&gt;" visibility="private">
+          <Argument type="File" name="file"/>
+        </Method>
+        <Method name="writeFile" returnType="void" visibility="private">
+          <Argument type="File" name="file"/>
+          <Argument type="ArrayList&lt;Account&gt;" name="listAccount"/>
+        </Method>
+        <Method name="getStage" returnType="Stage" visibility="public" isStatic="true"/>
+      </Methods>
+    </Class>
+    <Class name="MusicPlayer" package="UI_music" visibility="public" xPosition="1820.0" yPosition="1220.0">
+      <Fields>
+        <Field name="playerSong" type="MediaPlayer" visibility="private"/>
+        <Field name="status" type="String" visibility="private"/>
+        <Field name="musicSlider" type="Slider" visibility="private"/>
+        <Field name="volumeMusic" type="Slider" visibility="private"/>
+        <Field name="interrupt" type="Boolean" visibility="private"/>
+        <Field name="selectMusicFile" type="File" visibility="private"/>
+        <Field name="primaryStage" type="Stage" visibility="private"/>
+        <Field name="scene" type="Scene" visibility="private"/>
+        <Field name="fileChooser" type="FileChooser" visibility="private"/>
+        <Field name="songDetail" type="Label" visibility="private"/>
+        <Field name="mouse_x" type="double" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="selectFile" returnType="void" visibility="private">
+          <Argument type="FileChooser" name="fileChooser"/>
+        </Method>
+        <Method name="selectMusic" returnType="void" visibility="private"/>
+        <Method name="openFile" returnType="void" visibility="private">
+          <Argument type="File" name="file"/>
+        </Method>
+        <Method name="exitButton" returnType="Button" visibility="private"/>
+        <Method name="playMusic" returnType="void" visibility="private"/>
+      </Methods>
+    </Class>
+    <Class name="MyAccount" package="UI_music" visibility="public" xPosition="2120.0" yPosition="1220.0">
+      <Fields>
+        <Field name="profilePane" type="BorderPane" visibility="private"/>
+        <Field name="changePane" type="BorderPane" visibility="private"/>
+        <Field name="user" type="File" visibility="private"/>
+        <Field name="file" type="ReadWriteFile" visibility="private"/>
+        <Field name="listAccount" type="ArrayList&lt;Account&gt;" visibility="private"/>
+        <Field name="dOB" type="LocalDate" visibility="private"/>
+        <Field name="editBox" type="VBox" visibility="private"/>
+        <Field name="changeBox" type="VBox" visibility="private"/>
+        <Field name="leftBox" type="VBox" visibility="private"/>
+        <Field name="bottomBox" type="HBox" visibility="private"/>
+        <Field name="username" type="TextField" visibility="private"/>
+        <Field name="firstname" type="TextField" visibility="private"/>
+        <Field name="lastname" type="TextField" visibility="private"/>
+        <Field name="email" type="TextField" visibility="private"/>
+        <Field name="currentPassword" type="TextField" visibility="private"/>
+        <Field name="currentPasswordInGrid" type="TextField" visibility="private"/>
+        <Field name="password" type="TextField" visibility="private"/>
+        <Field name="passwordConfirm" type="TextField" visibility="private"/>
+        <Field name="sexToggle" type="ToggleGroup" visibility="private"/>
+        <Field name="male" type="RadioButton" visibility="private"/>
+        <Field name="female" type="RadioButton" visibility="private"/>
+        <Field name="otherRadio" type="RadioButton" visibility="private"/>
+        <Field name="changeStatus" type="boolean" visibility="package"/>
+        <Field name="fileChooser" type="FileChooser" visibility="private"/>
+        <Field name="filePath" type="File" visibility="private"/>
+        <Field name="photo" type="ImageView" visibility="private"/>
+        <Field name="image" type="Image" visibility="private"/>
+        <Field name="profilePicture" type="AnchorPane" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getProfilePane" returnType="BorderPane" visibility="public"/>
+        <Method name="showAccount" returnType="void" visibility="public"/>
+        <Method name="editAccount" returnType="void" visibility="public"/>
+        <Method name="saveAccount" returnType="boolean" visibility="public"/>
+        <Method name="Clear" returnType="void" visibility="public"/>
+        <Method name="isEmail" returnType="boolean" visibility="private">
+          <Argument type="String" name="email"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Profile" package="UI_music" visibility="public" xPosition="20.0" yPosition="1620.0">
+      <Fields>
+        <Field name="savebt" type="Button" visibility="package"/>
+        <Field name="cancelbt" type="Button" visibility="package"/>
+        <Field name="editbt" type="Button" visibility="package"/>
+        <Field name="buyPremiumbtn" type="Button" visibility="package"/>
+        <Field name="cancelPremiumbtn" type="Button" visibility="package"/>
+        <Field name="accountPane" type="BorderPane" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getMainPane" returnType="BorderPane" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="ReadWriteFile" package="UI_music" visibility="public" xPosition="320.0" yPosition="1620.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="readFile" returnType="ArrayList&lt;Account&gt;" visibility="public">
+          <Argument type="File" name="file"/>
+        </Method>
+        <Method name="writeFile" returnType="void" visibility="public">
+          <Argument type="File" name="file"/>
+          <Argument type="ArrayList&lt;Account&gt;" name="listAccount"/>
+        </Method>
+        <Method name="readFileSong" returnType="ArrayList&lt;Song&gt;" visibility="public" isStatic="true">
+          <Argument type="File" name="file"/>
+        </Method>
+        <Method name="writeFileSong" returnType="void" visibility="public" isStatic="true">
+          <Argument type="File" name="file"/>
+          <Argument type="ArrayList&lt;Song&gt;" name="listSong"/>
+        </Method>
+        <Method name="readFileArtist" returnType="ArrayList&lt;Artist&gt;" visibility="public" isStatic="true">
+          <Argument type="File" name="file"/>
+        </Method>
+        <Method name="writeFileArtist" returnType="void" visibility="public" isStatic="true">
+          <Argument type="File" name="file"/>
+          <Argument type="ArrayList&lt;Artist&gt;" name="listArtist"/>
+        </Method>
+        <Method name="readPricePremium" returnType="PricePremium" visibility="public" isStatic="true">
+          <Argument type="File" name="file"/>
+        </Method>
+        <Method name="writePricePremium" returnType="void" visibility="public" isStatic="true">
+          <Argument type="File" name="file"/>
+          <Argument type="PricePremium" name="price"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Register" package="UI_music" visibility="public" xPosition="620.0" yPosition="1620.0">
+      <Fields>
+        <Field name="user" type="File" visibility="package"/>
+        <Field name="dOB" type="LocalDate" visibility="package"/>
+        <Field name="dateSet" type="boolean" visibility="package"/>
+        <Field name="fileChooser" type="FileChooser" visibility="private"/>
+        <Field name="filePath" type="File" visibility="private"/>
+        <Field name="photo" type="ImageView" visibility="private"/>
+        <Field name="image" type="Image" visibility="private"/>
+        <Field name="roles" type="String" visibility="package"/>
+        <Field name="listUserAccount" type="ArrayList&lt;Account&gt;" visibility="package"/>
+        <Field name="userAccount" type="Account" visibility="package"/>
+        <Field name="addAccount" type="ArrayList&lt;Account&gt;" visibility="package"/>
+        <Field name="file" type="ReadWriteFile" visibility="private"/>
+        <Field name="regisStage" type="Stage" visibility="package"/>
+        <Field name="mouse_x" type="double" visibility="package"/>
+        <Field name="profilePicture" type="AnchorPane" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="userRole"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="isEmail" returnType="boolean" visibility="private">
+          <Argument type="String" name="email"/>
+        </Method>
+        <Method name="exitButton" returnType="Button" visibility="private"/>
+      </Methods>
+    </Class>
+    <Class name="SetupPricePremium" package="UI_music" visibility="public" xPosition="920.0" yPosition="1620.0">
+      <Fields>
+        <Field name="priceFile" type="File" visibility="package"/>
+        <Field name="pricePremium" type="PricePremium" visibility="package"/>
+        <Field name="stage" type="Stage" visibility="package"/>
+        <Field name="setUpPriceTextFill" type="TextField" visibility="package"/>
+        <Field name="mouse_x" type="double" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="exitButton" returnType="Button" visibility="private"/>
+      </Methods>
+    </Class>
+    <Class name="TileTagBar" package="UI_music" visibility="public" xPosition="1220.0" yPosition="1620.0">
+      <Fields>
+        <Field name="observableTags" type="ObservableList&lt;String&gt;" visibility="private" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getTags" returnType="ObservableList&lt;String&gt;" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="UI" package="UI_music" visibility="public" isAbstract="true" xPosition="1556.0" yPosition="1637.0">
+      <Fields>
+        <Field name="stage" type="Stage" visibility="private"/>
+        <Field name="menuBtnClicked" type="int" visibility="private"/>
+        <Field name="userAccount" type="Account" visibility="public" isStatic="true"/>
+        <Field name="searchTextField" type="TextField" visibility="public" isStatic="true"/>
+        <Field name="vbox" type="VBox" visibility="public" isStatic="true"/>
+        <Field name="mouse_x" type="double" visibility="package"/>
+        <Field name="titlepane" type="AnchorPane" visibility="package" isStatic="true"/>
+        <Field name="premium" type="Label" visibility="package" isStatic="true"/>
+        <Field name="upgradepremium" type="Label" visibility="package" isStatic="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="Stage" name="stage"/>
+          <Argument type="Account" name="userAccount"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="firstPagePane" returnType="AnchorPane" visibility="public" isAbstract="true">
+          <Argument type="String" name="page"/>
+        </Method>
+        <Method name="thirdPagePane" returnType="AnchorPane" visibility="public" isAbstract="true"/>
+        <Method name="searchBoxAll" returnType="HBox" visibility="public" isAbstract="true"/>
+        <Method name="searchBoxMy" returnType="HBox" visibility="public" isAbstract="true"/>
+        <Method name="myAccount" returnType="BorderPane" visibility="public" isAbstract="true"/>
+        <Method name="userLogout" returnType="void" visibility="public" isAbstract="true"/>
+        <Method name="allPane" returnType="BorderPane" visibility="public"/>
+        <Method name="allPane_Admin" returnType="BorderPane" visibility="public"/>
+        <Method name="mainBox" returnType="VBox" visibility="private"/>
+        <Method name="mainBox_Admin" returnType="VBox" visibility="private"/>
+        <Method name="CreaButton" returnType="Button" visibility="private">
+          <Argument type="String" name="text"/>
+        </Method>
+        <Method name="CreaButtonAdmin" returnType="Button" visibility="private">
+          <Argument type="String" name="text"/>
+        </Method>
+        <Method name="menu" returnType="VBox" visibility="private"/>
+        <Method name="menu_Admin" returnType="VBox" visibility="private"/>
+        <Method name="tilePane" returnType="AnchorPane" visibility="public"/>
+        <Method name="tilePane_Admin" returnType="AnchorPane" visibility="public"/>
+        <Method name="exitButton" returnType="Button" visibility="private"/>
+        <Method name="minimizeButton" returnType="Button" visibility="private"/>
+      </Methods>
+    </Class>
+    <Class name="User_UI" package="UI_music" visibility="public" xPosition="1778.0" yPosition="1698.0">
+      <Fields>
+        <Field name="searchSystemMyLibrary" type="SearchSystemAddSong" visibility="package"/>
+        <Field name="fileForDownload" type="File" visibility="private"/>
+        <Field name="songNameSelected" type="String" visibility="private"/>
+        <Field name="nameSet" type="String" visibility="private"/>
+        <Field name="songSelected" type="AddSong" visibility="private"/>
+        <Field name="page" type="String" visibility="private"/>
+        <Field name="writeFile" type="ReadWriteFile" visibility="private"/>
+        <Field name="list" type="ObservableList&lt;AddSong&gt;" visibility="private"/>
+        <Field name="stage" type="Stage" visibility="private"/>
+        <Field name="musicfile" type="File" visibility="package"/>
+        <Field name="artistfile" type="File" visibility="package"/>
+        <Field name="SongArrayList" type="ArrayList&lt;Song&gt;" visibility="public" isStatic="true"/>
+        <Field name="ArtistArrayList" type="ArrayList&lt;Artist&gt;" visibility="public" isStatic="true"/>
+        <Field name="addAccount" type="ObservableList&lt;Account&gt;" visibility="public" isStatic="true"/>
+        <Field name="playerStatus" type="String" visibility="public" isStatic="true"/>
+        <Field name="pane" type="AnchorPane" visibility="private"/>
+        <Field name="detailDownload" type="VBox" visibility="private"/>
+        <Field name="totalPane" type="AnchorPane" visibility="public" isStatic="true"/>
+        <Field name="editbt" type="Button" visibility="package"/>
+        <Field name="savebt" type="Button" visibility="package"/>
+        <Field name="cancelbt" type="Button" visibility="package"/>
+        <Field name="updateAccount" type="ArrayList&lt;Account&gt;" visibility="package"/>
+        <Field name="user" type="File" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="Stage" name="stage"/>
+          <Argument type="Account" name="userAccount"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="firstPagePane" returnType="AnchorPane" visibility="public">
+          <Argument type="String" name="page"/>
+        </Method>
+        <Method name="thirdPagePane" returnType="AnchorPane" visibility="public"/>
+        <Method name="updateDetailDownload" returnType="void" visibility="public"/>
+        <Method name="CreaButton" returnType="Button" visibility="private">
+          <Argument type="String" name="text"/>
+        </Method>
+        <Method name="tableMyMusic" returnType="AnchorPane" visibility="private"/>
+        <Method name="searchBoxAll" returnType="HBox" visibility="public"/>
+        <Method name="searchBoxMy" returnType="HBox" visibility="public"/>
+        <Method name="AllSong" returnType="BorderPane" visibility="private"/>
+        <Method name="updateScrollPane" returnType="TilePane" visibility="public">
+          <Argument type="String" name="text"/>
+        </Method>
+        <Method name="myAccount" returnType="BorderPane" visibility="public"/>
+        <Method name="downloader" returnType="void" visibility="public"/>
+        <Method name="userLogout" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <HasRelation name="songSelected" source="UI_music.User_UI" target="Component_Music.AddSong" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="songSelected" source="Component_Music.ShowMusicPage" target="Component_Music.Song" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="addAccount" source="Component_Music.Cashing" target="Component_Music.Account" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Account&gt;"/>
+    <HasRelation name="presentAccounts" source="Component_Music.Cashing" target="Component_Music.Account" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Account&gt;"/>
+    <HasRelation name="updateAccount" source="UI_music.Guest_UI" target="Component_Music.Account" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Account&gt;"/>
+    <HasRelation name="searchSystemMain" source="UI_music.Admin_UI" target="Component_Music.SearchSystem" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="songSelected" source="UI_music.Guest_UI" target="Component_Music.Song" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="artistSelected" source="UI_music.Admin_UI" target="Component_Music.Artist" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="list" source="UI_music.User_UI" target="Component_Music.AddSong" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ObservableList&lt;AddSong&gt;"/>
+    <HasRelation name="file" source="UI_music.Admin_UI" target="UI_music.ReadWriteFile" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="searchSystemMyLibrary" source="Component_Music.ShowMusicPage" target="Component_Music.SearchSystem" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="list" source="UI_music.Admin_UI" target="Component_Music.Account" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ObservableList&lt;Account&gt;"/>
+    <UseRelation source="Component_Music.SearchSystem" target="Component_Music.Song" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="editArtist" source="Component_Music.UploadArtistPopUp" target="Component_Music.Artist" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="Component_Music.SearchPage" target="Component_Music.Artist" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="userAccount" source="UI_music.Login" target="Component_Music.Account" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="songArrayList" source="UI_music.Admin_UI" target="Component_Music.Song" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Song&gt;"/>
+    <UseRelation source="Component_Music.ShowingArtist" target="Component_Music.Artist" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="addAccount" source="UI_music.Login" target="Component_Music.Account" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Account&gt;"/>
+    <HasRelation name="list" source="Component_Music.ShowingSongs" target="Component_Music.Song" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ObservableList&lt;Song&gt;"/>
+    <UseRelation source="Component_Music.Artist" target="Component_Music.Artist" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="writeFile" source="UI_music.User_UI" target="UI_music.ReadWriteFile" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="artistList" source="Component_Music.ShowingArtist" target="Component_Music.Artist" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ObservableList&lt;Artist&gt;"/>
+    <HasRelation name="updateAccount2" source="Component_Music.Cashing" target="Component_Music.Account" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="oldAccounts" source="Component_Music.Cashing" target="Component_Music.Account" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Account&gt;"/>
+    <UseRelation source="Component_Music.AddSong" target="Component_Music.Song" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="updateAccount" source="UI_music.Admin_UI" target="Component_Music.Account" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="Component_Music.SelectTypeSongPopUp" target="Component_Music.SelectTypePopUp"/>
+    <HasRelation name="searchAccount" source="UI_music.Admin_UI" target="Component_Music.SearchSystemAccount" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="UI_music.Guest_UI" target="UI_music.UI"/>
+    <HasRelation name="song" source="Component_Music.DetailSongPopUp" target="Component_Music.Song" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="table" source="Component_Music.ShowingSongs" target="Component_Music.Song" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="file" source="Component_Music.Cashing" target="UI_music.ReadWriteFile" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="userAccount" source="UI_music.Guest_UI" target="Component_Music.Account" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="tagBar" source="Component_Music.UploadSongPopUp" target="UI_music.TileTagBar" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="Component_Music.Cashing" target="Component_Music.Song" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="Component_Music.Account" target="Component_Music.Account" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="listUserAccount" source="UI_music.Register" target="Component_Music.Account" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Account&gt;"/>
+    <HasRelation name="listSong" source="Component_Music.Account" target="Component_Music.AddSong" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;AddSong&gt;"/>
+    <HasRelation name="searchSystemMyLibrary" source="UI_music.Guest_UI" target="Component_Music.SearchSystem" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="song" source="Component_Music.AddSong" target="Component_Music.Song" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="presentAccounts" source="UI_music.Admin_UI" target="Component_Music.Account" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Account&gt;"/>
+    <HasRelation name="listAccount" source="Component_Music.Cashing" target="Component_Music.Account" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Account&gt;"/>
+    <UseRelation source="UI_music.ReadWriteFile" target="Component_Music.PricePremium" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="file" source="UI_music.Register" target="UI_music.ReadWriteFile" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="Component_Music.PricePremium" target="Component_Music.PricePremium" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="updateAccount" source="Component_Music.Cashing" target="Component_Music.Account" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Account&gt;"/>
+    <IsRelation name="is" source="UI_music.Admin_UI" target="UI_music.UI"/>
+    <HasRelation name="filterData" source="Component_Music.SearchSystemAccount" target="Component_Music.Account" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="FilteredList&lt;Account&gt;"/>
+    <HasRelation name="userAccount" source="UI_music.UI" target="Component_Music.Account" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="artistList" source="UI_music.BrowsePane" target="Component_Music.Artist" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ObservableList&lt;Artist&gt;"/>
+    <HasRelation name="userAccount" source="UI_music.Register" target="Component_Music.Account" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="UI_music.Login" target="Component_Music.Account" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="ArtistArrayList" source="UI_music.User_UI" target="Component_Music.Artist" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Artist&gt;"/>
+    <UseRelation source="Component_Music.ShowingSongs" target="Component_Music.Song" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="guestAccount" source="UI_music.Login" target="Component_Music.Account" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="UI_music.User_UI" target="UI_music.UI"/>
+    <HasRelation name="filterData" source="Component_Music.SearchSystem" target="Component_Music.Song" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="FilteredList&lt;Song&gt;"/>
+    <HasRelation name="SongArrayList" source="UI_music.User_UI" target="Component_Music.Song" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Song&gt;"/>
+    <HasRelation name="songSelected" source="Component_Music.ShowingSongs" target="Component_Music.Song" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="Component_Music.SearchSystemAccount" target="Component_Music.Account" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="Component_Music.SelectTypeArtistPopUp" target="Component_Music.SelectTypePopUp"/>
+    <HasRelation name="searchSystemMyLibrary" source="UI_music.User_UI" target="Component_Music.SearchSystemAddSong" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="file" source="UI_music.MyAccount" target="UI_music.ReadWriteFile" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="UI_music.BrowsePane" target="Component_Music.Artist" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="artistArrayList" source="Component_Music.UploadArtistPopUp" target="Component_Music.Artist" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Artist&gt;"/>
+    <HasRelation name="addAccount" source="UI_music.Admin_UI" target="Component_Music.Account" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Account&gt;"/>
+    <HasRelation name="userAccount" source="Component_Music.Cashing" target="Component_Music.Account" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="song" source="Component_Music.Cashing" target="Component_Music.Song" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="pricePremium" source="UI_music.SetupPricePremium" target="Component_Music.PricePremium" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="listAccount" source="UI_music.Admin_UI" target="Component_Music.Account" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Account&gt;"/>
+    <HasRelation name="updateAccount" source="UI_music.User_UI" target="Component_Music.Account" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Account&gt;"/>
+    <HasRelation name="addAccount" source="UI_music.User_UI" target="Component_Music.Account" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ObservableList&lt;Account&gt;"/>
+    <UseRelation source="UI_music.ReadWriteFile" target="Component_Music.Account" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="searchSystemMyLibrary" source="Component_Music.ShowingSongs" target="Component_Music.SearchSystem" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="listUserAccount" source="UI_music.Login" target="Component_Music.Account" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Account&gt;"/>
+    <UseRelation source="Component_Music.UploadArtistPopUp" target="Component_Music.Artist" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="UI_music.ReadWriteFile" target="Component_Music.Artist" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="addAccount" source="UI_music.Register" target="Component_Music.Account" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Account&gt;"/>
+    <UseRelation source="UI_music.ReadWriteFile" target="Component_Music.Song" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="Component_Music.UploadSongPopUp" target="Component_Music.Song" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="songSelected" source="UI_music.Admin_UI" target="Component_Music.Song" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="listAccount" source="UI_music.MyAccount" target="Component_Music.Account" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Account&gt;"/>
+    <HasRelation name="table" source="Component_Music.ShowMusicPage" target="Component_Music.Song" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="Component_Music.Cashing" target="Component_Music.Account" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="songArrayList" source="Component_Music.UploadSongPopUp" target="Component_Music.Song" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Song&gt;"/>
+    <HasRelation name="filterData" source="Component_Music.SearchSystemAddSong" target="Component_Music.AddSong" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="FilteredList&lt;AddSong&gt;"/>
+    <UseRelation source="Component_Music.SearchPage" target="Component_Music.Song" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="artistArrayList" source="UI_music.Admin_UI" target="Component_Music.Artist" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Artist&gt;"/>
+    <UseRelation source="Component_Music.Account" target="Component_Music.Song" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="Component_Music.Song" target="Component_Music.Song" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="oldAccounts" source="UI_music.Admin_UI" target="Component_Music.Account" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Account&gt;"/>
+    <UseRelation source="Component_Music.SearchSystemAddSong" target="Component_Music.Song" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="tableAccount" source="UI_music.Admin_UI" target="Component_Music.Account" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="list" source="Component_Music.ShowMusicPage" target="Component_Music.Song" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ObservableList&lt;Song&gt;"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
