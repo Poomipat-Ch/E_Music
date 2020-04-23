@@ -161,6 +161,7 @@
 .downloadSelected Label{
     -fx-font-size: 25px;
     -fx-text-fill: white;
+    -fx-font-family: "Itim";
 }
 
 .backgroundpane{
@@ -336,7 +337,7 @@
 
 .topchart{
     -fx-background-color : #222222;
-    -fx-opacity: .5;
+    -fx-opacity: .3;
 }
 
 .topchartbtn {
@@ -745,6 +746,19 @@
     -fx-background-color: rgba(255,255,255,0.2);
     -fx-table-cell-border-color: transparent;
 }
+
+.headlabell{
+    -fx-font-size: 25px;
+    -fx-text-fill: white;
+    -fx-font-family: "Itim";
+}
+
+.backgroundmylib{
+    -fx-background-color : linear-gradient(to top, rgba(71,108,203,1) 0%, rgba(55,85,163,1) 100%);
+    -fx-opacity: .4;
+    -fx-background-radius: 2em
+}
+
 
 /****************************************************************
  
