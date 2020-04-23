@@ -203,7 +203,7 @@ public class Admin_UI extends UI {
         editArtistBtn.setLayoutY(600);
         editArtistBtn.setOnAction(e -> {
             if (artistSelectedBoolean) {
-                new UploadArtistPopUp("Upload Artist", artistSelected); //<<-- Gut 
+                new UploadArtistPopUp("Edit Artist", artistSelected); //<<-- Gut 
             } else {
                 AlertBox.displayAlert("Opp!", "Please select your artist.");
             }
@@ -666,8 +666,8 @@ public class Admin_UI extends UI {
 
                 paneContent.getChildren().addAll(profilePicture, new Label(artist.getName1())/*, new Label("Detail : " + artist.getInfomation())*/);
                 contentButton.setGraphic(paneContent);
-                contentButton.setMinHeight(150);
-                contentButton.setMinWidth(150);
+                contentButton.setPrefSize(150, 150);
+                contentButton.setMaxSize(150, 150);
 
                 tilePane.getChildren().add(contentButton);
             }
