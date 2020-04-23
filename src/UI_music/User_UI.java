@@ -10,6 +10,7 @@ import Component_Music.Account;
 import Component_Music.AddSong;
 import Component_Music.Artist;
 import Component_Music.DetailSongPopUp;
+import Component_Music.ImageRectangle;
 import Component_Music.SearchPage;
 import Component_Music.SearchSystemAddSong;
 import Component_Music.Song;
@@ -130,12 +131,30 @@ public class User_UI extends UI {
         img.getChildren().add(imgMy);
 
         detailDownload.getStyleClass().add("downloadSelected");
-        detailDownload.setLayoutX(1030 - 300 - 20);
-        detailDownload.setLayoutY(450);
+        detailDownload.setLayoutX(1030 - 300 );
+        detailDownload.setLayoutY(570);
+        
+        AnchorPane background = new AnchorPane();
+        background.getStyleClass().add("backgroundmylib");
+        background.setPrefSize(300, 200);
+        background.setLayoutX(1030 - 300 - 20);
+        background.setLayoutY(50);
+        
+        ImageView image = new ImageView(new Image("/icon/down-arrow.png"));
+        image.setFitHeight(50);
+        image.setFitWidth(50);
+        image.setLayoutX(1030 - 100);
+        image.setLayoutY(160);
+        
+        Label headLabel = new Label("SELECT YOUR SONG\nFOR DOWNLOAD \nTO SHOW HERE. ");
+        headLabel.setLayoutX(1030 - 250 - 45);
+        headLabel.setLayoutY(100);
+        headLabel.getStyleClass().add("headlabell");
+        
         Label nameSong = new Label();
         Label nameArtist = new Label();
         Label DownloadAble = new Label();
-        detailDownload.getChildren().addAll(nameSong, nameArtist, DownloadAble);
+        detailDownload.getChildren().addAll( nameSong, nameArtist, DownloadAble);
 
         Button downloadBtn = CreaButton("Download");
         downloadBtn.setLayoutX(1030 - 250 - 20);
@@ -148,12 +167,12 @@ public class User_UI extends UI {
             }
         });
 
-        pane.getChildren().addAll(img, downloadBtn, detailDownload, tableMyMusic(), searchBoxMy());
+        pane.getChildren().addAll(background, headLabel, img, downloadBtn, detailDownload, tableMyMusic(), searchBoxMy(), image);
         return pane;
     }
 
     public void updateDetailDownload(AddSong songSelected) {
-        pane.getChildren().remove(0);
+        pane.getChildren().remove(2);
         Image imageMy;
         if (songSelected != null) {
             ((Label) detailDownload.getChildren().get(0)).setText("Song : " + songSelected.getNameSong());
@@ -173,7 +192,7 @@ public class User_UI extends UI {
         img.setMinSize(300, 400);
         img.setMaxSize(300, 400);
         img.setLayoutX(1030 - 300 - 20);
-        img.setLayoutY(20);
+        img.setLayoutY(200);
         img.setAlignment(Pos.CENTER);
         
         
@@ -181,9 +200,9 @@ public class User_UI extends UI {
         ImageView imgMy = new ImageView(imageMy);
         imgMy.setFitHeight(200);
         imgMy.setFitWidth(200);
-        img.getChildren().add(imgMy);
+        img.getChildren().add(new ImageRectangle(200, 200,imageMy ).getMyRectangle());
 
-        pane.getChildren().add(0, img);
+        pane.getChildren().add(2, img);
     }
 
     private Button CreaButton(String text) {
@@ -196,7 +215,7 @@ public class User_UI extends UI {
 
     private AnchorPane tableMyMusic() {
         AnchorPane anchorPane = new AnchorPane();
-        anchorPane.setMinSize(1030 - 300 - 60, 700);
+        anchorPane.setPrefSize(1030 - 300 - 20, 700);
         anchorPane.setLayoutX(20);
         anchorPane.setLayoutY(100);
 
