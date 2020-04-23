@@ -57,6 +57,7 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
     Artist editArtist;
     Boolean changePhoto = false;
     private String nationality;
+    private int mode = 0; // 0 is Upload ,1 is Edit 
 
     public UploadArtistPopUp(String title, String nationality) { // For Upload
         this.title = new Label(title);
@@ -66,6 +67,7 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
         this.nationality = nationality;
         image = new Image("/image/defaultprofile.png");
         photo = new ImageView(image);
+        mode = 0;
         runOnce();
     }
 
@@ -79,6 +81,7 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
         photo = new ImageView(image);
         this.editArtist = editArtist;
         changePhoto = true;
+        mode = 1;
         runOnce();
 
     }
@@ -397,17 +400,17 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
                     if (changePhoto) {
                         this.saveArtist();
                     } else {
-                        if (changePhoto = AlertBox.display("missing photo?", "Saving without upload photo?")) {
+                        if (changePhoto = AlertBox.display("ไม่มีรูปภาพ?", "คุณแน่ใจหรือไม่? ที่จะทำการ\nบันทึกโดยการไม่มีรูปภาพ")) {
                             this.saveArtist();
                         } else {
                             System.out.println("save cancel");
                         }
                     }
                 } else {
-                    AlertBox.displayAlert("Upload Fail!", "This artist already exist");
+                    AlertBox.displayAlert("มีข้อผิดพลาด!", "มีศิลปินนี้อยู่แล้ว"); 
                 }
             } else {
-                AlertBox.displayAlert("Upload Fail!", "Plese complete the form.");
+                AlertBox.displayAlert("มีข้อผิดพลาด!", "กรุณากรอกข้อมูลให้ครบ");
             }
         });
 
@@ -468,6 +471,21 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
     }
 
     private void saveArtist() {
+        
+        System.out.println(this.title.getText());
+        System.out.println(mode);
+        
+            if (this.title.getText().equals("New Artist") || this.title.getText().equals("Edit Artist")) {
+                
+                if(mode == 0){ AlertBox.displayAlert("Save Success!", "Upload Success!"); }
+                else if(mode == 1){ AlertBox.displayAlert("Save Success!", "Edit Success!");}
+            } else {
+                if(mode == 0){ AlertBox.displayAlert("บันทึกสำเร็จ!", "เพิ่มศิลปินสำเร็จ!"); }
+                else if(mode == 1){ AlertBox.displayAlert("บันทึกสำเร็จ!", "แก้ไขศิลปินสำเร็จ!"); }
+            }
+        
+        
+        
         artistArrayList.add(new Artist(fillNameArtist.getText(), fillNameArtist2.getText(), fillDetailArtist.getText(), image, nationality));
         try {
             ReadWriteFile.writeFileArtist(artistFile, artistArrayList);
