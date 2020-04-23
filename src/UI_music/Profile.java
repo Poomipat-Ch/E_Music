@@ -103,6 +103,11 @@ public class Profile {
             if ("premium".equals(UI.userAccount.getUserRole())) {
                 bottom.getChildren().clear();
                 bottom.getChildren().addAll(cancelPremiumbtn, editbt);
+                UI.titlepane.getChildren().remove(3);
+                UI.titlepane.getChildren().add(UI.premium);
+
+                UI.vbox.getChildren().remove(0);
+                UI.vbox.getChildren().add(0, UI.titlepane);
             }
 
 //            Label premium = new Label("PREMIUM");
@@ -112,11 +117,7 @@ public class Profile {
 //            premium.setPrefSize(150, 30);
 //            premium.getStyleClass().add("showpremium");
 
-            UI.titlepane.getChildren().remove(3);
-            UI.titlepane.getChildren().add(UI.premium);
 
-            UI.vbox.getChildren().remove(0);
-            UI.vbox.getChildren().add(0, UI.titlepane);
 
         });
 
@@ -128,6 +129,11 @@ public class Profile {
             if (!"admin".equals(UI.userAccount.getUserRole()) && !"premium".equals(UI.userAccount.getUserRole())) {
                 bottom.getChildren().clear();
                 bottom.getChildren().addAll(buyPremiumbtn, editbt);
+                UI.titlepane.getChildren().remove(3);
+                UI.titlepane.getChildren().add(UI.upgradepremium);
+
+                UI.vbox.getChildren().remove(0);
+                UI.vbox.getChildren().add(0, UI.titlepane);
             }
 
 //            Label upgradepremium = new Label("UPGRADE PREMIUM");
@@ -137,11 +143,7 @@ public class Profile {
 //            upgradepremium.setPrefSize(250, 30);
 //            upgradepremium.getStyleClass().add("premiumbtn");
 
-            UI.titlepane.getChildren().remove(3);
-            UI.titlepane.getChildren().add(UI.upgradepremium);
 
-            UI.vbox.getChildren().remove(0);
-            UI.vbox.getChildren().add(0, UI.titlepane);
 
         });
 

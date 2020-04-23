@@ -41,7 +41,7 @@ public class AddSong implements Serializable{
     }
 
     public int getNumberOfDownload() {
-        return numberOfDownload;
+        return this.numberOfDownload;
     }
 
     public void setNumberOfDownload(int numberOfDownload) {
