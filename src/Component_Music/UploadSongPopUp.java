@@ -107,7 +107,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
     }
 
     public UploadSongPopUp(String title, Song editSong, String path) { //For Edit //Gut you can change this
-        this.checkExistFile = (editSong.getNameSong() + editSong.getArtistSong().replaceAll("\\s", ""));
+        this.checkExistFile = (editSong.getNameSong() + editSong.getArtistSong()).replaceAll("\\s", "");
         this.title = new Label(title);
         this.fillNameSong = new TextField(editSong.getNameSong());
         this.fillNameArtist = new TextField(editSong.getArtistSong());
