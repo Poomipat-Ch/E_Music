@@ -35,17 +35,20 @@ abstract public class UI {
     public static Account userAccount;
 
     public static VBox vbox;
-    
+
     //Abstract Class For User_UI & Admin_UI
     abstract public AnchorPane firstPagePane(String page);
+
     abstract public AnchorPane thirdPagePane();
 
     abstract public HBox searchBoxAll();
+
     abstract public HBox searchBoxMy();
 
     abstract public BorderPane myAccount();
+
     abstract public void userLogout();
-    
+
     //Constuctor
     public UI() {
     }
@@ -56,7 +59,6 @@ abstract public class UI {
         vbox = new VBox();
     }
 
-    
     //Totally ALLpane On Scene
     public BorderPane allPane() {
         BorderPane borderPane = new BorderPane();
@@ -124,7 +126,6 @@ abstract public class UI {
 //
 //        return btn;
 //    }
-
     private VBox menu() {
         VBox vBox = new VBox();
         vBox.getStyleClass().add("menu");
@@ -146,7 +147,7 @@ abstract public class UI {
 
         Button browse = CreaButton("Browse");
         browse.setOnMouseClicked(e -> {
-            
+
             if (!"guest".equals(UI.userAccount.getUserRole())) {
 
                 this.vbox.getChildren().remove(1);
@@ -284,12 +285,46 @@ abstract public class UI {
 
     double mouse_x = 0, mouse_y = 0; // position mouse
 
+    static AnchorPane titlepane;
+    static Label premium;
+    static Label upgradepremium;
+
     public AnchorPane tilePane() {
 
+        titlepane = new AnchorPane();
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.getStyleClass().add("title");
         anchorPane.setPadding(new Insets(5));
+
+        premium = new Label("PREMIUM");
+        premium.setLayoutX(750);
+        premium.setLayoutY(12);
+        premium.setAlignment(Pos.CENTER);
+        premium.setPrefSize(150, 30);
+        premium.getStyleClass().add("showpremium");
+
         anchorPane.getChildren().addAll(searchBoxAll(), exitButton(), minimizeButton());
+
+        if (userAccount.getUserRole().equals("premium")) {
+            anchorPane.getChildren().add(premium);
+        }
+
+        upgradepremium = new Label("UPGRADE PREMIUM");
+        upgradepremium.setLayoutX(650);
+        upgradepremium.setLayoutY(12);
+        upgradepremium.setAlignment(Pos.CENTER);
+        upgradepremium.setPrefSize(250, 30);
+        upgradepremium.getStyleClass().add("premiumbtn");
+
+        upgradepremium.setOnMouseClicked(clicked -> {
+            this.vbox.getChildren().remove(1);
+            this.vbox.getChildren().add(myAccount());
+        });
+
+        if (userAccount.getUserRole().equals("member")) {
+            anchorPane.getChildren().add(upgradepremium);
+        }
+
         anchorPane.setOnMousePressed(e -> {
             mouse_x = e.getSceneX();
             mouse_y = e.getSceneY();
@@ -299,6 +334,8 @@ abstract public class UI {
             stage.setX(e.getScreenX() - mouse_x);
             stage.setY(e.getScreenY() - mouse_y);
         });
+
+        titlepane = anchorPane;
 
         return anchorPane;
     }
@@ -385,5 +422,4 @@ abstract public class UI {
 //
 //        return anchorpane;
 //    }
-
 }

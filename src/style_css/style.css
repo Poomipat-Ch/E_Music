@@ -168,6 +168,15 @@
     -fx-background-radius: 2em;
 }
 
+.showpremium {
+    -fx-background-color : radial-gradient(center 50% 50%, radius 300%, rgba(255,183,0,0.95) 0%, rgba(87,49,0,0.95) 100%);
+    -fx-text-fill : white;
+    -fx-background-radius :  10;
+    -fx-font-size : 20px;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.5) , 5,0,2,2);
+    -fx-font-family: "Itim";
+}
+
 /****************************************************************
  
   ScrollBar Skin  

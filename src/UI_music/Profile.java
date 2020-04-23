@@ -8,6 +8,7 @@ package UI_music;
 import Component_Music.Account;
 import Component_Music.AlertBox;
 import Component_Music.Cashing;
+import static UI_music.UI.userAccount;
 import java.io.IOException;
 import java.util.ArrayList;
 import javafx.geometry.Insets;
@@ -34,8 +35,7 @@ public class Profile {
     Button cancelPremiumbtn = new Button("Cancel Premium");
 
     BorderPane accountPane = new BorderPane();
-    
-    
+
     public Profile() {
 
         MyAccount myAccount = new MyAccount();
@@ -60,7 +60,7 @@ public class Profile {
                 }
                 if ("premium".equals(UI.userAccount.getUserRole())) {
                     bottom.getChildren().addAll(cancelPremiumbtn);
-                }   
+                }
                 bottom.getChildren().addAll(editbt);
             } else {
                 AlertBox.displayAlert("Edit Profile", "Failed.");
@@ -99,28 +99,52 @@ public class Profile {
             System.out.println("NEW CASHING");
             Cashing cashPremium = new Cashing();
             cashPremium.buyPremium(new Stage(), UI.userAccount);
-           
-            if("premium".equals(UI.userAccount.getUserRole())){
+
+            if ("premium".equals(UI.userAccount.getUserRole())) {
                 bottom.getChildren().clear();
-                bottom.getChildren().addAll(cancelPremiumbtn,editbt);
+                bottom.getChildren().addAll(cancelPremiumbtn, editbt);
             }
-            
+
+//            Label premium = new Label("PREMIUM");
+//            premium.setLayoutX(750);
+//            premium.setLayoutY(12);
+//            premium.setAlignment(Pos.CENTER);
+//            premium.setPrefSize(150, 30);
+//            premium.getStyleClass().add("showpremium");
+
+            UI.titlepane.getChildren().remove(3);
+            UI.titlepane.getChildren().add(UI.premium);
+
+            UI.vbox.getChildren().remove(0);
+            UI.vbox.getChildren().add(0, UI.titlepane);
 
         });
-        
+
         cancelPremiumbtn.getStyleClass().add("cancelbtn");
         cancelPremiumbtn.setOnMouseClicked(e -> {
             Cashing cancelPremium = new Cashing();
             cancelPremium.cancelPremium(UI.userAccount);
-            
-            
+
             if (!"admin".equals(UI.userAccount.getUserRole()) && !"premium".equals(UI.userAccount.getUserRole())) {
                 bottom.getChildren().clear();
-                bottom.getChildren().addAll(buyPremiumbtn,editbt);
+                bottom.getChildren().addAll(buyPremiumbtn, editbt);
             }
-            
+
+//            Label upgradepremium = new Label("UPGRADE PREMIUM");
+//            upgradepremium.setLayoutX(650);
+//            upgradepremium.setLayoutY(12);
+//            upgradepremium.setAlignment(Pos.CENTER);
+//            upgradepremium.setPrefSize(250, 30);
+//            upgradepremium.getStyleClass().add("premiumbtn");
+
+            UI.titlepane.getChildren().remove(3);
+            UI.titlepane.getChildren().add(UI.upgradepremium);
+
+            UI.vbox.getChildren().remove(0);
+            UI.vbox.getChildren().add(0, UI.titlepane);
+
         });
-        
+
         if (!"admin".equals(UI.userAccount.getUserRole()) && !"premium".equals(UI.userAccount.getUserRole())) {
             bottom.getChildren().addAll(buyPremiumbtn);
         }
