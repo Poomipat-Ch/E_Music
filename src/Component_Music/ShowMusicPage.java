@@ -186,7 +186,7 @@ public class ShowMusicPage {
             imageview.setFitWidth(1030);
             imageview.setPreserveRatio(true);
             
-            anchorPane.getChildren().addAll(imageview, table, CreateLabel(name), profilePicture, searchBoxMy());
+            anchorPane.getChildren().addAll(table, CreateLabel(name), profilePicture, searchBoxMy());
             
         } else {
             NameCol.setMinWidth(418);
@@ -206,7 +206,7 @@ public class ShowMusicPage {
             imageview.setFitWidth(1030);
             imageview.setPreserveRatio(true);
 
-            anchorPane.getChildren().addAll(imageview, table, CreateLabel(name), profilePicture, searchBoxMy());
+            anchorPane.getChildren().addAll(table, CreateLabel(name), profilePicture, searchBoxMy());
         }
         
         table.getColumns().addAll(NameCol, artistCol, detailCol, downloadCol);

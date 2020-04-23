@@ -418,6 +418,11 @@
     -fx-background-radius: 0em;
 }
 
+.backgroundlist {
+    -fx-background-color : #222222;
+    -fx-opacity: .6;
+}
+
 /****************************************************************
  
   Search page Skin  
@@ -456,12 +461,11 @@
 }
 
 .borderplaylist {
-    -fx-background-radius: 0em;
     -fx-background-color : transparent;
     -fx-text-fill: white;
     -fx-font-size: 15px;
     -fx-font-weight: bold;
-    -fx-background-radius: 10em;
+    -fx-background-radius: 2em;
 }
 
 .borderplaylist:hover {

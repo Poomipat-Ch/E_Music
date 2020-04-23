@@ -167,15 +167,15 @@ public class SearchPage {
     private AnchorPane CreateSongList(double x, double y, Song song) {
         AnchorPane anchorpane = new AnchorPane();
         //anchorpane.getStyleClass().add("borderplaylist");
-        anchorpane.setMaxWidth(215);
-        anchorpane.setPrefSize(215, 60);
+        anchorpane.setMaxWidth(220);
+        anchorpane.setPrefSize(220, 60);
         anchorpane.setLayoutX(x);
         anchorpane.setLayoutY(y);
 
         Label nameLabel = new Label(song.getNameSong());
         nameLabel.setPadding(new Insets(0, 0, 0, 50));
-        nameLabel.setPrefSize(185, 60);
-        nameLabel.setMaxWidth(185);
+        nameLabel.setPrefSize(190, 60);
+        nameLabel.setMaxWidth(190);
         nameLabel.getStyleClass().add("borderplaylist");
         nameLabel.setLayoutX(0);
         nameLabel.setLayoutY(0);
