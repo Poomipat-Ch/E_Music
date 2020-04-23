@@ -7,7 +7,6 @@ package UI_music;
 
 import Component_Music.Account;
 import Component_Music.AlertBox;
-import Component_Music.SearchSystem;
 import Component_Music.SearchSystemAccount;
 import Component_Music.Song;
 import Component_Music.Artist;
@@ -58,7 +57,7 @@ import javafx.stage.StageStyle;
  */
 public class Admin_UI extends UI {
 
-    LocalDate dOB;
+    private LocalDate dOB;
     boolean dateSet = false;
     private ReadWriteFile file = new ReadWriteFile();
     static File user = new File("src/data/user.dat"); //Add Static By Pop
@@ -78,10 +77,9 @@ public class Admin_UI extends UI {
     static Boolean artistSelectedBoolean = false;
     static Boolean accountSelectedBoolean = false;
 
-    ObservableList<Account> list = null;
+    private ObservableList<Account> list = null;
 
-    SearchSystem searchSystemMain = new SearchSystem();
-    SearchSystemAccount searchAccount = new SearchSystemAccount();
+    private SearchSystemAccount searchAccount = new SearchSystemAccount();
 
     private TableView<Account> tableAccount;
     
@@ -511,15 +509,14 @@ public class Admin_UI extends UI {
         return scrollArtistPane;
     }
 
-    static Label selectNameSong1 = new Label("");
-    static Label selectArtistSong1 = new Label("");
-    static ImageView selectImageSong1;
+    public static Label selectNameSong1 = new Label("");
+    public static Label selectArtistSong1 = new Label("");
+    public static ImageView selectImageSong1;
 
     public static TilePane updateScrollPane(String text) {
 
         VBox paneContent;
         Button contentButton;
-        ImageView imageView;
 
         TilePane tilePane = new TilePane();
         tilePane.setPadding(new Insets(10, 10, 10, 10)); // Top,Bottom,Right,Left
@@ -597,9 +594,9 @@ public class Admin_UI extends UI {
         return tilePane;
     }
 
-    static Label selectArtist2 = new Label("");
-    static Label selectDetail2 = new Label("");
-    static ImageView selectImageArtist2;
+    public static Label selectArtist2 = new Label("");
+    public static Label selectDetail2 = new Label("");
+    public static ImageView selectImageArtist2;
 
     public static TilePane updateScrollArtistPane(String text) {
 
@@ -781,10 +778,10 @@ public class Admin_UI extends UI {
     }
 
     private AnchorPane photo = new AnchorPane();
-    ArrayList<Account> oldAccounts;
-    ArrayList<Account> presentAccounts;
-    Account updateAccount;
-    Stage stageUpdateAccount;
+    private ArrayList<Account> oldAccounts;
+    private ArrayList<Account> presentAccounts;
+    private Account updateAccount;
+    private Stage stageUpdateAccount;
 
     private int updateAccountClicked() {
         stageUpdateAccount = new Stage();

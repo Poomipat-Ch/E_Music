@@ -7,7 +7,6 @@ package UI_music;
 
 import Component_Music.Account;
 import Component_Music.AddSong;
-import Component_Music.AlertBox;
 import Component_Music.DetailSongPopUp;
 import Component_Music.SearchPage;
 import Component_Music.SearchSystem;
@@ -26,7 +25,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -45,17 +43,20 @@ import javafx.stage.StageStyle;
  */
 public class Guest_UI extends UI {
 
-    SearchSystem searchSystemMyLibrary = new SearchSystem();
+    private SearchSystem searchSystemMyLibrary = new SearchSystem();
 
     // Create File for downloader
-   private File fileForDownload;
-   private String nameSet;
-   private Song songSelected;
-   private Account userAccount;
-   private String page;
+    private File fileForDownload;
+    private String nameSet;
+    private Song songSelected;
+    private Account userAccount;
+    private String page;
+
+    private ArrayList<Account> updateAccount = new ArrayList<>();
+    private File user = new File("src/data/user.dat");
 
     public Guest_UI(Stage stage, Account userAccount) {
-        super(stage,userAccount);
+        super(stage, userAccount);
         this.userAccount = userAccount;
 
         Scene scene = new Scene(allPane(), 1280, 960);
@@ -74,22 +75,21 @@ public class Guest_UI extends UI {
 
         return pane;
     }
-    
-    
+
     private AnchorPane pane = new AnchorPane();
     private VBox detailDownload = new VBox(10);
-    
+
     @Override
     public AnchorPane thirdPagePane() {
         return null;
     }
-    
-    public void updateDetailDownload(){
+
+    public void updateDetailDownload() {
         pane.getChildren().remove(0);
-        ((Label)detailDownload.getChildren().get(0)).setText("Song : "+ songSelected.getNameSong());
-        ((Label)detailDownload.getChildren().get(1)).setText("Artist : "+ songSelected.getArtistSong());
-        ((Label)detailDownload.getChildren().get(2)).setText("Downloadable(Time) : "+"3"); // wait
-        
+        ((Label) detailDownload.getChildren().get(0)).setText("Song : " + songSelected.getNameSong());
+        ((Label) detailDownload.getChildren().get(1)).setText("Artist : " + songSelected.getArtistSong());
+        ((Label) detailDownload.getChildren().get(2)).setText("Downloadable(Time) : " + "3"); // wait
+
         AnchorPane img = new AnchorPane();
         img.setMaxSize(300, 400);
         img.setLayoutX(1030 - 300 - 20);
@@ -99,7 +99,7 @@ public class Guest_UI extends UI {
         ImageView imgMy = new ImageView(imageMy);
         imgMy.setFitHeight(400);
         img.getChildren().add(imgMy);
-        
+
         pane.getChildren().add(0, img);
     }
 
@@ -245,7 +245,6 @@ public class Guest_UI extends UI {
         return tilePane;
     }
 
-
     @Override
     public BorderPane myAccount() {
         return null;
@@ -268,9 +267,6 @@ public class Guest_UI extends UI {
         }
 
     }
-
-    ArrayList<Account> updateAccount = new ArrayList<>();
-    File user = new File("src/data/user.dat");
 
     @Override
     public void userLogout() {

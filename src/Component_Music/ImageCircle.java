@@ -5,23 +5,15 @@
  */
 package Component_Music;
 
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 
 /**
  *
@@ -29,7 +21,7 @@ import javafx.scene.text.FontWeight;
  */
 public class ImageCircle {
 
-    Circle myCircle;
+    private Circle myCircle;
 
     public ImageCircle(double radius, Image image) {
         myCircle = new Circle(radius);
@@ -51,8 +43,6 @@ public class ImageCircle {
         myCircle.setFill(Color.SNOW);
         myCircle.setEffect(new DropShadow(+25d, 0d, +2d, Color.BLACK));
 
-//        if(image.getHeight() > image.getWidth())
-//            image.
         Image newimage = null;
         try {
             newimage = this.setImage(image);
@@ -92,10 +82,6 @@ public class ImageCircle {
         }
 
         WritableImage img = new WritableImage(size, size);
-//
-//        System.out.println("width " + width + " height " + height + " size " + size);
-//        System.out.println((width - size) / 2 + " " + (width - ((width - size) / 2)));
-//        System.out.println((height - size) / 2 + " " + (height - ((height - size) / 2)));
 
         PixelWriter w = img.getPixelWriter();
         for (int i = ((width - size) / 2) + ((width - size) % 2), row = 0; i < width - ((width - size) / 2) - ((width - size) % 2); i++, row++) {

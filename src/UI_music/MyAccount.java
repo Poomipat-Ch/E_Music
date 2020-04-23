@@ -8,21 +8,13 @@ package UI_music;
 import Component_Music.Account;
 import Component_Music.AlertBox;
 import Component_Music.ImageCircle;
-import static UI_music.UI.profilePicture;
-import static UI_music.UI.userAccount;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.event.ActionEvent;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -41,7 +33,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
@@ -82,7 +73,7 @@ public class MyAccount {
     private RadioButton female;
     private RadioButton otherRadio;
 
-    boolean changeStatus = false;
+    private boolean changeStatus = false;
 
     private FileChooser fileChooser;
     private File filePath;

@@ -15,7 +15,7 @@ import javafx.collections.transformation.FilteredList;
  */
 public class SearchSystemAccount implements ChangeListener<String>{
     
-    FilteredList<Account> filterData;
+    private FilteredList<Account> filterData;
 
     public SearchSystemAccount(FilteredList<Account> filterData) {
         this.filterData = filterData;

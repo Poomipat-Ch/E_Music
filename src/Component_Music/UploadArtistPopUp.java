@@ -48,14 +48,14 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
 
     private Label title;
 
-    TextField fillNameArtist;
-    TextField fillNameArtist2;
-    TextField fillDetailArtist;
+    private TextField fillNameArtist;
+    private TextField fillNameArtist2;
+    private TextField fillDetailArtist;
 
-    File artistFile = new File("src/data/artist.dat");
-    ArrayList<Artist> artistArrayList = new ArrayList<Artist>();
-    Artist editArtist;
-    Boolean changePhoto = false;
+    private File artistFile = new File("src/data/artist.dat");
+    private ArrayList<Artist> artistArrayList = new ArrayList<Artist>();
+    private Artist editArtist;
+    private Boolean changePhoto = false;
     private String nationality;
     private int mode = 0; // 0 is Upload ,1 is Edit 
 

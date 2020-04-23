@@ -8,13 +8,9 @@ package UI_music;
 import Component_Music.Artist;
 import Component_Music.ImageCircle;
 import Component_Music.ShowMusicPage;
-import java.io.DataInputStream;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,14 +19,11 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 
 /**
  *
@@ -38,10 +31,10 @@ import javafx.scene.layout.VBox;
  */
 public class BrowsePane {
 
-    ScrollPane scrollpane;
-    AnchorPane backgroundpane;
+    private ScrollPane scrollpane;
+    private AnchorPane backgroundpane;
 
-    ObservableList<Artist> artistList;
+    private ObservableList<Artist> artistList;
 
     public BrowsePane() {
         scrollpane = new ScrollPane();
