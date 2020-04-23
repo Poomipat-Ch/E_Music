@@ -5,7 +5,7 @@
  */
 package Component_Music;
 
-import UI_music.User_UI;
+import UI_music.UI;
 import static UI_music.UI.searchTextField;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -145,7 +145,7 @@ public class SearchPage {
 
         if (filename.equals("music.dat")) {
             songCount = 0;
-            for (Song song : User_UI.SongArrayList) {
+            for (Song song : UI.SongArrayList) {
                 if (song.getNameSong().toLowerCase().contains(foundtext.toLowerCase())) {
                     anchorpane.getChildren().add(CreateSongList((230 * (songCount % column)) + dis, (150 * (songCount / column)) + 50, song));
                     songCount++;
@@ -153,7 +153,7 @@ public class SearchPage {
             }
         } else {
             artistCount = 0;
-            for (Artist artist : User_UI.ArtistArrayList) {
+            for (Artist artist : UI.ArtistArrayList) {
                 if (artist.getName1().toLowerCase().contains(foundtext.toLowerCase()) || artist.getName2().toLowerCase().contains(foundtext.toLowerCase())) {
                     anchorpane.getChildren().add(CreateArtistList((230 * (artistCount % column)) + dis, (150 * (artistCount / column)) + 50, artist));
                     artistCount++;
