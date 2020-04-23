@@ -26,9 +26,13 @@ public class TopChartPane {
     private AnchorPane pane;
     
     public TopChartPane() {
+        
+        AnchorPane backgroundtopchart = new AnchorPane();
+        backgroundtopchart.setStyle("-fx-background-color: transparent;");
+        
         pane = new AnchorPane();
         topchartpane = new BorderPane();
-        Button topChartBtn;
+        AnchorPane topChartBtn;
         
         ArrayList<String> topchartlist = new ArrayList<>();
 
@@ -37,8 +41,12 @@ public class TopChartPane {
 
         topchartpane.setLayoutX(20);
         topchartpane.setLayoutY(375);
-        topchartpane.getStyleClass().add("topchart");
+        topchartpane.setStyle("-fx-background-color: transparent;");
         topchartpane.setMinSize(1030 - 50, 500);
+        
+        AnchorPane background = new AnchorPane();
+        background.getStyleClass().add("topchart");
+        background.setMinSize(780, 500);
 
         VBox topChartVbox = new VBox(10);
         topChartVbox.setMinWidth(200);
@@ -55,13 +63,19 @@ public class TopChartPane {
         topChartList.setPadding(new Insets(20, 0, 0, 100));
         
         for (String string : topchartlist) {
-            topChartBtn = new Button();
+            topChartBtn = new AnchorPane();
             topChartBtn.getStyleClass().add("topchartbtn");
             topChartBtn.setPrefSize(600, 160);         
             
+            ImageView image = new ImageView(new Image("/image/"+string+".png"));
+            image.setFitWidth(600);
+            image.setPreserveRatio(true);
+            
+            topChartBtn.getChildren().add(image);
+            
             topChartList.getChildren().addAll(CreateLabel("\n", 2), CreateLabel(string, 2), topChartBtn);
 
-            topChartBtn.setOnAction(event -> {
+            topChartBtn.setOnMouseClicked(event -> {
                 System.out.println(string);
                     new ShowMusicPage(string, "", new Image("/UI_music/defaultprofile.png"));
             });
@@ -69,11 +83,13 @@ public class TopChartPane {
         }
         
         AnchorPane centerTopChart = new AnchorPane();
-        centerTopChart.getChildren().addAll(topChartList,CreateSeeAll(topchartlist.get(0),640,210, new Image("/UI_music/defaultprofile.png")),CreateSeeAll(topchartlist.get(1),640,430, new Image("/UI_music/defaultprofile.png")));
+        centerTopChart.getChildren().addAll(background, topChartList,CreateSeeAll(topchartlist.get(0),640,210, new Image("/UI_music/defaultprofile.png")),CreateSeeAll(topchartlist.get(1),640,430, new Image("/UI_music/defaultprofile.png")));
 
         topchartpane.setCenter(centerTopChart);
         
-        pane.getChildren().addAll(new ImageSlide().getAnchorpane(), topchartpane);
+        backgroundtopchart.getChildren().addAll( topchartpane);
+        
+        pane.getChildren().addAll(new ImageSlide().getAnchorpane(), backgroundtopchart);
 
 
     }

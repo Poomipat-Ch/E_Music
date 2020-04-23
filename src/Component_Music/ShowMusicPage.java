@@ -24,6 +24,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -155,6 +156,13 @@ public class ShowMusicPage {
 
                 }
             }
+
+            ImageView imageview = new ImageView(new Image("/image/" + name + ".png"));
+            imageview.setFitWidth(1030);
+            imageview.setPreserveRatio(true);
+
+            anchorPane.getChildren().addAll(imageview, table, searchBoxMy());
+
         } else if (content.equals("artist")) {
             System.out.println("yes");
             try {
@@ -167,6 +175,13 @@ public class ShowMusicPage {
             } catch (ClassNotFoundException | IOException ex) {
                 Logger.getLogger(ShowMusicPage.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
+            ImageView imageview = new ImageView(new Image("/image/BrowseBackground.jpg"));
+            imageview.setFitWidth(1030);
+            imageview.setPreserveRatio(true);
+            
+            anchorPane.getChildren().addAll(imageview, table, CreateLabel(name), profilePicture, searchBoxMy());
+            
         } else {
             try {
                 Song.getMyMusicList().forEach(song -> {
@@ -179,6 +194,12 @@ public class ShowMusicPage {
             } catch (IOException | ClassNotFoundException ex) {
                 System.out.println("173 ShowMusicPage : IOException get my music list from class song");
             }
+
+            ImageView imageview = new ImageView(new Image("/image/BrowseBackground.jpg"));
+            imageview.setFitWidth(1030);
+            imageview.setPreserveRatio(true);
+
+            anchorPane.getChildren().addAll(imageview, table, CreateLabel(name), profilePicture, searchBoxMy());
         }
 
         table.setItems(sortedList);
@@ -196,8 +217,6 @@ public class ShowMusicPage {
         scrollpane.setLayoutY(-4);
         scrollpane.setPrefSize(1030, 901);
 
-        anchorPane.getChildren().addAll(table, CreateLabel(name), profilePicture, searchBoxMy());
-
         scrollpane.setContent(anchorPane);
 
         UI.vbox.getChildren().remove(1);
@@ -208,16 +227,16 @@ public class ShowMusicPage {
     private AnchorPane CreateLabel(String string) {
         AnchorPane anchorpane = new AnchorPane();
         anchorpane.setPrefSize(500, 200);
-        anchorpane.setLayoutX(350);
+        anchorpane.setLayoutX(325);
         anchorpane.setLayoutY(75);
 
         AnchorPane background = new AnchorPane();
         background.getStyleClass().add("backgroundpane");
-        background.setPrefSize(500, 200);
+        background.setPrefSize(550, 200);
 
         Label label = new Label(string);
         label.getStyleClass().add("labelheadinshowpage");
-        label.setPrefSize(500, 200);
+        label.setPrefSize(550, 200);
         label.setAlignment(Pos.CENTER);
 
         anchorpane.getChildren().addAll(background, label);
@@ -227,7 +246,7 @@ public class ShowMusicPage {
 
     public HBox searchBoxMy() {
         HBox hBox = new HBox();
-        hBox.setPrefSize(1030 - 100, 30);
+        hBox.setPrefSize(1030 - 80, 30);
         hBox.setLayoutX(30);
         hBox.setLayoutY(320);
 
@@ -236,7 +255,7 @@ public class ShowMusicPage {
 //        anchorpane.getStyleClass().add("bgsearchfield");
         TextField searchTextField = new TextField();
         searchTextField.setPromptText("Filter");
-        searchTextField.setPrefSize(1030 - 200, 10);
+        searchTextField.setPrefSize(1030 - 175, 10);
         searchTextField.getStyleClass().add("searchfield");
 
 //        searchTextField.set
