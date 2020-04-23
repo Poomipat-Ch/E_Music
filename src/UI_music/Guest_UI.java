@@ -7,6 +7,7 @@ package UI_music;
 
 import Component_Music.Account;
 import Component_Music.AddSong;
+import Component_Music.Artist;
 import Component_Music.DetailSongPopUp;
 import Component_Music.SearchPage;
 import Component_Music.SearchSystem;
@@ -51,6 +52,9 @@ public class Guest_UI extends UI {
     private Song songSelected;
     private Account userAccount;
     private String page;
+    
+    private File musicfile = new File("src/data/music.dat");
+    private File artistfile = new File("src/data/artist.dat");
 
     private ArrayList<Account> updateAccount = new ArrayList<>();
     private File user = new File("src/data/user.dat");
@@ -58,6 +62,17 @@ public class Guest_UI extends UI {
     public Guest_UI(Stage stage, Account userAccount) {
         super(stage, userAccount);
         this.userAccount = userAccount;
+        try {
+            SongArrayList = ReadWriteFile.readFileSong(musicfile);
+        } catch (IOException | ClassNotFoundException ex) {
+            System.out.println("SearchPage: ERROR READ MUSIC.DAT");
+        }
+
+        try {
+            ArtistArrayList = new ReadWriteFile().readFileArtist(artistfile);
+        } catch (IOException | ClassNotFoundException ex) {
+            System.out.println("SearchPage: ERROR READ MUSIC.DAT");
+        }
 
         Scene scene = new Scene(allPane(), 1280, 960);
         String stylrSheet = getClass().getResource("/style_css/style.css").toExternalForm();

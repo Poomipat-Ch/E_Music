@@ -67,8 +67,7 @@ public class User_UI extends UI {
     private File musicfile = new File("src/data/music.dat");
     private File artistfile = new File("src/data/artist.dat");
 
-    public static ArrayList<Song> SongArrayList = new ArrayList<>();
-    public static ArrayList<Artist> ArtistArrayList = new ArrayList<>();
+
     public static ObservableList<Account> addAccount;
     public static String playerStatus;
 

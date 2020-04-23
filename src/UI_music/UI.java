@@ -7,8 +7,11 @@ package UI_music;
 
 import Component_Music.Account;
 import Component_Music.AlertBox;
+import Component_Music.Artist;
 import Component_Music.ImageCircle;
+import Component_Music.Song;
 import static UI_music.User_UI.playerStatus;
+import java.util.ArrayList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -35,6 +38,8 @@ abstract public class UI {
     public static Account userAccount;
     public static TextField searchTextField;
     public static VBox vbox;
+    public static ArrayList<Song> SongArrayList = new ArrayList<>();
+    public static ArrayList<Artist> ArtistArrayList = new ArrayList<>();
 
     //Abstract Class For User_UI & Admin_UI
     abstract public AnchorPane firstPagePane(String page);
@@ -139,15 +144,8 @@ abstract public class UI {
 
         Button browse = CreaButton("Browse");
         browse.setOnMouseClicked(e -> {
-
-            if (!"guest".equals(UI.userAccount.getUserRole())) {
                 this.vbox.getChildren().remove(1);
                 this.vbox.getChildren().add(new BrowsePane().getBrowsePane());
-            } else {
-                AlertBox registerFirst = new AlertBox();
-                registerFirst.displayAlert("Register First", "Register Free Account First");
-                new Register("member");
-            }
         });
 
         VBox mysong = new VBox();
