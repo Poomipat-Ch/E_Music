@@ -192,8 +192,8 @@ public class Account implements Serializable {
     }
     
     public void addSong(Song song, int downloader) {
-        if(firstSong)
-            listSong.remove(0);
+//        if(firstSong)
+//            listSong.remove(0);
         boolean isCheckAHA = false;
         for (AddSong addsong : listSong) {
             if(addsong.getSong().getNameSong().equals(song.getNameSong())){
