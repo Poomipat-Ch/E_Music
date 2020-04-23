@@ -307,7 +307,21 @@ public class Cashing {
                     AlertBox.displayAlert("Purchase Success", "\"" + song.getNameSong() + " - " + song.getArtistSong() + "\" was added to your playlist.");
                     System.out.println("Purchase complete");
                     this.paymentStage.close();
+                    
+                    ArrayList<Song> songList = new ArrayList<Song>();
                     song.isDownload();
+                    try {
+                        for (Song song1: Song.getMyMusicList()) {
+                            if (song1.getNameSong().equals(song.getNameSong())) 
+                            {
+                                song1.isDownload();
+                            }
+                            songList.add(song1);
+                        }
+                        ReadWriteFile.writeFileSong(new File("src/data/Music.dat"), songList);
+                    } catch (IOException | ClassNotFoundException ex) {
+                        Logger.getLogger(Cashing.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     UI.userAccount.addSong(song,downloadTime);
                     this.userSaveSong();
                     //<------------------------------------------------------------ EVERYTHING CHECK PURCHASE COMPLETE Set song EVERYTHINGto the playlist pls thank you by font
