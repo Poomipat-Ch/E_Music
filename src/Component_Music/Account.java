@@ -62,7 +62,7 @@ public class Account implements Serializable {
         this.userRole = userRole;
         this.setPhoto(image);
         
-        listSong.add(new AddSong());
+        //listSong.add(new AddSong());
     }
 
     
