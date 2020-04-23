@@ -522,14 +522,11 @@
 
 .searchfield{
     -fx-font-size: 18px;
-}
-
-.searchfield:hover{
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: black; 
 }
 
 .searchfield:pressed{
-    -fx-text-fill: white;
+    -fx-text-fill: black;
 }
 
 
