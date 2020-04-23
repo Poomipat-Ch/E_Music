@@ -143,6 +143,9 @@ public class Admin_UI extends UI {
                 } else {
                     new UploadSongPopUp("แก้ไขเพลง", songSelected, "src/MusicFile/" + songSelectString + ".mp3");
                 }
+                songSelectedBoolean = false; // By Pop
+                Admin_UI.updateVBox.getChildren().clear();                          //Refresh Picture
+                Admin_UI.updateVBox.getChildren().addAll(profilePicture, selectNameSong1, selectArtistSong1);
             } else {
                 AlertBox.displayAlert("Opp!", "Please select your song.");
             }
@@ -168,7 +171,7 @@ public class Admin_UI extends UI {
                         System.out.println("Error: delete Song has a problem when clicked");
                     }
                     AlertBox.displayAlert("Success", "Song : " + songSelected.getNameSong() + " has been deleted");
-                } else {
+                                    } else {
                     System.out.println("cancel delete");
                 }
             } else {
@@ -205,6 +208,9 @@ public class Admin_UI extends UI {
             } else {
                 AlertBox.displayAlert("Opp!", "Please select your artist.");
             }
+            artistSelectedBoolean =false;   //Pop
+            Admin_UI.updateArtistVBox.getChildren().clear();                        //Refresh Picture right
+            Admin_UI.updateArtistVBox.getChildren().addAll(profilePictureArtist, selectArtist2, selectDetail2);
         });
 
         Button newArtistBtn = CreaButton("New Artist");       //New Artist
