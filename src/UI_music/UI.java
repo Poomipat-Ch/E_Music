@@ -288,13 +288,13 @@ abstract public class UI {
         ImageView imageview = new ImageView(new Image("/icon/settings.png"));
         imageview.setFitWidth(15);
         imageview.setFitHeight(15);
-        imageview.setLayoutX(72);
-        imageview.setLayoutY(179);
+        imageview.setLayoutX(50); //72
+        imageview.setLayoutY(179); //179
         
         Label setting = new Label("EDIT MYACCOUNT");
         setting.getStyleClass().add("settinglabel");
-        setting.setLayoutX(92);
-        setting.setLayoutY(180);
+        setting.setLayoutX(70); //92
+        setting.setLayoutY(180); //180
         
         anchorpane.getChildren().addAll(profilePicture, label, imageview, setting);
 
