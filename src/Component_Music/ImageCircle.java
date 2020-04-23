@@ -9,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -33,7 +34,7 @@ public class ImageCircle {
     public ImageCircle(double radius, Image image) {
         myCircle = new Circle(radius);
         myCircle.setFill(Color.SNOW);
-        myCircle.setEffect(new DropShadow(+2d, 0d, +2d, Color.BLACK));
+        myCircle.setEffect(new DropShadow(BlurType.GAUSSIAN ,Color.WHITE,+25d, +5d, 0d, +2d));
 
         Image newimage = null;
         try {

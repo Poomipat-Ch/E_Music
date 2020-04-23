@@ -7,6 +7,7 @@ package UI_music;
 
 import Component_Music.Account;
 import Component_Music.AlertBox;
+import Component_Music.ImageCircle;
 import static UI_music.User_UI.playerStatus;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -187,7 +188,8 @@ abstract public class UI {
             }
         });
 
-        Button myAccount = CreaButton("My Account");
+//        Button myAccount = CreaButton("My Account");
+        Button myAccount = ButtonAccount();
         myAccount.setOnMouseClicked(e -> {
             menuBtnClicked = 2;
             if (!"guest".equals(UI.userAccount.getUserRole())) {
@@ -198,8 +200,8 @@ abstract public class UI {
                 AlertBox registerFirst = new AlertBox();
                 registerFirst.displayAlert("Register First", "Register Free Account First");
                 new Register("member");
-                this.stage.close();
-                Login.stage.show();
+//                this.stage.close();
+//                Login.stage.show();
             }
         });
         Button logOut = CreaButton("Logout");
@@ -207,12 +209,14 @@ abstract public class UI {
             this.stage.close();
             Login.stage.show();
         });
+        
+        myAccount.setAlignment(Pos.CENTER);
 
-        VBox bottomVBox = new VBox(playerMusic, myAccount, logOut);
+        VBox bottomVBox = new VBox(playerMusic, logOut);
         bottomVBox.setAlignment(Pos.BOTTOM_CENTER);
         VBox.setVgrow(bottomVBox, Priority.ALWAYS);
 
-        vBox.getChildren().addAll(logoLabel, home, browse, mysong, bottomVBox);
+        vBox.getChildren().addAll(logoLabel, myAccount, home, browse, mysong,  bottomVBox);
 
         return vBox;
     }
@@ -275,6 +279,46 @@ abstract public class UI {
         vBox.getChildren().addAll(logoLabel, songManage, artistManage, accountManage, bottomVBox);
 
         return vBox;
+    }
+
+    static AnchorPane profilePicture = new AnchorPane();
+
+    private Button ButtonAccount() {
+        AnchorPane anchorpane = new AnchorPane();
+
+        anchorpane.getStyleClass().add("accountbtn");
+
+        profilePicture.getChildren().add(new ImageCircle(125, 70, 60, userAccount.getPhoto()).getMyCircle());
+        Label label = new Label("Hello, " + userAccount.getUsername());
+        label.setStyle("-fx-text-fill : white;");
+        label.setPrefWidth(250);
+        label.setLayoutY(145);
+        label.setAlignment(Pos.CENTER);
+        
+        ImageView imageview = new ImageView(new Image("/icon/settings.png"));
+        imageview.setFitWidth(15);
+        imageview.setFitHeight(15);
+        imageview.setLayoutX(72);
+        imageview.setLayoutY(179);
+        
+        Label setting = new Label("EDIT MYACCOUNT");
+        setting.getStyleClass().add("settinglabel");
+        setting.setLayoutX(92);
+        setting.setLayoutY(180);
+        
+        anchorpane.getChildren().addAll(profilePicture, label, imageview, setting);
+
+        Button btn = new Button();
+
+        btn.getStyleClass().add("accountbtn");
+
+        btn.setGraphic(anchorpane);
+        btn.setMinWidth(250);
+        btn.setPadding(new Insets(10, 0, 20, 0));
+        btn.setAlignment(Pos.CENTER_LEFT);
+//        btn.getStyleClass().add("menubtn");
+
+        return btn;
     }
 
     double mouse_x = 0, mouse_y = 0; // position mouse

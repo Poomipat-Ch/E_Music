@@ -178,6 +178,25 @@
     -fx-font-family: "Itim";
 }
 
+.accountbtn{
+    -fx-background-color:transparent;
+    -fx-background-radius: 0em;
+    -fx-background-radius :  0 0 0 0; 
+    -fx-text-fill : white;
+    -fx-font-size : 20px;
+    -fx-font-family: "Itim";
+}
+
+.settinglabel{
+    -fx-text-fill : white;
+    -fx-font-size : 10px;
+    -fx-font-family: "Itim";
+}
+
+.settinglabel:hover{
+    -fx-underline: true;
+}
+
 /****************************************************************
  
   ScrollBar Skin  
