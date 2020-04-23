@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -125,7 +126,7 @@ public class User_UI extends UI {
         img.setLayoutX(1030 - 300 - 20);
         img.setLayoutY(20);
 
-        Image imageMy = new Image("/image/Music_pic.jpg");
+        Image imageMy = null;
         ImageView imgMy = new ImageView(imageMy);
         img.getChildren().add(imgMy);
 
@@ -255,7 +256,7 @@ public class User_UI extends UI {
         return anchorPane;
     }
 
-    public static TextField searchTextField;
+    
 
     @Override
     public HBox searchBoxAll() {

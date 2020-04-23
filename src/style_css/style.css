@@ -1,3 +1,4 @@
+
 @font-face{
     font-family: Itim;
     src: url("/font/Itim-Regular.ttf");
@@ -677,6 +678,7 @@
 .tableMyLibrary,tableMyLibrary:focused{
     -fx-background-color:transparent;
     -fx-font-family: "Itim";
+    -fx-font-size:20px;
 }
 
 .tableMyLibrary .column-header-background{
@@ -705,7 +707,7 @@
 .tableMyLibrary .table-row-cell:selected,.tableMyLibrary .table-row-cell:hover{
     -fx-text-fill: black;  
     -fx-background-color: rgba(0,0,0,0.1);; /*rgba(63,93,167,0.9);*/
-    -fx-font-size:15px;
+
 }
 
 .tableMyLibrary .table-row-cell,.tableMyLibrary .table-row-cell Lable{
@@ -729,3 +731,4 @@
 .xpremiumbutton:hover{
     -fx-text-fill: #ffffff;
 }
+
