@@ -60,7 +60,7 @@ public class MyAccount {
 
     private LocalDate dOB;
 
-    private VBox editBox = new VBox(30);
+    private VBox editBox = new VBox();
     private VBox changeBox = new VBox(10);
     private VBox leftBox = new VBox(10);
     private HBox bottomBox = new HBox();
@@ -99,6 +99,7 @@ public class MyAccount {
 
     public void showAccount() {
         editBox.getChildren().clear();
+        editBox.setSpacing(20);
         
         Label titleHead = new Label("My Account / บัญชีของฉัน");
         titleHead.getStyleClass().add("titleMyAccount");
@@ -258,7 +259,7 @@ public class MyAccount {
         GridPane gridPaneEdit = new GridPane();
         gridPaneEdit.getStyleClass().add("detailMyAccount");
         gridPaneEdit.setVgap(20);
-        gridPaneEdit.setHgap(10);
+        gridPaneEdit.setHgap(10);//10
         gridPaneEdit.setAlignment(Pos.CENTER_LEFT);
         GridPane.setHalignment(usernameTitleLabel, HPos.RIGHT);
         GridPane.setHalignment(firstnameTitleLabel, HPos.RIGHT);
@@ -319,6 +320,7 @@ public class MyAccount {
         Label colonC = new Label(":");
         
         GridPane gridPanePass = new GridPane();
+        gridPanePass.setPadding(new Insets(20,0,0,0));
         gridPanePass.setVgap(20);
         gridPanePass.setHgap(10);
         gridPanePass.getStyleClass().add("detailMyAccount");
@@ -337,18 +339,20 @@ public class MyAccount {
         gridPanePass.getChildren().addAll(currentPasswordTitleInGrid,passwordTitle,passwordConfirmTitle,
                                         colonA,colonB,colonC,
                                         currentPasswordInGrid,password,passwordConfirm);
+
+        editBox.getChildren().clear();
+        editBox.setSpacing(20);
+        editBox.getChildren().addAll(gridPaneEdit,rowCurrentPass,changePassword);
         
         changePassword.setOnMouseClicked(event -> {
+            editBox.setSpacing(0);
             currentPassword.clear();
             currentPasswordInGrid.clear();
             editBox.getChildren().removeAll(rowCurrentPass,changePassword);
             editBox.getChildren().addAll(gridPanePass);
             changeStatus = true;
         });
-
-        editBox.getChildren().clear();
-        editBox.getChildren().addAll(gridPaneEdit,rowCurrentPass,changePassword);
-        editBox.setPadding(new Insets(50, 50, 50, 50));
+        //editBox.setPadding(new Insets(0, 0, 50, 0));
         
         Button uploadBtn = new Button("Change Image");
         //Upload Picture 
