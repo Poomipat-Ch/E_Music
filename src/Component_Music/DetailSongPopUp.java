@@ -28,7 +28,6 @@ import javafx.stage.StageStyle;
 public class DetailSongPopUp {
     private Song song;
     private VBox detail;
-    //private BorderPane totalDetail;
     private Stage stage;
             
     public DetailSongPopUp(Song song) throws InterruptedException {
@@ -49,7 +48,7 @@ public class DetailSongPopUp {
     }
 
     
-    double mouse_x = 0,mouse_y = 0; // position mouse
+    private double mouse_x = 0,mouse_y = 0; // position mouse
     
     private void DetailSong() {
         this.detail = new VBox(10);

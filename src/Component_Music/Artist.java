@@ -7,7 +7,6 @@ package Component_Music;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
@@ -15,7 +14,6 @@ import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
@@ -29,8 +27,6 @@ public class Artist implements Serializable{
     
     private static final long serialVersionUID = 6529685098267757692L;
     private String name1, name2, infomation, nationality;
-    private Image image;
-    private ImageView imageView;
     private int width, height;
     private int[][] data;
     private static File artist = new File("src/data/artist.dat");

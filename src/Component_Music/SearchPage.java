@@ -5,26 +5,17 @@
  */
 package Component_Music;
 
-import UI_music.ReadWriteFile;
 import UI_music.User_UI;
 import static UI_music.UI.searchTextField;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
 
 /**
  *
@@ -35,8 +26,6 @@ public class SearchPage {
     private AnchorPane anchorPane;
     private int songCount = 0;
     private int artistCount = 0;
-
-    
 
     public SearchPage(String text) {
         anchorPane = new AnchorPane();
@@ -82,7 +71,6 @@ public class SearchPage {
 //    private AnchorPane //empty page
     private BorderPane FoundListPane(String foundtext) {
         BorderPane borderpane = new BorderPane();
-        //borderpane.getStyleClass().add("backgroundsearch");
         borderpane.setPadding(new Insets(0, 10, 0, 10));
 
         borderpane.setPrefWidth(970);
@@ -159,7 +147,7 @@ public class SearchPage {
             songCount = 0;
             for (Song song : User_UI.SongArrayList) {
                 if (song.getNameSong().toLowerCase().contains(foundtext.toLowerCase())) {
-                    anchorpane.getChildren().add(CreateSongList((230 * (songCount % column)) + dis, (150 * (songCount / column) ) + 50, song));
+                    anchorpane.getChildren().add(CreateSongList((230 * (songCount % column)) + dis, (150 * (songCount / column)) + 50, song));
                     songCount++;
                 }
             }
@@ -191,7 +179,7 @@ public class SearchPage {
         nameLabel.getStyleClass().add("borderplaylist");
         nameLabel.setLayoutX(0);
         nameLabel.setLayoutY(0);
-        
+
         nameLabel.setOnMouseClicked(event -> {
             try {
                 new DetailSongPopUp(song);
@@ -201,7 +189,7 @@ public class SearchPage {
         });
 
         AnchorPane profilePicture = new AnchorPane();
-         profilePicture.getChildren().add(new ImageRectangle(0, 0, 60, 60, song.getPhoto()).getMyRectangle());
+        profilePicture.getChildren().add(new ImageRectangle(0, 0, 60, 60, song.getPhoto()).getMyRectangle());
 
         nameLabel.setPadding(new Insets(8, 0, 0, 80));
         nameLabel.setAlignment(Pos.TOP_LEFT);
@@ -231,16 +219,16 @@ public class SearchPage {
         nameLabel.getStyleClass().add("borderplaylist");
         nameLabel.setLayoutX(0);
         nameLabel.setLayoutY(0);
-        
+
         nameLabel.setOnMouseClicked(event -> {
             new ShowMusicPage(artist.getName1(), "artist", artist.getPhoto());
         });
-        
+
         AnchorPane profilePicture = new AnchorPane();
-         profilePicture.getChildren().add(new ImageCircle(30, 30, 30, artist.getPhoto()).getMyCircle());
+        profilePicture.getChildren().add(new ImageCircle(30, 30, 30, artist.getPhoto()).getMyCircle());
 
         nameLabel.setAlignment(Pos.CENTER_LEFT);
-        anchorpane.getChildren().addAll(nameLabel,profilePicture);
+        anchorpane.getChildren().addAll(nameLabel, profilePicture);
 
         return anchorpane;
     }

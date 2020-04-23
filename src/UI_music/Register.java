@@ -47,26 +47,26 @@ import javax.imageio.ImageIO;
  */
 public class Register {
 
-    File user = new File("src/data/user.dat");
+    private File user = new File("src/data/user.dat");
 
-    LocalDate dOB;
-    boolean dateSet = false;
+    private LocalDate dOB;
+    private boolean dateSet = false;
 
     private FileChooser fileChooser;
     private File filePath;
     private ImageView photo;
     private Image image;
-    String roles = "member";
+    private String roles = "member";
 
-    ArrayList<Account> listUserAccount = new ArrayList<>();
-    Account userAccount = new Account();
-    ArrayList<Account> addAccount = new ArrayList<>();
+    private ArrayList<Account> listUserAccount = new ArrayList<>();
+    private Account userAccount = new Account();
+    private ArrayList<Account> addAccount = new ArrayList<>();
 
     private ReadWriteFile file = new ReadWriteFile();
     
-    Stage regisStage;
+    private Stage regisStage;
     
-    double mouse_x = 0, mouse_y = 0;
+    private double mouse_x = 0, mouse_y = 0;
     
     private AnchorPane profilePicture = new AnchorPane();
 

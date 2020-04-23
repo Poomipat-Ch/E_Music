@@ -6,11 +6,7 @@
 package Component_Music;
 
 import UI_music.UI;
-import UI_music.User_UI;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
@@ -24,30 +20,6 @@ public class ShowingSearchPage {
         AnchorPane anchorpane = new AnchorPane();
         anchorpane.setMinSize(1030, 901);
         anchorpane.getStyleClass().add("mainBox");
-        
-//        AnchorPane background = new AnchorPane();
-//        background.getStyleClass().add("backgroundsearch");
-//        background.setPrefSize(1030, 901);
-//        background.setPadding(Insets.EMPTY);
-//        background.setLayoutX(-1);
-//        background.setLayoutY(1);
-    
-//        HBox hBox = new HBox();
-//        hBox.setPrefSize(1030, 30);
-//        hBox.setAlignment(Pos.CENTER);
-//        hBox.setLayoutY(100);
-
-//        TextField searchTextField = new TextField();
-//        searchTextField.setPromptText("Search");
-//        searchTextField.setStyle("-fx-font-size: 18px;");
-//        searchTextField.setPrefSize(1030-300-60-70, 30);
-//        
-//        searchTextField.textProperty().addListener((ov, t, t1) -> {
-//            User_UI.totalPane.getChildren().remove(1);
-//            //User_UI.totalPane.getChildren().add(updateScrollPane(searchTextField.getText()));
-//        });
-//        
-//        hBox.getChildren().addAll(searchTextField);
         
         if(page.toLowerCase().equals("songs"))
             anchorpane.getChildren().addAll(CreateHead(page, foundtext), new ShowingSongs(foundtext).table);

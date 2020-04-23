@@ -11,7 +11,6 @@ import Component_Music.ImageCircle;
 import static UI_music.User_UI.playerStatus;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -23,7 +22,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 /**
  *
@@ -120,21 +118,13 @@ abstract public class UI {
         return btn;
     }
 
-//    private Button CreateStyleButton(String text) {
-//        Button btn = new Button(text);
-//        btn.getStyleClass().add("stylebtn");
-//        btn.setMinWidth(250);
-//        btn.setMinHeight(45);
-//
-//        return btn;
-//    }
     private VBox menu() {
         VBox vBox = new VBox();
         vBox.getStyleClass().add("menu");
         vBox.setMaxWidth(200);
         vBox.setPadding(Insets.EMPTY);
 
-        Label logoLabel = new Label("E-Music");
+        Label logoLabel = new Label("SPOOKIFY");
         logoLabel.getStyleClass().add("logoName");
         logoLabel.setMinWidth(250);
         logoLabel.setAlignment(Pos.CENTER);
@@ -227,7 +217,7 @@ abstract public class UI {
         vBox.setMaxWidth(200);
         vBox.setPadding(Insets.EMPTY);
 
-        Label logoLabel = new Label("E-Music");
+        Label logoLabel = new Label("SPOOKIFY");
         logoLabel.getStyleClass().add("logoName");
         logoLabel.setMinWidth(250);
         logoLabel.setAlignment(Pos.CENTER);
@@ -260,7 +250,7 @@ abstract public class UI {
             }
         });
 
-        Button myAccount = CreaButton("My Account");
+        Button myAccount = ButtonAccount();
         myAccount.setOnMouseClicked(e -> {
             this.vbox.getChildren().remove(1);
             this.vbox.getChildren().add(myAccount());
@@ -272,16 +262,16 @@ abstract public class UI {
             Login.stage.show();
         });
 
-        VBox bottomVBox = new VBox(playerMusic, myAccount, logOut);
+        VBox bottomVBox = new VBox(playerMusic, logOut);
         bottomVBox.setAlignment(Pos.BOTTOM_CENTER);
         VBox.setVgrow(bottomVBox, Priority.ALWAYS);
 
-        vBox.getChildren().addAll(logoLabel, songManage, artistManage, accountManage, bottomVBox);
+        vBox.getChildren().addAll(logoLabel, myAccount, songManage, artistManage, accountManage, bottomVBox);
 
         return vBox;
     }
 
-    static AnchorPane profilePicture = new AnchorPane();
+    public static AnchorPane profilePicture = new AnchorPane();
 
     private Button ButtonAccount() {
         AnchorPane anchorpane = new AnchorPane();
@@ -321,11 +311,11 @@ abstract public class UI {
         return btn;
     }
 
-    double mouse_x = 0, mouse_y = 0; // position mouse
+    public  double mouse_x = 0, mouse_y = 0; // position mouse
 
-    static AnchorPane titlepane;
-    static Label premium;
-    static Label upgradepremium;
+    public static AnchorPane titlepane;
+    public static Label premium;
+    public static Label upgradepremium;
 
     public AnchorPane tilePane() {
 
@@ -443,21 +433,4 @@ abstract public class UI {
         return minimize;
     }
 
-//    private AnchorPane AdPane() {
-//        AnchorPane anchorpane = new AnchorPane();
-//        anchorpane.setStyle("-fx-background-color : transparent");
-//
-//        ImageView imageview = new ImageView(new Image("/image/banner5.png"));
-//        imageview.setLayoutX(190);
-//        imageview.setLayoutY(330);
-//
-//        AnchorPane background = new AnchorPane();
-//        background.setStyle("-fx-background-color: #222222;\n"
-//                + "-fx-opacity: .6;");
-//        background.setMinSize(1280, 960);
-//
-//        anchorpane.getChildren().addAll(background, imageview);
-//
-//        return anchorpane;
-//    }
 }

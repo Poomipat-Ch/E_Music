@@ -6,10 +6,8 @@
 package Component_Music;
 
 import UI_music.UI;
-import UI_music.User_UI;
 import java.io.File;
 import java.io.IOException;
-import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -26,7 +24,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -39,7 +36,7 @@ import javafx.scene.layout.HBox;
  */
 public class ShowMusicPage {
 
-    SearchSystem searchSystemMyLibrary = new SearchSystem();
+    private SearchSystem searchSystemMyLibrary = new SearchSystem();
 
     private File fileForDownload;
     private String songNameSelected;
@@ -47,12 +44,10 @@ public class ShowMusicPage {
     private Song songSelected;
     private String page;
 
-    TableView<Song> table;
-    ObservableList<Song> list = null;
+    private TableView<Song> table;
+    private ObservableList<Song> list = null;
 
     int top = 0;
-
-    ;
 
     public ShowMusicPage(String name, String content, Image image) {
         AnchorPane anchorPane = new AnchorPane();

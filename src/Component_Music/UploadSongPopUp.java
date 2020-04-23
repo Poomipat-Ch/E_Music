@@ -58,37 +58,36 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
     private ImageView photo;
     private Image image;
     private HBox totalDetail;
-    //private BorderPane totalDetail;
     private Stage stage;
 
     private Label title;
 
     //data song
-    String nameForUpload;
-    File file = new File("src/MusicFile/song.mp3");
-    ArrayList<Song> songArrayList = new ArrayList<Song>();
-    File musicFile = new File("src/data/music.dat");
-    File selectFileDelete;
-    boolean changePhoto = false;
-    boolean songUploadEmply = true;
+    private String nameForUpload;
+    private File file = new File("src/MusicFile/song.mp3");
+    private ArrayList<Song> songArrayList = new ArrayList<Song>();
+    private File musicFile = new File("src/data/music.dat");
+    private File selectFileDelete;
+    private boolean changePhoto = false;
+    private boolean songUploadEmply = true;
 
-    TextField fillNameSong;
-    TextField fillNameArtist;
-    TextField fillDetailSong;
-    TextField fillSongPrice;
-    TextField path;
-    String checkExistFile = "";
+    private TextField fillNameSong;
+    private TextField fillNameArtist;
+    private TextField fillDetailSong;
+    private TextField fillSongPrice;
+    private TextField path;
+    private String checkExistFile = "";
 
-    String nationality;
+    private String nationality;
 
-    ArrayList<ArrayList> list = new ArrayList<>();
-    ArrayList<String> listStyleSong = new ArrayList<String>();
-    TileTagBar tagBar;
-    ScrollPane tagScrollPane = new ScrollPane();
+    private ArrayList<ArrayList> list = new ArrayList<>();
+    private ArrayList<String> listStyleSong = new ArrayList<String>();
+    private TileTagBar tagBar;
+    private ScrollPane tagScrollPane = new ScrollPane();
 
-    ArrayList<String> test = new ArrayList<>();
+    private ArrayList<String> test = new ArrayList<>();
 
-    int totalDownload = 0;
+    private int totalDownload = 0;
     
     private int mode = 0; // 0 is Upload ,1 is Edit 
 
@@ -150,9 +149,9 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         stage.showAndWait();
     }
 
-    double mouse_x = 0, mouse_y = 0; // position mouse
+    private double mouse_x = 0, mouse_y = 0; // position mouse
 
-    ArrayList<CheckBox> listCheckBox;
+    private ArrayList<CheckBox> listCheckBox;
 
     private CheckBox createCheckBox(String name) {
         CheckBox chkbox = new CheckBox(name);
@@ -494,9 +493,9 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         totalDetail.getChildren().addAll(imageDetail, detail, exitButton());
     }
 
-    ListView<String> listView;
+    private ListView<String> listView;
 
-    Stage selectStage;
+    private Stage selectStage;
 
 //    TileTagBar tagBar;
     private void setupThaiPane(ArrayList<String> list) {

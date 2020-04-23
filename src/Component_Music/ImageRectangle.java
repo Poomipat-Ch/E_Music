@@ -13,7 +13,6 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 /**
@@ -22,7 +21,7 @@ import javafx.scene.shape.Rectangle;
  */
 public class ImageRectangle {
 
-    Rectangle myRectangle;
+    private Rectangle myRectangle;
 
     public ImageRectangle(double width, double height, Image image) {
 
@@ -101,10 +100,6 @@ public class ImageRectangle {
         }
 
         WritableImage img = new WritableImage(size, size);
-//
-//        System.out.println("width " + width + " height " + height + " size " + size);
-//        System.out.println((width - size) / 2 + " " + (width - ((width - size) / 2)));
-//        System.out.println((height - size) / 2 + " " + (height - ((height - size) / 2)));
 
         PixelWriter w = img.getPixelWriter();
         for (int i = ((width - size) / 2) + ((width - size) % 2), row = 0; i < width - ((width - size) / 2) - ((width - size) % 2); i++, row++) {

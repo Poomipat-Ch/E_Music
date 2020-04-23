@@ -5,7 +5,6 @@
  */
 package Component_Music;
 
-import UI_music.User_UI;
 import java.io.File;
 import java.io.IOException;
 import javafx.collections.FXCollections;
@@ -23,15 +22,16 @@ import javafx.scene.input.MouseButton;
  */
 public class ShowingSongs {
 
-    SearchSystem searchSystemMyLibrary = new SearchSystem();
+    private SearchSystem searchSystemMyLibrary = new SearchSystem();
 
     private File fileForDownload;
     private Song songSelected;
     private String songNameSelected;
     private String nameSet;
-    TableView<Song> table;
+    
+    protected TableView<Song> table;
 
-    ObservableList<Song> list;
+    private ObservableList<Song> list;
 
     public ShowingSongs(String foundtext) {
         table = new TableView<>();

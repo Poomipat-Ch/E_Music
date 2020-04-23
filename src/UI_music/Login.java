@@ -42,16 +42,18 @@ import javafx.stage.StageStyle;
  */
 public class Login {
 
-    Scene scene1;
-    static Stage stage;
-    double mouse_x = 0, mouse_y = 0; // position mouse
-    File user = new File("src/data/user.dat");
-    File tempId = new File("src/data/user.txt");
+    private Scene scene1;
+    
+    public static Stage stage;
+    
+    private double mouse_x = 0, mouse_y = 0; // position mouse
+    private File user = new File("src/data/user.dat");
+    private File tempId = new File("src/data/user.txt");
 
-    ArrayList<Account> listUserAccount = new ArrayList<>();
-    Account userAccount = new Account();
-    Account guestAccount = new Account("guest", "guest", "guest", "guest@gmail.com", "guest", "N/A", LocalDate.now(), "guest", "guest", "guest", new Image("/image/defaultprofile.png"));
-    ArrayList<Account> addAccount = new ArrayList<>();
+    private ArrayList<Account> listUserAccount = new ArrayList<>();
+    private Account userAccount = new Account();
+    private Account guestAccount = new Account("guest", "guest", "guest", "guest@gmail.com", "guest", "N/A", LocalDate.now(), "guest", "guest", "guest", new Image("/image/defaultprofile.png"));
+    private ArrayList<Account> addAccount = new ArrayList<>();
     
 
     public Login(Stage stage) throws FileNotFoundException, IOException, ClassNotFoundException {

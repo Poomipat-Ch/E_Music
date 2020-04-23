@@ -5,8 +5,6 @@
  */
 package UI_music;
 
-import Component_Music.AlertBox;
-import static UI_music.Login.stage;
 import java.io.File;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

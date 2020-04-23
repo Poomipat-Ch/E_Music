@@ -15,8 +15,7 @@ import javafx.collections.transformation.FilteredList;
  */
 public class SearchSystemAddSong implements ChangeListener<String>{
     
-    FilteredList<AddSong> filterData;
-    
+    private FilteredList<AddSong> filterData; 
 
     public SearchSystemAddSong(FilteredList<AddSong> filterData) {
         this.filterData = filterData;
@@ -59,7 +58,4 @@ public class SearchSystemAddSong implements ChangeListener<String>{
                 });
     }
 
-    
-        
-    
 }
