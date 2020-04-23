@@ -33,6 +33,8 @@ public class Song implements Serializable {
     private String nationality;
     private int width, height;
     private int[][] data;
+    
+    private String sequence;
 
     private int totalDownload;
 
@@ -113,6 +115,14 @@ public class Song implements Serializable {
         this.totalDownload++;
     }
 
+    public void setSequence(String sequence) {
+        this.sequence = sequence;
+    }
+
+    public String getSequence() {
+        return sequence;
+    }
+
     @Override
     public String toString() {
         return "name : " + nameSong + " artist : " + artistSong + " detail : " + detailSong + "\n";
@@ -143,8 +153,11 @@ public class Song implements Serializable {
             }
         }
         
+        int i = 1;
         for (Song song : sortSong) {
             list.add(song);
+            song.setSequence(Integer.toString(i));
+            i++;
         }
 
         return list;

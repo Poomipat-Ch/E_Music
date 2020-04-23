@@ -83,8 +83,11 @@ public class ShowMusicPage {
         });
 
         // Create column NameSong (Data type of String).
+        TableColumn<Song, String> sequenceCol = new TableColumn<>("#");
+        sequenceCol.setMinWidth(20);
+        
         TableColumn<Song, String> NameCol = new TableColumn<>("TITLE");
-        NameCol.setMinWidth(408);
+        NameCol.setMinWidth(388);
 
         // Create column NameArtist (Data type of String).
         TableColumn<Song, String> artistCol = new TableColumn<>("ARTIST");
@@ -92,13 +95,14 @@ public class ShowMusicPage {
 
         // Create column Detail (Data type of String).
         TableColumn<Song, String> detailCol = new TableColumn<>("DETAIL");
-        detailCol.setMinWidth(100);
+        detailCol.setMinWidth(92);
 
         TableColumn<Song, String> downloadCol = new TableColumn<>("TOTAL DOWNLOAD");
         downloadCol.setMinWidth(200);
 
         // Defines how to fill data for each cell.
         // Get value from property of UserAccount. .
+        sequenceCol.setCellValueFactory(new PropertyValueFactory<>("sequence"));
         NameCol.setCellValueFactory(new PropertyValueFactory<>("nameSong"));
         artistCol.setCellValueFactory(new PropertyValueFactory<>("artistSong"));
         detailCol.setCellValueFactory(new PropertyValueFactory<>("detailSong"));
@@ -107,6 +111,7 @@ public class ShowMusicPage {
 
         // Set Sort type for userName column
         downloadCol.setSortType(TableColumn.SortType.DESCENDING);
+        sequenceCol.setSortable(false);
         downloadCol.setSortable(false);
         detailCol.setSortable(false);
         NameCol.setSortable(false);
@@ -121,7 +126,7 @@ public class ShowMusicPage {
         sortedList.comparatorProperty().bind(table.comparatorProperty());
         table.setItems(sortedList);
 
-        table.getColumns().addAll(NameCol, artistCol, detailCol, downloadCol);
+        table.getColumns().addAll(sequenceCol, NameCol, artistCol, detailCol, downloadCol);
 
         top = 0;
 

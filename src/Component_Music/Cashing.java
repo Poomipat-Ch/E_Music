@@ -318,6 +318,7 @@ public class Cashing {
                     } catch (IOException | ClassNotFoundException ex) {
                         Logger.getLogger(Cashing.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                    
                     UI.userAccount.addSong(song,downloadTime);
                     this.userSaveSong();
                     //<------------------------------------------------------------ EVERYTHING CHECK PURCHASE COMPLETE Set song EVERYTHINGto the playlist pls thank you by font

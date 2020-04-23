@@ -83,7 +83,7 @@ public class TopChartPane {
         }
         
         AnchorPane centerTopChart = new AnchorPane();
-        centerTopChart.getChildren().addAll(background, topChartList,CreateSeeAll(topchartlist.get(0),640,210, new Image("/UI_music/defaultprofile.png")),CreateSeeAll(topchartlist.get(1),640,430, new Image("/UI_music/defaultprofile.png")));
+        centerTopChart.getChildren().addAll(background, topChartList,CreateSeeAll(topchartlist.get(0),650,215, new Image("/UI_music/defaultprofile.png")),CreateSeeAll(topchartlist.get(1),650,435, new Image("/UI_music/defaultprofile.png")));
 
         topchartpane.setCenter(centerTopChart);
         
