@@ -51,7 +51,7 @@ import javafx.stage.StageStyle;
  */
 public class User_UI extends UI {
 
-    SearchSystemAddSong searchSystemMyLibrary = new SearchSystemAddSong();
+    private SearchSystemAddSong searchSystemMyLibrary = new SearchSystemAddSong();
 
     // Create File for downloader
     private File fileForDownload;
@@ -64,8 +64,8 @@ public class User_UI extends UI {
     private ObservableList<AddSong> list;
     private Stage stage;
 
-    File musicfile = new File("src/data/music.dat");
-    File artistfile = new File("src/data/artist.dat");
+    private File musicfile = new File("src/data/music.dat");
+    private File artistfile = new File("src/data/artist.dat");
 
     public static ArrayList<Song> SongArrayList = new ArrayList<>();
     public static ArrayList<Artist> ArtistArrayList = new ArrayList<>();
@@ -394,9 +394,9 @@ public class User_UI extends UI {
         return tilePane;
     }
 
-    Button editbt;
-    Button savebt;
-    Button cancelbt;
+    private Button editbt;
+    private Button savebt;
+    private Button cancelbt;
 
     @Override
     public BorderPane myAccount() {
@@ -441,8 +441,8 @@ public class User_UI extends UI {
         }
     }
 
-    ArrayList<Account> updateAccount = new ArrayList<>();
-    File user = new File("src/data/user.dat");
+    private ArrayList<Account> updateAccount = new ArrayList<>();
+    private File user = new File("src/data/user.dat");
 
     @Override
     public void userLogout() {

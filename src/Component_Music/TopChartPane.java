@@ -29,7 +29,6 @@ public class TopChartPane {
         pane = new AnchorPane();
         topchartpane = new BorderPane();
         Button topChartBtn;
-        ImageView chartImage;
         
         ArrayList<String> topchartlist = new ArrayList<>();
 

@@ -6,13 +6,9 @@
 package UI_music;
 
 import Component_Music.AlertBox;
-import Component_Music.Artist;
 import Component_Music.PricePremium;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -24,7 +20,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -35,12 +30,12 @@ import javafx.stage.StageStyle;
 public class SetupPricePremium {
     
     
-    File priceFile = new File("src/data/price.dat");
-    PricePremium pricePremium = new PricePremium();
-    Stage stage;
-    TextField setUpPriceTextFill;
+    private File priceFile = new File("src/data/price.dat");
+    private PricePremium pricePremium = new PricePremium();
+    private Stage stage;
+    private TextField setUpPriceTextFill;
     
-    double mouse_x = 0, mouse_y = 0; // position mouse
+    private double mouse_x = 0, mouse_y = 0; // position mouse
 
     public SetupPricePremium() {
     

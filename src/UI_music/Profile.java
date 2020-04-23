@@ -5,21 +5,14 @@
  */
 package UI_music;
 
-import Component_Music.Account;
 import Component_Music.AlertBox;
 import Component_Music.Cashing;
-import static UI_music.UI.userAccount;
-import java.io.IOException;
-import java.util.ArrayList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -28,13 +21,13 @@ import javafx.stage.Stage;
  */
 public class Profile {
 
-    Button savebt = new Button("Save");
-    Button cancelbt = new Button("Cancel");
-    Button editbt = new Button("Edit");
-    Button buyPremiumbtn = new Button("Upgrade Premium");
-    Button cancelPremiumbtn = new Button("Cancel Premium");
+    private Button savebt = new Button("Save");
+    private Button cancelbt = new Button("Cancel");
+    private Button editbt = new Button("Edit");
+    private Button buyPremiumbtn = new Button("Upgrade Premium");
+    private Button cancelPremiumbtn = new Button("Cancel Premium");
 
-    BorderPane accountPane = new BorderPane();
+    private BorderPane accountPane = new BorderPane();
 
     public Profile() {
 
