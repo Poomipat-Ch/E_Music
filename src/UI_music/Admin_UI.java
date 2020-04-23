@@ -63,16 +63,16 @@ public class Admin_UI extends UI {
     static File user = new File("src/data/user.dat"); //Add Static By Pop
     static File musicFile = new File("src/data/music.dat");
     static File artistFile = new File("src/data/artist.dat");
-   
+
     static ArrayList<Account> listAccount = new ArrayList<>(); //Add Static By Pop
     static ArrayList<Account> addAccount = new ArrayList<>(); //Add Static By Pop
     static ArrayList<Song> songArrayList = new ArrayList<>();
     static ArrayList<Artist> artistArrayList = new ArrayList<>();
-   
+
     static String songSelectString;
     static Song songSelected = new Song();
     static Artist artistSelected = new Artist();
-    
+
     static Boolean songSelectedBoolean = false;
     static Boolean artistSelectedBoolean = false;
     static Boolean accountSelectedBoolean = false;
@@ -82,7 +82,7 @@ public class Admin_UI extends UI {
     private SearchSystemAccount searchAccount = new SearchSystemAccount();
 
     private TableView<Account> tableAccount;
-    
+
     public Admin_UI() {
 
     }
@@ -255,14 +255,14 @@ public class Admin_UI extends UI {
         title2.getStyleClass().add("titleAdmin");
         title2.setLayoutX(50);
         title2.setLayoutY(5);
-        
+
         Button premiumDiscountBtn = CreaButton("Premium Discount");
         premiumDiscountBtn.getStyleClass().add("premiumpricebtn");
         premiumDiscountBtn.setLayoutX(60);
         premiumDiscountBtn.setLayoutY(675);
         premiumDiscountBtn.setOnAction(e -> {
             new SetupPricePremium();
-        });   
+        });
 
         Button addAccountBtn = CreaButton("Add Account");
         addAccountBtn.setLayoutX(290);
@@ -333,9 +333,9 @@ public class Admin_UI extends UI {
         usernameCol.setMinWidth(120);
         TableColumn<Account, String> emailCol = new TableColumn<>("Email");
         emailCol.setMinWidth(250);
-          TableColumn<Account, String> genderCol = new TableColumn<>("Gender");
+        TableColumn<Account, String> genderCol = new TableColumn<>("Gender");
         genderCol.setMinWidth(90);
-           TableColumn<Account, LocalDate> dobCol = new TableColumn<>("Date of Birth");
+        TableColumn<Account, LocalDate> dobCol = new TableColumn<>("Date of Birth");
         dobCol.setMinWidth(130);
         TableColumn<Account, String> adminCol = new TableColumn<>("Role");
         adminCol.setMinWidth(101);
@@ -543,11 +543,11 @@ public class Admin_UI extends UI {
 
                         Admin_UI.updateVBox.getChildren().clear();
 
-                        selectNameSong1 = new Label(song.getNameSong());
+                        Label selectNameSong1 = new Label(song.getNameSong());
                         selectNameSong1.setPrefWidth(230);
                         selectNameSong1.setMaxWidth(230);
                         selectNameSong1.setAlignment(Pos.CENTER);
-                        selectArtistSong1 = new Label(/*"ARTIST : " + */song.getArtistSong());
+                        Label selectArtistSong1 = new Label(/*"ARTIST : " + */song.getArtistSong());
                         selectArtistSong1.setPrefWidth(230);
                         selectArtistSong1.setMaxWidth(230);
                         selectArtistSong1.setAlignment(Pos.CENTER);
@@ -625,16 +625,16 @@ public class Admin_UI extends UI {
                 contentButton.getStyleClass().add("contentDetailbtn"); //CSS           
                 contentButton.setOnAction(e -> {
                     //SELECTION 
-                    
+
                     Admin_UI.updateArtistVBox.getChildren().clear();
-                    
+
                     artistSelected = artist;
-                    selectArtist2 = new Label(artist.getName1());
+                    Label selectArtist2 = new Label(artist.getName1());
                     selectArtist2.setPrefWidth(230);
                     selectArtist2.setMaxWidth(230);
                     selectArtist2.setAlignment(Pos.CENTER);
 
-                    selectDetail2 = new Label(artist.getInfomation());
+                    Label selectDetail2 = new Label(artist.getInfomation());
                     selectDetail2.setPrefWidth(230);
                     selectDetail2.setMaxWidth(230);
                     selectDetail2.setAlignment(Pos.CENTER);
@@ -675,6 +675,7 @@ public class Admin_UI extends UI {
 
     //UPDATE CLICKPANE // RUN ONLY ONCE THE PROGRAM RUN 1 PAGE
     private static VBox updateVBox;
+    private AnchorPane profilePicture;
 
     private AnchorPane UpdateClikedPane() {
 
@@ -685,7 +686,7 @@ public class Admin_UI extends UI {
 
         updateVBox = new VBox(10);
 
-        AnchorPane profilePicture = new AnchorPane();
+        profilePicture = new AnchorPane();
         profilePicture.getChildren().add(new ImageRectangle(230, 230, new Image("/image/defaultmusic.png")).getMyRectangle());
 
         selectNameSong1 = new Label("Please select song");
@@ -699,15 +700,10 @@ public class Admin_UI extends UI {
         selectNameSong1.setAlignment(Pos.CENTER);
         selectArtistSong1.setAlignment(Pos.CENTER_LEFT);
 
-        if (selectArtistSong1.getText().equals("")) {
-            selectNameSong1.setTranslateY(20);
-        } // Ship Y axis 
-        else {
-            selectNameSong1.setTranslateY(0);
-        }
+        selectNameSong1.setTranslateY(20);
 
-        updateVBox.setAlignment(Pos.CENTER);
-        updateVBox.getChildren().addAll(profilePicture, selectNameSong1, selectArtistSong1);
+        Admin_UI.updateVBox.setAlignment(Pos.CENTER);
+        Admin_UI.updateVBox.getChildren().addAll(profilePicture, selectNameSong1, selectArtistSong1);
         updatePane.getChildren().add(updateVBox);
 
         return updatePane;
@@ -716,6 +712,8 @@ public class Admin_UI extends UI {
 
     //UPDATE CLICKPANE ARTIST // RUN ONLY ONCE THE PROGRAM RUN 2 PAGE
     private static VBox updateArtistVBox;
+
+    private AnchorPane profilePictureArtist;
 
     private AnchorPane UpdateClikedArtistPane() {
 
@@ -726,7 +724,7 @@ public class Admin_UI extends UI {
 
         updateArtistVBox = new VBox(10);
 
-        AnchorPane profilePictureArtist = new AnchorPane();
+        profilePictureArtist = new AnchorPane();
         profilePictureArtist.getChildren().add(new ImageRectangle(230, 230, new Image("/image/defaultprofile.png")).getMyRectangle());
 
         selectArtist2 = new Label("Please select artist");
@@ -739,12 +737,7 @@ public class Admin_UI extends UI {
         selectArtist2.setAlignment(Pos.CENTER);
         selectDetail2.setAlignment(Pos.CENTER_LEFT);
 
-        if (selectDetail2.getText().equals("")) {
-            selectArtist2.setTranslateY(20);
-        } // Ship Y axis 
-        else {
-            selectArtist2.setTranslateY(0);
-        }
+        selectArtist2.setTranslateY(20);
 
         updateArtistVBox.setAlignment(Pos.CENTER);
         updateArtistVBox.getChildren().addAll(profilePictureArtist, selectArtist2, selectDetail2);
@@ -1016,6 +1009,9 @@ public class Admin_UI extends UI {
             }
         }
 
+        Admin_UI.updateVBox.getChildren().clear();
+        Admin_UI.updateVBox.getChildren().addAll(profilePicture, selectNameSong1, selectArtistSong1);
+
         ReadWriteFile.writeFileSong(musicFile, newSongList);
         Admin_UI.totalPane.getChildren().remove(0);
         Admin_UI.totalPane.getChildren().add(updateScrollPane(""));
@@ -1047,6 +1043,9 @@ public class Admin_UI extends UI {
                 newArtistList.add(artist);
             }
         }
+
+        Admin_UI.updateArtistVBox.getChildren().clear();
+        Admin_UI.updateArtistVBox.getChildren().addAll(profilePictureArtist, selectArtist2, selectDetail2);
 
         ReadWriteFile.writeFileArtist(artistFile, newArtistList);
         Admin_UI.totalArtistPane.getChildren().remove(0);

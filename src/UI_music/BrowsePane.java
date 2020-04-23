@@ -50,6 +50,10 @@ public class BrowsePane {
         backgroundpane.setMinHeight(901);
         backgroundpane.getStyleClass().add("mainBox");
         //backgroundpane.setPadding(new Insets(0, 0 ,50,0));
+        
+        ImageView imageview = new ImageView(new Image("/image/BrowseBackground.jpg"));
+        imageview.setFitWidth(1030);
+        imageview.setPreserveRatio(true);
 
         Label browse = CreateHead("Browse", 50, 70);
         Button thaigenresbtn = CreateButton("เพลงไทย", 40, 190, 260, 1);
@@ -62,8 +66,8 @@ public class BrowsePane {
         Button interartistbg = CreateBackgroundButton(800, 190, 180);
 
         try {
-            backgroundpane.getChildren().addAll(thaigenresbg, thaigenresbtn, thaiartistbg, thaiartistbtn, intergenresbg, intergenresbtn,
-                    interartistbg, interartistbtn, browse, BorderList("หมวดหมู่ และ อารมณ์", 1));
+            backgroundpane.getChildren().addAll(imageview, thaigenresbg, thaigenresbtn, thaiartistbg, thaiartistbtn, intergenresbg, intergenresbtn,
+                    interartistbg, interartistbtn, browse, BorderList("เพลงไทย", 1));
         } catch (IOException ex) {
             Logger.getLogger(BrowsePane.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -86,7 +90,7 @@ public class BrowsePane {
         button.setLayoutY(y);
 
         button.setOnAction(event -> {
-            this.backgroundpane.getChildren().remove(9);
+            this.backgroundpane.getChildren().remove(10);
 
             try {
                 this.backgroundpane.getChildren().add(BorderList(name, index));
