@@ -5,6 +5,7 @@
  */
 package Component_Music;
 
+import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
@@ -27,7 +28,7 @@ public class ImageRectangle {
 
         myRectangle = new Rectangle(width, height);
         myRectangle.setFill(Color.SNOW);
-        myRectangle.setEffect(new DropShadow(+2d, 0d, +2d, Color.BLACK));
+        myRectangle.setEffect(new DropShadow(BlurType.GAUSSIAN ,Color.WHITE,+25d, +5d, 0d, +2d));
 
         Image newimage = null;
         try {

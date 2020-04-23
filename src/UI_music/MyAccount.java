@@ -8,6 +8,8 @@ package UI_music;
 import Component_Music.Account;
 import Component_Music.AlertBox;
 import Component_Music.ImageCircle;
+import static UI_music.UI.profilePicture;
+import static UI_music.UI.userAccount;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -471,6 +473,10 @@ public class MyAccount {
                                     UI.userAccount.getPassword(), userGender, dOB);
                             this.photo.setImage(UI.userAccount.getPhoto());                         
                             changeAccount.add(UI.userAccount);
+                            
+                            UI.profilePicture.getChildren().remove(0);
+                            UI.profilePicture.getChildren().add(new ImageCircle(125, 70, 60, UI.userAccount.getPhoto()).getMyCircle());
+  
 
                         } else {
                             changeAccount.add(account);
