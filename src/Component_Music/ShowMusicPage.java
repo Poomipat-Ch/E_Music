@@ -130,8 +130,7 @@ public class ShowMusicPage {
 
         // Display row data
         if (name.toLowerCase().contains("top 50")) {
-            NameCol.setMinWidth(388);
-            table.getColumns().addAll(sequenceCol);
+            
             if (name.toLowerCase().contains("thailand")) {
                 try {
 
@@ -146,7 +145,7 @@ public class ShowMusicPage {
                 } catch (IOException | ClassNotFoundException ex) {
                     System.out.println("137 ShowMusicPage : IOException get my music list from class song");
                 }
-            } else {
+            } else if (name.toLowerCase().contains("international")){
                 try {
                     Song.getMyMusicList().forEach(song -> {
                         if (song.getNationality().equals("international")) {
@@ -165,6 +164,8 @@ public class ShowMusicPage {
             ImageView imageview = new ImageView(new Image("/image/" + name + ".png"));
             imageview.setFitWidth(1030);
             imageview.setPreserveRatio(true);
+            
+            NameCol.setMinWidth(418);
 
             anchorPane.getChildren().addAll(imageview, table, searchBoxMy());
 
