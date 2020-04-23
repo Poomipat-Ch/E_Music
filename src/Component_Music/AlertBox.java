@@ -38,12 +38,14 @@ public class AlertBox {
             label1.setText(message);
 
             Button yesBtn = new Button("Yes");
+            yesBtn.setStyle("-fx-font-size : 15px");
             yesBtn.setOnAction(e -> {
                 ans = true;
                 stage.close();
             });
 
             Button noBtn = new Button("No");
+            noBtn.setStyle("-fx-font-size : 15px");
             noBtn.setOnAction(e -> {
                 ans = false;
                 stage.close();
@@ -82,10 +84,11 @@ public class AlertBox {
             stage.setResizable(false);
 
             Label label1 = new Label();
-            label1.setStyle("-fx-font-size : 15px");
+            label1.setStyle("-fx-font-size : 18px");
             label1.setText(message);
 
             Button okBtn = new Button("OK");
+            okBtn.setStyle("-fx-font-size : 15px");
             okBtn.setOnAction(e -> {
                 stage.close();
             });
@@ -114,16 +117,18 @@ public class AlertBox {
             stage.setResizable(false);
 
             Label label1 = new Label();
-            label1.setStyle("-fx-font-size : 15px");
+            label1.setStyle("-fx-font-size : 18px");
             label1.setText(message);
 
             Button yesBtn = new Button("Confirm");
+            yesBtn.setStyle("-fx-font-size : 15px");
             yesBtn.setOnAction(e -> {
                 ans = true;
                 stage.close();
             });
 
             Button noBtn = new Button("Cancel");
+            noBtn.setStyle("-fx-font-size : 15px");
             noBtn.setOnAction(e -> {
                 ans = false;
                 stage.close();
@@ -134,10 +139,12 @@ public class AlertBox {
             row1.setAlignment(Pos.CENTER);
 
             VBox layout1 = new VBox(20);
+            layout1.setPadding(new Insets(15));
             layout1.getChildren().addAll(label1, row1);
             layout1.setAlignment(Pos.CENTER);
+            layout1.setMinSize(350, 100);
 
-            Scene scene = new Scene(layout1, 350, 100);
+            Scene scene = new Scene(layout1);
 
             stage.setScene(scene);
             stage.showAndWait();
