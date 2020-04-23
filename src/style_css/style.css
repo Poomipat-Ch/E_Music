@@ -669,7 +669,7 @@
 
 .tableTopChartMusic .column-header-background .label{
     -fx-background-color: transparent;
-    -fx-font-size:20px;
+    -fx-font-size:25px;
     -fx-padding: 10 0 10 0;
     -fx-font-weight:bold;
     -fx-text-fill: white;
@@ -687,13 +687,13 @@
 .tableTopChartMusic .table-row-cell:selected,.tableTopChartMusic .table-row-cell:hover{
     -fx-text-fill: black;  
     -fx-background-color: rgba(0,0,0,0.1);; /*rgba(63,93,167,0.9);*/
-    -fx-font-size:15px;
+    -fx-font-size:22px;
 }
 
 .tableTopChartMusic .table-row-cell,.tableTopChartMusic .table-row-cell Lable{
     -fx-background-color: rgba(255,255,255,0.2);
     -fx-table-cell-border-color: transparent;
-    -fx-font-size:15px;
+    -fx-font-size:20px;
 }
 
 /****************************************************************
