@@ -244,15 +244,15 @@ public class User_UI extends UI {
 
         // Create column NameSong (Data type of String).
         TableColumn<AddSong, String> NameCol = new TableColumn<>("Name Song");
-        NameCol.setMinWidth(200);
+        NameCol.setMinWidth(240);
 
         // Create column NameArtist (Data type of String).
         TableColumn<AddSong, String> artistCol = new TableColumn<>("Artist");
-        artistCol.setMinWidth(140);
+        artistCol.setMinWidth(200);
 
         // Create column Detail (Data type of String).
         TableColumn<AddSong, String> detailCol = new TableColumn<>("Detail");
-        detailCol.setMinWidth(190);
+        detailCol.setMinWidth(90);
 
         // Create column Downloadable (Data type of String).
         TableColumn<AddSong, Integer> Downloadable = new TableColumn<>("Downloadable");
