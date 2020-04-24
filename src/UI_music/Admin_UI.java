@@ -593,7 +593,7 @@ public class Admin_UI extends UI {
 
                     AnchorPane profilePicture = new AnchorPane();
                     profilePicture.getChildren().add(new ImageRectangle(2, 5, 100, 100, song.getPhoto()).getMyRectangle());
-                    profilePicture.setPadding(new Insets(0, 0, 40, 0));
+                    profilePicture.setPadding(new Insets(0, 0, 10, 0));
 
                     paneContent.getChildren().addAll(profilePicture, new Label(song.getNameSong()), new Label(/*"ARTIST : " + */song.getArtistSong()));
 
@@ -677,7 +677,7 @@ public class Admin_UI extends UI {
 
                 AnchorPane profilePicture = new AnchorPane();
                 profilePicture.getChildren().add(new ImageRectangle(2, 5, 100, 100, artist.getPhoto()).getMyRectangle());
-                profilePicture.setPadding(new Insets(0, 0, 40, 0));
+                profilePicture.setPadding(new Insets(0, 0, 10, 0));
 
                 paneContent.getChildren().addAll(profilePicture, new Label(artist.getName1())/*, new Label("Detail : " + artist.getInfomation())*/);
                 contentButton.setGraphic(paneContent);
