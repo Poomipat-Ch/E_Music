@@ -64,7 +64,7 @@ public class Profile {
             accountPane.setTranslateY(20);
             myAccount.showAccount();
             accountPane.setCenter(myAccount.getProfilePane());
-            myAccount.Clear();
+            myAccount.clear();
             bottom.getChildren().clear();
             if (!"admin".equals(UI.userAccount.getUserRole()) && !"premium".equals(UI.userAccount.getUserRole())) {
                 bottom.getChildren().addAll(buyPremiumbtn);

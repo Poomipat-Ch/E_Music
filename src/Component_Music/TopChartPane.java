@@ -54,8 +54,8 @@ public class TopChartPane {
         topChartVbox.setAlignment(Pos.CENTER);
         topChartVbox.setLayoutY(20);
 
-        topChartVbox.getChildren().addAll(CreateLabel(" ", 2), CreateLabel("T", 1), CreateLabel("O", 1), CreateLabel("P", 1), CreateLabel(" ", 2),
-                CreateLabel("C", 1), CreateLabel("H", 1), CreateLabel("A", 1), CreateLabel("R", 1), CreateLabel("T", 1), CreateLabel(" ", 2));
+        topChartVbox.getChildren().addAll(createLabel(" ", 2), createLabel("T", 1), createLabel("O", 1), createLabel("P", 1), createLabel(" ", 2),
+                createLabel("C", 1), createLabel("H", 1), createLabel("A", 1), createLabel("R", 1), createLabel("T", 1), createLabel(" ", 2));
 
         topchartpane.setLeft(topChartVbox);
 
@@ -73,7 +73,7 @@ public class TopChartPane {
             
             topChartBtn.getChildren().add(image);
             
-            topChartList.getChildren().addAll(CreateLabel("\n", 2), CreateLabel(string, 2), topChartBtn);
+            topChartList.getChildren().addAll(createLabel("\n", 2), createLabel(string, 2), topChartBtn);
 
             topChartBtn.setOnMouseClicked(event -> {
                 System.out.println(string);
@@ -83,7 +83,7 @@ public class TopChartPane {
         }
         
         AnchorPane centerTopChart = new AnchorPane();
-        centerTopChart.getChildren().addAll(background, topChartList,CreateSeeAll(topchartlist.get(0),650,215, new Image("/UI_music/defaultprofile.png")),CreateSeeAll(topchartlist.get(1),650,435, new Image("/UI_music/defaultprofile.png")));
+        centerTopChart.getChildren().addAll(background, topChartList,createSeeAll(topchartlist.get(0),650,215, new Image("/UI_music/defaultprofile.png")),createSeeAll(topchartlist.get(1),650,435, new Image("/UI_music/defaultprofile.png")));
 
         topchartpane.setCenter(centerTopChart);
         
@@ -98,7 +98,7 @@ public class TopChartPane {
         return pane;
     }
 
-    private Label CreateLabel(String alphabet, int style) {
+    private Label createLabel(String alphabet, int style) {
         Label label = new Label(alphabet);
         if (style == 1) {
             label.getStyleClass().add("labeldetail");
@@ -109,7 +109,7 @@ public class TopChartPane {
         return label;
     }
     
-    private Label CreateSeeAll(String string, double x, double y, Image image) {
+    private Label createSeeAll(String string, double x, double y, Image image) {
         Label label = new Label("SEE ALL");
         label.setLayoutX(x);
         label.setLayoutY(y);

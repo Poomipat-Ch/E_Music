@@ -62,19 +62,19 @@ public class BrowsePane {
         imageview.setFitWidth(1030);
         imageview.setPreserveRatio(true);
 
-        Label browse = CreateHead("Browse", 50, 70);
-        Button thaigenresbtn = CreateButton("เพลงไทย", 40, 190, 260, 1);
-        Button thaigenresbg = CreateBackgroundButton(40, 190, 260);
-        Button thaiartistbtn = CreateButton("ศิลปิน", 320, 190, 180, 2);
-        Button thaiartistbg = CreateBackgroundButton(320, 190, 180);
-        Button intergenresbtn = CreateButton("GLOBAL SONGS", 520, 190, 260, 0);
-        Button intergenresbg = CreateBackgroundButton(520, 190, 260);
-        Button interartistbtn = CreateButton("ARTIST", 800, 190, 180, 2);
-        Button interartistbg = CreateBackgroundButton(800, 190, 180);
+        Label browse = createHead("Browse", 50, 70);
+        Button thaigenresbtn = createButton("เพลงไทย", 40, 190, 260, 1);
+        Button thaigenresbg = createBackgroundButton(40, 190, 260);
+        Button thaiartistbtn = createButton("ศิลปิน", 320, 190, 180, 2);
+        Button thaiartistbg = createBackgroundButton(320, 190, 180);
+        Button intergenresbtn = createButton("GLOBAL SONGS", 520, 190, 260, 0);
+        Button intergenresbg = createBackgroundButton(520, 190, 260);
+        Button interartistbtn = createButton("ARTIST", 800, 190, 180, 2);
+        Button interartistbg = createBackgroundButton(800, 190, 180);
 
         try {
             backgroundpane.getChildren().addAll(imageview, thaigenresbg, thaigenresbtn, thaiartistbg, thaiartistbtn, intergenresbg, intergenresbtn,
-                    interartistbg, interartistbtn, browse, BorderList("เพลงไทย", 1));
+                    interartistbg, interartistbtn, browse, borderList("เพลงไทย", 1));
         } catch (IOException ex) {
             Logger.getLogger(BrowsePane.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -89,7 +89,7 @@ public class BrowsePane {
         return this.scrollpane;
     }
 
-    private Button CreateButton(String name, double x, double y, double width, int index) {
+    private Button createButton(String name, double x, double y, double width, int index) {
         Button button = new Button(name);
         button.getStyleClass().add("buttoninbrowse");
         button.setPrefSize(width, 50);
@@ -100,7 +100,7 @@ public class BrowsePane {
             this.backgroundpane.getChildren().remove(10);
 
             try {
-                this.backgroundpane.getChildren().add(BorderList(name, index));
+                this.backgroundpane.getChildren().add(borderList(name, index));
             } catch (IOException ex) {
                 Logger.getLogger(BrowsePane.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -110,7 +110,7 @@ public class BrowsePane {
         return button;
     }
 
-    private Button CreateBackgroundButton(double x, double y, double width) {
+    private Button createBackgroundButton(double x, double y, double width) {
         Button button = new Button();
         button.getStyleClass().add("backgroundbuttoninbrowse");
         button.setPrefSize(width, 50);
@@ -120,7 +120,7 @@ public class BrowsePane {
         return button;
     }
 
-    private Label CreateHead(String string, double x, double y) {
+    private Label createHead(String string, double x, double y) {
         Label label = new Label(string);
         label.getStyleClass().add("browseheadlabel");
         label.setLayoutX(x);
@@ -129,7 +129,7 @@ public class BrowsePane {
         return label;
     }
 
-    private AnchorPane BorderList(String name, double index) throws IOException {
+    private AnchorPane borderList(String name, double index) throws IOException {
         AnchorPane anchorpane = new AnchorPane();
         anchorpane.getStyleClass().add("borderlist");
         anchorpane.setPrefWidth(1030);
@@ -149,7 +149,7 @@ public class BrowsePane {
             if (name.contains("ARTIST")) {
                 for (Artist artist : artistList) {
                     if (artist.getNationality().equals("international")) {
-                        AnchorPane listAlbums = CreateArtistList(artist, (235 * (i % 4)) + 50, (235 * (i / 4)) + 75);
+                        AnchorPane listAlbums = createArtistList(artist, (235 * (i % 4)) + 50, (235 * (i / 4)) + 75);
                         i++;
 
                         anchorpane.getChildren().add(listAlbums);
@@ -158,7 +158,7 @@ public class BrowsePane {
             } else {
                 for (Artist artist : artistList) {
                     if (artist.getNationality().equals("thai")) {
-                        AnchorPane listAlbums = CreateArtistList(artist, (235 * (i % 4)) + 50, (235 * (i / 4)) + 75);
+                        AnchorPane listAlbums = createArtistList(artist, (235 * (i % 4)) + 50, (235 * (i / 4)) + 75);
                         i++;
 
                         anchorpane.getChildren().add(listAlbums);
@@ -169,10 +169,10 @@ public class BrowsePane {
         } else {
             int i = 0;
 
-            ArrayList<StyleMusicList> list = ReadFile().get((int) index);
+            ArrayList<StyleMusicList> list = readFile().get((int) index);
 
             for (StyleMusicList object : list) {
-                AnchorPane listAlbums = CreateAlbumsList(object, (235 * (i % 4)) + 50, (235 * (i / 4)) + 75);
+                AnchorPane listAlbums = createAlbumsList(object, (235 * (i % 4)) + 50, (235 * (i / 4)) + 75);
                 i++;
 
                 listAlbums.setOnMouseClicked(e -> {
@@ -183,12 +183,12 @@ public class BrowsePane {
             }
         }
 
-        anchorpane.getChildren().add(CreateLabel(name, 50, 15));
+        anchorpane.getChildren().add(BrowsePane.this.createLabel(name, 50, 15));
 
         return anchorpane;
     }
 
-    private Label CreateLabel(String string, double x, double y) {
+    private Label createLabel(String string, double x, double y) {
         Label label = new Label(string);
         label.setPadding(new Insets(5));
         label.getStyleClass().add("browselabel");
@@ -199,18 +199,18 @@ public class BrowsePane {
         return label;
     }
 
-    private AnchorPane CreateArtistList(Artist artist, double x, double y) {
+    private AnchorPane createArtistList(Artist artist, double x, double y) {
         AnchorPane anchorpane = new AnchorPane();
         anchorpane.getStyleClass().add("artistbuttonlist");
         anchorpane.setPrefSize(225, 225);
         anchorpane.setLayoutX(x);
         anchorpane.setLayoutY(y);
-        anchorpane.getChildren().addAll(new ImageCircle(112.5, 92, 90, artist.getPhoto()).getMyCircle(), CreateLabel(artist.getName1(), 190, artist.getPhoto()));
+        anchorpane.getChildren().addAll(new ImageCircle(112.5, 92, 90, artist.getPhoto()).getMyCircle(), createLabel(artist.getName1(), 190, artist.getPhoto()));
 
         return anchorpane;
     }
 
-    private AnchorPane CreateAlbumsList(StyleMusicList object, double x, double y) {
+    private AnchorPane createAlbumsList(StyleMusicList object, double x, double y) {
         System.out.println(object.getName());
         AnchorPane anchorpane = new AnchorPane();
         anchorpane.getStyleClass().add("buttonlist");
@@ -222,12 +222,12 @@ public class BrowsePane {
         background.setPrefSize(225, 225);
         background.getStyleClass().add("backgroundlist");
         
-        anchorpane.getChildren().addAll(new ImageRectangle(0, 0, 225, 225, object.getPhoto()).getMyRectangle(), background, CreateIcon(object.getName()), CreateLabel(object.getName(), 160, object.getPhoto()));
+        anchorpane.getChildren().addAll(new ImageRectangle(0, 0, 225, 225, object.getPhoto()).getMyRectangle(), background, createIcon(object.getName()), createLabel(object.getName(), 160, object.getPhoto()));
 
         return anchorpane;
     }
 
-    private ImageView CreateIcon(String name) {
+    private ImageView createIcon(String name) {
 //        System.out.println(name);
         ImageView image = new ImageView(new Image("/icon/" + name + "icon.png"));
         image.setFitHeight(60);
@@ -240,7 +240,7 @@ public class BrowsePane {
         return image;
     }
 
-    private Button CreateLabel(String string, int dis, Image image) {
+    private Button createLabel(String string, int dis, Image image) {
         Button button = new Button(string);
         button.setPrefSize(225, 225);
 //        button.setLayoutY(180);
@@ -258,7 +258,7 @@ public class BrowsePane {
         return button;
     }
 
-    private ArrayList<ArrayList> ReadFile() {
+    private ArrayList<ArrayList> readFile() {
 
         ArrayList<ArrayList> list = new ArrayList<>();
 

@@ -492,7 +492,7 @@ public class MyAccount {
                 }
             }
 
-            this.Clear();
+            this.clear();
 
         } else if (!currentPassword.getText().equals(UI.userAccount.getPassword())) {
             AlertBox.displayAlert("Something went wrong!", "Current password is not correct.");
@@ -502,7 +502,7 @@ public class MyAccount {
         return editSave;
     }
 
-    public void Clear() {
+    public void clear() {
         currentPassword.clear();
         password.clear();
         passwordConfirm.clear();

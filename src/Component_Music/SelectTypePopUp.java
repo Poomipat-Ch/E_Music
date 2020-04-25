@@ -29,7 +29,7 @@ abstract public class SelectTypePopUp {
         stage.setResizable(false);
         
 
-        Scene scene = new Scene(ShowPane());
+        Scene scene = new Scene(showPane());
         String stylrSheet = getClass().getResource("/style_css/stylePopupDetail.css").toExternalForm(); // From PopUpdetail CSS
         scene.getStylesheets().add(stylrSheet);
          scene.setFill(Color.TRANSPARENT);
@@ -38,7 +38,7 @@ abstract public class SelectTypePopUp {
         stage.showAndWait();
     }
     
-    private  AnchorPane ShowPane() {
+    private  AnchorPane showPane() {
         AnchorPane anchorpane =  new AnchorPane();
         anchorpane.setPrefSize(500, 500);
         anchorpane.getStyleClass().add("mainBox");
@@ -50,12 +50,12 @@ abstract public class SelectTypePopUp {
         AnchorPane detailpane = new AnchorPane();
         detailpane.setPrefSize(500, 500);      
         
-        anchorpane.getChildren().addAll(backgroundpane, detailpane, CreateButton(), CreateHeadLabel(), CreateCloseButton());
+        anchorpane.getChildren().addAll(backgroundpane, detailpane, createButton(), createHeadLabel(), createCloseButton());
         
         return anchorpane;
     }
     
-    private Label CreateCloseButton () {
+    private Label createCloseButton () {
                 
         Label close = new Label("CLOSE");
         close.getStyleClass().add("cancelbtn");
@@ -71,7 +71,7 @@ abstract public class SelectTypePopUp {
         return close;
     }
     
-    abstract AnchorPane CreateButton();
-    abstract AnchorPane CreateHeadLabel();
+    abstract AnchorPane createButton();
+    abstract AnchorPane createHeadLabel();
     
 }

@@ -94,7 +94,7 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
         stage.setTitle("Upload New Song");
         stage.setResizable(false);
 
-        DetailUploadArtist();
+        detailUploadArtist();
         Scene scene = new Scene(totalDetail);
         String stylrSheet = getClass().getResource("/style_css/stylePopupDetail.css").toExternalForm(); // From PopUpdetail CSS
         scene.getStylesheets().add(stylrSheet); // CSS
@@ -107,7 +107,7 @@ public class UploadArtistPopUp { // Use for Upload And Edit Song
 
     double mouse_x = 0, mouse_y = 0; // position mouse
 
-    private void DetailUploadArtist() {
+    private void detailUploadArtist() {
 
         title.getStyleClass().add("title"); //CSS
 

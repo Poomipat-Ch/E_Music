@@ -39,7 +39,7 @@ public class ShowingArtist {
 
         for (Artist artist : artistList) {
             if (artist.getName1().toLowerCase().contains(foundtext.toLowerCase()) || artist.getName2().toLowerCase().contains(foundtext.toLowerCase())) {
-                AnchorPane listAlbums = CreateArtistList(artist, (235 * (i % 4)) + 50, (255 * (i / 4)) + 250);
+                AnchorPane listAlbums = createArtistList(artist, (235 * (i % 4)) + 50, (255 * (i / 4)) + 250);
                 i++;
 
                 showingartist.getChildren().add(listAlbums);
@@ -51,18 +51,18 @@ public class ShowingArtist {
         return showingartist;
     }
 
-    private AnchorPane CreateArtistList(Artist artist, double x, double y) {
+    private AnchorPane createArtistList(Artist artist, double x, double y) {
         AnchorPane anchorpane = new AnchorPane();
         anchorpane.getStyleClass().add("artistbuttonlist");
         anchorpane.setPrefSize(225, 225);
         anchorpane.setLayoutX(x);
         anchorpane.setLayoutY(y);
-        anchorpane.getChildren().addAll(new ImageCircle(112.5, 92, 90, artist.getPhoto()).getMyCircle(), CreateLabel(artist, 190));
+        anchorpane.getChildren().addAll(new ImageCircle(112.5, 92, 90, artist.getPhoto()).getMyCircle(), createLabel(artist, 190));
 
         return anchorpane;
     }
 
-    private Button CreateLabel(Artist artist, int dis) {
+    private Button createLabel(Artist artist, int dis) {
         Button button = new Button(artist.getName1());
         button.setPrefSize(225, 225);
 //        button.setLayoutY(180);
