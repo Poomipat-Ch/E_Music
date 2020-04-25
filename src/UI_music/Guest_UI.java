@@ -63,13 +63,13 @@ public class Guest_UI extends UI {
         super(stage, userAccount);
         this.userAccount = userAccount;
         try {
-            SongArrayList = ReadWriteFile.readFileSong(musicfile);
+            songArrayList = ReadWriteFile.readFileSong(musicfile);
         } catch (IOException | ClassNotFoundException ex) {
             System.out.println("SearchPage: ERROR READ MUSIC.DAT");
         }
 
         try {
-            ArtistArrayList = new ReadWriteFile().readFileArtist(artistfile);
+            artistArrayList = new ReadWriteFile().readFileArtist(artistfile);
         } catch (IOException | ClassNotFoundException ex) {
             System.out.println("SearchPage: ERROR READ MUSIC.DAT");
         }
@@ -86,7 +86,7 @@ public class Guest_UI extends UI {
     public AnchorPane firstPagePane(String page) {
         AnchorPane pane = new AnchorPane();
         this.page = page;
-        pane.getChildren().addAll(AllSong());
+        pane.getChildren().addAll(allSong());
 
         return pane;
     }
@@ -118,7 +118,7 @@ public class Guest_UI extends UI {
         pane.getChildren().add(0, img);
     }
 
-    private Button CreaButton(String text) {
+    private Button creaButton(String text) {
         Button downLoadButton = new Button(text);
         downLoadButton.getStyleClass().add("detailbtn");
         downLoadButton.setMinSize(200, 50);
@@ -161,7 +161,7 @@ public class Guest_UI extends UI {
         searchTextField.setPromptText("Search Music");
         searchTextField.setMinSize(1030 - 300 - 60 - 70, 30);
 
-        Button searchButton = CreaButton("Refresh");
+        Button searchButton = creaButton("Refresh");
         searchButton.setStyle("-fx-font-size : 15px;");
         searchButton.setMinSize(50, 30);
         HBox.setMargin(searchButton, new Insets(0, 0, 0, 10));
@@ -175,7 +175,7 @@ public class Guest_UI extends UI {
 
     public static AnchorPane totalPane;
 
-    private BorderPane AllSong() {
+    private BorderPane allSong() {
 
         BorderPane scrollPane = new BorderPane();
         scrollPane.setPrefSize(1030, 900);

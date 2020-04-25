@@ -22,7 +22,7 @@ public class SelectTypeArtistPopUp extends SelectTypePopUp {
     }
 
     @Override
-    AnchorPane CreateButton() {
+    AnchorPane createButton() {
         AnchorPane anchorpane = new AnchorPane();
         anchorpane.setPrefSize(400, 380);
         anchorpane.setLayoutX(50);
@@ -64,7 +64,7 @@ public class SelectTypeArtistPopUp extends SelectTypePopUp {
     }
 
     @Override
-    AnchorPane CreateHeadLabel() {
+    AnchorPane createHeadLabel() {
         Label label = new Label("Please select artist's type\nโปรดเลือกประเภทของศิลปิน");
         label.getStyleClass().add("selectlabel");
         label.setAlignment(Pos.CENTER);

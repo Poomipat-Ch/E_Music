@@ -49,18 +49,18 @@ public class SearchPage {
         searchTextField.textProperty().addListener((ov, t, t1) -> {
             anchorPane.getChildren().remove(1);
             if (searchTextField.getText().equals("")) {
-                anchorPane.getChildren().addAll(BlankPane());
+                anchorPane.getChildren().addAll(blankPane());
             } else {
-                anchorPane.getChildren().addAll(FoundListPane(searchTextField.getText()));
+                anchorPane.getChildren().addAll(foundListPane(searchTextField.getText()));
                 if (this.songCount == 0 && this.artistCount == 0) {
                     anchorPane.getChildren().remove(1);
-                    anchorPane.getChildren().addAll(CantFoundPane(searchTextField.getText()));
+                    anchorPane.getChildren().addAll(cantFoundPane(searchTextField.getText()));
                 }
             }
 
         });
 
-        anchorPane.getChildren().addAll(background, BlankPane());
+        anchorPane.getChildren().addAll(background, blankPane());
 
     }
 
@@ -69,7 +69,7 @@ public class SearchPage {
     }
 
 //    private AnchorPane //empty page
-    private BorderPane FoundListPane(String foundtext) {
+    private BorderPane foundListPane(String foundtext) {
         BorderPane borderpane = new BorderPane();
         borderpane.setPadding(new Insets(0, 10, 0, 10));
 
@@ -78,13 +78,13 @@ public class SearchPage {
         borderpane.setLayoutX(30);
         borderpane.setLayoutY(60);
 
-        BorderPane songpane = PlaylistPane("Songs", "music.dat", foundtext, 2, 400);
-        BorderPane artistpane = PlaylistPane("Artists", "artist.dat", foundtext, 2, 400);
+        BorderPane songpane = playlistPane("Songs", "music.dat", foundtext, 2, 400);
+        BorderPane artistpane = playlistPane("Artists", "artist.dat", foundtext, 2, 400);
 
         if (this.songCount == 0) {
-            borderpane.setLeft(PlaylistPane("Artists", "artist.dat", foundtext, 4, 880));
+            borderpane.setLeft(playlistPane("Artists", "artist.dat", foundtext, 4, 880));
         } else if (this.artistCount == 0) {
-            borderpane.setLeft(PlaylistPane("Songs", "music.dat", foundtext, 4, 880));
+            borderpane.setLeft(playlistPane("Songs", "music.dat", foundtext, 4, 880));
         } else {
             borderpane.setLeft(songpane);
             borderpane.setRight(artistpane);
@@ -93,30 +93,30 @@ public class SearchPage {
         return borderpane;
     }
 
-    private BorderPane PlaylistPane(String string, String filename, String foundtext, int column, double seeall) {
+    private BorderPane playlistPane(String string, String filename, String foundtext, int column, double seeall) {
         BorderPane borderpane = new BorderPane();
         borderpane.setPadding(new Insets(20, 0, 20, 0));
 
         borderpane.setPrefWidth(445);
         borderpane.setPrefHeight(341);
 
-        borderpane.setTop(HeadPane(string, foundtext, seeall));
-        borderpane.setCenter(Playlist(foundtext, filename, column, 12));
+        borderpane.setTop(headPane(string, foundtext, seeall));
+        borderpane.setCenter(playlist(foundtext, filename, column, 12));
 
         return borderpane;
     }
 
-    private AnchorPane HeadPane(String string, String foundtext, double x) {
+    private AnchorPane headPane(String string, String foundtext, double x) {
         AnchorPane pane = new AnchorPane();
         pane.getStyleClass().add("hbox");
-        Label seeall = CreateSeeAll(string, foundtext, x);
+        Label seeall = createSeeAll(string, foundtext, x);
 
-        pane.getChildren().addAll(CreateLabel(string), seeall);
+        pane.getChildren().addAll(createLabel(string), seeall);
 
         return pane;
     }
 
-    private Label CreateLabel(String string) {
+    private Label createLabel(String string) {
         Label label = new Label(string);
         label.getStyleClass().add("headlabel");
         label.setAlignment(Pos.CENTER_LEFT);
@@ -124,7 +124,7 @@ public class SearchPage {
         return label;
     }
 
-    private Label CreateSeeAll(String string, String foundtext, double x) {
+    private Label createSeeAll(String string, String foundtext, double x) {
         Label label = new Label("SEE ALL");
         label.setAlignment(Pos.CENTER_RIGHT);
         label.getStyleClass().add("seealllabel");
@@ -139,23 +139,23 @@ public class SearchPage {
         return label;
     }
 
-    private AnchorPane Playlist(String foundtext, String filename, int column, int dis) {
+    private AnchorPane playlist(String foundtext, String filename, int column, int dis) {
         AnchorPane anchorpane = new AnchorPane();
 //        borderpane.set
 
         if (filename.equals("music.dat")) {
             songCount = 0;
-            for (Song song : UI.SongArrayList) {
+            for (Song song : UI.songArrayList) {
                 if (song.getNameSong().toLowerCase().contains(foundtext.toLowerCase())) {
-                    anchorpane.getChildren().add(CreateSongList((230 * (songCount % column)) + dis, (150 * (songCount / column)) + 50, song));
+                    anchorpane.getChildren().add(createSongList((230 * (songCount % column)) + dis, (150 * (songCount / column)) + 50, song));
                     songCount++;
                 }
             }
         } else {
             artistCount = 0;
-            for (Artist artist : UI.ArtistArrayList) {
+            for (Artist artist : UI.artistArrayList) {
                 if (artist.getName1().toLowerCase().contains(foundtext.toLowerCase()) || artist.getName2().toLowerCase().contains(foundtext.toLowerCase())) {
-                    anchorpane.getChildren().add(CreateArtistList((230 * (artistCount % column)) + dis, (150 * (artistCount / column)) + 50, artist));
+                    anchorpane.getChildren().add(createArtistList((230 * (artistCount % column)) + dis, (150 * (artistCount / column)) + 50, artist));
                     artistCount++;
                 }
             }
@@ -164,7 +164,7 @@ public class SearchPage {
         return anchorpane;
     }
 
-    private AnchorPane CreateSongList(double x, double y, Song song) {
+    private AnchorPane createSongList(double x, double y, Song song) {
         AnchorPane anchorpane = new AnchorPane();
         //anchorpane.getStyleClass().add("borderplaylist");
         anchorpane.setMaxWidth(220);
@@ -204,7 +204,7 @@ public class SearchPage {
         return anchorpane;
     }
 
-    private AnchorPane CreateArtistList(double x, double y, Artist artist) {
+    private AnchorPane createArtistList(double x, double y, Artist artist) {
         AnchorPane anchorpane = new AnchorPane();
         //anchorpane.getStyleClass().add("borderplaylist");
         anchorpane.setMaxWidth(215);
@@ -233,7 +233,7 @@ public class SearchPage {
         return anchorpane;
     }
 
-    private AnchorPane BlankPane() {
+    private AnchorPane blankPane() {
         AnchorPane anchorpane = new AnchorPane();
         anchorpane.setMinWidth(1030);
         ImageView image = new ImageView(new Image("/icon/search.png"));
@@ -260,7 +260,7 @@ public class SearchPage {
         return anchorpane;
     }
 
-    private AnchorPane CantFoundPane(String foundtext) {
+    private AnchorPane cantFoundPane(String foundtext) {
         AnchorPane anchorpane = new AnchorPane();
         anchorpane.setMinWidth(1030);
         ImageView image = new ImageView(new Image("/icon/flag.png"));

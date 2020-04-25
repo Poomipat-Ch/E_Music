@@ -38,8 +38,8 @@ abstract public class UI {
     public static Account userAccount;
     public static TextField searchTextField;
     public static VBox vbox;
-    public static ArrayList<Song> SongArrayList = new ArrayList<>();
-    public static ArrayList<Artist> ArtistArrayList = new ArrayList<>();
+    public static ArrayList<Song> songArrayList = new ArrayList<>();
+    public static ArrayList<Artist> artistArrayList = new ArrayList<>();
 
     //Abstract Class For User_UI & Admin_UI
     abstract public AnchorPane firstPagePane(String page);
@@ -101,7 +101,7 @@ abstract public class UI {
         return vbox;
     }
 
-    private Button CreaButton(String text) {
+    private Button creaButton(String text) {
         Button btn = new Button(text);
         btn.setPadding(new Insets(0, 0, 0, 70));
         btn.setAlignment(Pos.CENTER_LEFT);
@@ -112,7 +112,7 @@ abstract public class UI {
         return btn;
     }
 
-    private Button CreaButtonAdmin(String text) {
+    private Button creaButtonAdmin(String text) {
         Button btn = new Button(text);
         btn.setPadding(new Insets(0, 0, 0, 50));
         btn.setAlignment(Pos.CENTER_LEFT);
@@ -134,7 +134,7 @@ abstract public class UI {
         logoLabel.setMinWidth(250);
         logoLabel.setAlignment(Pos.CENTER);
 
-        Button home = CreaButton("Home");
+        Button home = creaButton("Home");
         home.setOnMouseClicked(e -> {
             menuBtnClicked = 0;
 
@@ -142,7 +142,7 @@ abstract public class UI {
             this.vbox.getChildren().add(firstPagePane(""));
         });
 
-        Button browse = CreaButton("Browse");
+        Button browse = creaButton("Browse");
         browse.setOnMouseClicked(e -> {
                 this.vbox.getChildren().remove(1);
                 this.vbox.getChildren().add(new BrowsePane().getBrowsePane());
@@ -150,7 +150,7 @@ abstract public class UI {
 
         VBox mysong = new VBox();
 
-        Button myLibrary = CreaButton("My Library");
+        Button myLibrary = creaButton("My Library");
         mysong.getChildren().add(myLibrary);
         myLibrary.setOnMouseClicked(e -> {
             menuBtnClicked = 1;
@@ -166,7 +166,7 @@ abstract public class UI {
             }
         });
 
-        Button playerMusic = CreaButton("Spookify Player");
+        Button playerMusic = creaButton("Spookify Player");
         playerMusic.setOnMouseClicked(e -> {
             if (!"Ready".equals(playerStatus)) {
                 MusicPlayer musicPlayer = new MusicPlayer();
@@ -176,8 +176,8 @@ abstract public class UI {
             }
         });
 
-//        Button myAccount = CreaButton("My Account");
-        Button myAccount = ButtonAccount();
+//        Button myAccount = creaButton("My Account");
+        Button myAccount = buttonAccount();
         myAccount.setOnMouseClicked(e -> {
             menuBtnClicked = 2;
             if (!"guest".equals(UI.userAccount.getUserRole())) {
@@ -192,7 +192,7 @@ abstract public class UI {
 //                Login.stage.show();
             }
         });
-        Button logOut = CreaButton("Logout");
+        Button logOut = creaButton("Logout");
         logOut.setOnMouseClicked(e -> {
             this.stage.close();
             Login.stage.show();
@@ -220,25 +220,25 @@ abstract public class UI {
         logoLabel.setMinWidth(250);
         logoLabel.setAlignment(Pos.CENTER);
 
-        Button songManage = CreaButtonAdmin("Music Management");
+        Button songManage = creaButtonAdmin("Music Management");
         songManage.setOnMouseClicked(e -> {
             this.vbox.getChildren().remove(1);
             this.vbox.getChildren().add(firstPagePane(""));
         });
 
-        Button artistManage = CreaButtonAdmin("Artist Management");
+        Button artistManage = creaButtonAdmin("Artist Management");
         artistManage.setOnMouseClicked(e -> {
             this.vbox.getChildren().remove(1);
-            this.vbox.getChildren().add(new Admin_UI().ArtistPane(""));////
+            this.vbox.getChildren().add(new Admin_UI().artistPane(""));////
         });
 
-        Button accountManage = CreaButtonAdmin("Account Management");
+        Button accountManage = creaButtonAdmin("Account Management");
         accountManage.setOnMouseClicked(e -> {
             this.vbox.getChildren().remove(1);
             this.vbox.getChildren().add(thirdPagePane());
         });
 
-        Button playerMusic = CreaButton("Spookify Player");
+        Button playerMusic = creaButton("Spookify Player");
         playerMusic.setOnMouseClicked(e -> {
             if (!"Ready".equals(playerStatus)) {
                 MusicPlayer musicPlayer = new MusicPlayer();
@@ -248,13 +248,13 @@ abstract public class UI {
             }
         });
 
-        Button myAccount = ButtonAccount();
+        Button myAccount = buttonAccount();
         myAccount.setOnMouseClicked(e -> {
             this.vbox.getChildren().remove(1);
             this.vbox.getChildren().add(myAccount());
         });
 
-        Button logOut = CreaButton("Logout");
+        Button logOut = creaButton("Logout");
         logOut.setOnMouseClicked(e -> {
             this.stage.close();
             Login.stage.show();
@@ -271,7 +271,7 @@ abstract public class UI {
 
     public static AnchorPane profilePicture = new AnchorPane();
 
-    private Button ButtonAccount() {
+    private Button buttonAccount() {
         AnchorPane anchorpane = new AnchorPane();
 
         anchorpane.getStyleClass().add("accountbtn");

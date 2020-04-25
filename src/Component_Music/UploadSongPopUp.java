@@ -138,7 +138,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         stage.setTitle("Upload New Song");
         stage.setResizable(false);
         System.out.println(checkExistFile);//test
-        DetailUploadSong();
+        detailUploadSong();
         Scene scene = new Scene(totalDetail);
         String stylrSheet = getClass().getResource("/style_css/stylePopupDetail.css").toExternalForm(); // From PopUpdetail CSS
         scene.getStylesheets().add(stylrSheet); // CSS
@@ -159,7 +159,7 @@ public class UploadSongPopUp { // Use for Upload And Edit Song
         return chkbox;
     }
 
-    private void DetailUploadSong() {
+    private void detailUploadSong() {
 
         title.getStyleClass().add("title"); //CSS
 

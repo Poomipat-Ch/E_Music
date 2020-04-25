@@ -22,15 +22,15 @@ public class ShowingSearchPage {
         anchorpane.getStyleClass().add("mainBox");
         
         if(page.toLowerCase().equals("songs"))
-            anchorpane.getChildren().addAll(CreateHead(page, foundtext), new ShowingSongs(foundtext).table);
+            anchorpane.getChildren().addAll(createHead(page, foundtext), new ShowingSongs(foundtext).table);
         else if(page.toLowerCase().equals("artists"))
-            anchorpane.getChildren().addAll(CreateHead(page, foundtext), new ShowingArtist(foundtext).getShowingartist());   
+            anchorpane.getChildren().addAll(createHead(page, foundtext), new ShowingArtist(foundtext).getShowingartist());   
         
         UI.vbox.getChildren().remove(1);
         UI.vbox.getChildren().add(anchorpane);
     }
     
-    private HBox CreateHead(String page, String foundtext) {
+    private HBox createHead(String page, String foundtext) {
         HBox hbox = new HBox();
         hbox.setLayoutX(50);
         hbox.setLayoutY(100);

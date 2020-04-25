@@ -93,7 +93,7 @@ public class Login {
         loginBtn.setOnAction(e -> {
 
             
-        ReadFileAccount();    
+        readFileAccount();    
 
             //If checkbox is checked, program will remember username to ID field
             if (chk1.isSelected()) {
@@ -256,7 +256,7 @@ public class Login {
     }
 
     public void forgetPassword() {
-        ReadFileAccount();
+        readFileAccount();
         
         fgtStage = new Stage();
         fgtStage.initModality(Modality.APPLICATION_MODAL);
@@ -416,7 +416,7 @@ public class Login {
         return stage;
     }
 
-    private void ReadFileAccount() { //By Pop
+    private void readFileAccount() { //By Pop
         try {
             listUserAccount = new ReadWriteFile().readFile(user);
         } catch (IOException ex) {

@@ -187,7 +187,7 @@ public class ShowMusicPage {
             imageview.setFitWidth(1030);
             imageview.setPreserveRatio(true);
             
-            anchorPane.getChildren().addAll(table, CreateLabel(name), profilePicture, searchBoxMy());
+            anchorPane.getChildren().addAll(table, createLabel(name), profilePicture, searchBoxMy());
             
         } else {
             NameCol.setMinWidth(418);
@@ -207,7 +207,7 @@ public class ShowMusicPage {
             imageview.setFitWidth(1030);
             imageview.setPreserveRatio(true);
 
-            anchorPane.getChildren().addAll(table, CreateLabel(name), profilePicture, searchBoxMy());
+            anchorPane.getChildren().addAll(table, createLabel(name), profilePicture, searchBoxMy());
         }
         
         table.getColumns().addAll(NameCol, artistCol, detailCol, downloadCol);
@@ -234,7 +234,7 @@ public class ShowMusicPage {
 
     }
 
-    private AnchorPane CreateLabel(String string) {
+    private AnchorPane createLabel(String string) {
         AnchorPane anchorpane = new AnchorPane();
         anchorpane.setPrefSize(500, 200);
         anchorpane.setLayoutX(325);
@@ -269,7 +269,7 @@ public class ShowMusicPage {
         searchTextField.getStyleClass().add("searchfield");
 
 //        searchTextField.set
-        Button searchButton = CreaButton("Refresh");
+        Button searchButton = creaButton("Refresh");
         searchButton.setStyle("-fx-font-size : 15px;");
         HBox.setMargin(searchButton, new Insets(0, 0, 0, 10));
 
@@ -281,7 +281,7 @@ public class ShowMusicPage {
         return hBox;
     }
 
-    private Button CreaButton(String text) {
+    private Button creaButton(String text) {
         Button downLoadButton = new Button(text);
         downLoadButton.getStyleClass().add("detailbtn");
         downLoadButton.setPrefSize(80, 40);

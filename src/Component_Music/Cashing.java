@@ -102,7 +102,7 @@ public class Cashing {
         return (100.0-getPromotion())/100.0;
     }
 
-    public void Info(Stage paymentStage, Song song) {
+    public void info(Stage paymentStage, Song song) {
         this.paymentStage = paymentStage;
         this.song = song;
 
@@ -466,7 +466,7 @@ public class Cashing {
     private Account updateAccount2;
     private Account userAccount;
 
-    public void buyPremium(Stage paymentStage, Account userAccount) { //copy from Info and UpdateAccountClicked in Admin_UI
+    public void buyPremium(Stage paymentStage, Account userAccount) { //copy from info and UpdateAccountClicked in Admin_UI
         //Payment
         this.paymentStage = paymentStage;
         this.userAccount = userAccount;

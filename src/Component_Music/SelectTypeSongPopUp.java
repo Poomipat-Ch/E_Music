@@ -23,7 +23,7 @@ public class SelectTypeSongPopUp extends SelectTypePopUp {
     }
 
     @Override
-    AnchorPane CreateHeadLabel() {
+    AnchorPane createHeadLabel() {
 
         Label label = new Label("Please select song's type\nโปรดเลือกประเภทของเพลง");
         label.getStyleClass().add("selectlabel");
@@ -44,7 +44,7 @@ public class SelectTypeSongPopUp extends SelectTypePopUp {
     }
 
     @Override
-    AnchorPane CreateButton() {
+    AnchorPane createButton() {
         AnchorPane anchorpane = new AnchorPane();
         anchorpane.setPrefSize(400, 380);
         anchorpane.setLayoutX(50);

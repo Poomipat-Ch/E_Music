@@ -37,7 +37,7 @@ public class DetailSongPopUp {
         stage.setTitle("Detail Song");
         stage.setResizable(false);
         
-        DetailSong();
+        detailSong();
         Scene scene = new Scene(detail);
         String stylrSheet = getClass().getResource("/style_css/stylePopupDetail.css").toExternalForm();
         scene.getStylesheets().add(stylrSheet);
@@ -50,7 +50,7 @@ public class DetailSongPopUp {
     
     private double mouse_x = 0,mouse_y = 0; // position mouse
     
-    private void DetailSong() {
+    private void detailSong() {
         this.detail = new VBox(10);
         detail.getStyleClass().add("allPane");
         detail.setAlignment(Pos.TOP_CENTER);
@@ -98,7 +98,7 @@ public class DetailSongPopUp {
                         
             }else{
                 Cashing cashing = new Cashing();
-                cashing.Info(new Stage(),song);
+                cashing.info(new Stage(),song);
             }
             
             System.out.println("Calling Info");

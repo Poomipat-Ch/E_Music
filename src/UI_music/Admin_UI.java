@@ -113,7 +113,7 @@ public class Admin_UI extends UI {
         stage.show();
     }
 
-    private Button CreaButton(String text) {
+    private Button creaButton(String text) {
         Button downLoadButton = new Button(text);
         downLoadButton.getStyleClass().add("detailbtn");
         downLoadButton.setMinSize(200, 50);
@@ -133,7 +133,7 @@ public class Admin_UI extends UI {
         title1.setLayoutX(50);
         title1.setLayoutY(5);
 
-        Button editSongBtn = CreaButton("Edit Song");       //Edit Button
+        Button editSongBtn = creaButton("Edit Song");       //Edit Button
         editSongBtn.setLayoutX(780);
         editSongBtn.setLayoutY(600);
         editSongBtn.setOnAction(e -> {
@@ -151,7 +151,7 @@ public class Admin_UI extends UI {
             }
         });
 
-        Button uploadBtn = CreaButton("Upload");        //Upload Button
+        Button uploadBtn = creaButton("Upload");        //Upload Button
         uploadBtn.setLayoutX(780);
         uploadBtn.setLayoutY(700);
         uploadBtn.setOnAction(e -> {
@@ -159,7 +159,7 @@ public class Admin_UI extends UI {
             new SelectTypeSongPopUp();
         });
 
-        Button deleteBtn = CreaButton("Delete");        //Delete Button
+        Button deleteBtn = creaButton("Delete");        //Delete Button
         deleteBtn.setLayoutX(780);
         deleteBtn.setLayoutY(770);
         deleteBtn.setOnAction(e -> {
@@ -185,12 +185,12 @@ public class Admin_UI extends UI {
         backgroundpane.setLayoutY(80);
         backgroundpane.getStyleClass().add("backgroundpane");
 
-        pane.getChildren().addAll(searchBoxAll(), AllSong(), backgroundpane, UpdateClikedPane(), title1, editSongBtn, uploadBtn, deleteBtn);
+        pane.getChildren().addAll(searchBoxAll(), allSong(), backgroundpane, updateClikedPane(), title1, editSongBtn, uploadBtn, deleteBtn);
 
         return pane;
     }
 
-    public AnchorPane ArtistPane(String page) {   //Second Page 2
+    public AnchorPane artistPane(String page) {   //Second Page 2
         AnchorPane pane = new AnchorPane();
         this.page = page;
 
@@ -199,7 +199,7 @@ public class Admin_UI extends UI {
         title2.setLayoutX(50);
         title2.setLayoutY(5);
 
-        Button editArtistBtn = CreaButton("Edit Artist");       //New Artist
+        Button editArtistBtn = creaButton("Edit Artist");       //New Artist
         editArtistBtn.setLayoutX(780);
         editArtistBtn.setLayoutY(600);
         editArtistBtn.setOnAction(e -> {
@@ -213,14 +213,14 @@ public class Admin_UI extends UI {
             Admin_UI.updateArtistVBox.getChildren().addAll(profilePictureArtist, selectArtist2, selectDetail2);
         });
 
-        Button newArtistBtn = CreaButton("New Artist");       //New Artist
+        Button newArtistBtn = creaButton("New Artist");       //New Artist
         newArtistBtn.setLayoutX(780);
         newArtistBtn.setLayoutY(700);
         newArtistBtn.setOnAction(e -> {
             new SelectTypeArtistPopUp();
         });
 
-        Button deleteArtistBtn = CreaButton("Delete");        //Delete Button
+        Button deleteArtistBtn = creaButton("Delete");        //Delete Button
         deleteArtistBtn.setLayoutX(780);
         deleteArtistBtn.setLayoutY(770);
         deleteArtistBtn.setOnAction(e -> {
@@ -246,7 +246,7 @@ public class Admin_UI extends UI {
         backgroundpane.setLayoutY(80);
         backgroundpane.getStyleClass().add("backgroundpane");
 
-        pane.getChildren().addAll(searchArtistBox(), AllArtist(), backgroundpane, UpdateClikedArtistPane(), title2, editArtistBtn, newArtistBtn, deleteArtistBtn); // editArtistBtn, newArtistBtn, 
+        pane.getChildren().addAll(searchArtistBox(), allArtist(), backgroundpane, updateClikedArtistPane(), title2, editArtistBtn, newArtistBtn, deleteArtistBtn); // editArtistBtn, newArtistBtn, 
 
         return pane;
     }
@@ -262,7 +262,7 @@ public class Admin_UI extends UI {
         title2.setLayoutX(50);
         title2.setLayoutY(5);
 
-        Button premiumDiscountBtn = CreaButton("Premium Discount");
+        Button premiumDiscountBtn = creaButton("Premium Discount");
         premiumDiscountBtn.getStyleClass().add("premiumpricebtn");
         premiumDiscountBtn.setLayoutX(60);
         premiumDiscountBtn.setLayoutY(675);
@@ -270,7 +270,7 @@ public class Admin_UI extends UI {
             new SetupPricePremium();
         });
 
-        Button addAccountBtn = CreaButton("Add Account");
+        Button addAccountBtn = creaButton("Add Account");
         addAccountBtn.setLayoutX(290);
         addAccountBtn.setLayoutY(675);
         addAccountBtn.setOnAction(e -> {
@@ -278,7 +278,7 @@ public class Admin_UI extends UI {
             refreshTable();
         });
 
-        Button updateAccountBtn = CreaButton("Update Account");
+        Button updateAccountBtn = creaButton("Update Account");
         updateAccountBtn.setLayoutX(520);
         updateAccountBtn.setLayoutY(675);
         updateAccountBtn.setOnAction(e -> {
@@ -292,7 +292,7 @@ public class Admin_UI extends UI {
 
         });
 
-        Button deleteAccountBtn = CreaButton("Delete Account");
+        Button deleteAccountBtn = creaButton("Delete Account");
         deleteAccountBtn.setLayoutX(750);
         deleteAccountBtn.setLayoutY(675);
         deleteAccountBtn.setOnAction(e -> {
@@ -380,7 +380,7 @@ public class Admin_UI extends UI {
         searchTextField.getStyleClass().add("searchBox");
         searchTextField.setMinSize(1030 - 300 - 60 - 70, 30);
 
-        Button searchButton = CreaButton("Search");
+        Button searchButton = creaButton("Search");
         searchButton.setOnMouseClicked(e -> {
             Admin_UI.totalPane.getChildren().remove(0);
             Admin_UI.totalPane.getChildren().add(updateScrollPane(searchTextField.getText()));
@@ -412,7 +412,7 @@ public class Admin_UI extends UI {
         searchTextField.getStyleClass().add("searchBox");
         searchTextField.setMinSize(1030 - 300 - 60 - 70, 30);
 
-        Button searchButton = CreaButton("Search");
+        Button searchButton = creaButton("Search");
         searchButton.setOnMouseClicked(e -> {
             Admin_UI.totalArtistPane.getChildren().remove(0);
             Admin_UI.totalArtistPane.getChildren().add(updateScrollArtistPane(searchTextField.getText()));
@@ -444,7 +444,7 @@ public class Admin_UI extends UI {
         searchTextField.setMinSize(850, 32); //1030 - 300 - 60 - 70
         searchTextField.getStyleClass().add("searchBox");
 
-        Button searchButton = CreaButton("Refresh");
+        Button searchButton = creaButton("Refresh");
         searchButton.setStyle("-fx-font-size : 15px;");
         searchButton.setMinSize(50, 32);
         searchButton.setOnAction(e -> {
@@ -469,7 +469,7 @@ public class Admin_UI extends UI {
 
     public static VBox totalPane;
 
-    private ScrollPane AllSong() {
+    private ScrollPane allSong() {
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setPrefSize(750, 750);
@@ -493,7 +493,7 @@ public class Admin_UI extends UI {
 
     public static VBox totalArtistPane;
 
-    private ScrollPane AllArtist() {
+    private ScrollPane allArtist() {
 
         ScrollPane scrollArtistPane = new ScrollPane();
         scrollArtistPane.setPrefSize(750, 750);
@@ -695,7 +695,7 @@ public class Admin_UI extends UI {
     private static VBox updateVBox;
     private AnchorPane profilePicture;
 
-    private AnchorPane UpdateClikedPane() {
+    private AnchorPane updateClikedPane() {
 
         //Image
         AnchorPane updatePane = new AnchorPane();
@@ -734,7 +734,7 @@ public class Admin_UI extends UI {
 
     private AnchorPane profilePictureArtist;
 
-    private AnchorPane UpdateClikedArtistPane() {
+    private AnchorPane updateClikedArtistPane() {
 
         //Image
         AnchorPane updatePane = new AnchorPane();
