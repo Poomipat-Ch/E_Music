@@ -336,7 +336,9 @@ public class Login {
             if (answer.getText().equals(userAccount.getAnswer())) {
                 if (passIn1.getText().equals(passIn2.getText())) {
                     System.out.println("Changing password.");
-                    ArrayList<Account> addAccount = new ArrayList<>();
+                    readFileAccount();
+                    ArrayList<Account> addAccount = listUserAccount;
+                    
 
                     addAccount.add(new Account(userAccount.getName(), userAccount.getSurname(), userAccount.getUsername(), userAccount.getEmail(),
                             passIn1.getText(), userAccount.getGender(), userAccount.getDateOfBirth(), userAccount.getQuestion(), userAccount.getAnswer(), "member", userAccount.getPhoto()));
